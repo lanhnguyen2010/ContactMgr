@@ -34,7 +34,7 @@ public class Contact {
 	@Column(name = "MOBILE", columnDefinition="char(15)")
 	private String mobile;
 	
-	@Column(name = "GENDER")
+	@Column(name = "GENDER", columnDefinition="char(6)")
 	private String gender;
 	
 	@Column(name = "BIRTHDAY", columnDefinition="date")
