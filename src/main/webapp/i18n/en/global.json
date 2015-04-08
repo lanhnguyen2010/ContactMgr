@@ -1,0 +1,24 @@
+{
+    "global": {
+        "title": "Contact Manager",
+        "menu": {
+            "home": "Home",
+            "contacts": {
+                "main": "Contacts",
+                "add": "Add new Contact"
+            },
+            "cards": {
+                "main": "Cards",
+                "add": "Design new Card template",
+                "generate": "Generate Cards"
+            },
+            "admin": {
+                "main": "Administrator",
+                "users": "Manage Users",
+                "users-add": "Add new User"
+            }
+        },
+        "browserupgrade": "You are using an <strong>outdated</strong> browser. Please <a href='http://browsehappy.com/?locale=en'>upgrade your browser</a> to improve your experience.",
+        "copyright": "Copyright &copy;2015 KMS Technology, Inc."
+    }
+}

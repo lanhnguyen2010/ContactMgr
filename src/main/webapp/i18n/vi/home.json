@@ -1,0 +1,17 @@
+{
+    "home": {
+        "title": "Quản lý Thông tin Cá nhân",
+        "quick-links": "Để truy cập nhanh, vui lòng chọn một trong các liên kết bên dưới:",
+        "links": {
+            "contacts": "Quản lý Thông tin Cá nhân",
+            "contacts-new": "Thêm Thông tin Cá nhân mới",
+            "cards": "Quản lý Thẻ tên",
+            "cards-new": "Thiết kế Mẫu thẻ tên mới",
+            "cards-generate": "In ấn các Thẻ tên",
+            "admin": {
+                "users": "Quản lý Người dùng",
+                "users-new": "Thêm mới Người dùng"
+            }
+        }
+    }
+}

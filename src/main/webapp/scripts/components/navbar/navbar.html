@@ -1,0 +1,80 @@
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#/"><span translate="global.title">Contact Manager</span> <span class="navbar-version">v{{VERSION}}</span></a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+            <ul class="nav navbar-nav nav-pills navbar-right">
+                <li ui-sref-active="active">
+                    <a ui-sref="home" class="navbar-item">
+                        <span class="fa fa-home fa-2x"></span>
+                        <span translate="global.menu.home">Home</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active" class="dropdown pointer">
+                    <a class="dropdown-toggle navbar-item" data-toggle="dropdown" href="">
+                        <span>
+                            <span class="fa fa-book fa-2x"></span>
+                            <span class="hidden-tablet" translate="global.menu.contacts.main">Contacts</span>
+                            <b class="caret"></b>
+                        </span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li ui-sref-active="active"><a ui-sref="add"><span class="fa fa-file-text-o"></span>
+                            &#xA0;<span translate="global.menu.contacts.add">Add new Contact</span></a></li>
+                    </ul>
+                </li>
+                <li ui-sref-active="active" class="dropdown pointer">
+                    <a class="dropdown-toggle navbar-item" data-toggle="dropdown" href="">
+                        <span>
+                            <span class="fa fa-newspaper-o fa-2x"></span>
+                            <span class="hidden-tablet" translate="global.menu.cards.main">Cards</span>
+                            <b class="caret"></b>
+                        </span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li ui-sref-active="active"><a ui-sref="add"><span class="fa fa-credit-card"></span>
+                            &#xA0;<span translate="global.menu.cards.add">Design new Contact template</span></a></li>
+                        <li ui-sref-active="active"><a ui-sref="add"><span class="fa fa-fax"></span>
+                            &#xA0;<span translate="global.menu.cards.generate">Generate Contacts</span></a></li>
+                    </ul>
+                </li>
+                <li ui-sref-active="active" class="dropdown pointer">
+                    <a class="dropdown-toggle navbar-item" data-toggle="dropdown" href="">
+                        <span>
+                            <span class="fa fa-gears fa-2x"></span>
+                            <span class="hidden-tablet" translate="global.menu.admin.main">Administration</span>
+                            <b class="caret"></b>
+                        </span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li ui-sref-active="active"><a ui-sref="add"><span class="fa fa-user-plus"></span>
+                            &#xA0;<span translate="global.menu.admin.users-add">Add new User</span></a></li>
+                        <li ui-sref-active="active"><a ui-sref="add"><span class="fa fa-users"></span>
+                            &#xA0;<span translate="global.menu.admin.users">Manage Users</span></a></li>
+                    </ul>
+                </li>
+                <li ui-sref-active="active" class="dropdown pointer" ng-controller="LanguageController">
+                    <a class="dropdown-toggle navbar-item" data-toggle="dropdown" href="">
+                        <span>
+                            <span class="fa fa-language"></span>
+                            <span class="hidden-tablet">{{'language.' + currentLanguage() | translate}}</span>
+                            <b class="caret"></b>
+                        </span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li active-menu="{{language}}" ng-repeat="language in languages">
+                            <a href="" ng-click="changeLanguage(language)">{{'language.' + language | translate}}</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

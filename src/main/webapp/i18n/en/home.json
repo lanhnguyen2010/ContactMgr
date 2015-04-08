@@ -1,0 +1,17 @@
+{
+    "home": {
+        "title": "Welcome to Contact Manager!",
+        "quick-links": "For quick access, you can follow up the links below:",
+        "links": {
+            "contacts": "Manage Contacts",
+            "contacts-new": "Add new Contact",
+            "cards": "Manage Cards",
+            "cards-new": "Design new Card",
+            "cards-generate": "Generate Cards",
+            "admin": {
+                "users": "Manage Users",
+                "users-new": "Add new User"
+            }
+        }
+    }
+}
