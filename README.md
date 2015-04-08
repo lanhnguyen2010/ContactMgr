@@ -3,11 +3,11 @@ Launch - Contact Manager
 
 ## Setup Environment
 1. Install [JDK 1.7] and then verify Java version by doing the command:
-```sh
+```
 java -version
 ```
 2. Install [Maven 3.3.x] and then verify Maven version by doing the command:
-```sh
+```
 maven -version
 ```
 3. Install Git from [git-scm.com]. It is recommended to use a tool like [SourceTree] 
@@ -15,25 +15,25 @@ or [TortoiseGit] if you are starting with Git.
 4. Install Node.js from the [Node.js] website. This will also install npm, which is 
 the node package manager we are using in the next commands.
 5. Install [Bower]
-```sh
+```
 npm install -g bower
 ```
 6. Install [Grunt Client]
-```sh
+```
 npm install -g grunt-cli
 ```
 7. Install [MySQL database]
 
 ## Building ContactMgr
 1. Clone contactmgr source code from [Assembla Git repo]:
-```sh
+```
 git clone git@git.assembla.com:launch-contact-manager.git
 ```
 For more details, you can follow up the [Assembla - Getting started with Git]
 
 2. Go to the project source code directory and do below commands:
 - Resolve all dependencies for AngualarJS
-```sh
+```
 bower install
 ```
 - Build AngularJS application
@@ -52,11 +52,11 @@ mvn -Pprod package
 
 ## Running ContactMgr
 1. Run ConcactMgr application in development 
-```sh
+```
 java -jar contactmgr-[version].war
 ```
 2. Run ContactMgr application in production mode
-```sh
+```
 java -jar contactmgr-[version].war --spring.profiles.active=prod
 ```
 
