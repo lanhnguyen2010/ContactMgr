@@ -18,6 +18,11 @@ public class ContactController {
 	@Autowired
 	private ContactService contactService;
 	
+	/**
+	 * Get detail of an existing contact
+	 * @param id is ID of the contact we need get.
+	 * @return "404 code" if not found or "200 code and data of contact"
+	 */
 	@RequestMapping(value = "/{id}", method = GET)
 	public ResponseEntity<Contact> getContact(@PathVariable int id) {
 		Contact contact = contactService.getContact(id);

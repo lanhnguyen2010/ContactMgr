@@ -9,20 +9,23 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import vn.kms.launch.contactmgr.ContactMgrApp;
-import vn.kms.launch.contactmgr.domain.contact.Contact;
-import vn.kms.launch.contactmgr.service.ContactService;
-
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = ContactMgrApp.class)
-public class ContactServiceTest {
+public class ContactControllerTest {
 	@Autowired
-	ContactService contactService;
+	private WebApplicationContext wac;
+
+	private MockMvc mockMvc;
 
 	@Before
 	public void setUp() throws Exception {
+		 this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
 	}
 
 	@After
@@ -31,15 +34,6 @@ public class ContactServiceTest {
 
 	@Test
 	public void testGetContact() {
-		// Get a existing contact
-		Contact contact = contactService.getContact(1);
-		assertNotNull("Test contact not null if id is 1.", contact);
-		assertEquals("Test contact.firstName equal Trang if id is 1", "Trang", contact.getFirstName());
-		assertEquals("Test contact.company.code equal AB if id is 1", "AB", contact.getWork().getCompany().getCode());
-		
-		// Not found contact
-		contact = contactService.getContact(-1);
-		assertNull("Test contact null if id is -1.", contact);
 	}
 
 }
