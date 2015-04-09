@@ -1,11 +1,10 @@
-package vn.kms.launch.contactmgr.domain;
+package vn.kms.launch.contactmgr.domain.contact;
 
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Lob;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -14,26 +13,29 @@ public class Company {
 	@Id
 	@Column(name = "ID")
 	private int id;
-	@Column(name = "CODE", columnDefinition = "char(10)")
+	
+	@Column(name = "CODE")
 	private String code;
+	
 	@Column(name = "NAME")
 	private String name;
-	@Lob
-	@Column(name = "WEBSITE", columnDefinition = "TEXT")
+	
+	@Column(name = "WEBSITE")
 	private String website;
-	@Lob
+	
 	@Column(name = "LOGO")
 	private String logo;
-	@Lob
 	@Column(name = "MESSAGE")
 	private String message;
 
-	@Column(name = "PHONE", columnDefinition = "char(10)")
+	@Column(name = "PHONE")
 	private String phone;
-	@Column(name = "FAX",columnDefinition="char(20)")
-	private String fax;
 	
-	@Embedded private Address address;
+	@Column(name = "FAX")
+	private String fax;
+
+	@Embedded
+	private Address address;
 
 	public String getPhone() {
 		return phone;
@@ -82,6 +84,7 @@ public class Company {
 	public void setWebsite(String website) {
 		this.website = website;
 	}
+
 	public int getId() {
 		return id;
 	}
@@ -105,7 +108,5 @@ public class Company {
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	
 
 }
