@@ -11,7 +11,7 @@ import javax.persistence.Table;
 @Table(name = "CONTACT")
 public class Contact extends vn.kms.launch.contactmgr.domain.Entity {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Column(name = "FIRST_NAME")
 	private String firstName;
 	@Column(name = "MIDDLE_NAME")
