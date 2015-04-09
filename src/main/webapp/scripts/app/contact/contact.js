@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('contactmgrApp') //add object lib ngTable
+angular.module('contactmgrApp')
     .config(function($stateProvider) {
         $stateProvider
             .state('contact', {
