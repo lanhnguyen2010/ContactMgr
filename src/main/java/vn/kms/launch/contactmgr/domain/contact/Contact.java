@@ -1,21 +1,19 @@
-package vn.kms.launch.contactmgr.domain;
+package vn.kms.launch.contactmgr.domain.contact;
+
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "CONTACT")
 public class Contact {
-
 	@Id
 	@Column(name = "ID")
 	private int id;
@@ -27,19 +25,18 @@ public class Contact {
 	private String lastname;
 	@Column(name = "EMAIL")
 	private String email;
-	
-	@Lob
+
 	@Column(name = "PHOTO")
 	private String photo;
-	@Column(name = "MOBILE", columnDefinition="char(15)")
+	@Column(name = "MOBILE")
 	private String mobile;
-	
+
 	@Column(name = "GENDER")
 	private String gender;
-	
-	@Column(name = "BIRTHDAY", columnDefinition="date")
+
+	@Column(name = "BIRTHDAY")
 	private Date birthday;
-	
+
 	@Embedded
 	private Home home;
 
@@ -132,5 +129,98 @@ public class Contact {
 
 	public void setWork(Work work) {
 		this.work = work;
+	}
+
+	@Embeddable
+	public class Work {
+		@Column(name = "TITLE")
+		private String title;
+
+		@Column(name = "DEPARTMENT")
+		private String department;
+
+		@ManyToOne
+		@JoinColumn(name = "COMPANY_ID")
+		private Company company;
+
+		public Work() {
+
+		}
+
+		public Work(String title, String department, Company company) {
+			this.title = title;
+			this.department = department;
+			this.company = company;
+		}
+
+		public String getTitle() {
+			return title;
+		}
+
+		public void setTitle(String title) {
+			this.title = title;
+		}
+
+		public String getDepartment() {
+			return department;
+		}
+
+		public void setDepartment(String department) {
+			this.department = department;
+		}
+
+		public Company getCompany() {
+			return company;
+		}
+
+		public void setCompany(Company company) {
+			this.company = company;
+		}
+	}
+
+	@Embeddable
+	public class Home {
+		private Address address;
+
+		@Column(name = "PHONE")
+		private String phone;
+
+		@Column(name = "FAX")
+		private String fax;
+
+		public Home() {
+
+		}
+
+		public Home(Address address, String phone, String tax) {
+			this.address = address;
+			this.phone = phone;
+			this.fax = tax;
+		}
+
+		public Address getAddress() {
+			return address;
+		}
+
+		public void setAddress(Address address) {
+			this.address = address;
+		}
+
+		public String getPhone() {
+			return phone;
+		}
+
+		public void setPhone(String phone) {
+			this.phone = phone;
+		}
+
+		public String getFax() {
+			return fax;
+		}
+
+		public void setFax(String fax) {
+			this.fax = fax;
+		}
+
 	}
 }
