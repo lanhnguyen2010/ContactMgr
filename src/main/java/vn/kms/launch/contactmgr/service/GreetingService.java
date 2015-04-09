@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+import vn.kms.launch.contactmgr.Constants;
 import vn.kms.launch.contactmgr.domain.greeting.Greeting;
 import vn.kms.launch.contactmgr.domain.greeting.GreetingRepository;
 
@@ -11,6 +12,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+
+import static vn.kms.launch.contactmgr.Constants.SYSTEM_USER;
 
 /**
  * Created by trungnguyen on 4/8/15.
@@ -27,11 +30,11 @@ public class GreetingService {
         if (greeting == null) {
             greeting = new Greeting(code, message);
             greeting.setCreatedAt(new Date());
-            greeting.setCreatedBy("system");
+            greeting.setCreatedBy(SYSTEM_USER);
         } else {
             greeting.setMessage(message);
             greeting.setUpdatedAt(new Date());
-            greeting.setUpdatedBy("system");
+            greeting.setUpdatedBy(SYSTEM_USER);
         }
 
         greetingRepo.save(greeting);
