@@ -1,6 +1,17 @@
 {
     "contact": {
-        "title": "Error page!",
-        "403": "You are not authorized to access the page."
+    	"button": {
+    		"add-contact": "Add Contact",
+    		"search": "Search",
+    		"delete": "Delete"
+    	},
+    	"contact-field": {
+    		"name": "Name",
+    		"mobile": "Mobile",
+    		"email": "E-mail",
+    		"job-title": "Job Title",
+    		"department": "Department",
+    		"company": "Company"
+    	}
     }
 }

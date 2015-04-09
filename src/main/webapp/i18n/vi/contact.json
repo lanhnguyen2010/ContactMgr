@@ -1,6 +1,17 @@
 {
     "contact": {
-        "title": "Trang bị lỗi!",
-        "403": "Bạn không được phép truy xuất trang này!"
+    	"button": {
+    		"add-contact": "Thêm mới",
+    		"search": "Tìm Kiếm",
+    		"delete": "Xóa"
+    	},
+    	"contact-field": {
+    		"name": "Tên",
+    		"mobile": "Điện thoại",
+    		"email": "E-mail",
+    		"job-title": "Chức vụ",
+    		"department": "Bộ phận",
+    		"company": "Tên công ty"
+    	}
     }
 }
