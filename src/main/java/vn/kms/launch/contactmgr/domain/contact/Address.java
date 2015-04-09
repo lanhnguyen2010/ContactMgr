@@ -1,12 +1,9 @@
 package vn.kms.launch.contactmgr.domain.contact;
 
-import javax.persistence.Access;
-import javax.persistence.AccessType;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @Embeddable
-@Access(AccessType.PROPERTY)
 public class Address {
 
 	@Column(name = "STREET")

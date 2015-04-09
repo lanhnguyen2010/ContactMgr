@@ -3,20 +3,15 @@ package vn.kms.launch.contactmgr.domain.contact;
 import java.util.Date;
 
 import javax.persistence.Column;
-import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "CONTACT")
-public class Contact {
-	@Id
-	@Column(name = "ID")
-	private int id;
+public class Contact extends vn.kms.launch.contactmgr.domain.Entity {
+	private static final long serialVersionUID = 1L;
+	
 	@Column(name = "FIRST_NAME")
 	private String firstName;
 	@Column(name = "MIDDLE_NAME")
@@ -42,14 +37,6 @@ public class Contact {
 
 	@Embedded
 	private Work work;
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
 
 	public String getFirstName() {
 		return firstName;
@@ -130,8 +117,4 @@ public class Contact {
 	public void setWork(Work work) {
 		this.work = work;
 	}
-
-	
-
-	
 }
