@@ -199,5 +199,7 @@ angular.module('contactmgrApp')
             }
             
     	},true);
+    	
+    	$scope.namecompany = 'KMS Technology';
     });
 
