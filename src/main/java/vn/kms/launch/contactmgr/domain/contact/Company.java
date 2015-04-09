@@ -4,7 +4,6 @@ import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.Table;
 
 @Entity
@@ -13,16 +12,16 @@ public class Company {
 	@Id
 	@Column(name = "ID")
 	private int id;
-	
+
 	@Column(name = "CODE")
 	private String code;
-	
+
 	@Column(name = "NAME")
 	private String name;
-	
+
 	@Column(name = "WEBSITE")
 	private String website;
-	
+
 	@Column(name = "LOGO")
 	private String logo;
 	@Column(name = "MESSAGE")
@@ -30,7 +29,7 @@ public class Company {
 
 	@Column(name = "PHONE")
 	private String phone;
-	
+
 	@Column(name = "FAX")
 	private String fax;
 
