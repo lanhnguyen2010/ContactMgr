@@ -1,59 +1,77 @@
-
 <div ng-cloak>
 	<a href="#contact/new" class="btn btn-default" translate="contact.button.add-contact">Add Contact</a>
 	
 	<hr>
 	
-	<form class="form-horizontal" role="form" ng-submit="searchContacts(0)">
+		<form name="contact_form" novalidate class="form-horizontal" role="form" ng-submit="searchContacts()">
 		<div class="container">
 			<div class="row">
-				<div class="form-group col-sm-6">
-					<label for="name" class="control-label col-sm-2" translate="contact.contact-field.name">Name</label>
-					<div class="col-sm-10">
-						<input type="text" class="form-control" id="name">
+				<div class="form-group col-sm-6">	
+					<label for="name" class="control-label col-sm-3" translate="contact.contact-field.name">Name</label>
+					<div class="col-sm-9">
+						<input type="text" name="name" class="form-control" ng-model="filter.name" ng-pattern = "/[a-zA-Z0-9]/">
+						<div style="color:red" ng-show="contact_form.name.$dirty && contact_form.name.$invalid">
+					 		<small ng-show="contact_form.name.$error.pattern" class="">Invalid Input.</small>
+					 	</div>
 					</div>
+					
 				</div>
 				<div class="form-group col-sm-6">
-					<label for="jobtitle" class="control-label col-sm-2" translate="contact.contact-field.job-title">Job Title</label>
-					<div class="col-sm-10">
-						<input type="text" class="form-control" id="jobtitle">
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="form-group col-sm-6">
-					<label for="mobile" class="control-label col-sm-2" translate="contact.contact-field.mobile">Mobile</label>
-					<div class="col-sm-10">
-						<input type="text" class="form-control" id="mobile">
-					</div>
-				</div>
-				<div class="form-group col-sm-6">
-					<label for="department" class="control-label col-sm-2" translate="contact.contact-field.department">Department</label>
-					<div class="col-sm-10">
-						<input type="text" class="form-control" id="department">
+					<label for="jobtitle" class="control-label col-sm-3" translate="contact.contact-field.job-title">Job Title</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" name="jobtitle" ng-model="filter.jobtitle" ng-minlength = 5 ng-pattern = "/[a-zA-Z0-9]/">
+						<small class="error" ng-show="contact_form.jobtitle.$error.minlength">Your name is required to be at least 5 characters
+						</small>
 					</div>
 				</div>
 			</div>
 			<div class="row">
 				<div class="form-group col-sm-6">
-					<label for="email" class="control-label col-sm-2" translate="contact.contact-field.email">Email</label>
-					<div class="col-sm-10">
-						<input type="email" class="form-control" id="email">
+					<label for="mobile" class="control-label col-sm-3" translate="contact.contact-field.mobile">Mobile</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" name="mobile" ng-model="filter.mobile" ng-pattern ="/[0-9]/" ng-maxlength = 11>		
+						<div style="color:red" ng-show="contact_form.mobile.$dirty && contact_form.mobile.$invalid">
+						 	<small ng-show="contact_form.mobile.$error.pattern">Invalid Mobile</small>
+						 	<small ng-show="contact_form.mobile.$error.maxlength">Max length is 11</small>
+						 </div>
 					</div>
 				</div>
 				<div class="form-group col-sm-6">
-					<label for="company" class="control-label col-sm-2" translate="contact.contact-field.company">Company</label>
-					<div class="col-sm-10">
-						<select class="form-control">
-							<option value="KMS">KMS Company</option>
-							<option value="KMS">KMS Company1</option>
-							<option value="KMS">KMS Company2</option>
-						</select>
+					<label for="department" class="control-label col-sm-3" translate="contact.contact-field.department">Department</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" name="department" ng-model="filter.department" ng-pattern ="/[a-zA-Z0-9]/">		
+
+						<div style="color:red" ng-show="contact_form.department.$dirty && contact_form.department.$invalid">
+					 	<small ng-show="contact_form.department.$error.pattern">Invalid Mobile</small>
+					 </div>
+					</div>
+					
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="form-group col-sm-6">
+					<label for="email" class="control-label col-sm-3" translate="contact.contact-field.email">Email</label>
+					<div class="col-sm-9">
+						<input type="email" class="form-control" name="email" ng-model="filter.email" >	
+						<div style="color:red" ng-show="contact_form.email.$dirty && contact_form.email.$invalid">
+					 		<small ng-show="contact_form.email.$error.email">Email is not valid</small>	
+					 	</div>
+					</div>
+				</div>
+				<div class="form-group col-sm-6">
+					<label for="company" class="control-label col-sm-3" translate="contact.contact-field.company">Company</label>
+					<div class="col-sm-9">
+							<select class="form-control"> 
+								<option value="KMS"> KMS Company</option>
+								<option value="KMS"> KMS Company1</option>
+								<option value="KMS"> KMS Company2</option>
+							</select>
 					</div>
 				</div>
 			</div>
 			<div class="form-group">
-				<button type="submit" class="btn btn-default search-contact-button" translate="contact.button.search">Search</button>
+				<button type="submit" class="btn btn-default search-contact-button" ng-click="searchContacts(0)">Search</button>			
 			</div>
 
 		</div>
