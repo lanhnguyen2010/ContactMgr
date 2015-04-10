@@ -12,7 +12,7 @@ angular.module('contactmgrApp')
     		company: 'KMS Technology'
     	}, {
     		id: 2,
-    		name: 'Nguyen Van A',
+    		name: 'Tran Van B',
     		mobile: '0935738212',
     		email: 'a@gmail.com',
     		jobTitle: 'Software Engineer',
@@ -20,7 +20,7 @@ angular.module('contactmgrApp')
     		company: 'KMS Technology'
     	}, {
     		id: 3,
-    		name: 'Nguyen Van A',
+    		name: 'Le Thi Hong Van',
     		mobile: '0935738212',
     		email: 'a@gmail.com',
     		jobTitle: 'Software Engineer',
@@ -96,6 +96,7 @@ angular.module('contactmgrApp')
     		page: 1, // Show the first page
     		count: 10 // Count per page
     	}, {
+    		counts: [],
     		total: data.length, // Length of data
     		getData: function($defer, params) {
     			$defer.resolve($scope.contacts = data.slice((params.page() - 1) * params.count(), params.page() * params.count()));

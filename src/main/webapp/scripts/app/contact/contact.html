@@ -64,15 +64,20 @@
 	<div>
 		<div>Search Results</div>
 
-		<button class="btn btn-default pull-right" translate="contact.button.delete">Delete</button>
+		<button class="btn btn-default pull-right delete-contact-button" translate="contact.button.delete">Delete</button>
 		<table ng-table="contactsTableParams" class="table">
+			<th></th>
+			<th class="data-table-title" translate="contact.contact-field.name">Name</th>
+			<th class="data-table-title" translate="contact.contact-field.email">E-mail</th>
+			<th class="data-table-title" translate="contact.contact-field.job-title">Job Title</th>
+			<th class="data-table-title" translate="contact.contact-field.department">Department</th>
+			<th class="data-table-title" translate="contact.contact-field.company">Company</th>
 			<tr ng-repeat="user in $data">
 				<td width="30" style="text-align: left" header="'ng-table/headers/checkbox.html'">
 					<input type="checkbox" ng-model="checkboxes.items[user.id]" />
 				</td>
 				<td data-title="'Name'">{{user.name}}</td>
 				<td data-title="'Mobile'">{{user.email}}</td>
-				<td data-title="'Email'">{{user.email}}</td>
 				<td data-title="'Job Title'">{{user.jobTitle}}</td>
 				<td data-title="'Department'">{{user.department}}</td>
 				<td data-title="'Company'"><a href="">{{user.company}}</a></td>

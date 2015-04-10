@@ -71,3 +71,11 @@ Hide ng-cloak on page load, https://docs.angularjs.org/api/ng/directive/ngCloak
 	display: block;
 	margin: auto;
 }
+
+.delete-contact-button {
+	margin-bottom: 10px;
+}
+
+.data-table-title {
+	text-align: left !important;
+}
