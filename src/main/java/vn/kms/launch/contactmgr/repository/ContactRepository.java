@@ -18,9 +18,9 @@ public interface ContactRepository extends JpaRepository<Contact, Integer> {
             + "and lower(c.email) like :email% "
             + "and lower(c.work.title) like :jobTitle% "
             + "and lower(c.work.department) like :department% "
-            + "or lower(c.work.company.name) like :company% "
+            + "and lower(c.work.company.name) like :company% "
             + "order by c.firstName")
     List<Contact> searchContacts(@Param("name") String name, @Param("mobile") String mobile, @Param("email") String email,
                                 @Param("jobTitle") String jobTitle, @Param("department") String department,
-                                @Param("company") String company,Pageable pageable);
+                                @Param("company") String company);
 }

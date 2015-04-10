@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import vn.kms.launch.contactmgr.domain.contact.Contact;
 import vn.kms.launch.contactmgr.repository.ContactRepository;
@@ -28,6 +31,7 @@ public class ContactService {
 		return contactRepo.findOne(id);
 	}
 	
+	
     public HashMap<String, Object> searchContacts(String data) throws JSONException{
     	
         JSONObject jOb = new JSONObject(data);
@@ -35,7 +39,6 @@ public class ContactService {
         JSONObject jObContact = (JSONObject) jOb.get("contact");
         
         String name = jObContact.getString("name");
-        System.out.println("name :" + name);
         
         String mobile = jObContact.getString("mobile");
         
@@ -52,6 +55,13 @@ public class ContactService {
         int pageSize = jOb.getInt("pagesize");
         
         List<Contact> contacts = contactRepo.searchContacts(name, mobile, email, jobTitle, department, company);
+        
+        if(page*pageSize > contacts.size()){
+            page = contacts.size()/pageSize;
+        }
+        if(page<0){
+            page = 0;
+        }
         
         List<Contact> resultContacts = new ArrayList<Contact>(contacts.subList(page*pageSize, (page + 1) * pageSize));
         JSONObject result = new JSONObject();
