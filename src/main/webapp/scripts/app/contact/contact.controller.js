@@ -132,8 +132,8 @@ angular.module('contactmgrApp')
     		count: PAGE_SIZE // Count per page
     	}, {
     		counts: [],
-    		total: dummyData.length, // For dummy data
-    		//total: $scope.total, // For real data
+    		//total: dummyData.length, // For dummy data
+    		total: $scope.total, // For real data
     		getData: function ($defer, params) {
     			$scope.currentPage = params.page();
     			$defer.resolve($scope.contacts); // For real data
