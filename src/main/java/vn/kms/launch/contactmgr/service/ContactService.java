@@ -4,15 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import vn.kms.launch.contactmgr.domain.contact.Contact;
 import vn.kms.launch.contactmgr.repository.ContactRepository;
@@ -32,7 +29,7 @@ public class ContactService {
 	}
 	
 	
-    public HashMap<String, Object> searchContacts(String data) throws JSONException{
+    public HashMap<String, Object> searchContacts(String data) throws JSONException {
     	
         JSONObject jOb = new JSONObject(data);
         
@@ -70,6 +67,18 @@ public class ContactService {
         obContact.put("contact",resultContacts);
         obContact.put("total",contacts.size());
         return obContact;
-        
+
 	};
+	
+	/**
+	 * Service form function delete
+	 * @param ids
+	 * @return total contact are deleted
+	 */
+	@Transactional
+	public int deleteContacts(Integer... ids) {
+		return contactRepo.deleteContacts(ids);
+	}
+	
+	
 }
