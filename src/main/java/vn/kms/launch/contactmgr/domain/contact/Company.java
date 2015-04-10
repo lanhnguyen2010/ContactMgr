@@ -96,5 +96,4 @@ public class Company extends vn.kms.launch.contactmgr.domain.Entity{
 	public void setName(String name) {
 		this.name = name;
 	}
-
 }
