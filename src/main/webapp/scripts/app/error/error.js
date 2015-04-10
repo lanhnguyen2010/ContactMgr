@@ -17,7 +17,7 @@ angular.module('contactmgrApp')
                 },
                 resolve: {
                     mainTranslatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
-                        $translatePartialLoader.addPart('error');
+                        $translatePartialLoader.addPart('errors');
                         return $translate.refresh();
                     }]
                 }
@@ -35,7 +35,7 @@ angular.module('contactmgrApp')
                 },
                 resolve: {
                     mainTranslatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
-                        $translatePartialLoader.addPart('error');
+                        $translatePartialLoader.addPart('errors');
                         return $translate.refresh();
                     }]
                 }

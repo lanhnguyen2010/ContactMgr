@@ -1,0 +1,17 @@
+{
+    "contact": {
+    	"button": {
+    		"add-contact": "Thêm mới",
+    		"search": "Tìm Kiếm",
+    		"delete": "Xóa"
+    	},
+    	"contact-field": {
+    		"name": "Tên nhân viên",
+    		"mobile": "Điện thoại",
+    		"email": "E-mail",
+    		"job-title": "Chức vụ",
+    		"department": "Bộ phận",
+    		"company": "Tên công ty"
+    	}
+    }
+}
