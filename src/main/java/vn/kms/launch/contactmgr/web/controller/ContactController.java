@@ -3,7 +3,10 @@ package vn.kms.launch.contactmgr.web.controller;
 import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
+import javax.websocket.server.PathParam;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -45,11 +48,13 @@ public class ContactController {
 	 * Return 404 not found code if not contact associated to ID is not found
 	 * Return 200 success code if deleted successfully
 	 */
-	@RequestMapping(value = "/delete", method = DELETE)
+	@RequestMapping(value = "/delete/{id}", method = DELETE)
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public ResponseEntity<Void> delete(@RequestParam int id) {
-
+	public ResponseEntity<Void> delete(@PathVariable int id) {
+		
 		int deleteId = contactService.deleteContacts(id);
+		//receive  id with method deleteContact() from UI
+		
 		if (deleteId == 0) {
 			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
 		}
@@ -64,7 +69,7 @@ public class ContactController {
 	 * Return 404 not found code if not contact associated to ID is not found
 	 * Return 200 success code if deleted successfully
 	 */
-	@RequestMapping(value = "/deletes", method = DELETE)
+	@RequestMapping(value = "/delete", method = DELETE)
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public ResponseEntity<Integer> deletes(@RequestParam Integer... ids) {
 
