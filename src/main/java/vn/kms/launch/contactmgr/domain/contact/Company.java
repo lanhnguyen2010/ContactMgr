@@ -3,7 +3,6 @@ package vn.kms.launch.contactmgr.domain.contact;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity

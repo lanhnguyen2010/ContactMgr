@@ -13,6 +13,9 @@ public class Work {
 	@Column(name = "DEPARTMENT")
 	private String department;
 
+	@Column(name = "COMPANY_ID", insertable = false, updatable = false)
+	private Integer companyId;
+	
 	@ManyToOne
 	@JoinColumn(name = "COMPANY_ID")
 	private Company company;
@@ -41,6 +44,14 @@ public class Work {
 
 	public void setDepartment(String department) {
 		this.department = department;
+	}
+
+	public Integer getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(Integer companyId) {
+		this.companyId = companyId;
 	}
 
 	public Company getCompany() {

@@ -45,5 +45,4 @@ public class Home {
 	public void setFax(String fax) {
 		this.fax = fax;
 	}
-
 }

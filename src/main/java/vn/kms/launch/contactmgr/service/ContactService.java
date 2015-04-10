@@ -14,6 +14,11 @@ public class ContactService {
 	private ContactRepository contactRepo;
 
 	@Transactional
+	/**
+	 * Get a contact by id
+	 * @param id is ID of the contact we will get.
+	 * @return a contact if found and null if not found.
+	 */
 	public Contact getContact(int id) {
 		return contactRepo.findOne(id);
 	}

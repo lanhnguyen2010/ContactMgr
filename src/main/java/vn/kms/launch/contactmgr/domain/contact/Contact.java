@@ -17,7 +17,7 @@ public class Contact extends vn.kms.launch.contactmgr.domain.Entity {
 	@Column(name = "MIDDLE_NAME")
 	private String middleName;
 	@Column(name = "LAST_NAME")
-	private String lastname;
+	private String lastName;
 	@Column(name = "EMAIL")
 	private String email;
 
@@ -54,12 +54,12 @@ public class Contact extends vn.kms.launch.contactmgr.domain.Entity {
 		this.middleName = middleName;
 	}
 
-	public String getLastname() {
-		return lastname;
+	public String getLastName() {
+		return lastName;
 	}
 
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
+	public void setLastName(String lastname) {
+		this.lastName = lastname;
 	}
 
 	public String getEmail() {
