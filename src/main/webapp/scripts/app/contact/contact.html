@@ -1,9 +1,9 @@
 
 <div ng-cloak>
-     <!--  <div class="row" >
+	<!--  <div class="row" >
         <h1>For searching and showing result!</h1>
     </div> -->
-     <a href="#"class="btn btn-primary">Add Contact</a>
+	<a href="#" class="btn btn-primary">Add Contact</a>
 	<hr>
 	<form class="form-horizontal" role="form" ng-submit="searchContacts(0)">
 		<div class="container">
@@ -11,13 +11,14 @@
 				<div class="form-group col-sm-6">
 					<label for="name" class="control-label col-sm-2">Name</label>
 					<div class="col-sm-10">
-						<input type="text" class="form-control" id="name">		
+						<input type="text" class="form-control" id="name">
 					</div>
 				</div>
 				<div class="form-group col-sm-6">
-					<label for="jobtitle" class="control-label col-sm-2">Job Title</label>
+					<label for="jobtitle" class="control-label col-sm-2">Job
+						Title</label>
 					<div class="col-sm-10">
-						<input type="text" class="form-control" id="jobtitle">		
+						<input type="text" class="form-control" id="jobtitle">
 					</div>
 				</div>
 			</div>
@@ -25,38 +26,38 @@
 				<div class="form-group col-sm-6">
 					<label for="mobile" class="control-label col-sm-2">Mobile</label>
 					<div class="col-sm-10">
-						<input type="text" class="form-control" id="mobile">		
+						<input type="text" class="form-control" id="mobile">
 					</div>
 				</div>
 				<div class="form-group col-sm-6">
 					<label for="department" class="control-label col-sm-2">Department</label>
 					<div class="col-sm-10">
-						<input type="text" class="form-control" id="department">		
+						<input type="text" class="form-control" id="department">
 					</div>
 				</div>
 			</div>
-			
+
 			<div class="row">
 				<div class="form-group col-sm-6">
 					<label for="email" class="control-label col-sm-2">Email</label>
 					<div class="col-sm-10">
-						<input type="email" class="form-control" id="email">		
+						<input type="email" class="form-control" id="email">
 					</div>
 				</div>
 				<div class="form-group col-sm-6">
 					<label for="company" class="control-label col-sm-2">Company</label>
 					<div class="col-sm-10">
-							<select class="form-control"> 
-								<option value="KMS"> KMS Company</option>
-								<option value="KMS"> KMS Company1</option>
-								<option value="KMS"> KMS Company2</option>
-							</select>
+						<select class="form-control">
+							<option value="KMS">KMS Company</option>
+							<option value="KMS">KMS Company1</option>
+							<option value="KMS">KMS Company2</option>
+						</select>
 					</div>
 				</div>
 			</div>
 			<div class="form-group">
 				<div class="col-sm-offset-6">
-						<button type="submit" class="btn btn-info" >Search</button>			
+					<button type="submit" class="btn btn-info">Search</button>
 				</div>
 			</div>
 
@@ -64,80 +65,70 @@
 	</form>
 	<hr>
 	<div>
-		<span class="pull-left">Search Results</span>
-		<a href="#" class="btn btn-primary pull-right">Delete</a> <br>
+		<span class="pull-left">Search Results</span> <a href="#"
+			class="btn btn-primary pull-right">Delete</a> <br>
 	</div>
 	<br>
-	
+
 	<!-- Component Select marked or select all -->
-    <div class = "row">
-	
-		 <table ng-table="tableParams" class="table">
-	        <tr ng-repeat="contact in $data">
-	            <td width="30" style="text-align: left" header="'ng-table/headers/checkbox.html'">
-	                <input type="checkbox" ng-model="checkboxes.items[contact.id]" />
-	            </td>
-	            <td data-title="'Name'">
-	                {{contact.name}}
-	            </td>
-	            <td data-title="'Mobile'">
-	                {{contact.mobile}}
-	            </td>
-	            <td data-title="'E-mail'">
-	                {{contact.email}}
-	            </td>
-	            <td data-title="'Job title'">
-	                {{contact.jobtitle}}
-	            </td>
-	            <td data-title="'Department'">
-	                {{contact.department}}
-	            </td>
-	            <td data-title="'Company'">
-	               <a href="" data-toggle="modal" data-target="#myModal">{{contact.company}}</a>
-	            </td>
-	        </tr>
-	    </table>
-	    
-	<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="vertical-alignment-helper">
-        <div class="modal-dialog vertical-align-center">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">
-                    <span aria-hidden="true">&times;
-                    </span>
-                    <span class="sr-only">Close</span>
+	<div class="row">
 
-                    </button>
-                     <h4 class="modal-title" id="myModalLabel">Company Info</h4>
+		<table ng-table="tableParams" class="table">
+			<tr ng-repeat="contact in $data">
+				<td width="30" style="text-align: left"
+					header="'ng-table/headers/checkbox.html'"><input
+					type="checkbox" ng-model="checkboxes.items[contact.id]" /></td>
+				<td data-title="'Name'">{{contact.name}}</td>
+				<td data-title="'Mobile'">{{contact.mobile}}</td>
+				<td data-title="'E-mail'">{{contact.email}}</td>
+				<td data-title="'Job title'">{{contact.jobtitle}}</td>
+				<td data-title="'Department'">{{contact.department}}</td>
+				<td data-title="'Company'"><a href="" data-toggle="modal"
+					data-target="#myModal">{{contact.company}}</a></td>
+			</tr>
+		</table>
 
-                </div>
-                <div class="modal-body">
-                
-			          <div class="container-fluid">
-			          	<div class="row">
-			          		<div class="col-md-6">
-			          			cot 1
-			          		</div>
-			          		<div class="col-md-6">
-			          			cot 2
-			          		</div>
-			          	</div>				           
-			         </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>                   
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+		<!-- Modal -->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="vertical-alignment-helper">
+				<div class="modal-dialog vertical-align-center">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">
+								<span aria-hidden="true">&times; </span> <span class="sr-only">Close</span>
+							</button>
+							<h3 class="modal-title" id="myModalLabel" style="color:white">Company Information</h3>
+						</div>
+						<div class="modal-body">
 
-	  	 <script type="text/ng-template" id="ng-table/headers/checkbox.html">
+							<div class="container-fluid">
+								<div class="row">
+									<div class="col-md-6">
+										Name: {{company_name}} </br> Logo </br> </br> Message: {{company_message}} </br>
+										Website: <a href="">{{company_website}}</a> </br> Phone: </br> Fax: </br>
+
+									</div>
+									<div class="col-md-6">
+										</br> Addr. line 1: </br> Addr. line 2: </br> City: </br> State: </br> Zip Code: </br>
+										Country: </br>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-primary"
+								data-dismiss="modal">Close</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script type="text/ng-template" id="ng-table/headers/checkbox.html">
       	 <input type="checkbox" ng-model="checkboxes.checked" id="select_all" name="filter-checkbox" value="" />
    		</script>
-   	</div>
+	</div>
 </div>
 
 

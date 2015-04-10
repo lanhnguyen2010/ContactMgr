@@ -81,9 +81,13 @@ Hide ng-cloak on page load, https://docs.angularjs.org/api/ng/directive/ngCloak
 }
 .modal-content {
     /* Bootstrap sets the size of the modal in the modal-dialog class, we need to inherit it */
-    width:inherit;
+    width:700px;
     height:inherit;
     /* To center horizontally */
     margin: 0 auto;
     pointer-events: all;
+}
+.modal-header {
+  background-color: #0480be;
+  font-coler: #0000CD;
 }
