@@ -54,8 +54,8 @@ Hide ng-cloak on page load, https://docs.angularjs.org/api/ng/directive/ngCloak
 
 .banner {
     display: inline-block;
-    width: 512px;
-    height: 512px;
+    width: 256px;
+    height: 256px;
     background: url("../images/banner.png") no-repeat center top;
     background-size: contain;
 }

@@ -1,16 +1,16 @@
 package vn.kms.launch.contactmgr.domain.contact;
 
-import javax.persistence.Access;
-import javax.persistence.AccessType;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @Embeddable
-@Access(AccessType.PROPERTY)
 public class Address {
 
-	@Column(name = "STREET")
-	private String street;
+	@Column(name = "ADDR_LINE1")
+	private String addrLine1;
+	
+	@Column(name = "ADDR_LINE2")
+	private String addrLine2;
 
 	@Column(name = "CITY")
 	private String city;
@@ -19,17 +19,25 @@ public class Address {
 	private String state;
 
 	@Column(name = "POSTAL_CODE")
-	private int postalCode;
+	private Integer postalCode;
 
 	@Column(name = "COUNTRY")
 	private String country;
 
-	public String getStreet() {
-		return street;
+	public String getAddrLine1() {
+		return addrLine1;
 	}
 
-	public void setStreet(String street) {
-		this.street = street;
+	public void setAddrLine1(String addrLine1) {
+		this.addrLine1 = addrLine1;
+	}
+
+	public String getAddrLine2() {
+		return addrLine2;
+	}
+
+	public void setAddrLine2(String addrLine2) {
+		this.addrLine2 = addrLine2;
 	}
 
 	public String getCity() {
@@ -48,11 +56,11 @@ public class Address {
 		this.state = state;
 	}
 
-	public int getPostalCode() {
+	public Integer getPostalCode() {
 		return postalCode;
 	}
 
-	public void setPostalCode(int postalCode) {
+	public void setPostalCode(Integer postalCode) {
 		this.postalCode = postalCode;
 	}
 

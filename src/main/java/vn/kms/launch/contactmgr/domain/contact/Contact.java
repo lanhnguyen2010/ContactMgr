@@ -3,26 +3,21 @@ package vn.kms.launch.contactmgr.domain.contact;
 import java.util.Date;
 
 import javax.persistence.Column;
-import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "CONTACT")
-public class Contact {
-	@Id
-	@Column(name = "ID")
-	private int id;
+public class Contact extends vn.kms.launch.contactmgr.domain.Entity {
+	private static final long serialVersionUID = 1L;
+
 	@Column(name = "FIRST_NAME")
 	private String firstName;
 	@Column(name = "MIDDLE_NAME")
 	private String middleName;
 	@Column(name = "LAST_NAME")
-	private String lastname;
+	private String lastName;
 	@Column(name = "EMAIL")
 	private String email;
 
@@ -43,14 +38,6 @@ public class Contact {
 	@Embedded
 	private Work work;
 
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
 	public String getFirstName() {
 		return firstName;
 	}
@@ -67,12 +54,12 @@ public class Contact {
 		this.middleName = middleName;
 	}
 
-	public String getLastname() {
-		return lastname;
+	public String getLastName() {
+		return lastName;
 	}
 
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
+	public void setLastName(String lastname) {
+		this.lastName = lastname;
 	}
 
 	public String getEmail() {
@@ -129,98 +116,5 @@ public class Contact {
 
 	public void setWork(Work work) {
 		this.work = work;
-	}
-
-	@Embeddable
-	public class Work {
-		@Column(name = "TITLE")
-		private String title;
-
-		@Column(name = "DEPARTMENT")
-		private String department;
-
-		@ManyToOne
-		@JoinColumn(name = "COMPANY_ID")
-		private Company company;
-
-		public Work() {
-
-		}
-
-		public Work(String title, String department, Company company) {
-			this.title = title;
-			this.department = department;
-			this.company = company;
-		}
-
-		public String getTitle() {
-			return title;
-		}
-
-		public void setTitle(String title) {
-			this.title = title;
-		}
-
-		public String getDepartment() {
-			return department;
-		}
-
-		public void setDepartment(String department) {
-			this.department = department;
-		}
-
-		public Company getCompany() {
-			return company;
-		}
-
-		public void setCompany(Company company) {
-			this.company = company;
-		}
-	}
-
-	@Embeddable
-	public class Home {
-		private Address address;
-
-		@Column(name = "PHONE")
-		private String phone;
-
-		@Column(name = "FAX")
-		private String fax;
-
-		public Home() {
-
-		}
-
-		public Home(Address address, String phone, String tax) {
-			this.address = address;
-			this.phone = phone;
-			this.fax = tax;
-		}
-
-		public Address getAddress() {
-			return address;
-		}
-
-		public void setAddress(Address address) {
-			this.address = address;
-		}
-
-		public String getPhone() {
-			return phone;
-		}
-
-		public void setPhone(String phone) {
-			this.phone = phone;
-		}
-
-		public String getFax() {
-			return fax;
-		}
-
-		public void setFax(String fax) {
-			this.fax = fax;
-		}
-
 	}
 }

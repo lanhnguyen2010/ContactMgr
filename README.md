@@ -14,24 +14,29 @@ maven -version
 or [TortoiseGit] if you are starting with Git.
 4. Install Node.js from the [Node.js] website. This will also install npm, which is 
 the node package manager we are using in the next commands.
-5. Install [Bower]
-```
-npm install -g bower
-```
-6. Install [Grunt Client]
+5. Install [Grunt Client]
 ```
 npm install -g grunt-cli
+```
+6. Install [Bower]
+```
+npm install -g bower
 ```
 7. Install [MySQL database]
 
 ## Building ContactMgr
 1. Clone contactmgr source code from [Assembla Git repo]:
 ```
-git clone git@git.assembla.com:launch-contact-manager.git
+git clone https://git.assembla.com/launch-contact-manager.git
 ```
 For more details, you can follow up the [Assembla - Getting started with Git]
 
 2. Go to the project source code directory and do below commands:
+- Resolve all dependencies for Grunt build
+```
+npm install
+```
+
 - Resolve all dependencies for AngualarJS
 ```
 bower install
@@ -65,7 +70,7 @@ java -jar contactmgr-[version].war --spring.profiles.active=prod
 [git-scm.com]: http://git-scm.com/
 [SourceTree]: http://www.sourcetreeapp.com/
 [TortoiseGit]: https://code.google.com/p/tortoisegit/wiki/Download
-[Note.js]: https://nodejs.org/
+[Node.js]: https://nodejs.org/
 [Bower]: http://bower.io/
 [Grunt Client]: http://gruntjs.com/
 [MySQL database]: http://dev.mysql.com/downloads/
