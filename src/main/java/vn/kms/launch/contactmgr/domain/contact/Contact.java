@@ -26,7 +26,7 @@ public class Contact extends vn.kms.launch.contactmgr.domain.Entity {
 
 	@Column(name = "PHOTO")
 	private String photo;
-	
+
 	@Column(name = "MOBILE")
 	private String mobile;
 
