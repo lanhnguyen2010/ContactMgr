@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 import vn.kms.launch.contactmgr.domain.contact.Contact;
 
 public interface ContactRepository extends JpaRepository<Contact, Integer> {
+	
     @Query("select c from Contact c where lower(c.firstName) like :name% "
             + "or lower(c.middleName) like :name% "
             + "or lower(c.lastName) like :name% "
