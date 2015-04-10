@@ -3,15 +3,12 @@ package vn.kms.launch.contactmgr.domain.contact;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "Company")
-public class Company {
-	@Id
-	@Column(name = "ID")
-	private int id;
+public class Company extends vn.kms.launch.contactmgr.domain.Entity{
+	private static final long serialVersionUID = 1L;
 
 	@Column(name = "CODE")
 	private String code;
@@ -82,14 +79,6 @@ public class Company {
 
 	public void setWebsite(String website) {
 		this.website = website;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public String getCode() {

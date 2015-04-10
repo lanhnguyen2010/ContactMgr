@@ -12,7 +12,7 @@ angular.module('contactmgrApp')
                 views: {
                     'content@': {
                         templateUrl: 'scripts/app/home/home.html',
-                        controller: 'MainController'
+                        controller: 'HomeController'
                     }
                 },
                 resolve: {
