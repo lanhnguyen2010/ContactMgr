@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import vn.kms.launch.contactmgr.domain.contact.Company;
 import vn.kms.launch.contactmgr.domain.contact.Contact;
+import vn.kms.launch.contactmgr.repository.CompanyRepository;
 import vn.kms.launch.contactmgr.repository.ContactRepository;
 
 @Service
@@ -12,6 +14,9 @@ import vn.kms.launch.contactmgr.repository.ContactRepository;
 public class ContactService {
 	@Autowired
 	private ContactRepository contactRepo;
+
+	@Autowired
+	private CompanyRepository companyRepo;
 
 	/**
 	 * Get a contact by id
@@ -38,30 +43,50 @@ public class ContactService {
 
 	@Transactional
 	public int createContact(Contact contact) {
-		if (contact.getId() != null && contact.getId() != 0) {
+		//contact.setId(null);
+		Integer companyId = contact.getWork().getCompanyId();
+		if ( companyId != null && companyId != 0) {
+			// create a new contact with existing company
+			return createContactWithExistCompany(contact);
+		} else {
 			if (contact.getWork().getCompany() == null) {
-				// create a new contact with existing company
-				createContactWithExistCompany(contact);
+				// create a new contact without company
+				return createContactWithoutCompany(contact);
 			} else {
 				// create a new contact with new company
-				createContactWithNewCompany(contact);
+				return createContactWithNewCompany(contact);
 			}
-		} else {
-			// create a new contact without company
-			createContactWithoutCompany(contact);
+		}
+	}
+
+	private int createContactWithNewCompany(Contact contact) {
+		Company newCompany = companyRepo.save(contact.getWork().getCompany());
+		if(newCompany != null){
+			contact.getWork().setCompany(newCompany);
+			contact.getWork().setCompanyId(newCompany.getId());
+			Contact newContact = contactRepo.save(contact);
+			if(newContact != null){
+				return newContact.getId();
+			}
 		}
 		return 0;
 	}
 
-	private void createContactWithNewCompany(Contact contact) {
-		
+	private int createContactWithExistCompany(Contact contact) {
+		Company company = companyRepo.findOne(contact.getWork().getCompanyId());
+		if (company != null) {
+			Contact newContact = contactRepo.save(contact);
+			return newContact.getId();
+		}
+		return 0;
 	}
 
-	private void createContactWithExistCompany(Contact contact) {
-		
-	}
-
-	private void createContactWithoutCompany(Contact contact) {
+	private int createContactWithoutCompany(Contact contact) {
+		Contact newContact = contactRepo.save(contact);
+		if (newContact != null) {
+			return newContact.getId();
+		}
+		return 0;
 
 	}
 
