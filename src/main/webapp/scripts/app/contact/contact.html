@@ -5,7 +5,7 @@
 	<hr>
 
 	<form name="contact_form" novalidate class="form-horizontal"
-		role="form" ng-submit="searchContacts()">
+		role="form" ng-submit="searchContacts(0)">
 		<div class="container">
 			<div class="row">
 				<div class="form-group col-sm-6">
@@ -16,8 +16,7 @@
 							ng-model="filter.name" ng-pattern="/[a-zA-Z0-9]+$/">
 						<div style="color: red"
 							ng-show="contact_form.name.$dirty && contact_form.name.$invalid">
-							<small ng-show="contact_form.name.$error.pattern" class="">Invalid
-								Input.</small>
+							<small ng-show="contact_form.name.$error.pattern" class="">Invalid Input.</small>
 						</div>
 					</div>
 
@@ -27,8 +26,7 @@
 						translate="contact.contact-field.job-title">Job Title</label>
 					<div class="col-sm-9">
 						<input type="text" class="form-control" name="jobtitle"
-							ng-model="filter.jobtitle"
-							ng-pattern="/[a-zA-Z0-9]+$/">
+							ng-model="filter.jobtitle" ng-pattern="/[a-zA-Z0-9]+$/">
 						<div style="color: red"
 							ng-show="contact_form.jobtitle.$dirty && contact_form.jobtitle.$invalid">
 							<small ng-show="contact_form.jobtitle.$error.pattern">
@@ -96,10 +94,8 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<button type="submit" class="btn btn-default search-contact-button"
-					ng-click="searchContacts(0)">Search</button>
+				<button type="submit" class="btn btn-default search-contact-button">Search</button>
 			</div>
-
 		</div>
 	</form>
 
@@ -110,8 +106,9 @@
 
 		<button class="btn btn-default pull-right delete-contact-button"
 			translate="contact.button.delete">Delete</button>
-		<table ng-table="tableParams" class="table">
-			<th></th>
+		<table ng-table="contactsTableParams" class="table">
+			<th><input type="checkbox" ng-model="checkboxes.checked"
+				id="select_all" name="filter-checkbox" value="" /></th>
 			<th class="data-table-title" translate="contact.contact-field.name">Name</th>
 			<th class="data-table-title" translate="contact.contact-field.email">E-mail</th>
 			<th class="data-table-title"
@@ -120,24 +117,19 @@
 				translate="contact.contact-field.department">Department</th>
 			<th class="data-table-title"
 				translate="contact.contact-field.company">Company</th>
-			<tr ng-repeat="contact in $data">
+			<tr ng-repeat="user in $data">
 				<td width="30" style="text-align: left"
 					header="'ng-table/headers/checkbox.html'"><input
-					type="checkbox" ng-model="checkboxes.items[contact.id]" /></td>
-				<td data-title="'Name'">{{contact.name}}</td>
-				<td data-title="'Mobile'">{{contact.email}}</td>
-				<td data-title="'Job Title'">{{contact.jobTitle}}</td>
-				<td data-title="'Department'">{{contact.department}}</td>
+					type="checkbox" ng-model="checkboxes.items[user.id]" /></td>
+				<td data-title="'Name'">{{user.name}}</td>
+				<td data-title="'Mobile'">{{user.email}}</td>
+				<td data-title="'Job Title'">{{user.jobTitle}}</td>
+				<td data-title="'Department'">{{user.department}}</td>
 				<td data-title="'Company'"><a href="" data-toggle="modal"
-					data-target="#myModal">{{contact.company}}</a></td>
+					data-target="#myModal">{{user.company}}</a></td>
 			</tr>
 		</table>
-
-		<script type="text/ng-template" id="ng-table/headers/checkbox.html">
-        	<input type="checkbox" ng-model="checkboxes.checked" id="select_all" name="filter-checkbox" value="" />
-    	</script>
 	</div>
-
 
 	<!-- Modal -->
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
@@ -161,8 +153,3 @@
 		</div>
 	</div>
 </div>
-
-</div>
-
-
-
