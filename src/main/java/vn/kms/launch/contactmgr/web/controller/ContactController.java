@@ -60,28 +60,14 @@ public class ContactController {
      * @return
      */
     @RequestMapping(value = "/{id}", method = PUT)
-    public ResponseEntity<Contact> updateContact(@PathVariable Integer id, @RequestBody @Valid Contact contact) {
-        Work work = contact.getWork();
+    public ResponseEntity<Contact> updateContact(@PathVariable int id, @RequestBody @Valid Contact contact) {
+		Contact returnContact = contactService.saveContact(contact);
+    	
+		if (returnContact == null) { 
+    		return new ResponseEntity<Contact>(returnContact, HttpStatus.BAD_REQUEST);
+    	}
 
-        if (work != null) {
-            Integer companyId = contact.getWork().getCompanyId();
-            System.out.println(companyId);
-            Company company = contact.getWork().getCompany();
-
-            if (companyId != null){
-                Company com = contactService.getCompany(companyId);
-                if (com == null) {
-                    return new ResponseEntity<Contact>(contact, HttpStatus.BAD_REQUEST);
-                }
-            }
-            if (company != null) {
-                contactService.saveCompany(company);
-            }
-        }
-
-        contactService.saveContact(contact);
-
-        return new ResponseEntity<Contact>(contact, HttpStatus.OK);
+        return new ResponseEntity<Contact>(returnContact, HttpStatus.OK);
     }
 
 	/**
@@ -122,13 +108,15 @@ public class ContactController {
 	 * @return
 	 */
 	@RequestMapping(method = POST)
-	public ResponseEntity<Void> create(@RequestBody Contact contact) {
-		int idContact = contactService.createContact(contact);
-		if (idContact <= 0) {
-			return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
-		} else {
-			return new ResponseEntity<Void>(HttpStatus.CREATED);
-		}
+	public ResponseEntity<Contact> create(@RequestBody @Valid Contact contact) {
+		
+		Contact returnContact = contactService.saveContact(contact);
+    	
+		if (returnContact == null) { 
+    		return new ResponseEntity<Contact>(returnContact, HttpStatus.BAD_REQUEST);
+    	}
+
+        return new ResponseEntity<Contact>(returnContact, HttpStatus.OK);
 	}
 	
 }

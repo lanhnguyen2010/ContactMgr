@@ -9,11 +9,14 @@ import javax.validation.Valid;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import vn.kms.launch.contactmgr.domain.contact.Company;
 import vn.kms.launch.contactmgr.domain.contact.Contact;
+import vn.kms.launch.contactmgr.domain.contact.Work;
 import vn.kms.launch.contactmgr.repository.CompanyRepository;
 import vn.kms.launch.contactmgr.repository.ContactRepository;
 
@@ -41,6 +44,23 @@ public class ContactService {
 
         if (contact == null) {
             return null;
+        }
+        
+        Work work = contact.getWork();
+
+        if (work != null) {
+            Integer companyId = contact.getWork().getCompanyId();
+            Company company = contact.getWork().getCompany();
+
+            if (companyId != null) {
+                Company com = getCompany(companyId);
+                if (com == null) {
+                	return null;
+                }
+            }
+            if (company != null) {
+                saveCompany(company);
+            }
         }
 
         return contactRepo.save(contact);
