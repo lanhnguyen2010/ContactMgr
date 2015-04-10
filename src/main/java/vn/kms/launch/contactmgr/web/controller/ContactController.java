@@ -1,13 +1,22 @@
 package vn.kms.launch.contactmgr.web.controller;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
+import java.util.HashMap;
+import java.util.List;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.fasterxml.jackson.databind.util.JSONPObject;
 
 import vn.kms.launch.contactmgr.domain.contact.Contact;
 import vn.kms.launch.contactmgr.service.ContactService;
@@ -32,4 +41,12 @@ public class ContactController {
 		
 		return new ResponseEntity<Contact>(contact, HttpStatus.OK);
 	}
+
+	
+    @RequestMapping(value = "/search", method = POST)
+    public HashMap<String, Object> searchContact(
+        @RequestParam (value = "data", defaultValue = "") String data) throws JSONException {
+        return contactService.searchContacts(data);
+        
+    }
 }
