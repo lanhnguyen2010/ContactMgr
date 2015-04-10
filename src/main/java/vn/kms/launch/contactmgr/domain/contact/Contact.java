@@ -14,15 +14,19 @@ public class Contact extends vn.kms.launch.contactmgr.domain.Entity {
 
 	@Column(name = "FIRST_NAME")
 	private String firstName;
+	
 	@Column(name = "MIDDLE_NAME")
 	private String middleName;
+	
 	@Column(name = "LAST_NAME")
 	private String lastName;
+	
 	@Column(name = "EMAIL")
 	private String email;
 
 	@Column(name = "PHOTO")
 	private String photo;
+	
 	@Column(name = "MOBILE")
 	private String mobile;
 

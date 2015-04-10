@@ -68,10 +68,17 @@ java -jar contactmgr-[version].war --spring.profiles.active=prod
 ## Connect database
 1. Run file contactmgr.sql in src/main/resources to create database
 ```
-2. Config file application-dev.yml or application-prod.yml
-* Change url by your database url
-* change username and password by your mysql usename and password.
-
+2. Configure the database connection. The database connection is configured in the files: application-dev.yml or application-prod.yml
+		db.url=[your database url]
+		db.username=[your username database]
+		db.password=[your username database]
+		db.driver=org.mariadb.jdbc.Driver
+Ex:
+        db.url=jdbc:mysql://localhost:3306/contacts_manager
+        db.username=root
+        db.password=123456
+        db.driver=org.mariadb.jdbc.Driver
+		
 [JDK 1.7]: http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html
 [Maven 3.3.x]: http://maven.apache.org/download.cgi
 [git-scm.com]: http://git-scm.com/
