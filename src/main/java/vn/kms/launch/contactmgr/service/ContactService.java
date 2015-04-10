@@ -15,7 +15,9 @@ public class ContactService {
 
 	/**
 	 * Get a contact by id
-	 * @param id is ID of the contact we will get.
+	 * 
+	 * @param id
+	 *            is ID of the contact we will get.
 	 * @return a contact if found and null if not found.
 	 */
 	@Transactional
@@ -25,12 +27,42 @@ public class ContactService {
 
 	/**
 	 * Service form function delete
+	 * 
 	 * @param ids
 	 * @return
 	 */
 	@Transactional
 	public int deleteContacts(Integer... ids) {
 		return contactRepo.deleteContacts(ids);
+	}
+
+	@Transactional
+	public int createContact(Contact contact) {
+		if (contact.getId() != null && contact.getId() != 0) {
+			if (contact.getWork().getCompany() == null) {
+				// create a new contact with existing company
+				createContactWithExistCompany(contact);
+			} else {
+				// create a new contact with new company
+				createContactWithNewCompany(contact);
+			}
+		} else {
+			// create a new contact without company
+			createContactWithoutCompany(contact);
+		}
+		return 0;
+	}
+
+	private void createContactWithNewCompany(Contact contact) {
+		
+	}
+
+	private void createContactWithExistCompany(Contact contact) {
+		
+	}
+
+	private void createContactWithoutCompany(Contact contact) {
+
 	}
 
 }
