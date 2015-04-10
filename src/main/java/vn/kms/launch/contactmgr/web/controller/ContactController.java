@@ -58,8 +58,12 @@ public class ContactController {
 	 * Return 200 success code if deleted successfully
 	 */
 	@RequestMapping(method = DELETE)
-	public ResponseEntity<Integer> deleteContacts(@RequestParam Integer... contactIds) {
+	public ResponseEntity<Integer> deleteContacts(@RequestParam int... contactIds) {
 
+		if(contactIds.length == 0){
+			return new ResponseEntity<Integer>(HttpStatus.BAD_REQUEST);
+		}
+		
 		int deleteId = contactService.deleteContacts(contactIds);
 		if (deleteId == 0) {
 			return new ResponseEntity<Integer>(HttpStatus.NOT_FOUND);

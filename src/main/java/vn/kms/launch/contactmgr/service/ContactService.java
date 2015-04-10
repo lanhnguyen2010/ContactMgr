@@ -29,7 +29,7 @@ public class ContactService {
 	 * @return total contact are deleted
 	 */
 	@Transactional
-	public int deleteContacts(Integer... ids) {
+	public int deleteContacts(int... ids) {
 		return contactRepo.deleteContacts(ids);
 	}
 
