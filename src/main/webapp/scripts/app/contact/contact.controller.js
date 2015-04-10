@@ -2,7 +2,7 @@
 
 angular.module('contactmgrApp')
     .controller('ContactController', function($scope, $http, ContactService, ngTableParams) {
-    	var data = [{
+    	var dummyData = [{
     		id: 1,
     		name: 'Nguyen Van A',
     		mobile: '0935738212',
@@ -102,86 +102,59 @@ angular.module('contactmgrApp')
     		page:''
     	};
     	
-    	
-    	$scope.total = $scope.contacts.lenth;
-    	
-    	$scope.searchContacts=function(page){
+    	var PAGE_SIZE = 10;
+    	$scope.currentPage = 1;
+    	$scope.total = dummyData.length; // For dummy data
+    	$scope.searchContacts = function () {
     		if($scope.isLoading){
     			return;
     		}
-    		var PAGE_SIZE = 10;
+    		    		
     		$scope.isLoading = true;
-    		$http.post('api/contacts/search', {filter: $scope.filter, page: page, pagesize: PAGE_SIZE})
-    		.success(function(data){
+    		
+    		ContactService.searchContacts($scope.filter, $scope.currentPage, PAGE_SIZE)
+    		.success(function(data, status) {
     			$scope.contacts = [];
     			items = data['contact'];
     			$scope.total = data['total'];
+    			
     			for (var i = 0; i < items.length; i ++) {
     				$scope.contacts.push(items[i]);
     			}
+    			
     			$scope.isLoading = false;
-    		}).
-    		error(function(data, status, headers, config) {
+    		})
+    		.error(function(data, status) {
+    			console.log(status);
     		});
     	}
     	
     	$scope.contactsTableParams = new ngTableParams({
     		page: 1, // Show the first page
-    		count: 10 // Count per page
+    		count: PAGE_SIZE // Count per page
     	}, {
     		counts: [],
-
-//    			SearchContact(params.page());
-    			console.log(params.page());
+    		total: dummyData.length, // For dummy data
+    		//total: $scope.total, // For real data
+    		getData: function ($defer, params) {
+    			$scope.currentPage = params.page();
+    			//$defer.resolve($scope.contacts); // For real data
+    			$defer.resolve($scope.contacts = dummyData.slice((params.page() - 1) * params.count(), params.page() * params.count())); // For dummy data
     		}
     	});
     	
     	// Delete contacts
     	$scope.deleteContacts = function () {
-    		ContactService.deleteContacts($scope.checkedIds)
-    		.success(function (data, status) {
-    			console.log(data, status);
-    		})
-    		.error(function (data, status) {
-    			console.log(data, status);
-    		});
-    	};
-
-    	var inArray = Array.prototype.indexOf 
-    	? function (val, arr) {
-    		return arr.indexOf
-    	} 
-    	: function (val, arr) {
-    		var i = arr.length; 
-
-    		while (i--) {
-    			if (arr[i] === val) {
-    				return i;
-    			}
+    		if (confirm("Do you want to delete?")) {
+	    		ContactService.deleteContacts($scope.checkedIds)
+	    		.success(function (data, status) {
+	    			console.log("Deleted " + data + " contact(s)");
+	    		})
+	    		.error(function (data, status) {
+	    			console.log("Error", status);
+	    		});
     		}
-
-    		return -1;
     	};
-
-    	$scope.names = function(column) {
-            var def = $q.defer(),
-                arr = [],
-                names = [];
-
-            angular.forEach(data, function (item) {
-                if (inArray(item.name, arr) === -1) {
-                    arr.push(item.name);
-                    names.push({
-                        'id': item.name,
-                        'title': item.name
-                    });
-                }
-            });
-
-            def.resolve(names);
-
-            return def;
-        };
 
         $scope.checkboxes = {
     	    'checked': false, 
@@ -228,6 +201,7 @@ angular.module('contactmgrApp')
             	}
             }
             
+            // Remove the final ','
             if ($scope.checkedIds.length > 0) {
             	$scope.checkedIds = $scope.checkedIds.substr(0, $scope.checkedIds.length - 1); 
             }
