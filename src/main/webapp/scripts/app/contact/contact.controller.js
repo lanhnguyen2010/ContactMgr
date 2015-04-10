@@ -122,7 +122,6 @@ angular.module('contactmgrApp')
     			$scope.isLoading = false;
     		}).
     		error(function(data, status, headers, config) {
-    			//
     		});
     	}
     	
@@ -133,7 +132,7 @@ angular.module('contactmgrApp')
     		counts: [],
     		total:$scope.contacts.length,
     		getData: function($defer,params){
-    			SearchContact(params.page());
+//    			SearchContact(params.page());
     			$defer.resolve($scope.contactPage = $scope.contacts.slice( (params.page() - 1) * params.count() , params.page() * params.count()));
     			console.log(params.page());
     		}
