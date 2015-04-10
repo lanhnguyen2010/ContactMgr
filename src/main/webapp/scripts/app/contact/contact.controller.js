@@ -200,6 +200,10 @@ angular.module('contactmgrApp')
             
     	},true);
     	
-    	$scope.namecompany = 'KMS Technology';
+    	$scope.company_name = 'KMS Technology';
+    	$scope.company_message = 'Bright Minds, Brilliant Solutions';
+    	$scope.company_phone = '';
+    	$scope.company_fax = '';
+    	$scope.company_website = 'kms-technology.com';
     });
 
