@@ -2,6 +2,7 @@
 
 angular.module('contactmgrApp')
     .controller('ContactController', function($scope, $http, ngTableParams) {
+    	
     	$scope.contacts = [{
     		id: 1,
     		name: 'Nguyen Van A',
@@ -128,6 +129,7 @@ angular.module('contactmgrApp')
     		page: 1,
     		count: 10
     	},{
+    		counts: [],
     		total:$scope.contacts.length,
     		getData: function($defer,params){
     			$defer.resolve($scope.contactPage = $scope.contacts.slice( (params.page() - 1) * params.count() , params.page() * params.count()));
