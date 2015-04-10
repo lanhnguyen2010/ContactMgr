@@ -86,6 +86,7 @@
 						translate="contact.contact-field.company">Company</label>
 					<div class="col-sm-9">
 						<select class="form-control">
+							<option value=""></option>
 							<option value="KMS">KMS Company</option>
 							<option value="KMS">KMS Company1</option>
 							<option value="KMS">KMS Company2</option>
@@ -94,7 +95,10 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<button type="submit" class="btn btn-default search-contact-button">Search</button>
+				
+				<button type="submit" class="btn btn-default search-contact-button"
+					ng-click="searchContacts(0)" ng-disabled="contact_form.name.$dirty && contact_form.name.$invalid || contact_form.jobtitle.$dirty && contact_form.jobtitle.$invalid
+					|| contact_form.mobile.$dirty && contact_form.mobile.$invalid || contact_form.department.$dirty && contact_form.department.$invalid || contact_form.email.$dirty && contact_form.email.$invalid ">Search</button>
 			</div>
 		</div>
 	</form>
@@ -118,13 +122,6 @@
 			<th class="data-table-title"
 				translate="contact.contact-field.company">Company</th>
 			<tr ng-repeat="user in $data">
-				<td width="30" style="text-align: left"
-					header="'ng-table/headers/checkbox.html'"><input
-					type="checkbox" ng-model="checkboxes.items[user.id]" /></td>
-				<td data-title="'Name'">{{user.name}}</td>
-				<td data-title="'Mobile'">{{user.email}}</td>
-				<td data-title="'Job Title'">{{user.jobTitle}}</td>
-				<td data-title="'Department'">{{user.department}}</td>
 				<td data-title="'Company'"><a href="" data-toggle="modal"
 					data-target="#myModal">{{user.company}}</a></td>
 			</tr>

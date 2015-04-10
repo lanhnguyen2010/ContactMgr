@@ -102,25 +102,27 @@ angular.module('contactmgrApp')
     		page:''
     	};
     	
-    	$scope.searchContacts=function(page){    		
+    	
+    	$scope.total = $scope.contacts.lenth;
+    	
+    	$scope.searchContacts=function(page){
     		if($scope.isLoading){
     			return;
     		}
-    		if(!page){
-    			$scope.contacts = [];
-    			page = 0;
-    		}
-    		var PAGE_SIZE = 100;
-    		$scope.page = page;
+    		var PAGE_SIZE = 10;
     		$scope.isLoading = true;
-    		$http.get('http://localhost:8181/download/1?name=contact.json')
-    		.success(function(items){
-    			$scope.hasMoreContacts=(items.length >= PAGE_SIZE);
+    		$http.post('api/contacts/search', {filter: $scope.filter, page: page, pagesize: PAGE_SIZE})
+    		.success(function(data){
+    			$scope.contacts = [];
+    			items = data['contact'];
+    			$scope.total = data['total'];
     			for (var i = 0; i < items.length; i ++) {
     				$scope.contacts.push(items[i]);
     			}
     			$scope.isLoading = false;
-    		})
+    		}).
+    		error(function(data, status, headers, config) {
+    		});
     	}
     	
     	$scope.contactsTableParams = new ngTableParams({
@@ -128,9 +130,9 @@ angular.module('contactmgrApp')
     		count: 10 // Count per page
     	}, {
     		counts: [],
-    		total: data.length, // Length of data
-    		getData: function($defer, params) {
-    			$defer.resolve($scope.contacts = data.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+
+//    			SearchContact(params.page());
+    			console.log(params.page());
     		}
     	});
     	
