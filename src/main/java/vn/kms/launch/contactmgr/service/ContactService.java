@@ -26,7 +26,7 @@ public class ContactService {
 	/**
 	 * Service form function delete
 	 * @param ids
-	 * @return
+	 * @return total contact are deleted
 	 */
 	@Transactional
 	public int deleteContacts(Integer... ids) {
