@@ -103,27 +103,28 @@ angular.module('contactmgrApp')
     			page:''
     		};
     	
+    	$scope.total = $scope.contacts.lenth;
+    	
     	$scope.searchContacts=function(page){
     		if($scope.isLoading){
     			return;
     		}
-    		if(!page){
-    			$scope.contacts = [];
-    			page = 0;
-    		}
-    		var PAGE_SIZE = 100;
-    		$scope.page = page;
+    		var PAGE_SIZE = 10;
     		$scope.isLoading = true;
-    		$http.get('http://localhost:8181/download/1?name=contact.json')
-    		.success(function(items){
-    			$scope.hasMoreContacts=(items.length >= PAGE_SIZE);
+    		$http.post('api/contacts/search', {filter: $scope.filter, page: page, pagesize: PAGE_SIZE})
+    		.success(function(data){
+    			$scope.contacts = [];
+    			items = data['contact'];
+    			$scope.total = data['total'];
     			for (var i = 0; i < items.length; i ++) {
     				$scope.contacts.push(items[i]);
     			}
     			$scope.isLoading = false;
-    		})
+    		}).
+    		error(function(data, status, headers, config) {
+    			//
+    		});
     	}
-    	
     	
     	$scope.tableParams = new ngTableParams({
     		page: 1,
@@ -132,7 +133,9 @@ angular.module('contactmgrApp')
     		counts: [],
     		total:$scope.contacts.length,
     		getData: function($defer,params){
+    			SearchContact(params.page());
     			$defer.resolve($scope.contactPage = $scope.contacts.slice( (params.page() - 1) * params.count() , params.page() * params.count()));
+    			console.log(params.page());
     		}
     	});
 
@@ -158,7 +161,7 @@ angular.module('contactmgrApp')
     			unchecked += (!$scope.checkboxes.items[item.id]) || 0;
     		});
     		if((unchecked == 0)||(checked == 0)){
-    			$scope.checkboxes.checked=(checked == total);
+    			$scope.checkboxes.checked =(checked == total);
     		}
     		// grayed checkboxes
     		angular.element(document.getElementById("select_all")).prop("indeterminate", (checked != 0 && unchecked != 0));
