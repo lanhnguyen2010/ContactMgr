@@ -16,7 +16,6 @@ public class Home {
 	public Home() {
 
 	}
-
 	public Home(Address address, String phone, String tax) {
 		this.address = address;
 		this.phone = phone;
