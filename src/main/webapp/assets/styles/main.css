@@ -79,20 +79,21 @@ Hide ng-cloak on page load, https://docs.angularjs.org/api/ng/directive/ngCloak
 .data-table-title {
 	text-align: left !important;
 }
-}
 
 .vertical-alignment-helper {
-    display:table;
+    display: table;
     height: 90%;
     width: 100%;
-    pointer-events:none; /* This makes sure that we can still click outside of the modal to close it */
+    pointer-events: none; /* This makes sure that we can still click outside of the modal to close it */
 }
+
 .vertical-align-center {
     /* To center vertically */
-    display: table-cell;
+    /*display: table-cell;*/
     vertical-align: middle;
-    pointer-events:none;
+    pointer-events: none;
 }
+
 .modal-content {
     /* Bootstrap sets the size of the modal in the modal-dialog class, we need to inherit it */
     width:700px;
@@ -101,6 +102,7 @@ Hide ng-cloak on page load, https://docs.angularjs.org/api/ng/directive/ngCloak
     margin: 0 auto;
     pointer-events: all;
 }
+
 .modal-header {
   background-color: #0480be;
   font-coler: #0000CD;

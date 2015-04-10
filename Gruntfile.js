@@ -288,7 +288,9 @@ module.exports = function (grunt) {
                 },
                 constants: {
                     ENV: 'dev',
-                    VERSION: parseVersionFromPomXml()
+                    VERSION: parseVersionFromPomXml(),
+                    MULTI_DELETE_CONTACT_API: '/api/contacts/deletes?ids=',
+                    SEARCH_CONTACT_API: '/api/contacts/search'
                 }
             },
             prod: {
@@ -297,7 +299,9 @@ module.exports = function (grunt) {
                 },
                 constants: {
                     ENV: 'prod',
-                    VERSION: parseVersionFromPomXml()
+                    VERSION: parseVersionFromPomXml(),
+                    MULTI_DELETE_CONTACT_API: '/api/contacts/deletes?ids=',
+                    SEARCH_CONTACT_API: '/api/contacts/search'
                 }
             }
         }
