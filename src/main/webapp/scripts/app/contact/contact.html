@@ -102,10 +102,10 @@
 	<hr>
 
 	<div>
-		<div>Search Results</div>
+		<div>Search Results</div>{{checkedIds}}
 
 		<button class="btn btn-default pull-right delete-contact-button"
-			translate="contact.button.delete">Delete</button>
+			translate="contact.button.delete" ng-click="deleteContacts()" ng-disabled="!checkedIds.length">Delete</button>
 		<table ng-table="contactsTableParams" class="table">
 			<th><input type="checkbox" ng-model="checkboxes.checked"
 				id="select_all" name="filter-checkbox" value="" /></th>

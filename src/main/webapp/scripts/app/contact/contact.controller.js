@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('contactmgrApp')
-    .controller('ContactController', function($scope, $http, ngTableParams) {
+    .controller('ContactController', function($scope, $http, ContactService, ngTableParams) {
     	var data = [{
     		id: 1,
     		name: 'Nguyen Van A',
@@ -133,6 +133,17 @@ angular.module('contactmgrApp')
     			$defer.resolve($scope.contacts = data.slice((params.page() - 1) * params.count(), params.page() * params.count()));
     		}
     	});
+    	
+    	// Delete contacts
+    	$scope.deleteContacts = function () {
+    		ContactService.deleteContacts($scope.checkedIds)
+    		.success(function (data, status) {
+    			console.log(data, status);
+    		})
+    		.error(function (data, status) {
+    			console.log(data, status);
+    		});
+    	};
 
     	var inArray = Array.prototype.indexOf 
     	? function (val, arr) {
@@ -175,7 +186,7 @@ angular.module('contactmgrApp')
     	    items: {}
      	};
 
-     	$scope.checkedIds = [];
+     	$scope.checkedIds = '';
 
         // watch for check all checkbox
         $scope.$watch('checkboxes.checked', function(value) {
@@ -208,11 +219,15 @@ angular.module('contactmgrApp')
             angular.element(document.getElementById("select_all")).prop("indeterminate", (checked != 0 && unchecked != 0));
 
             // Create checked id list
-            $scope.checkedIds = [];
+            $scope.checkedIds = '';
             for (var item in $scope.checkboxes.items) {
             	if ($scope.checkboxes.items[item]) {
-            		$scope.checkedIds.push(parseInt(item));
+            		$scope.checkedIds = $scope.checkedIds + item + ',';
             	}
+            }
+            
+            if ($scope.checkedIds.length > 0) {
+            	$scope.checkedIds = $scope.checkedIds.substr(0, $scope.checkedIds.length - 1); 
             }
         }, true);
     });
