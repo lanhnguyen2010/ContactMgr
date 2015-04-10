@@ -20,10 +20,12 @@ import vn.kms.launch.contactmgr.service.ContactService;
 public class ContactController {
 	@Autowired
 	private ContactService contactService;
-	
+
 	/**
 	 * Get detail of an existing contact
-	 * @param id is ID of the contact we need get.
+	 * 
+	 * @param id
+	 *            is ID of the contact we need get.
 	 * @return "404 code" if not found or "200 code and data of contact"
 	 */
 	@RequestMapping(value = "/{id}", method = GET)
@@ -37,35 +39,38 @@ public class ContactController {
 	}
 
 	/**
-	 * Delete a contact
-	 * 
+	 * Delete a contact.
 	 * @param id
 	 * @return
+	 * Return 404 not found code if not contact associated to ID is not found
+	 * Return 200 success code if deleted successfully
 	 */
 	@RequestMapping(value = "/delete", method = DELETE)
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public ResponseEntity<Void> delete(@RequestParam int id) {
-
 		int deleteId = contactService.deleteContacts(id);
-		if (deleteId == 0)
+		if (deleteId == 0) {
 			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+		}
+		
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
-
+	
 	/**
-	 * deletes contact
-	 * 
+	 * Deletes a contact.
 	 * @param ids
+	 * @return
+	 * Return 404 not found code if not contact associated to ID is not found
+	 * Return 200 success code if deleted successfully
 	 */
-
 	@RequestMapping(value = "/deletes", method = DELETE)
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public ResponseEntity<Void> deletes(@RequestParam Integer... ids) {
-
 		int deleteId = contactService.deleteContacts(ids);
-		if (deleteId == 0)
+		if (deleteId == 0) {
 			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+		}
+		
 		return new ResponseEntity<Void>(HttpStatus.OK);
-
 	}
 }
