@@ -92,6 +92,7 @@ angular.module('contactmgrApp')
     		company: 'KMS Technology'
     	}];
 
+    	
     	$scope.contactsTableParams = new ngTableParams({
     		page: 1, // Show the first page
     		count: 10 // Count per page
