@@ -3,9 +3,9 @@
 angular.module('contactmgrApp', ['LocalStorageModule', 'tmh.dynamicLocale',
     'ngResource', 'ui.router', 'ngCookies', 'pascalprecht.translate', 'ngCacheBuster', 'ngTable'])
 
-    .run(function($rootScope, $location, $window, $http, $state, $translate, Language/*, ENV, VERSION*/) {
-        //$rootScope.ENV = ENV;
-        //$rootScope.VERSION = VERSION;
+    .run(function($rootScope, $location, $window, $http, $state, $translate, Language, ENV, VERSION) {
+        $rootScope.ENV = ENV;
+        $rootScope.VERSION = VERSION;
         $rootScope.back = function() {
             // If previous state is 'activate' or do not exist go to 'home'
             if ($rootScope.previousStateName === 'activate' || $state.get($rootScope.previousStateName) === null) {
