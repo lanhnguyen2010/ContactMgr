@@ -13,12 +13,12 @@ public class ContactService {
 	@Autowired
 	private ContactRepository contactRepo;
 
-	@Transactional
 	/**
 	 * Get a contact by id
 	 * @param id is ID of the contact we will get.
 	 * @return a contact if found and null if not found.
 	 */
+	@Transactional
 	public Contact getContact(int id) {
 		return contactRepo.findOne(id);
 	}
@@ -26,7 +26,7 @@ public class ContactService {
 	/**
 	 * Service form function delete
 	 * @param ids
-	 * @return total contact are deleted
+	 * @return
 	 */
 	@Transactional
 	public int deleteContacts(Integer... ids) {
