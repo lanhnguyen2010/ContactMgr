@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import vn.kms.launch.contactmgr.domain.contact.Contact;
 
 public interface ContactRepository extends JpaRepository<Contact, Integer> {
+	
 	/**
 	 * Query function deleteContacts
 	 * return 0,no row are deleted  
