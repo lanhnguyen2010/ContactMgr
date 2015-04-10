@@ -5,7 +5,7 @@
 	<hr>
 
 	<form name="contact_form" novalidate class="form-horizontal"
-		role="form" ng-submit="searchContacts()">
+		role="form" ng-submit="searchContacts(false)">
 		<div class="container">
 			<div class="row">
 				<div class="form-group col-sm-6">
@@ -98,7 +98,7 @@
 			</div>
 			<div class="form-group">
 				<button type="submit" class="btn btn-default search-contact-button"
-					ng-click="searchContacts(0)" ng-disabled="contact_form.name.$dirty && contact_form.name.$invalid || contact_form.jobtitle.$dirty && contact_form.jobtitle.$invalid
+					 ng-disabled="contact_form.name.$dirty && contact_form.name.$invalid || contact_form.jobtitle.$dirty && contact_form.jobtitle.$invalid
 					|| contact_form.mobile.$dirty && contact_form.mobile.$invalid || contact_form.department.$dirty && contact_form.department.$invalid || contact_form.email.$dirty && contact_form.email.$invalid ">Search</button>
 			</div>
 
@@ -126,12 +126,12 @@
 				<td width="30" style="text-align: left" header="'ng-table/headers/checkbox.html'">
                 <input type="checkbox" ng-model="checkboxes.items[contact.id]" />
             </td>
-				<td data-title="'Name'">{{contact.name}}</td>
+				<td data-title="'Name'">{{contact.firstName}}</td>
 				<td data-title="'Mobile'">{{contact.email}}</td>
-				<td data-title="'Job Title'">{{contact.jobTitle}}</td>
-				<td data-title="'Department'">{{contact.department}}</td>
+				<td data-title="'Job Title'">{{contact.work.title}}</td>
+				<td data-title="'Department'">{{contact.work.department}}</td>
 				<td data-title="'Company'"><a href="" data-toggle="modal"
-					data-target="#myModal">{{contact.company}}</a></td>
+					data-target="#myModal">{{contact.work.company.name}}</a></td>
 			</tr>
 		</table>
 		 <script type="text/ng-template" id="ng-table/headers/checkbox.html">

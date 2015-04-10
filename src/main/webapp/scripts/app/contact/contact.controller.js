@@ -3,95 +3,7 @@
 angular.module('contactmgrApp')
     .controller('ContactController', function($scope, $http, ngTableParams) {
     	
-    	$scope.contacts = [{
-    		id: 1,
-    		name: 'Nguyen Van A',
-    		mobile: '0935738212',
-    		email: 'a@gmail.com',
-    		jobTitle: 'Software Engineer',
-    		department: 'R&D',
-    		company: 'KMS Technology'
-    	}, {
-    		id: 2,
-    		name: 'Tran Van B',
-    		mobile: '0935738212',
-    		email: 'a@gmail.com',
-    		jobTitle: 'Software Engineer',
-    		department: 'R&D',
-    		company: 'KMS Technology'
-    	}, {
-    		id: 3,
-    		name: 'Le Thi Hong Van',
-    		mobile: '0935738212',
-    		email: 'a@gmail.com',
-    		jobTitle: 'Software Engineer',
-    		department: 'R&D',
-    		company: 'KMS Technology'
-    	}, {
-    		id: 4,
-    		name: 'Nguyen Van A',
-    		mobile: '0935738212',
-    		email: 'a@gmail.com',
-    		jobTitle: 'Software Engineer',
-    		department: 'R&D',
-    		company: 'KMS Technology'
-    	}, {
-    		id: 5,
-    		name: 'Nguyen Van A',
-    		mobile: '0935738212',
-    		email: 'a@gmail.com',
-    		jobTitle: 'Software Engineer',
-    		department: 'R&D',
-    		company: 'KMS Technology'
-    	}, {
-    		id: 6,
-    		name: 'Nguyen Van A',
-    		mobile: '0935738212',
-    		email: 'a@gmail.com',
-    		jobTitle: 'Software Engineer',
-    		department: 'R&D',
-    		company: 'KMS Technology'
-    	}, {
-    		id: 7,
-    		name: 'Nguyen Van A',
-    		mobile: '0935738212',
-    		email: 'a@gmail.com',
-    		jobTitle: 'Software Engineer',
-    		department: 'R&D',
-    		company: 'KMS Technology'
-    	}, {
-    		id: 8,
-    		name: 'Nguyen Van A',
-    		mobile: '0935738212',
-    		email: 'a@gmail.com',
-    		jobTitle: 'Software Engineer',
-    		department: 'R&D',
-    		company: 'KMS Technology'
-    	}, {
-    		id: 9,
-    		name: 'Nguyen Van A',
-    		mobile: '0935738212',
-    		email: 'a@gmail.com',
-    		jobTitle: 'Software Engineer',
-    		department: 'R&D',
-    		company: 'KMS Technology'
-    	}, {
-    		id: 10,
-    		name: 'Nguyen Van A',
-    		mobile: '0935738212',
-    		email: 'a@gmail.com',
-    		jobTitle: 'Software Engineer',
-    		department: 'R&D',
-    		company: 'KMS Technology'
-    	}, {
-    		id: 11,
-    		name: 'Nguyen Van A',
-    		mobile: '0935738212',
-    		email: 'a@gmail.com',
-    		jobTitle: 'Software Engineer',
-    		department: 'R&D',
-    		company: 'KMS Technology'
-    	}];
+    	$scope.contacts = [];
     	
     	$scope.filter = {
     			name: '',
@@ -103,23 +15,30 @@ angular.module('contactmgrApp')
     			page:''
     		};
     	
-    	$scope.total = $scope.contacts.lenth;
+    	$scope.page = 1;
     	
-    	$scope.searchContacts=function(page){
+    	
+    	$scope.searchContacts=function(paging){
     		if($scope.isLoading){
     			return;
     		}
     		var PAGE_SIZE = 10;
     		$scope.isLoading = true;
-    		$http.post('api/contacts/search', {filter: $scope.filter, page: page, pagesize: PAGE_SIZE})
+    		
+    		var data= {contact: $scope.filter, page: $scope.page, pagesize: PAGE_SIZE};
+    		var jsonData = JSON.stringify(data);	
+    		console.log(jsonData);
+    		$http.post('api/contacts/search?data=' + jsonData)
     		.success(function(data){
     			$scope.contacts = [];
-    			items = data['contact'];
+    			var items = data['contact'];
     			$scope.total = data['total'];
-    			for (var i = 0; i < items.length; i ++) {
-    				$scope.contacts.push(items[i]);
+    			$scope.contacts = items;
+    			$scope.isLoading = false;    		
+    			
+    			if (!paging) {
+    				$scope.tableParams.reload();
     			}
-    			$scope.isLoading = false;
     		}).
     		error(function(data, status, headers, config) {
     			//
@@ -131,14 +50,14 @@ angular.module('contactmgrApp')
     		count: 10
     	},{
     		counts: [],
-    		total:$scope.contacts.length,
+    		total: $scope.total,
     		getData: function($defer,params){
-    			SearchContact(params.page());
-    			$defer.resolve($scope.contactPage = $scope.contacts.slice( (params.page() - 1) * params.count() , params.page() * params.count()));
-    			console.log(params.page());
+    			$scope.page = params.page();
+    			$defer.resolve($scope.contacts);
+    			$scope.searchContacts(true);
     		}
     	});
-
+    	
      	$scope.checkboxes = {'checked':false, items: {} };
 
     	//watch for check all checkboxes
