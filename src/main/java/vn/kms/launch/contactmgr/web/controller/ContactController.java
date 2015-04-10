@@ -2,7 +2,11 @@ package vn.kms.launch.contactmgr.web.controller;
 
 import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
+import java.util.HashMap;
+
+import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,6 +39,13 @@ public class ContactController {
 
 		return new ResponseEntity<Contact>(contact, HttpStatus.OK);
 	}
+	
+    @RequestMapping(value = "/search", method = POST)
+    public HashMap<String, Object> searchContact(
+        @RequestParam (value = "data", defaultValue = "") String data) throws JSONException {
+        return contactService.searchContacts(data);
+        
+    }
 
 	/**
 	 * Return 404 not found code if not contact associated to ID is not found
