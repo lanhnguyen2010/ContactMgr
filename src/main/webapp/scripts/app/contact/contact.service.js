@@ -8,6 +8,7 @@ angular.module('contactmgrApp')
     	};
     	
     	this.searchContacts = function (filter, page, pageSize) {
-    		return $http.post(SEARCH_CONTACT_API, {filter: filter, page: page, pagesize: pageSize});
+    		var jsonString = JSON.stringify({contact: filter, page: page, pagesize: pageSize});
+    		return $http.post(SEARCH_CONTACT_API + "?data=" + jsonString);
     	};
     });

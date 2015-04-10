@@ -53,18 +53,8 @@ public class ContactService {
         
         List<Contact> contacts = contactRepo.searchContacts(name, mobile, email, jobTitle, department, company);
         
-        if(page*pageSize > contacts.size()){
-            page = contacts.size()/pageSize;
-        }
-        if(page<0){
-            page = 0;
-        }
-        
-        List<Contact> resultContacts = new ArrayList<Contact>(contacts.subList(page*pageSize, (page + 1) * pageSize));
-        JSONObject result = new JSONObject();
-        
         HashMap<String, Object> obContact = new HashMap<String, Object>();
-        obContact.put("contact",resultContacts);
+        obContact.put("contact",contacts);
         obContact.put("total",contacts.size());
         return obContact;
 

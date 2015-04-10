@@ -2,95 +2,7 @@
 
 angular.module('contactmgrApp')
     .controller('ContactController', function($scope, ContactService, ngTableParams) {
-    	var dummyData = [{
-    		id: 1,
-    		name: 'Nguyen Van A',
-    		mobile: '0935738212',
-    		email: 'a@gmail.com',
-    		jobTitle: 'Software Engineer',
-    		department: 'R&D',
-    		company: 'KMS Technology'
-    	}, {
-    		id: 2,
-    		name: 'Tran Van B',
-    		mobile: '0935738212',
-    		email: 'a@gmail.com',
-    		jobTitle: 'Software Engineer',
-    		department: 'R&D',
-    		company: 'KMS Technology'
-    	}, {
-    		id: 3,
-    		name: 'Le Thi Hong Van',
-    		mobile: '0935738212',
-    		email: 'a@gmail.com',
-    		jobTitle: 'Software Engineer',
-    		department: 'R&D',
-    		company: 'KMS Technology'
-    	}, {
-    		id: 4,
-    		name: 'Nguyen Van A',
-    		mobile: '0935738212',
-    		email: 'a@gmail.com',
-    		jobTitle: 'Software Engineer',
-    		department: 'R&D',
-    		company: 'KMS Technology'
-    	}, {
-    		id: 5,
-    		name: 'Nguyen Van A',
-    		mobile: '0935738212',
-    		email: 'a@gmail.com',
-    		jobTitle: 'Software Engineer',
-    		department: 'R&D',
-    		company: 'KMS Technology'
-    	}, {
-    		id: 6,
-    		name: 'Nguyen Van A',
-    		mobile: '0935738212',
-    		email: 'a@gmail.com',
-    		jobTitle: 'Software Engineer',
-    		department: 'R&D',
-    		company: 'KMS Technology'
-    	}, {
-    		id: 7,
-    		name: 'Nguyen Van A',
-    		mobile: '0935738212',
-    		email: 'a@gmail.com',
-    		jobTitle: 'Software Engineer',
-    		department: 'R&D',
-    		company: 'KMS Technology'
-    	}, {
-    		id: 8,
-    		name: 'Nguyen Van A',
-    		mobile: '0935738212',
-    		email: 'a@gmail.com',
-    		jobTitle: 'Software Engineer',
-    		department: 'R&D',
-    		company: 'KMS Technology'
-    	}, {
-    		id: 9,
-    		name: 'Nguyen Van A',
-    		mobile: '0935738212',
-    		email: 'a@gmail.com',
-    		jobTitle: 'Software Engineer',
-    		department: 'R&D',
-    		company: 'KMS Technology'
-    	}, {
-    		id: 10,
-    		name: 'Nguyen Van A',
-    		mobile: '0935738212',
-    		email: 'a@gmail.com',
-    		jobTitle: 'Software Engineer',
-    		department: 'R&D',
-    		company: 'KMS Technology'
-    	}, {
-    		id: 11,
-    		name: 'Nguyen Van A',
-    		mobile: '0935738212',
-    		email: 'a@gmail.com',
-    		jobTitle: 'Software Engineer',
-    		department: 'R&D',
-    		company: 'KMS Technology'
-    	}];
+    	var dummyData = [];
     	
     	$scope.filter = {
     		name: '',
@@ -160,6 +72,8 @@ angular.module('contactmgrApp')
 	    		ContactService.deleteContacts($scope.checkedIds)
 	    		.success(function (data, status) {
 	    			console.log("Deleted " + data + " contact(s)");
+	    			
+	    			$scope.contactsTableParams.reload();
 	    		})
 	    		.error(function (data, status) {
 	    			console.log("Error", status);
