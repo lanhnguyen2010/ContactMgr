@@ -2,7 +2,7 @@
 
 angular.module('contactmgrApp')
     .controller('ContactController', function($scope, $http, ngTableParams) {
-    	var data = [{
+    	$scope.contacts = [{
     		id: 1,
     		name: 'Nguyen Van A',
     		mobile: '0935738212',
@@ -92,53 +92,40 @@ angular.module('contactmgrApp')
     		company: 'KMS Technology'
     	}];
 
+    	$scope.searchContacts=function(page){
+    		if($scope.isLoading){
+    			return;
+    		}
+    		if(!page){
+    			$scope.contacts = [];
+    			page = 0;
+    		}
+    		var PAGE_SIZE = 100;
+    		$scope.page = page;
+    		$scope.isLoading = true;
+    		$http.get('http://localhost:8181/download/1?name=contact.json')
+    		.success(function(items){
+    			$scope.hasMoreContacts=(items.length >= PAGE_SIZE);
+    			for (var i = 0; i < items.length; i ++) {
+    				$scope.contacts.push(items[i]);
+    			}
+    		})
+    		.finally(function(){
+    			$scope.isLoading = false;
+    		});
+    	}
     	
-    	$scope.contactsTableParams = new ngTableParams({
-    		page: 1, // Show the first page
-    		count: 10 // Count per page
-    	}, {
-    		counts: [],
-    		total: data.length, // Length of data
-    		getData: function($defer, params) {
-    			$defer.resolve($scope.contacts = data.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+    	
+    	$scope.tableParams = new ngTableParams({
+    		page: 1,
+    		count: 5
+    	},{
+    		total:$scope.contacts.length,
+    		getData: function($defer,params){
+    			$defer.resolve($scope.contactPage = $scope.contacts.slice( (params.page() - 1) * params.count() , params.page() * params.count()));
     		}
     	});
 
-    	var inArray = Array.prototype.indexOf 
-    	? function (val, arr) {
-    		return arr.indexOf
-    	} 
-    	: function (val, arr) {
-    		var i = arr.length; 
-
-    		while (i--) {
-    			if (arr[i] === val) {
-    				return i;
-    			}
-    		}
-
-    		return -1;
-    	};
-
-    	$scope.names = function(column) {
-            var def = $q.defer(),
-                arr = [],
-                names = [];
-
-            angular.forEach(data, function (item) {
-                if (inArray(item.name, arr) === -1) {
-                    arr.push(item.name);
-                    names.push({
-                        'id': item.name,
-                        'title': item.name
-                    });
-                }
-            });
-
-            def.resolve(names);
-
-            return def;
-        };
 
         $scope.checkboxes = {
     	    'checked': false, 
@@ -147,35 +134,32 @@ angular.module('contactmgrApp')
 
      	$scope.checkedIds = [];
 
-        // watch for check all checkbox
-        $scope.$watch('checkboxes.checked', function(value) {
-            angular.forEach($scope.contacts, function(item) {
-                if (angular.isDefined(item.id)) {
-                    $scope.checkboxes.items[item.id] = value;
-                }
-            });
-        });
+     	$scope.checkboxes = {'checked':false, items: {} };
 
-        // watch for data checkboxes
-        $scope.$watch('checkboxes.items', function(values) {
-            if (!$scope.contacts) {
-                return;
-            }
+    	//watch for check all checkboxes
+    	$scope.$watch('checkboxes.checked', function(value){
+    		angular.forEach($scope.contactPage,function(item){
+    			if(angular.isDefined(item.id)){
+    				$scope.checkboxes.items[item.id] = value;
+    			}
+    		});
+    	});
 
-            var checked = 0, unchecked = 0,
-                total = $scope.contacts.length;
-
-            angular.forEach($scope.contacts, function(item) {
-                checked += ($scope.checkboxes.items[item.id]) || 0;
-                unchecked += (!$scope.checkboxes.items[item.id]) || 0;
-            });
-
-            if ((unchecked == 0) || (checked == 0)) {
-                $scope.checkboxes.checked = (checked == total);
-            }
-
-            // grayed checkbox
-            angular.element(document.getElementById("select_all")).prop("indeterminate", (checked != 0 && unchecked != 0));
+    	//watch for data checkboxes
+    	$scope.$watch('checkboxes.items',function(values){
+    		if(!$scope.contactPage){
+    			return;
+    		}
+    		var checked = 0, unchecked = 0, total = $scope.contactPage.length;
+    		angular.forEach($scope.contactPage, function(item) {
+    			checked += ($scope.checkboxes.items[item.id]) || 0;
+    			unchecked += (!$scope.checkboxes.items[item.id]) || 0;
+    		});
+    		if((unchecked == 0)||(checked == 0)){
+    			$scope.checkboxes.checked=(checked == total);
+    		}
+    		// grayed checkboxes
+    		angular.element(document.getElementById("select_all")).prop("indeterminate", (checked != 0 && unchecked != 0));
 
             // Create checked id list
             $scope.checkedIds = [];
@@ -185,5 +169,6 @@ angular.module('contactmgrApp')
             	}
             }
         }, true);
+    	
     });
 
