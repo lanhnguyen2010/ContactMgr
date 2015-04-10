@@ -131,7 +131,7 @@
 				<td data-title="'Job Title'">{{contact.work.title}}</td>
 				<td data-title="'Department'">{{contact.work.department}}</td>
 				<td data-title="'Company'"><a href="" data-toggle="modal"
-					data-target="#myModal">{{contact.work.company.name}}</a></td>
+					data-target="#myModal" ng-click="selectedContact = contact">{{contact.work.company.name}}</a></td>
 			</tr>
 		</table>
 		 <script type="text/ng-template" id="ng-table/headers/checkbox.html">
@@ -153,7 +153,7 @@
 					<h4 class="modal-title" id="myModalLabel">Company Info</h4>
 				</div>
 				<div class="modal-body">
-					<p>Name: {{namecompany}}</p>
+					<p>Name: {{selectedContact.work.company.name}}</p>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
