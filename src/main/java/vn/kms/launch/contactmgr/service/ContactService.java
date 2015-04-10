@@ -1,5 +1,13 @@
 package vn.kms.launch.contactmgr.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import javax.validation.Valid;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -8,9 +16,6 @@ import vn.kms.launch.contactmgr.domain.contact.Company;
 import vn.kms.launch.contactmgr.domain.contact.Contact;
 import vn.kms.launch.contactmgr.repository.CompanyRepository;
 import vn.kms.launch.contactmgr.repository.ContactRepository;
-
-import javax.validation.Valid;
-import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
@@ -70,5 +75,45 @@ public class ContactService {
 	public int deleteContacts(Integer... ids) {
 		return contactRepo.deleteContacts(ids);
 	}
+	
+	public HashMap<String, Object> searchContacts(String data) throws JSONException{
 
+        JSONObject jOb = new JSONObject(data);
+
+        JSONObject jObContact = (JSONObject) jOb.get("contact");
+
+        String name = jObContact.getString("name");
+
+        String mobile = jObContact.getString("mobile");
+
+        String email = jObContact.getString("email");
+
+        String jobTitle = jObContact.getString("department");
+
+        String department = jObContact.getString("department");
+
+        String company = jObContact.getString("company");
+
+        int page = jOb.getInt("page");
+
+        int pageSize = jOb.getInt("pagesize");
+
+        List<Contact> contacts = contactRepo.searchContacts(name, mobile, email, jobTitle, department, company);
+
+        if(page*pageSize > contacts.size()){
+            page = contacts.size()/pageSize;
+        }
+        if(page<0){
+            page = 0;
+        }
+
+        List<Contact> resultContacts = new ArrayList<Contact>(contacts.subList(page*pageSize, (page + 1) * pageSize));
+        JSONObject result = new JSONObject();
+
+        HashMap<String, Object> obContact = new HashMap<String, Object>();
+        obContact.put("contact",resultContacts);
+        obContact.put("total",contacts.size());
+        return obContact;
+
+    };
 }
