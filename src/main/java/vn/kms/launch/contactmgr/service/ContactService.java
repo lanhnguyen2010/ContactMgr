@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,6 +35,30 @@ public class ContactService {
 		return contactRepo.findOne(id);
 	}
 
+    public Company getCompany(Integer id) {
+        return companyRepo.findOne(id);
+    }
+
+    @Transactional
+    public Contact saveContact(@Valid Contact contact) {
+
+        if (contact == null) {
+            return null;
+        }
+
+        return contactRepo.save(contact);
+    }
+    
+    @Transactional
+    public Company saveCompany(@Valid Company company) {
+
+        if (company == null) {
+            return null;
+        }
+
+        return companyRepo.save(company);
+    }
+	
 	public HashMap<String, Object> searchContacts(String data)
 			throws JSONException {
 

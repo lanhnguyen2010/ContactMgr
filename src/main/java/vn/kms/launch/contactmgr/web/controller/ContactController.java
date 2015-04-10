@@ -3,8 +3,11 @@ package vn.kms.launch.contactmgr.web.controller;
 import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
 import java.util.HashMap;
+
+import javax.validation.Valid;
 
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import vn.kms.launch.contactmgr.domain.contact.Contact;
+import vn.kms.launch.contactmgr.domain.contact.Work;
+import vn.kms.launch.contactmgr.domain.contact.Company;
 import vn.kms.launch.contactmgr.service.ContactService;
 
 @RestController
@@ -95,4 +100,36 @@ public class ContactController {
 			return new ResponseEntity<Void>(HttpStatus.CREATED);
 		}
 	}
+	
+
+    /**
+     *
+     * @param id
+     * @param contact
+     * @return
+     */
+    @RequestMapping(value = "/{id}", method = PUT)
+    public ResponseEntity<Contact> updateContact(@PathVariable Integer id, @RequestBody @Valid Contact contact) {
+        Work work = contact.getWork();
+
+        if (work != null) {
+            Integer companyId = contact.getWork().getCompanyId();
+            System.out.println(companyId);
+            Company company = contact.getWork().getCompany();
+
+            if (companyId != null){
+                Company com = contactService.getCompany(companyId);
+                if (com == null) {
+                    return new ResponseEntity<Contact>(contact, HttpStatus.BAD_REQUEST);
+                }
+            }
+            if (company != null) {
+                contactService.saveCompany(company);
+            }
+        }
+
+        contactService.saveContact(contact);
+
+        return new ResponseEntity<Contact>(contact, HttpStatus.OK);
+    }
 }
