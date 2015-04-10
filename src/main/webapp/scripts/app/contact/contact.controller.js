@@ -91,7 +91,17 @@ angular.module('contactmgrApp')
     		department: 'R&D',
     		company: 'KMS Technology'
     	}];
-
+    	
+    	$scope.filter = {
+    			name: '',
+    			mobile: '',
+    			jobtitle: '',
+    			department:'',
+    			email:'',
+    			company:'',
+    			page:''
+    		};
+    	
     	$scope.searchContacts=function(page){
     		if($scope.isLoading){
     			return;
@@ -109,30 +119,20 @@ angular.module('contactmgrApp')
     			for (var i = 0; i < items.length; i ++) {
     				$scope.contacts.push(items[i]);
     			}
-    		})
-    		.finally(function(){
     			$scope.isLoading = false;
-    		});
+    		})
     	}
     	
     	
     	$scope.tableParams = new ngTableParams({
     		page: 1,
-    		count: 5
+    		count: 10
     	},{
     		total:$scope.contacts.length,
     		getData: function($defer,params){
     			$defer.resolve($scope.contactPage = $scope.contacts.slice( (params.page() - 1) * params.count() , params.page() * params.count()));
     		}
     	});
-
-
-        $scope.checkboxes = {
-    	    'checked': false, 
-    	    items: {}
-     	};
-
-     	$scope.checkedIds = [];
 
      	$scope.checkboxes = {'checked':false, items: {} };
 

@@ -9,7 +9,7 @@
 				<div class="form-group col-sm-6">	
 					<label for="name" class="control-label col-sm-3" translate="contact.contact-field.name">Name</label>
 					<div class="col-sm-9">
-						<input type="text" name="name" class="form-control" ng-model="filter.name" ng-pattern = "/[a-zA-Z0-9]/">
+						<input type="text" name="name" class="form-control" ng-model="filter.name" ng-pattern = "/[a-zA-Z0-9]*/">
 						<div style="color:red" ng-show="contact_form.name.$dirty && contact_form.name.$invalid">
 					 		<small ng-show="contact_form.name.$error.pattern" class="">Invalid Input.</small>
 					 	</div>
@@ -20,8 +20,10 @@
 					<label for="jobtitle" class="control-label col-sm-3" translate="contact.contact-field.job-title">Job Title</label>
 					<div class="col-sm-9">
 						<input type="text" class="form-control" name="jobtitle" ng-model="filter.jobtitle" ng-minlength = 5 ng-pattern = "/[a-zA-Z0-9]/">
-						<small class="error" ng-show="contact_form.jobtitle.$error.minlength">Your name is required to be at least 5 characters
+						<div style="color:red" ng-show="contact_form.jobtitle.$dirty && contact_form.jobtitle.$invalid">
+							<small  ng-show="contact_form.jobtitle.$error.minlength"> Jobtitle invalid
 						</small>
+						</div>
 					</div>
 				</div>
 			</div>
