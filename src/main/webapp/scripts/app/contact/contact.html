@@ -88,6 +88,7 @@
 						translate="contact.contact-field.company">Company</label>
 					<div class="col-sm-9">
 						<select class="form-control">
+							<option value=""></option>
 							<option value="KMS">KMS Company</option>
 							<option value="KMS">KMS Company1</option>
 							<option value="KMS">KMS Company2</option>
@@ -97,7 +98,8 @@
 			</div>
 			<div class="form-group">
 				<button type="submit" class="btn btn-default search-contact-button"
-					ng-click="searchContacts(0)">Search</button>
+					ng-click="searchContacts(0)" ng-disabled="contact_form.name.$dirty && contact_form.name.$invalid || contact_form.jobtitle.$dirty && contact_form.jobtitle.$invalid
+					|| contact_form.mobile.$dirty && contact_form.mobile.$invalid || contact_form.department.$dirty && contact_form.department.$invalid || contact_form.email.$dirty && contact_form.email.$invalid ">Search</button>
 			</div>
 
 		</div>
@@ -121,9 +123,9 @@
 			<th class="data-table-title"
 				translate="contact.contact-field.company">Company</th>
 			<tr ng-repeat="contact in $data">
-				<td width="30" style="text-align: left"
-					header="'ng-table/headers/checkbox.html'"><input
-					type="checkbox" ng-model="checkboxes.items[contact.id]" /></td>
+				<td width="30" style="text-align: left" header="'ng-table/headers/checkbox.html'">
+                <input type="checkbox" ng-model="checkboxes.items[contact.id]" />
+            </td>
 				<td data-title="'Name'">{{contact.name}}</td>
 				<td data-title="'Mobile'">{{contact.email}}</td>
 				<td data-title="'Job Title'">{{contact.jobTitle}}</td>
@@ -132,10 +134,9 @@
 					data-target="#myModal">{{contact.company}}</a></td>
 			</tr>
 		</table>
-
-		<script type="text/ng-template" id="ng-table/headers/checkbox.html">
-        	<input type="checkbox" ng-model="checkboxes.checked" id="select_all" name="filter-checkbox" value="" />
-    	</script>
+		 <script type="text/ng-template" id="ng-table/headers/checkbox.html">
+       		<input type="checkbox" ng-model="checkboxes.checked" id="select_all" name="filter-checkbox" value="" />
+   		</script>
 	</div>
 
 
