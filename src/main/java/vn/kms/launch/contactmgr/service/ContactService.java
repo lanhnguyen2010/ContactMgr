@@ -51,7 +51,7 @@ public class ContactService {
         
         int pageSize = jOb.getInt("pagesize");
         
-        List<Contact> contacts = contactRepo.searchContacts(name, mobile, email, jobTitle, department, company, new PageRequest(page, pageSize));
+        List<Contact> contacts = contactRepo.searchContacts(name, mobile, email, jobTitle, department, company);
         
         List<Contact> resultContacts = new ArrayList<Contact>(contacts.subList(page*pageSize, (page + 1) * pageSize));
         JSONObject result = new JSONObject();
