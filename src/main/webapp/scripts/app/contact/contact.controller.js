@@ -105,24 +105,22 @@ angular.module('contactmgrApp')
     	var PAGE_SIZE = 10;
     	$scope.currentPage = 1;
     	$scope.total = dummyData.length; // For dummy data
-    	$scope.searchContacts = function () {
+    	$scope.searchContacts = function (isPaging) {
     		if($scope.isLoading){
     			return;
     		}
-    		    		
+    		
     		$scope.isLoading = true;
     		
     		ContactService.searchContacts($scope.filter, $scope.currentPage, PAGE_SIZE)
     		.success(function(data, status) {
-    			$scope.contacts = [];
-    			items = data['contact'];
+    			$scope.contacts = data['contact'];
     			$scope.total = data['total'];
-    			
-    			for (var i = 0; i < items.length; i ++) {
-    				$scope.contacts.push(items[i]);
-    			}
-    			
     			$scope.isLoading = false;
+    			
+    			if (!isPaging) {
+    				$scope.contactsTableParams.reload();
+    			}
     		})
     		.error(function(data, status) {
     			console.log(status);
@@ -134,14 +132,20 @@ angular.module('contactmgrApp')
     		count: PAGE_SIZE // Count per page
     	}, {
     		counts: [],
-    		total: dummyData.length, // For dummy data
-    		//total: $scope.total, // For real data
+    		//total: dummyData.length, // For dummy data
+    		total: $scope.total, // For real data
     		getData: function ($defer, params) {
     			$scope.currentPage = params.page();
-    			//$defer.resolve($scope.contacts); // For real data
-    			$defer.resolve($scope.contacts = dummyData.slice((params.page() - 1) * params.count(), params.page() * params.count())); // For dummy data
+    			$defer.resolve($scope.contacts); // For real data
+    			//$defer.resolve($scope.contacts = dummyData.slice((params.page() - 1) * params.count(), params.page() * params.count())); // For dummy data
+    			$scope.searchContacts(true);
     		}
     	});
+    	
+    	$scope.selectedContact = {};
+    	$scope.setSelectedContact = function(contact) {
+    		$scope.selectedContact = contact;
+    	};
     	
     	// Delete contacts
     	$scope.deleteContacts = function () {
@@ -206,6 +210,7 @@ angular.module('contactmgrApp')
             	$scope.checkedIds = $scope.checkedIds.substr(0, $scope.checkedIds.length - 1); 
             }
         }, true);
+        
     	$scope.company_name = 'KMS Technology';
     	$scope.company_message = 'Bright Minds, Brilliant Solutions';
     	$scope.company_phone = '';
