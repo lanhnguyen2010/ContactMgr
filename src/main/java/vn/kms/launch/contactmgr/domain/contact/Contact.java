@@ -6,23 +6,35 @@ import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "CONTACT")
 public class Contact extends vn.kms.launch.contactmgr.domain.Entity {
 	private static final long serialVersionUID = 1L;
 
+    @NotEmpty(message = "{validation.not-empty.message}")
 	@Column(name = "FIRST_NAME")
 	private String firstName;
+	
 	@Column(name = "MIDDLE_NAME")
 	private String middleName;
+	
+	@NotEmpty(message = "{validation.not-empty.message}")
 	@Column(name = "LAST_NAME")
 	private String lastName;
+	
+	@Email(message = "{validation.email.message}")
 	@Column(name = "EMAIL")
 	private String email;
 
 	@Column(name = "PHOTO")
 	private String photo;
+	
+	@Pattern(regexp = "(\\+[0-9]{1,3}\\s)([0-9]{9,10})", message = "{validation.mobile.message}")
 	@Column(name = "MOBILE")
 	private String mobile;
 

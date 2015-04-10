@@ -21,6 +21,7 @@ public class Company extends vn.kms.launch.contactmgr.domain.Entity{
 
 	@Column(name = "LOGO")
 	private String logo;
+
 	@Column(name = "MESSAGE")
 	private String message;
 
@@ -96,5 +97,4 @@ public class Company extends vn.kms.launch.contactmgr.domain.Entity{
 	public void setName(String name) {
 		this.name = name;
 	}
-
 }
