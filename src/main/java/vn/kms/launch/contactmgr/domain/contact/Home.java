@@ -2,11 +2,13 @@ package vn.kms.launch.contactmgr.domain.contact;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.validation.constraints.Pattern;
 
 @Embeddable
 public class Home {
 	private Address address;
 
+	@Pattern(regexp = "(\\+[0-9]{1,3}\\s)([0-9]{9,10})", message = "{validation.phone.message}")
 	@Column(name = "PHONE")
 	private String phone;
 
