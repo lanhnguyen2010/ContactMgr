@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('contactmgrApp')
-    .controller('ContactController', function($scope, $http, ContactService, ngTableParams) {
+    .controller('ContactController', function($scope, ContactService, ngTableParams) {
     	var dummyData = [{
     		id: 1,
     		name: 'Nguyen Van A',
@@ -104,7 +104,7 @@ angular.module('contactmgrApp')
     	
     	var PAGE_SIZE = 10;
     	$scope.currentPage = 1;
-    	$scope.total = dummyData.length; // For dummy data
+    	//$scope.total = dummyData.length; // For dummy data
     	$scope.searchContacts = function (isPaging) {
     		if($scope.isLoading){
     			return;
@@ -132,13 +132,20 @@ angular.module('contactmgrApp')
     		count: PAGE_SIZE // Count per page
     	}, {
     		counts: [],
-    		//total: dummyData.length, // For dummy data
-    		total: $scope.total, // For real data
+    		total: dummyData.length, // For dummy data
+    		//total: $scope.total, // For real data
     		getData: function ($defer, params) {
     			$scope.currentPage = params.page();
     			$defer.resolve($scope.contacts); // For real data
     			//$defer.resolve($scope.contacts = dummyData.slice((params.page() - 1) * params.count(), params.page() * params.count())); // For dummy data
     			$scope.searchContacts(true);
+    			
+    			$scope.checkboxes = {
+    		        'checked': false, 
+    		        items: {}
+    		    };
+    			
+    			$scope.checkedIds = '';
     		}
     	});
     	
@@ -210,11 +217,5 @@ angular.module('contactmgrApp')
             	$scope.checkedIds = $scope.checkedIds.substr(0, $scope.checkedIds.length - 1); 
             }
         }, true);
-        
-    	$scope.company_name = 'KMS Technology';
-    	$scope.company_message = 'Bright Minds, Brilliant Solutions';
-    	$scope.company_phone = '';
-    	$scope.company_fax = '';
-    	$scope.company_website = 'kms-technology.com';
     });
 
