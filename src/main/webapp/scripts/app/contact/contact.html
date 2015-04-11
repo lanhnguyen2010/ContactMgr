@@ -1,153 +1,152 @@
 <div ng-cloak>
-	<a href="#contact/new" class="btn btn-default" translate="contact.button.add-contact">Add Contact</a>
+    <a href="#contact/new" class="btn btn-default" translate="contact.button.add-contact">Add Contact</a>
 
-	<hr>
+    <hr>
 
-	<form name="contact_form" novalidate class="form-horizontal"
-		role="form" ng-submit="searchContacts(false)">
-		<div class="container">
-			<div class="row">
-				<div class="form-group col-sm-6">
-					<label for="name" class="control-label col-sm-3"
-						translate="contact.contact-field.name">Name</label>
-					<div class="col-sm-9">
-						<input type="text" name="name" class="form-control" ng-model="filter.name">
-					</div>
-				</div>
-				<div class="form-group col-sm-6">
-					<label for="jobtitle" class="control-label col-sm-3"
-						translate="contact.contact-field.job-title">Job Title</label>
-					<div class="col-sm-9">
-						<input type="text" class="form-control" name="jobtitle" ng-model="filter.jobtitle">
-					</div>
-				</div>
-			</div>
-			
-			<div class="row">
-				<div class="form-group col-sm-6">
-					<label for="mobile" class="control-label col-sm-3"
-						translate="contact.contact-field.mobile">Mobile</label>
-					<div class="col-sm-9">
-						<input type="text" class="form-control" name="mobile" ng-model="filter.mobile">
-					</div>
-				</div>
-				<div class="form-group col-sm-6">
-					<label for="department" class="control-label col-sm-3"
-						translate="contact.contact-field.department">Department</label>
-					<div class="col-sm-9">
-						<input type="text" class="form-control" name="department" ng-model="filter.department">
-					</div>
+    <form name="contact_form" novalidate class="form-horizontal"
+        role="form" ng-submit="searchContacts(false)">
+        <div class="container">
+            <div class="row">
+                <div class="form-group col-sm-6">
+                    <label for="name" class="control-label col-sm-3"
+                        translate="contact.contact-field.name">Name</label>
+                    <div class="col-sm-9">
+                        <input type="text" name="name" class="form-control" ng-model="filter.name">
+                    </div>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label for="jobtitle" class="control-label col-sm-3"
+                        translate="contact.contact-field.job-title">Job Title</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" name="jobtitle" ng-model="filter.jobtitle">
+                    </div>
+                </div>
+            </div>
 
-				</div>
-			</div>
+            <div class="row">
+                <div class="form-group col-sm-6">
+                    <label for="mobile" class="control-label col-sm-3"
+                        translate="contact.contact-field.mobile">Mobile</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" name="mobile" ng-model="filter.mobile">
+                    </div>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label for="department" class="control-label col-sm-3"
+                        translate="contact.contact-field.department">Department</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" name="department" ng-model="filter.department">
+                    </div>
 
-			<div class="row">
-				<div class="form-group col-sm-6">
-					<label for="email" class="control-label col-sm-3"
-						translate="contact.contact-field.email">Email</label>
-					<div class="col-sm-9">
-						<input type="text" class="form-control" ng-model="filter.email">
-					</div>
-				</div>
-				<div class="form-group col-sm-6">
-					<label for="company" class="control-label col-sm-3"
-						translate="contact.contact-field.company">Company</label>
-					<div class="col-sm-9">
-						<select class="form-control">
-							<option value=""></option>
-							<option value="KMS">KMS Company</option>
-							<option value="KMS">KMS Company1</option>
-							<option value="KMS">KMS Company2</option>
-						</select>
-					</div>
-				</div>
-			</div>
-			
-			<div class="form-group">
-				<button type="submit" class="btn btn-default search-contact-button" translate="contact.button.search">
-					Search
-				</button>
-			</div>
-		</div>
-	</form>
+                </div>
+            </div>
 
-	<hr>
-	<div ng-hide="contacts.length">
-		No result
-	</div>
-	<div ng-show="contacts.length">
-		<div>Search Results</div>
+            <div class="row">
+                <div class="form-group col-sm-6">
+                    <label for="email" class="control-label col-sm-3"
+                        translate="contact.contact-field.email">Email</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" ng-model="filter.email">
+                    </div>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label for="company" class="control-label col-sm-3"
+                        translate="contact.contact-field.company">Company</label>
+                    <div class="col-sm-9">
+                        <select class="form-control" ng-model="filter.company">
+                            <option ng-repeat="company in companies" value="{{company.name}}">{{company.name}}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
 
-		<button class="btn btn-default pull-right delete-contact-button"
-				translate="contact.button.delete" 
-				ng-click="deleteContacts()" 
-				ng-disabled="!checkedIds.length">
-			Delete
-		</button>		
-		<table ng-table="contactsTableParams" class="table">
-			<th>
-				<input type="checkbox" ng-model="checkboxes.checked" 
-						id="select_all" name="filter-checkbox" value="" />
-			</th>
-			<th class="data-table-title" translate="contact.contact-field.name">Name</th>
-			<th class="data-table-title" translate="contact.contact-field.mobile">Mobile</th>
-			<th class="data-table-title" translate="contact.contact-field.email">E-mail</th>
-			<th class="data-table-title" translate="contact.contact-field.job-title">Job Title</th>
-			<th class="data-table-title" translate="contact.contact-field.department">Department</th>
-			<th class="data-table-title" translate="contact.contact-field.company">Company</th>
-			
-			<tr ng-repeat="contact in $data">
-				<td width="30" style="text-align: left"
-					header="'ng-table/headers/checkbox.html'">
-					<input type="checkbox" ng-model="checkboxes.items[contact.id]" />
-				</td>
-				<td data-title="'Name'">{{contact.firstName}}</td>
-				<td data-title="'Mobile'">{{contact.mobile}}</td>
-				<td data-title="'Email'">{{contact.email}}</td>
-				<td data-title="'Job Title'">{{contact.work.title}}</td>
-				<td data-title="'Department'">{{contact.work.department}}</td>
-				<td data-title="'Company'">
-					<a href="" data-toggle="modal" data-target="#myModal" ng-click="setSelectedContact(contact)">{{contact.work.company.name}}</a>
-				</td>
-			</tr>
-		</table>
-	</div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-default search-contact-button" translate="contact.button.search">
+                    Search
+                </button>
+            </div>
+        </div>
+    </form>
 
-	<!-- Modal -->
-		<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-			aria-labelledby="myModalLabel" aria-hidden="true">
-			<div class="vertical-alignment-helper">
-				<div class="modal-dialog vertical-align-center">
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal">
-								<span aria-hidden="true">&times; </span> <span class="sr-only">Close</span>
-							</button>
-							<h3 class="modal-title" id="myModalLabel" style="color: white">Company
-								Information</h3>
-						</div>
-						<div class="modal-body">
+    <hr>
+    <div ng-hide="contacts.length">
+        No result
+    </div>
+    <div ng-show="contacts.length">
+        <div>Search Results</div>
 
-							<div class="container-fluid">
-								<div class="row">
-									<div class="col-md-6">
-										Name: {{selectedContact.work.company.name}} </br> Logo </br> </br> Message: {{selectedContact.work.company.message}} </br>
-										Website: <a href="">{{selectedContact.work.company.website}}</a> </br> Phone: {{selectedContact.mobile}}</br> Fax: {{selectedContact.mobile}}</br>
+        <button class="btn btn-default pull-right delete-contact-button"
+                translate="contact.button.delete"
+                ng-click="deleteContacts()"
+                ng-disabled="!checkedIds.length">
+            Delete
+        </button>
+        <table ng-table="contactsTableParams" class="table">
+            <th>
+                <input type="checkbox" ng-model="checkboxes.checked"
+                        id="select_all" name="filter-checkbox" value="" />
+            </th>
+            <th class="data-table-title">ID</th>
+            <th class="data-table-title" translate="contact.contact-field.name">Name</th>
+            <th class="data-table-title" translate="contact.contact-field.mobile">Mobile</th>
+            <th class="data-table-title" translate="contact.contact-field.email">E-mail</th>
+            <th class="data-table-title" translate="contact.contact-field.job-title">Job Title</th>
+            <th class="data-table-title" translate="contact.contact-field.department">Department</th>
+            <th class="data-table-title" translate="contact.contact-field.company">Company</th>
 
-									</div>
-									<div class="col-md-6">
-										</br> Addr. line 1: </br> Addr. line 2: </br> City: </br> State: </br> Zip Code: </br>
-										Country: </br>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-primary"
-								data-dismiss="modal">Close</button>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+            <tr ng-repeat="contact in $data">
+                <td width="30" style="text-align: left"
+                    header="'ng-table/headers/checkbox.html'">
+                    <input type="checkbox" ng-model="checkboxes.items[contact.id]" />
+                </td>
+                <td>{{contact.id}}</td>
+                <td>{{contact.firstName}}</td>
+                <td>{{contact.mobile}}</td>
+                <td>{{contact.email}}</td>
+                <td>{{contact.work.title}}</td>
+                <td>{{contact.work.department}}</td>
+                <td>
+                    <a href="" data-toggle="modal" data-target="#myModal" ng-click="setSelectedContact(contact)">{{contact.work.company.name}}</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+            aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="vertical-alignment-helper">
+                <div class="modal-dialog vertical-align-center">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">
+                                <span aria-hidden="true">&times; </span> <span class="sr-only">Close</span>
+                            </button>
+                            <h3 class="modal-title" id="myModalLabel" style="color: white">Company
+                                Information</h3>
+                        </div>
+                        <div class="modal-body">
+
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        Name: {{selectedContact.work.company.name}} </br> Logo </br> </br> Message: {{selectedContact.work.company.message}} </br>
+                                        Website: <a href="">{{selectedContact.work.company.website}}</a> </br> Phone: {{selectedContact.mobile}}</br> Fax: {{selectedContact.mobile}}</br>
+
+                                    </div>
+                                    <div class="col-md-6">
+                                        </br> Addr. line 1: </br> Addr. line 2: </br> City: </br> State: </br> Zip Code: </br>
+                                        Country: </br>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary"
+                                data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 </div>

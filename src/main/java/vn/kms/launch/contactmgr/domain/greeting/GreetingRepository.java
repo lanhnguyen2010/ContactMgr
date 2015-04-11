@@ -10,5 +10,5 @@ import org.springframework.stereotype.Repository;
 public interface GreetingRepository extends CrudRepository<Greeting, Integer> {
     Greeting findByCode(String code);
 
-    int deleteByCode(String code);
+    //int deleteByCode(String code);
 }

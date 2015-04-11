@@ -1,13 +1,18 @@
 'use strict';
 
 angular.module('contactmgrApp')
-    .service('ContactService', function($http, MULTI_DELETE_CONTACT_API, SEARCH_CONTACT_API) {
+    .service('ContactService', function($http) {
     	
     	this.deleteContacts = function (ids) {
-    		return $http.delete(MULTI_DELETE_CONTACT_API + ids, {});
+    		return $http.delete('/api/contacts?contactIds=' + ids, {});
     	};
     	
     	this.searchContacts = function (filter, page, pageSize) {
-    		return $http.post(SEARCH_CONTACT_API, {filter: filter, page: page, pagesize: pageSize});
+    		var jsonString = JSON.stringify({contact: filter, page: page, pageSize: pageSize});
+    		return $http.post('/api/contacts/search?data=' + jsonString, {});
+    	};
+    	
+    	this.getCompanies = function () {
+    		return $http.get('/api/companies/names');
     	};
     });
