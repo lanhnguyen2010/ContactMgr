@@ -86,7 +86,6 @@
                 <input type="checkbox" ng-model="checkboxes.checked"
                         id="select_all" name="filter-checkbox" value="" />
             </th>
-            <th class="data-table-title">ID</th>
             <th class="data-table-title" translate="contact.contact-field.name">Name</th>
             <th class="data-table-title" translate="contact.contact-field.mobile">Mobile</th>
             <th class="data-table-title" translate="contact.contact-field.email">E-mail</th>
@@ -99,7 +98,6 @@
                     header="'ng-table/headers/checkbox.html'">
                     <input type="checkbox" ng-model="checkboxes.items[contact.id]" />
                 </td>
-                <td>{{contact.id}}</td>
                 <td>{{contact.firstName}}</td>
                 <td>{{contact.mobile}}</td>
                 <td>{{contact.email}}</td>
