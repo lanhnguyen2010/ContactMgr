@@ -1,11 +1,12 @@
 package vn.kms.launch.contactmgr.domain;
 
+import java.io.Serializable;
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
-import java.io.Serializable;
-import java.util.Date;
 
 /**
  * Created by trungnguyen on 4/5/15.

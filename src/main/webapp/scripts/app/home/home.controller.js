@@ -1,6 +1,7 @@
 'use strict';
 
 angular.module('contactmgrApp')
-    .controller('MainController', function($scope) {
+    .controller('HomeController', function($scope) {
+
     	
     });

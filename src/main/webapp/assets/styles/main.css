@@ -54,8 +54,8 @@ Hide ng-cloak on page load, https://docs.angularjs.org/api/ng/directive/ngCloak
 
 .banner {
     display: inline-block;
-    width: 512px;
-    height: 512px;
+    width: 256px;
+    height: 256px;
     background: url("../images/banner.png") no-repeat center top;
     background-size: contain;
 }
@@ -70,4 +70,34 @@ Hide ng-cloak on page load, https://docs.angularjs.org/api/ng/directive/ngCloak
 .search-contact-button {
 	display: block;
 	margin: auto;
+}
+
+.delete-contact-button {
+	margin-bottom: 10px;
+}
+
+.data-table-title {
+	text-align: left !important;
+}
+
+.modal-header {
+  background-color: #0480be;
+  font-coler: #0000CD;
+}
+
+.modal {
+  text-align: center;
+}
+
+.modal:before {
+  display: inline-block;
+  vertical-align: middle;
+  content: " ";
+  height: 20%;
+}
+
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
 }

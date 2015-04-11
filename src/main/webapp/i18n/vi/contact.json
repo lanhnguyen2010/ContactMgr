@@ -6,11 +6,11 @@
     		"delete": "Xóa"
     	},
     	"contact-field": {
-    		"name": "Tên",
+    		"name": "Tên nhân viên",
     		"mobile": "Điện thoại",
     		"email": "E-mail",
     		"job-title": "Chức vụ",
-    		"department": "Bộ phận",
+    		"department": "Phòng ban",
     		"company": "Tên công ty"
     	}
     }
