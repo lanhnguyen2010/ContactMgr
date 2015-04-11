@@ -1,130 +1,85 @@
 'use strict';
 
 angular.module('contactmgrApp')
-
+    .controller('ContactController', function($scope, ContactService, ngTableParams) {
+    	var refresh = true; // Do not search when accessing page the first time
     	
-    	$scope.filter = {
-    		name: '',
-    		mobile: '',
-    		jobTitle: '',
-    		department:'',
-    		email:'',
-    		company:'',
-    		page:''
-    	};
-    	
-    	var PAGE_SIZE = 10;
-    	$scope.currentPage = 1;
-    	//$scope.total = dummyData.length; // For dummy data
-    	$scope.searchContacts = function (isPaging) {
-    		if($scope.isLoading){
-    			return;
-    		}
-    		
-    		$scope.isLoading = true;
-    		
-    		ContactService.searchContacts($scope.filter, $scope.currentPage, PAGE_SIZE)
-    		.success(function(data, status) {
-    			$scope.contacts = data['contact'];
-    			$scope.total = data['total'];
-    			$scope.isLoading = false;
-    			
-    			if (!isPaging) {
-    				$scope.contactsTableParams.reload();
-    			}
-    		})
-    		.error(function(data, status) {
-    			console.log(status);
-    		});
-    	}
-    	
-    	$scope.contactsTableParams = new ngTableParams({
-    		page: 1, // Show the first page
-    		count: 10 // Count per page
-    		count: PAGE_SIZE // Count per page
-    	}, {
-    		total: data.length, // Length of data
-    		getData: function($defer, params) {
-    			$defer.resolve($scope.contacts = data.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-    		counts: [],
-    		total: dummyData.length, // For dummy data
-    		//total: $scope.total, // For real data
-    		getData: function ($defer, params) {
-    			$scope.currentPage = params.page();
-    			$defer.resolve($scope.contacts); // For real data
-    			//$defer.resolve($scope.contacts = dummyData.slice((params.page() - 1) * params.count(), params.page() * params.count())); // For dummy data
-    			$scope.searchContacts(true);
-    			
-    			$scope.checkboxes = {
-    		        'checked': false, 
-    		        items: {}
-    		    };
-    			
-    			$scope.checkedIds = '';
-    		}
-    	});
+    	var resetCheckboxes = function () {
+        	$scope.checkboxes = {
+	            'checked': false,
+	            items: {}
+            };
 
-    	var inArray = Array.prototype.indexOf 
-    	? function (val, arr) {
-    		return arr.indexOf
-    	} 
-    	: function (val, arr) {
-    		var i = arr.length; 
-
-    		while (i--) {
-    			if (arr[i] === val) {
-    				return i;
-    			}
-    	
-    	$scope.selectedContact = {};
-    	$scope.setSelectedContact = function(contact) {
-    		$scope.selectedContact = contact;
-    	};
-    	
-    	// Delete contacts
-    	$scope.deleteContacts = function () {
-    		if (confirm("Do you want to delete?")) {
-	    		ContactService.deleteContacts($scope.checkedIds)
-	    		.success(function (data, status) {
-	    			console.log("Deleted " + data + " contact(s)");
-	    			
-	    			$scope.contactsTableParams.reload();
-	    		})
-	    		.error(function (data, status) {
-	    			console.log("Error", status);
-	    		});
-    		}
-
-    		return -1;
-    	};
-
-    	$scope.names = function(column) {
-            var def = $q.defer(),
-                arr = [],
-                names = [];
-
-            angular.forEach(data, function (item) {
-                if (inArray(item.name, arr) === -1) {
-                    arr.push(item.name);
-                    names.push({
-                        'id': item.name,
-                        'title': item.name
-                    });
-                }
-            });
-
-            def.resolve(names);
-
-            return def;
+            $scope.checkedIds = '';
         };
+        
+        resetCheckboxes();
+        
+        // Get companies to fill select box
+        $scope.companies = [];
+        ContactService.getCompanies()
+        .success(function (data, status) {
+        	$scope.companies = data;
+        })
+        .error(function (data, status) {
+        	console.log('Error', status);
+        });
+    	
+        $scope.filter = {
+            name: '',
+            mobile: '',
+            jobTitle: '',
+            department:'',
+            email:'',
+            company:''
+        };
+        
+        var PAGE_SIZE = 10;
+        $scope.contacts = [];
+        $scope.total = 0;
+        $scope.searchContacts = function () {
+        	$scope.contactsTableParams.reload();
+        }
+        
+        $scope.contactsTableParams = new ngTableParams({
+            page: 1, // Show the first page
+            count: PAGE_SIZE // Count per page
+        }, {
+            counts: [],
+            total: $scope.total,
+            getData: function ($defer, params) {
+            	if (!refresh) {
+            		ContactService.searchContacts($scope.filter, params.page(), PAGE_SIZE)
+                    .success(function(data, status) {
+                        $scope.contacts = data['contact'];
+                        $scope.total = data['total'];
+                        
+                        params.total($scope.total);
+                        $defer.resolve($scope.contacts);
+                        
+                        resetCheckboxes();
+                    })
+                    .error(function(data, status) {
+                        console.log('Error', status);
+                    });
+            	} else {
+            		refresh = false;	
+            	}
+            }
+        });        
 
-        $scope.checkboxes = {
-    	    'checked': false, 
-    	    items: {}
-     	};
-
-     	$scope.checkedIds = [];
-     	$scope.checkedIds = '';
+        // Delete contacts
+        $scope.deleteContacts = function () {
+            if (confirm("Do you want to delete?")) {
+                ContactService.deleteContacts($scope.checkedIds)
+                .success(function (data, status) {
+                    $scope.searchContacts();
+                })
+                .error(function (data, status) {
+                    console.log("Error", status);
+                });
+            }
+        };        
 
         // watch for check all checkbox
         $scope.$watch('checkboxes.checked', function(value) {
@@ -157,19 +112,22 @@ angular.module('contactmgrApp')
             angular.element(document.getElementById("select_all")).prop("indeterminate", (checked != 0 && unchecked != 0));
 
             // Create checked id list
-            $scope.checkedIds = [];
             $scope.checkedIds = '';
             for (var item in $scope.checkboxes.items) {
-            	if ($scope.checkboxes.items[item]) {
-            		$scope.checkedIds.push(parseInt(item));
-            		$scope.checkedIds = $scope.checkedIds + item + ',';
-            	}
+                if ($scope.checkboxes.items[item]) {
+                    $scope.checkedIds = $scope.checkedIds + item + ',';
+                }
             }
-            
+
             // Remove the final ','
             if ($scope.checkedIds.length > 0) {
-            	$scope.checkedIds = $scope.checkedIds.substr(0, $scope.checkedIds.length - 1); 
+                $scope.checkedIds = $scope.checkedIds.substr(0, $scope.checkedIds.length - 1);
             }
         }, true);
+        
+        // Show company info into popup
+        $scope.selectedContact = {};
+        $scope.setSelectedContact = function(contact) {
+            $scope.selectedContact = contact;            
+        };
     });
-

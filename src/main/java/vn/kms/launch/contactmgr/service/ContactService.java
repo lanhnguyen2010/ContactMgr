@@ -97,43 +97,41 @@ public class ContactService {
 	}
 	
 	public HashMap<String, Object> searchContacts(String data) throws JSONException{
-
-        JSONObject jOb = new JSONObject(data);
-
+        JSONObject jOb        = new JSONObject(data);
         JSONObject jObContact = (JSONObject) jOb.get("contact");
-
-        String name = jObContact.getString("name");
-
-        String mobile = jObContact.getString("mobile");
-
-        String email = jObContact.getString("email");
-
-        String jobTitle = jObContact.getString("department");
-
-        String department = jObContact.getString("department");
-
-        String company = jObContact.getString("company");
-
-        int page = jOb.getInt("page");
-
-        int pageSize = jOb.getInt("pagesize");
+        String name           = jObContact.getString("name");
+        String mobile         = jObContact.getString("mobile");
+        String email          = jObContact.getString("email");
+        String jobTitle       = jObContact.getString("jobTitle");
+        String department     = jObContact.getString("department");
+        String company        = jObContact.getString("company");
+        int page              = jOb.getInt("page");
+        int pageSize          = jOb.getInt("pageSize");
 
         List<Contact> contacts = contactRepo.searchContacts(name, mobile, email, jobTitle, department, company);
-
-        if(page*pageSize > contacts.size()){
-            page = contacts.size()/pageSize;
+        int contactsSize = contacts.size();
+        int totalPages = contactsSize / pageSize;
+        
+        if (contactsSize % pageSize != 0) {
+        	totalPages++;
         }
-        if(page<0){
-            page = 0;
+        
+        if (page > totalPages) {
+        	page = totalPages;
         }
-
-        List<Contact> resultContacts = new ArrayList<Contact>(contacts.subList(page*pageSize, (page + 1) * pageSize));
-        JSONObject result = new JSONObject();
+        
+        if (page < 1) {
+        	page = 1;
+        }
+                
+        int fromIndex = (page - 1) * pageSize;
+        int toIndex = (page * pageSize > contactsSize) ? contactsSize : page * pageSize;
+        List<Contact> resultContacts = new ArrayList<Contact>(contacts.subList(fromIndex, toIndex));        
 
         HashMap<String, Object> obContact = new HashMap<String, Object>();
-        obContact.put("contact",resultContacts);
-        obContact.put("total",contacts.size());
+        obContact.put("contact", resultContacts);
+        obContact.put("total", contactsSize);
+        
         return obContact;
-
     };
 }
