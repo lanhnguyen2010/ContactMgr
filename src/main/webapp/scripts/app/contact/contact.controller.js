@@ -97,8 +97,10 @@ angular.module('contactmgrApp')
     		page: 1, // Show the first page
     		count: 10 // Count per page
     	}, {
+    		counts: [],
     		total: data.length, // Length of data
     		getData: function($defer, params) {
+    			console.log("page: ", params.page());
     			$defer.resolve($scope.contacts = data.slice((params.page() - 1) * params.count(), params.page() * params.count()));
     		}
     	});
