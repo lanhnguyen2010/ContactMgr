@@ -2,6 +2,7 @@ package vn.kms.launch.contactmgr.domain.contact;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.validation.constraints.Pattern;
 
 @Embeddable
 public class Address {
@@ -18,9 +19,11 @@ public class Address {
 	@Column(name = "STATE")
 	private String state;
 
+	@Pattern(regexp = "([0-9]{7})", message = "{validation.postalCode.message}")
 	@Column(name = "POSTAL_CODE")
 	private Integer postalCode;
 
+	@Pattern(regexp = "([A-Z]{2})", message = "{validation.country.message}")
 	@Column(name = "COUNTRY")
 	private String country;
 
@@ -71,5 +74,4 @@ public class Address {
 	public void setCountry(String country) {
 		this.country = country;
 	}
-
 }

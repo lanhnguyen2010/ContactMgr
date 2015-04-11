@@ -1,100 +1,6 @@
 'use strict';
 
 angular.module('contactmgrApp')
-    .controller('ContactController', function($scope, $http, ngTableParams) {
-    	var data = [{
-    .controller('ContactController', function($scope, $http, ContactService, ngTableParams) {
-    	var dummyData = [{
-    		id: 1,
-    		name: 'Nguyen Van A',
-    		mobile: '0935738212',
-    		email: 'a@gmail.com',
-    		jobTitle: 'Software Engineer',
-    		department: 'R&D',
-    		company: 'KMS Technology'
-    	}, {
-    		id: 2,
-    		name: 'Nguyen Van A',
-    		name: 'Tran Van B',
-    		mobile: '0935738212',
-    		email: 'a@gmail.com',
-    		jobTitle: 'Software Engineer',
-    		department: 'R&D',
-    		company: 'KMS Technology'
-    	}, {
-    		id: 3,
-    		name: 'Nguyen Van A',
-    		name: 'Le Thi Hong Van',
-    		mobile: '0935738212',
-    		email: 'a@gmail.com',
-    		jobTitle: 'Software Engineer',
-    		department: 'R&D',
-    		company: 'KMS Technology'
-    	}, {
-    		id: 4,
-    		name: 'Nguyen Van A',
-    		mobile: '0935738212',
-    		email: 'a@gmail.com',
-    		jobTitle: 'Software Engineer',
-    		department: 'R&D',
-    		company: 'KMS Technology'
-    	}, {
-    		id: 5,
-    		name: 'Nguyen Van A',
-    		mobile: '0935738212',
-    		email: 'a@gmail.com',
-    		jobTitle: 'Software Engineer',
-    		department: 'R&D',
-    		company: 'KMS Technology'
-    	}, {
-    		id: 6,
-    		name: 'Nguyen Van A',
-    		mobile: '0935738212',
-    		email: 'a@gmail.com',
-    		jobTitle: 'Software Engineer',
-    		department: 'R&D',
-    		company: 'KMS Technology'
-    	}, {
-    		id: 7,
-    		name: 'Nguyen Van A',
-    		mobile: '0935738212',
-    		email: 'a@gmail.com',
-    		jobTitle: 'Software Engineer',
-    		department: 'R&D',
-    		company: 'KMS Technology'
-    	}, {
-    		id: 8,
-    		name: 'Nguyen Van A',
-    		mobile: '0935738212',
-    		email: 'a@gmail.com',
-    		jobTitle: 'Software Engineer',
-    		department: 'R&D',
-    		company: 'KMS Technology'
-    	}, {
-    		id: 9,
-    		name: 'Nguyen Van A',
-    		mobile: '0935738212',
-    		email: 'a@gmail.com',
-    		jobTitle: 'Software Engineer',
-    		department: 'R&D',
-    		company: 'KMS Technology'
-    	}, {
-    		id: 10,
-    		name: 'Nguyen Van A',
-    		mobile: '0935738212',
-    		email: 'a@gmail.com',
-    		jobTitle: 'Software Engineer',
-    		department: 'R&D',
-    		company: 'KMS Technology'
-    	}, {
-    		id: 11,
-    		name: 'Nguyen Van A',
-    		mobile: '0935738212',
-    		email: 'a@gmail.com',
-    		jobTitle: 'Software Engineer',
-    		department: 'R&D',
-    		company: 'KMS Technology'
-    	}];
 
     	
     	$scope.filter = {
@@ -109,7 +15,7 @@ angular.module('contactmgrApp')
     	
     	var PAGE_SIZE = 10;
     	$scope.currentPage = 1;
-    	$scope.total = dummyData.length; // For dummy data
+    	//$scope.total = dummyData.length; // For dummy data
     	$scope.searchContacts = function (isPaging) {
     		if($scope.isLoading){
     			return;
@@ -141,13 +47,20 @@ angular.module('contactmgrApp')
     		getData: function($defer, params) {
     			$defer.resolve($scope.contacts = data.slice((params.page() - 1) * params.count(), params.page() * params.count()));
     		counts: [],
-    		//total: dummyData.length, // For dummy data
-    		total: $scope.total, // For real data
+    		total: dummyData.length, // For dummy data
+    		//total: $scope.total, // For real data
     		getData: function ($defer, params) {
     			$scope.currentPage = params.page();
     			$defer.resolve($scope.contacts); // For real data
     			//$defer.resolve($scope.contacts = dummyData.slice((params.page() - 1) * params.count(), params.page() * params.count())); // For dummy data
     			$scope.searchContacts(true);
+    			
+    			$scope.checkboxes = {
+    		        'checked': false, 
+    		        items: {}
+    		    };
+    			
+    			$scope.checkedIds = '';
     		}
     	});
 
@@ -174,6 +87,8 @@ angular.module('contactmgrApp')
 	    		ContactService.deleteContacts($scope.checkedIds)
 	    		.success(function (data, status) {
 	    			console.log("Deleted " + data + " contact(s)");
+	    			
+	    			$scope.contactsTableParams.reload();
 	    		})
 	    		.error(function (data, status) {
 	    			console.log("Error", status);
@@ -256,11 +171,5 @@ angular.module('contactmgrApp')
             	$scope.checkedIds = $scope.checkedIds.substr(0, $scope.checkedIds.length - 1); 
             }
         }, true);
-        
-    	$scope.company_name = 'KMS Technology';
-    	$scope.company_message = 'Bright Minds, Brilliant Solutions';
-    	$scope.company_phone = '';
-    	$scope.company_fax = '';
-    	$scope.company_website = 'kms-technology.com';
     });
 

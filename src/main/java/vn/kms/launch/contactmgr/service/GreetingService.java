@@ -42,7 +42,7 @@ public class GreetingService {
 
     @Transactional
     public boolean deleteGreeting(String code) {
-        int effected = greetingRepo.deleteByCode(code);
+        int effected = 0;//greetingRepo.deleteByCode(code);
 
         return (effected > 0)? true : false;
     }
