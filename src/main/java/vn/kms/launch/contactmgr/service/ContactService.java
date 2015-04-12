@@ -45,7 +45,7 @@ public class ContactService {
         if (contact == null) {
             return null;
         }
-        
+
         Work work = contact.getWork();
 
         if (work != null) {
@@ -95,8 +95,8 @@ public class ContactService {
 	public int deleteContacts(Integer... ids) {
 		return contactRepo.deleteContacts(ids);
 	}
-	
-	public HashMap<String, Object> searchContacts(String data) throws JSONException{
+
+	public HashMap<String, Object> searchContacts(String data) throws JSONException {
         JSONObject jOb        = new JSONObject(data);
         JSONObject jObContact = (JSONObject) jOb.get("contact");
         String name           = jObContact.getString("name");
@@ -111,27 +111,27 @@ public class ContactService {
         List<Contact> contacts = contactRepo.searchContacts(name, mobile, email, jobTitle, department, company);
         int contactsSize = contacts.size();
         int totalPages = contactsSize / pageSize;
-        
+
         if (contactsSize % pageSize != 0) {
         	totalPages++;
         }
-        
+
         if (page > totalPages) {
         	page = totalPages;
         }
-        
+
         if (page < 1) {
         	page = 1;
         }
-                
+
         int fromIndex = (page - 1) * pageSize;
         int toIndex = (page * pageSize > contactsSize) ? contactsSize : page * pageSize;
-        List<Contact> resultContacts = new ArrayList<Contact>(contacts.subList(fromIndex, toIndex));        
+        List<Contact> resultContacts = new ArrayList<Contact>(contacts.subList(fromIndex, toIndex));
 
         HashMap<String, Object> obContact = new HashMap<String, Object>();
         obContact.put("contact", resultContacts);
         obContact.put("total", contactsSize);
-        
+
         return obContact;
     };
 }

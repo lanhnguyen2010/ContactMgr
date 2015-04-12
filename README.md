@@ -22,7 +22,7 @@ npm install -g grunt-cli
 ```
 npm install -g bower
 ```
-7. Install [MySQL database]
+7. Install [MariaDB database]
 
 ## Building ContactMgr
 1. Clone contactmgr source code from [Assembla Git repo]:
@@ -55,6 +55,11 @@ mvn package
 mvn -Pprod package
 ```
 
+## Migrating Database
+- Go to ```db``` folder
+- Update the correct DB connection and other configurations in ```conf\flyway.config``` file
+- Run command ```flyway migrate``` to migration DB changes
+
 ## Running ContactMgr
 1. Run ConcactMgr application in development 
 ```
@@ -65,20 +70,6 @@ java -jar contactmgr-[version].war
 java -jar contactmgr-[version].war --spring.profiles.active=prod
 ```
 
-## Connect database
-1. Run file contactmgr.sql in src/main/resources to create database
-```
-2. Configure the database connection. The database connection is configured in the files: application-dev.yml or application-prod.yml
-		db.url=[your database url]
-		db.username=[your username database]
-		db.password=[your username database]
-		db.driver=org.mariadb.jdbc.Driver
-Ex:
-        db.url=jdbc:mysql://localhost:3306/contacts_manager
-        db.username=root
-        db.password=123456
-        db.driver=org.mariadb.jdbc.Driver
-		
 [JDK 1.7]: http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html
 [Maven 3.3.x]: http://maven.apache.org/download.cgi
 [git-scm.com]: http://git-scm.com/
@@ -87,6 +78,6 @@ Ex:
 [Node.js]: https://nodejs.org/
 [Bower]: http://bower.io/
 [Grunt Client]: http://gruntjs.com/
-[MySQL database]: http://dev.mysql.com/downloads/
+[MariaDB database]: http://downloads.mariadb.org/
 [Assembla Git repo]: https://www.assembla.com/code/launch-contact-manager/git/nodes/
 [Assembla - Getting started with Git]: https://www.assembla.com/code/launch-contact-manager/git/repo/instructions
