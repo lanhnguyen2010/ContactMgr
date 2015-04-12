@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import vn.kms.launch.contactmgr.domain.contact.Company;
 import vn.kms.launch.contactmgr.domain.contact.Contact;
 import vn.kms.launch.contactmgr.domain.contact.Work;
-import vn.kms.launch.contactmgr.domain.contact.Company;
 import vn.kms.launch.contactmgr.service.ContactService;
 
 @RestController
@@ -32,9 +32,8 @@ public class ContactController {
 
 	/**
 	 * Get detail of an existing contact
-	 * 
-	 * @param id
-	 *            is ID of the contact we need get.
+	 *
+	 * @param id is ID of the contact we need get.
 	 * @return "404 code" if not found or "200 code and data of contact"
 	 */
 	@RequestMapping(value = "/{id}", method = GET)
@@ -54,6 +53,23 @@ public class ContactController {
         
     }
 
+    /**
+     *
+     * @param id
+     * @param contact
+     * @return
+     */
+    @RequestMapping(value = "/{id}", method = PUT)
+    public ResponseEntity<Contact> updateContact(@PathVariable int id, @RequestBody @Valid Contact contact) {
+		Contact returnContact = contactService.saveContact(contact);
+    	
+		if (returnContact == null) { 
+    		return new ResponseEntity<Contact>(returnContact, HttpStatus.BAD_REQUEST);
+    	}
+
+        return new ResponseEntity<Contact>(returnContact, HttpStatus.OK);
+    }
+
 	/**
 	 * Return 404 not found code if not contact associated to ID is not found
 	 * Return 200 success code if deleted successfully
@@ -63,12 +79,12 @@ public class ContactController {
 		
 		int deleteId = contactService.deleteContacts(contactId);
 		//receive  id with method deleteContact() from UI
-		
+
 		if (deleteId == 0) {
 			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
 		}
-		
-		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+
+		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 
 	/**
@@ -83,7 +99,7 @@ public class ContactController {
 			return new ResponseEntity<Integer>(HttpStatus.NOT_FOUND);
 		}
 
-		return new ResponseEntity<Integer>(deleteId, HttpStatus.OK);
+		return new ResponseEntity<Integer>(deleteId,HttpStatus.OK);
 	}
 
 	/**
@@ -92,44 +108,15 @@ public class ContactController {
 	 * @return
 	 */
 	@RequestMapping(method = POST)
-	public ResponseEntity<Void> create(@RequestBody Contact contact) {
-		int idContact = contactService.createContact(contact);
-		if (idContact <= 0) {
-			return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
-		} else {
-			return new ResponseEntity<Void>(HttpStatus.CREATED);
-		}
+	public ResponseEntity<Contact> create(@RequestBody @Valid Contact contact) {
+		
+		Contact returnContact = contactService.saveContact(contact);
+    	
+		if (returnContact == null) { 
+    		return new ResponseEntity<Contact>(returnContact, HttpStatus.BAD_REQUEST);
+    	}
+
+        return new ResponseEntity<Contact>(returnContact, HttpStatus.OK);
 	}
 	
-
-    /**
-     *
-     * @param id
-     * @param contact
-     * @return
-     */
-    @RequestMapping(value = "/{id}", method = PUT)
-    public ResponseEntity<Contact> updateContact(@PathVariable Integer id, @RequestBody @Valid Contact contact) {
-        Work work = contact.getWork();
-
-        if (work != null) {
-            Integer companyId = contact.getWork().getCompanyId();
-            System.out.println(companyId);
-            Company company = contact.getWork().getCompany();
-
-            if (companyId != null){
-                Company com = contactService.getCompany(companyId);
-                if (com == null) {
-                    return new ResponseEntity<Contact>(contact, HttpStatus.BAD_REQUEST);
-                }
-            }
-            if (company != null) {
-                contactService.saveCompany(company);
-            }
-        }
-
-        contactService.saveContact(contact);
-
-        return new ResponseEntity<Contact>(contact, HttpStatus.OK);
-    }
 }

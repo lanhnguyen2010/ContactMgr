@@ -1,43 +1,43 @@
 package vn.kms.launch.contactmgr.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import vn.kms.launch.contactmgr.domain.contact.Company;
 import vn.kms.launch.contactmgr.domain.contact.Contact;
+import vn.kms.launch.contactmgr.domain.contact.Work;
 import vn.kms.launch.contactmgr.repository.CompanyRepository;
 import vn.kms.launch.contactmgr.repository.ContactRepository;
 
 @Service
+@Transactional(readOnly = true)
 public class ContactService {
 	@Autowired
 	private ContactRepository contactRepo;
 
-	@Autowired
-	private CompanyRepository companyRepo;
+    @Autowired
+    private CompanyRepository companyRepo;
 
 	/**
 	 * Get a contact by id
-	 * 
-	 * @param id
-	 *            is ID of the contact we will get.
+	 * @param id is ID of the contact we will get.
 	 * @return a contact if found and null if not found.
 	 */
+	@Transactional
 	public Contact getContact(int id) {
 		return contactRepo.findOne(id);
 	}
-
-    public Company getCompany(Integer id) {
-        return companyRepo.findOne(id);
-    }
 
     @Transactional
     public Contact saveContact(@Valid Contact contact) {
@@ -45,10 +45,37 @@ public class ContactService {
         if (contact == null) {
             return null;
         }
+        
+        Work work = contact.getWork();
+
+        if (work != null) {
+            Integer companyId = contact.getWork().getCompanyId();
+            Company company = contact.getWork().getCompany();
+
+            if (companyId != null) {
+                Company com = getCompany(companyId);
+                if (com == null) {
+                	return null;
+                }
+            }
+            if (company != null) {
+                saveCompany(company);
+            }
+        }
 
         return contactRepo.save(contact);
     }
-    
+
+    @Transactional
+    public Company getCompany(Integer id) {
+        return companyRepo.findOne(id);
+    }
+
+    @Transactional
+    public List<Company> getAllCompany() {
+        return companyRepo.findAll();
+    }
+
     @Transactional
     public Company saveCompany(@Valid Company company) {
 
@@ -58,97 +85,53 @@ public class ContactService {
 
         return companyRepo.save(company);
     }
-	
-	public HashMap<String, Object> searchContacts(String data)
-			throws JSONException {
-
-		JSONObject jOb = new JSONObject(data);
-
-		JSONObject jObContact = (JSONObject) jOb.get("contact");
-
-		String name = jObContact.getString("name");
-
-		String mobile = jObContact.getString("mobile");
-
-		String email = jObContact.getString("email");
-
-		String jobTitle = jObContact.getString("department");
-
-		String department = jObContact.getString("department");
-
-		String company = jObContact.getString("company");
-
-		int page = jOb.getInt("page");
-
-		int pageSize = jOb.getInt("pagesize");
-
-		List<Contact> contacts = contactRepo.searchContacts(name, mobile,
-				email, jobTitle, department, company);
-
-		HashMap<String, Object> obContact = new HashMap<String, Object>();
-		obContact.put("contact", contacts);
-		obContact.put("total", contacts.size());
-		return obContact;
-
-	};
 
 	/**
 	 * Service form function delete
-	 * 
 	 * @param ids
-	 * @return total contact are deleted
+	 * @return
 	 */
 	@Transactional
 	public int deleteContacts(Integer... ids) {
 		return contactRepo.deleteContacts(ids);
 	}
+	
+	public HashMap<String, Object> searchContacts(String data) throws JSONException{
+        JSONObject jOb        = new JSONObject(data);
+        JSONObject jObContact = (JSONObject) jOb.get("contact");
+        String name           = jObContact.getString("name");
+        String mobile         = jObContact.getString("mobile");
+        String email          = jObContact.getString("email");
+        String jobTitle       = jObContact.getString("jobTitle");
+        String department     = jObContact.getString("department");
+        String company        = jObContact.getString("company");
+        int page              = jOb.getInt("page");
+        int pageSize          = jOb.getInt("pageSize");
 
-	@Transactional
-	public int createContact(Contact contact) {
-		// contact.setId(null);
-		Integer companyId = contact.getWork().getCompanyId();
-		if (companyId != null && companyId != 0) {
-			// create a new contact with existing company
-			return createContactWithExistCompany(contact);
-		} else {
-			if (contact.getWork().getCompany() == null) {
-				// create a new contact without company
-				return createContactWithoutCompany(contact);
-			} else {
-				// create a new contact with new company
-				return createContactWithNewCompany(contact);
-			}
-		}
-	}
+        List<Contact> contacts = contactRepo.searchContacts(name, mobile, email, jobTitle, department, company);
+        int contactsSize = contacts.size();
+        int totalPages = contactsSize / pageSize;
+        
+        if (contactsSize % pageSize != 0) {
+        	totalPages++;
+        }
+        
+        if (page > totalPages) {
+        	page = totalPages;
+        }
+        
+        if (page < 1) {
+        	page = 1;
+        }
+                
+        int fromIndex = (page - 1) * pageSize;
+        int toIndex = (page * pageSize > contactsSize) ? contactsSize : page * pageSize;
+        List<Contact> resultContacts = new ArrayList<Contact>(contacts.subList(fromIndex, toIndex));        
 
-	private int createContactWithNewCompany(Contact contact) {
-		Company newCompany = companyRepo.save(contact.getWork().getCompany());
-		if (newCompany != null) {
-			contact.getWork().setCompany(newCompany);
-			contact.getWork().setCompanyId(newCompany.getId());
-			Contact newContact = contactRepo.save(contact);
-			if (newContact != null) {
-				return newContact.getId();
-			}
-		}
-		return 0;
-	}
-
-	private int createContactWithExistCompany(Contact contact) {
-		Company company = companyRepo.findOne(contact.getWork().getCompanyId());
-		if (company != null) {
-			Contact newContact = contactRepo.save(contact);
-			return newContact.getId();
-		}
-		return 0;
-	}
-
-	private int createContactWithoutCompany(Contact contact) {
-		Contact newContact = contactRepo.save(contact);
-		if (newContact != null) {
-			return newContact.getId();
-		}
-		return 0;
-
-	}
+        HashMap<String, Object> obContact = new HashMap<String, Object>();
+        obContact.put("contact", resultContacts);
+        obContact.put("total", contactsSize);
+        
+        return obContact;
+    };
 }
