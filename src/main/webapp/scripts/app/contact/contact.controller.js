@@ -77,6 +77,7 @@ angular.module('contactmgrApp')
 	    		ContactService.deleteContacts($scope.checkedIds)
 	    		.success(function (data, status) {
 	    			console.log("Deleted " + data + " contact(s)");
+	    			$scope.searchContacts(false);
 	    			$scope.contactsTableParams.reload();
 	    		})
 	    		.error(function (data, status) {

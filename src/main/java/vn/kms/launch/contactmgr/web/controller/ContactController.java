@@ -73,10 +73,10 @@ public class ContactController {
 	 * Return 404 not found code if not contact associated to ID is not found
 	 * Return 200 success code if deleted successfully
 	 */
-	@RequestMapping(value = "/{contactId}", method = DELETE)
-	public ResponseEntity<Void> deleteContact(@PathVariable int contactId) {
+	@RequestMapping(value = "/{id}", method = DELETE)
+	public ResponseEntity<Void> deleteContact(@PathVariable int id) {
 		
-		int deleteId = contactService.deleteContacts(contactId);
+		int deleteId = contactService.deleteContacts(id);
 		//receive  id with method deleteContact() from UI
 
 		if (deleteId == 0) {
@@ -91,13 +91,13 @@ public class ContactController {
 	 * Return 200 success code if deleted successfully
 	 */
 	@RequestMapping(method = DELETE)
-	public ResponseEntity<Integer> deleteContacts(@RequestParam int... contactIds) {
+	public ResponseEntity<Integer> deleteContacts(@RequestParam int... ids) {
 
-		if(contactIds.length == 0){
+		if(ids.length == 0){
 			return new ResponseEntity<Integer>(HttpStatus.BAD_REQUEST);
 		}
 		
-		int deleteId = contactService.deleteContacts(contactIds);
+		int deleteId = contactService.deleteContacts(ids);
 		if (deleteId == 0) {
 			return new ResponseEntity<Integer>(HttpStatus.NOT_FOUND);
 		}
