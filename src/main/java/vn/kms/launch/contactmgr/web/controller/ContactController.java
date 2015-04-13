@@ -9,7 +9,6 @@ import java.util.HashMap;
 
 import javax.validation.Valid;
 
-import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,8 +47,14 @@ public class ContactController {
     @RequestMapping(value="/search", method = POST)
     public HashMap<String, Object> searchContact(@RequestParam ("page") int page,
                                               @RequestParam (value="pageSize", defaultValue="10") int pageSize,
-                                              @RequestBody ContactSearchCriteria criteria) throws JSONException {
-           return contactService.searchContacts(criteria, page, pageSize);
+                                              @RequestBody ContactSearchCriteria criteria) {
+        return contactService.searchContacts(criteria, page, pageSize);
+    }
+    
+    @RequestMapping(value="/validate", method = POST)
+    public HashMap<String, Object> validateContact(@Valid Contact contact) {
+    	
+        return null;
     }
     
     /**
@@ -60,6 +65,7 @@ public class ContactController {
      */
     @RequestMapping(value = "/{id}", method = PUT)
     public ResponseEntity<Contact> updateContact(@PathVariable int id, @RequestBody @Valid Contact contact) {
+    	
 		Contact returnContact = contactService.saveContact(contact);
     	
 		if (returnContact == null) { 
@@ -73,17 +79,17 @@ public class ContactController {
 	 * Return 404 not found code if not contact associated to ID is not found
 	 * Return 200 success code if deleted successfully
 	 */
-	@RequestMapping(value = "/{contactId}", method = DELETE)
-	public ResponseEntity<Void> deleteContact(@PathVariable int contactId) {
+	@RequestMapping(value = "/{id}", method = DELETE)
+	public ResponseEntity<Void> deleteContact(@PathVariable int id) {
 		
-		int deleteId = contactService.deleteContacts(contactId);
+		int deleteId = contactService.deleteContacts(id);
 		//receive  id with method deleteContact() from UI
 
 		if (deleteId == 0) {
 			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
 		}
 
-		return new ResponseEntity<Void>(HttpStatus.OK);
+		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 	}
 
 	/**
@@ -91,13 +97,13 @@ public class ContactController {
 	 * Return 200 success code if deleted successfully
 	 */
 	@RequestMapping(method = DELETE)
-	public ResponseEntity<Integer> deleteContacts(@RequestParam int... contactIds) {
+	public ResponseEntity<Integer> deleteContacts(@RequestParam int... ids) {
 
-		if(contactIds.length == 0){
+		if(ids.length == 0){
 			return new ResponseEntity<Integer>(HttpStatus.BAD_REQUEST);
 		}
 		
-		int deleteId = contactService.deleteContacts(contactIds);
+		int deleteId = contactService.deleteContacts(ids);
 		if (deleteId == 0) {
 			return new ResponseEntity<Integer>(HttpStatus.NOT_FOUND);
 		}

@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @Table(name = "Company")
@@ -24,10 +25,12 @@ public class Company extends vn.kms.launch.contactmgr.domain.Entity{
 
 	@Column(name = "MESSAGE")
 	private String message;
-
+	
+	@Pattern(regexp = "(\\+[0-9]{1,3}\\s)([0-9]{9,10})", message = "{validation.phone.message}")
 	@Column(name = "PHONE")
 	private String phone;
 
+	@Pattern(regexp = "(\\+[0-9]{1,3}\\s)([0-9]{9,10})", message = "{validation.fax.message}")
 	@Column(name = "FAX")
 	private String fax;
 

@@ -12,6 +12,7 @@ public class Home {
 	@Column(name = "PHONE")
 	private String phone;
 
+	@Pattern(regexp = "(\\+[0-9]{1,3}\\s)([0-9]{9,10})", message = "{validation.fax.message}")
 	@Column(name = "FAX")
 	private String fax;
 

@@ -248,7 +248,7 @@ public class ContactService {
 		}
 		
 		int realPage = getRealPageSelected(page, queryCount.getSingleResult().intValue(), pageSize);
-		query.setFirstResult(realPage * pageSize).setMaxResults((realPage + 1) * pageSize - 1);
+		query.setFirstResult(realPage * pageSize).setMaxResults((realPage + 1) * pageSize);
 		List<Contact> contacts = query.getResultList();
 		
 		HashMap<String, Object> result = new HashMap<String, Object>();
