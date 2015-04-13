@@ -9,7 +9,6 @@ import java.util.HashMap;
 
 import javax.validation.Valid;
 
-import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,25 +47,34 @@ public class ContactController {
     @RequestMapping(value="/search", method = POST)
     public HashMap<String, Object> searchContact(@RequestParam ("page") int page,
                                               @RequestParam (value="pageSize", defaultValue="10") int pageSize,
-                                              @RequestBody ContactSearchCriteria criteria) throws JSONException {
+                                              @RequestBody ContactSearchCriteria criteria) {
            return contactService.searchContacts(criteria, page, pageSize);
     }
-    
+
     /**
-     *
+     * To update contact info(s),
      * @param id
      * @param contact
      * @return
      */
     @RequestMapping(value = "/{id}", method = PUT)
-    public ResponseEntity<Contact> updateContact(@PathVariable int id, @RequestBody @Valid Contact contact) {
-		Contact returnContact = contactService.saveContact(contact);
-    	
-		if (returnContact == null) { 
-    		return new ResponseEntity<Contact>(returnContact, HttpStatus.BAD_REQUEST);
-    	}
+    public ResponseEntity<HashMap<String, Object>> updateContact(@PathVariable int id,
+                                                                 @RequestBody @Valid Contact contact) {
+        Contact returnContact;
+        HashMap<String, Object> bodyReturn = new HashMap<String, Object>();
 
-        return new ResponseEntity<Contact>(returnContact, HttpStatus.OK);
+        contact.setId(id);
+		returnContact = contactService.saveContact(contact);
+		if (returnContact == null) {
+            bodyReturn.put("data", contact);
+            HashMap<String, String> errors = new HashMap<String, String>();
+            errors.put("companyId", "No companyId found");
+            bodyReturn.put("errors",errors);
+    		return new ResponseEntity<HashMap<String, Object>>(bodyReturn, HttpStatus.BAD_REQUEST);
+    	} else {
+            bodyReturn.put("data", returnContact);
+            return new ResponseEntity<HashMap<String, Object>>(bodyReturn, HttpStatus.OK);
+        }
     }
 
 	/**
@@ -75,7 +83,7 @@ public class ContactController {
 	 */
 	@RequestMapping(value = "/{id}", method = DELETE)
 	public ResponseEntity<Void> deleteContact(@PathVariable int id) {
-		
+
 		int deleteId = contactService.deleteContacts(id);
 		//receive  id with method deleteContact() from UI
 
@@ -83,7 +91,7 @@ public class ContactController {
 			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
 		}
 
-		return new ResponseEntity<Void>(HttpStatus.OK);
+		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 	}
 
 	/**
@@ -96,7 +104,7 @@ public class ContactController {
 		if(ids.length == 0){
 			return new ResponseEntity<Integer>(HttpStatus.BAD_REQUEST);
 		}
-		
+
 		int deleteId = contactService.deleteContacts(ids);
 		if (deleteId == 0) {
 			return new ResponseEntity<Integer>(HttpStatus.NOT_FOUND);
@@ -111,15 +119,21 @@ public class ContactController {
 	 * @return
 	 */
 	@RequestMapping(method = POST)
-	public ResponseEntity<Contact> create(@RequestBody @Valid Contact contact) {
-		
-		Contact returnContact = contactService.saveContact(contact);
-    	
-		if (returnContact == null) { 
-    		return new ResponseEntity<Contact>(returnContact, HttpStatus.BAD_REQUEST);
-    	}
+	public ResponseEntity<HashMap<String, Object>> createContact(@RequestBody @Valid Contact contact) {
+        Contact returnContact;
+        HashMap<String, Object> bodyReturn = new HashMap<String, Object>();
 
-        return new ResponseEntity<Contact>(returnContact, HttpStatus.OK);
+        returnContact = contactService.saveContact(contact);
+        if (returnContact == null) {
+            bodyReturn.put("data", contact);
+            HashMap<String, String> errors = new HashMap<String, String>();
+            errors.put("companyId", "No companyId found");
+            bodyReturn.put("errors",errors);
+            return new ResponseEntity<HashMap<String, Object>>(bodyReturn, HttpStatus.BAD_REQUEST);
+        } else {
+            bodyReturn.put("data", returnContact);
+            return new ResponseEntity<HashMap<String, Object>>(bodyReturn, HttpStatus.OK);
+        }
 	}
-	
+
 }
