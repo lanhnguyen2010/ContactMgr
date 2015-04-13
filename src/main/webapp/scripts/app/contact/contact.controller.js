@@ -66,13 +66,20 @@ angular.module('contactmgrApp')
     		$scope.selectedContact = contact;
     	};
     	
+    	function findAndRemove(array, property, value) {
+    		$.each(array, function(index, result) {
+    			if(result[property] == value) {
+    				array.splice(index, 1);
+    		    }    
+    		});
+    	}
+    	
     	// Delete contacts
     	$scope.deleteContacts = function () {
     		if (confirm("Do you want to delete?")) {
 	    		ContactService.deleteContacts($scope.checkedIds)
 	    		.success(function (data, status) {
 	    			console.log("Deleted " + data + " contact(s)");
-	    			
 	    			$scope.contactsTableParams.reload();
 	    		})
 	    		.error(function (data, status) {
