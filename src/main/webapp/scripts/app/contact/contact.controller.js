@@ -2,32 +2,31 @@
 
 angular.module('contactmgrApp')
     .controller('ContactController', function($scope, ContactService, ngTableParams) {
-    	var dummyData = [];
     	
     	$scope.filter = {
     		name: '',
+    		email:'',
     		mobile: '',
     		jobTitle: '',
     		department:'',
-    		email:'',
-    		company:'',
-    		page:''
+    		company:''
     	};
     	
-    	var PAGE_SIZE = 10;
+    	var PAGE_SIZE = 2;
     	$scope.currentPage = 1;
-    	//$scope.total = dummyData.length; // For dummy data
-    	$scope.searchContacts = function (isPaging) {
+    	
+    	$scope.searchContacts = function (isPaging) {    		
     		if($scope.isLoading){
     			return;
     		}
-    		
     		$scope.isLoading = true;
     		
     		ContactService.searchContacts($scope.filter, $scope.currentPage, PAGE_SIZE)
     		.success(function(data, status) {
-    			$scope.contacts = data['contact'];
-    			$scope.total = data['total'];
+    			$scope.contacts = data['data'];
+    			$scope.total = data['totalItem'];
+    			console.log($scope.total);
+    			console.log($scope.contacts);
     			$scope.isLoading = false;
     			
     			if (!isPaging) {
@@ -41,15 +40,13 @@ angular.module('contactmgrApp')
     	
     	$scope.contactsTableParams = new ngTableParams({
     		page: 1, // Show the first page
-    		count: PAGE_SIZE // Count per page
+    		count: 2 // Count per page
     	}, {
     		counts: [],
-    		total: dummyData.length, // For dummy data
-    		//total: $scope.total, // For real data
+    		total: $scope.total,
     		getData: function ($defer, params) {
     			$scope.currentPage = params.page();
     			$defer.resolve($scope.contacts); // For real data
-    			//$defer.resolve($scope.contacts = dummyData.slice((params.page() - 1) * params.count(), params.page() * params.count())); // For dummy data
     			$scope.searchContacts(true);
     			
     			$scope.checkboxes = {
