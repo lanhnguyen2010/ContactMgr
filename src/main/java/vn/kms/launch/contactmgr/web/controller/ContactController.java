@@ -87,7 +87,7 @@ public class ContactController {
 	}
 
 	/**
-	 * Return 404(Bad Request)  code if ids param is null
+	 * Return 400(Bad Request)  code if ids param is null
 	 * Return 404(Not Found)  code if not contact associated to ID is not found
 	 * Return 200(OK) code and the actual number of Contact that deleted
 	 */
