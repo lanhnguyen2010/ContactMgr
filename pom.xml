@@ -5,7 +5,7 @@
     <groupId>vn.kms.launch</groupId>
     <artifactId>contactmgr</artifactId>
     <name>Contact Manager</name>
-    <version>0.1.1-SNAPSHOT</version>
+    <version>0.1.1</version>
     <packaging>war</packaging>
     <parent>
         <groupId>org.springframework.boot</groupId>
