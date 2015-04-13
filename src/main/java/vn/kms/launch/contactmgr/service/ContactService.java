@@ -92,7 +92,7 @@ public class ContactService {
 	 * @return
 	 */
 	@Transactional
-	public int deleteContacts(Integer... ids) {
+	public int deleteContacts(int... ids) {
 		return contactRepo.deleteContacts(ids);
 	}
 	
