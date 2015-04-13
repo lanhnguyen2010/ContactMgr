@@ -1,5 +1,14 @@
 package vn.kms.launch.contactmgr.web.controller;
 
+import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import static org.springframework.web.bind.annotation.RequestMethod.PUT;
+
+import java.util.HashMap;
+
+import javax.validation.Valid;
+
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,16 +18,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import vn.kms.launch.contactmgr.domain.contact.Contact;
+import vn.kms.launch.contactmgr.domain.search.ContactSearchCriteria;
 import vn.kms.launch.contactmgr.service.ContactService;
-
-import javax.validation.Valid;
-import java.util.HashMap;
-
-import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
-import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
 @RestController
 @RequestMapping(value = "/api/contacts")
@@ -42,13 +45,13 @@ public class ContactController {
 		return new ResponseEntity<Contact>(contact, HttpStatus.OK);
 	}
 
-    @RequestMapping(value = "/search", method = POST)
-    public HashMap<String, Object> searchContact(
-        @RequestParam (value = "data", defaultValue = "") String data) throws JSONException {
-        return contactService.searchContacts(data);
-
+    @RequestMapping(value="/search", method = POST)
+    public HashMap<String, Object> searchContact(@RequestParam ("page") int page,
+                                              @RequestParam (value="pageSize", defaultValue="10") int pageSize,
+                                              @RequestBody ContactSearchCriteria criteria) throws JSONException {
+           return contactService.searchContacts(criteria, page, pageSize);
     }
-
+    
     /**
      *
      * @param id
@@ -58,8 +61,8 @@ public class ContactController {
     @RequestMapping(value = "/{id}", method = PUT)
     public ResponseEntity<Contact> updateContact(@PathVariable int id, @RequestBody @Valid Contact contact) {
 		Contact returnContact = contactService.saveContact(contact);
-
-		if (returnContact == null) {
+    	
+		if (returnContact == null) { 
     		return new ResponseEntity<Contact>(returnContact, HttpStatus.BAD_REQUEST);
     	}
 
@@ -72,7 +75,7 @@ public class ContactController {
 	 */
 	@RequestMapping(value = "/{contactId}", method = DELETE)
 	public ResponseEntity<Void> deleteContact(@PathVariable int contactId) {
-
+		
 		int deleteId = contactService.deleteContacts(contactId);
 		//receive  id with method deleteContact() from UI
 
@@ -88,8 +91,12 @@ public class ContactController {
 	 * Return 200 success code if deleted successfully
 	 */
 	@RequestMapping(method = DELETE)
-	public ResponseEntity<Integer> deleteContacts(@RequestParam Integer... contactIds) {
+	public ResponseEntity<Integer> deleteContacts(@RequestParam int... contactIds) {
 
+		if(contactIds.length == 0){
+			return new ResponseEntity<Integer>(HttpStatus.BAD_REQUEST);
+		}
+		
 		int deleteId = contactService.deleteContacts(contactIds);
 		if (deleteId == 0) {
 			return new ResponseEntity<Integer>(HttpStatus.NOT_FOUND);
@@ -105,14 +112,14 @@ public class ContactController {
 	 */
 	@RequestMapping(method = POST)
 	public ResponseEntity<Contact> create(@RequestBody @Valid Contact contact) {
-
+		
 		Contact returnContact = contactService.saveContact(contact);
-
-		if (returnContact == null) {
+    	
+		if (returnContact == null) { 
     		return new ResponseEntity<Contact>(returnContact, HttpStatus.BAD_REQUEST);
     	}
 
         return new ResponseEntity<Contact>(returnContact, HttpStatus.OK);
 	}
-
+	
 }
