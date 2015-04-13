@@ -12,25 +12,22 @@ angular.module('contactmgrApp')
     		company:''
     	};
     	
-    	var PAGE_SIZE = 1000;
-    	$scope.currentPage = 1;
+    	var PAGE_SIZE = 10;
+    	var isFristSearchClicked = false;
     	
-    	$scope.searchContacts = function (isPaging) {
-    		
+    	$scope.searchContacts = function (page) {
+    		isFristSearchClicked = true;
     		if($scope.isLoading){
     			return;
     		}
     		$scope.isLoading = true;
     		
-    		ContactService.searchContacts($scope.filter, $scope.currentPage, PAGE_SIZE)
+    		ContactService.searchContacts($scope.filter, page, PAGE_SIZE)
     		.success(function(data, status) {
     			$scope.contacts = data['data'];
     			$scope.total = data['totalItem'];
     			$scope.isLoading = false;
-    			
-    			if (!isPaging) {
-    				$scope.contactsTableParams.reload();
-    			}
+    			$scope.contactsTableParams.reload();
     		})
     		.error(function(data, status) {
     			console.log(status);
@@ -39,21 +36,27 @@ angular.module('contactmgrApp')
     	
     	$scope.contactsTableParams = new ngTableParams({
     		page: 1, // Show the first page
-    		count: 1000, // Count per page
+    		count: 10, // Count per page
     	}, {
     		counts: [],
-    		total: $scope.total,
     		getData: function ($defer, params) {
-    			$scope.currentPage = params.page();
-    			$defer.resolve($scope.contacts);
+    			if (!isFristSearchClicked)
+    				return;
     			
-    			$scope.searchContacts(true);
+    			ContactService.searchContacts($scope.filter, params.page(), PAGE_SIZE)
+        		.success(function(data, status) {
+        			$scope.contacts = data['data'];
+        			params.total(data['totalItem']);
+        			$defer.resolve($scope.contacts);
+        		})
+        		.error(function(data, status) {
+        			console.log(status);
+        		});
     			
     			$scope.checkboxes = {
     		        'checked': false, 
     		        items: {}
     		    };
-    			
     			$scope.checkedIds = '';
     		}
     	});
@@ -77,7 +80,7 @@ angular.module('contactmgrApp')
 	    		ContactService.deleteContacts($scope.checkedIds)
 	    		.success(function (data, status) {
 	    			console.log("Deleted " + data + " contact(s)");
-	    			$scope.searchContacts(false);
+	    			$scope.contactsTableParams.reload();
 	    		})
 	    		.error(function (data, status) {
 	    			console.log("Error", status);
