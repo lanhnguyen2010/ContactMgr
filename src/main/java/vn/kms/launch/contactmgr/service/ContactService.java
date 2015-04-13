@@ -72,7 +72,7 @@ public class ContactService {
 	 * 
 	 */
 	@Transactional
-	public Contact saveContact(@Valid Contact contact) {
+	public Contact saveContact(Contact contact) {
 
 		if (contact == null) {
 			return null;
@@ -259,5 +259,15 @@ public class ContactService {
 		result.put("data", contacts);
 
 		return result;
+	}
+	
+	/**
+	 * 
+	 * 
+	 * @return
+	 */
+	public HashMap<String, Object> validateContacts() {
+		
+		return null;
 	}
 }

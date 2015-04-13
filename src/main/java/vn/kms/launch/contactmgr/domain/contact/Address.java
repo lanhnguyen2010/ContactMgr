@@ -19,11 +19,10 @@ public class Address {
 	@Column(name = "STATE")
 	private String state;
 
-	@Pattern(regexp = "([0-9]{7})", message = "{validation.postalCode.message}")
 	@Column(name = "POSTAL_CODE")
 	private Integer postalCode;
-
-	@Pattern(regexp = "([A-Z]{2})", message = "{validation.country.message}")
+	
+    @Pattern(regexp = "([A-Z]{2})", message = "must be two letter in uppercase")
 	@Column(name = "COUNTRY")
 	private String country;
 

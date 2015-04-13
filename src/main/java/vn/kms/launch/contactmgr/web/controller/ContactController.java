@@ -9,6 +9,7 @@ import java.util.HashMap;
 
 import javax.validation.Valid;
 
+import org.hibernate.validator.constraints.br.CNPJ;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import vn.kms.launch.contactmgr.domain.contact.Contact;
 import vn.kms.launch.contactmgr.domain.search.ContactSearchCriteria;
 import vn.kms.launch.contactmgr.service.ContactService;
+import vn.kms.launch.contactmgr.service.validator.ContactValidator;
 
 @RestController
 @RequestMapping(value = "/api/contacts")
@@ -52,9 +54,14 @@ public class ContactController {
     }
     
     @RequestMapping(value="/validate", method = POST)
-    public HashMap<String, Object> validateContact(@Valid Contact contact) {
+    public HashMap<String, String> validateContact(@RequestBody @Valid Contact contact) {
+    	HashMap<String, String> returnValue = new HashMap<String, String>();
+    	ContactValidator contactValidator = new ContactValidator();
+//    	contactValidator.validate(contact, errors);
     	
-        return null;
+    	returnValue.put("displayName", "invalid displayName!");
+    	
+        return returnValue;
     }
     
     /**
