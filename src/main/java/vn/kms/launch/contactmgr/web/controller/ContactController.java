@@ -19,9 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import vn.kms.launch.contactmgr.domain.contact.Company;
 import vn.kms.launch.contactmgr.domain.contact.Contact;
-import vn.kms.launch.contactmgr.domain.contact.Work;
+import vn.kms.launch.contactmgr.domain.search.ContactSearchCriteria;
 import vn.kms.launch.contactmgr.service.ContactService;
 
 @RestController
@@ -45,14 +44,14 @@ public class ContactController {
 
 		return new ResponseEntity<Contact>(contact, HttpStatus.OK);
 	}
-	
-    @RequestMapping(value = "/search", method = POST)
-    public HashMap<String, Object> searchContact(
-        @RequestParam (value = "data", defaultValue = "") String data) throws JSONException {
-        return contactService.searchContacts(data);
-        
-    }
 
+    @RequestMapping(value="/search", method = POST)
+    public HashMap<String, Object> searchContact(@RequestParam ("page") int page,
+                                              @RequestParam (value="pageSize", defaultValue="10") int pageSize,
+                                              @RequestBody ContactSearchCriteria criteria) throws JSONException {
+           return contactService.searchContacts(criteria, page, pageSize);
+    }
+    
     /**
      *
      * @param id
