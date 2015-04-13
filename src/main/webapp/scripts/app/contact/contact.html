@@ -53,7 +53,7 @@
 					<label for="company" class="control-label col-sm-3"
 						translate="contact.contact-field.company">Company</label>
 					<div class="col-sm-9">
-						<select class="form-control">
+						<select class="form-control" ng-model="filter.company">
 							<option value=""></option>
 							<option value="KMS">KMS Company</option>
 							<option value="KMS">KMS Company1</option>
@@ -101,8 +101,11 @@
 					header="'ng-table/headers/checkbox.html'">
 					<input type="checkbox" ng-model="checkboxes.items[contact.id]" />
 				</td>
-				<td data-title="'Name'">{{contact.firstName}}</td>
-				<td data-title="'Mobile'">{{contact.mobile}}</td>
+				<td data-title="'Name'">
+					<a href="">{{contact.lastName + " " + contact.middleName + " " + contact.firstName }}</a>
+				</td>
+				<td data-title="'Mobile'">{{contact.mobile}}
+				</td>
 				<td data-title="'Email'">{{contact.email}}</td>
 				<td data-title="'Job Title'">{{contact.work.title}}</td>
 				<td data-title="'Department'">{{contact.work.department}}</td>
