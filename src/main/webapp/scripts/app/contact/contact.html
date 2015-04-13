@@ -55,9 +55,7 @@
 					<div class="col-sm-9">
 						<select class="form-control" ng-model="filter.company">
 							<option value=""></option>
-							<option value="KMS">KMS Company</option>
-							<option value="KMS">KMS Company1</option>
-							<option value="KMS">KMS Company2</option>
+							<option ng-repeat="company in companies" value="{{company.name}}">{{company.name}}</option>
 						</select>
 					</div>
 				</div>

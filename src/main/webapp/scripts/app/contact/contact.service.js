@@ -10,4 +10,8 @@ angular.module('contactmgrApp')
     	this.searchContacts = function (filter, page, pageSize) {
     		return $http.post("/api/contacts/search?page=" + page + "&pageSize=" + pageSize, filter);
     	};
+    	
+    	this.getCompanies=function(){
+    		return $http.get("/api/companies/names");
+    	}
     });

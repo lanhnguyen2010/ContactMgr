@@ -3,6 +3,11 @@
 angular.module('contactmgrApp')
     .controller('ContactController', function($scope, ContactService, ngTableParams) {
     	
+    	
+    	function init(){
+    		$scope.getCompanies();
+    	};
+    	
     	$scope.filter = {
     		name: '',
     		email:'',
@@ -138,5 +143,17 @@ angular.module('contactmgrApp')
             	$scope.checkedIds = $scope.checkedIds.substr(0, $scope.checkedIds.length - 1); 
             }
         }, true);
+        
+        $scope.getCompanies=function(){
+        	ContactService.getCompanies()
+        	.success(function(data,status){
+        		$scope.companies=data;
+        	})
+        	.error(function (data, status) {
+    			console.log("Error get companies", status);
+    		});
+        }
+        
+        init();
     });
 
