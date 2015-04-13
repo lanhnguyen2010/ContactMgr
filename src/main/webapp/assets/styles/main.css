@@ -75,11 +75,17 @@ Hide ng-cloak on page load, https://docs.angularjs.org/api/ng/directive/ngCloak
 .voffset8 { margin-top: 100px; }
 .voffset9 { margin-top: 150px; }
 
+.logo {
+    width: 24px;
+    height: 24px;
+    float: left;
+}
+
 .banner {
     display: inline-block;
     width: 256px;
     height: 256px;
-    background: url("../images/banner.png") no-repeat center top;
+    background: url("../images/banner.png") no-repeat center middle;
     background-size: contain;
 }
 
