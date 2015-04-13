@@ -1,0 +1,159 @@
+{
+    "createTest": {
+        "firstName": "Trung",
+        "middleName": "Ngoc",
+        "lastName": "Trung",
+        "email": "trungnguyen@kms-technology.com",
+        "photo": "http://abc.com/trungnguyen.jpg",
+        "mobile": "+84 863986234",
+        "gender": "M",
+        "birthday": "1900-01-01",
+        "home": {
+            "phone": "+84 812345568",
+            "fax": "+84 812345568",
+            "address": {
+                "street": "364 Cong Hoa st, Ward 13",
+                "city": "Ho Chi Minh",
+                "country": "VN"
+            }
+        },
+        "work": {
+            "title": "Software Architect",
+            "department": "CoE"
+        }
+    },
+    "updateTest1": {
+        "firstName": "Trung",
+        "middleName": "Ngoc",
+        "lastName": "Trung",
+        "email": "odthientho@kms-technology.com",
+        "photo": "http://abc.com/trungnguyen.jpg",
+        "mobile": "+84 863986234",
+        "gender": "M",
+        "birthday": "1900-01-01",
+        "home": {
+            "phone": "+84 812345568",
+            "fax": "+84 812345568",
+            "address": {
+                "street": "364 Cong Hoa st, Ward 13",
+                "city": "Ho Chi Minh",
+                "country": "VN"
+            }
+        },
+        "work": {
+            "title": "Software Architect",
+            "department": "CoE"
+        }
+    },
+    "updateTest2": {
+        "firstName": "Trung",
+        "middleName": "Ngoc",
+        "lastName": "Trung",
+        "email": "trungnguyen@kms-technology.com",
+        "photo": "http://abc.com/trungnguyen.jpg",
+        "mobile": "+84 863986234",
+        "gender": "M",
+        "birthday": "1900-01-01",
+        "home": {
+            "phone": "+84 812345568",
+            "fax": "+84 812345568",
+            "address": {
+                "street": "364 Cong Hoa st, Ward 13",
+                "city": "Ho Chi Minh",
+                "country": "VN"
+            }
+        },
+        "work": {
+            "title": "Software Architect",
+            "department": "CoE",
+            "company": {
+                "name": "KMS Technology",
+                "logo": "http://kms-technology.com/logo.jpg",
+                "message": "Brilliant Solutions, Bright Minds",
+                "phone": "+84 812345568",
+                "fax": "+84 812345568",
+                "address": {
+                    "addrLine1": "123 Cong Hoa st, Ward 12",
+                    "addrLine2": "Tan Binh district",
+                    "city": "Ho Chi Minh",
+                    "country": "VN"
+                }
+            }
+        }
+    },
+    "updateTest3": {
+        "firstName": "Trung",
+        "middleName": "Ngoc",
+        "lastName": "Trung",
+        "email": "trungnguyen@kms-technology.com",
+        "photo": "http://abc.com/trungnguyen.jpg",
+        "mobile": "+84 863986234",
+        "gender": "M",
+        "birthday": "1900-01-01",
+        "home": {
+            "phone": "+84 812345568",
+            "fax": "+84 812345568",
+            "address": {
+                "street": "364 Cong Hoa st, Ward 13",
+                "city": "Ho Chi Minh",
+                "country": "VN"
+            }
+        },
+        "work": {
+            "title": "Software Architect",
+            "department": "CoE",
+            "companyId": "1",
+            "company": {
+                "name": "KMS Technology",
+                "logo": "http://kms-technology.com/logo.jpg",
+                "message": "Bright Minds, Brilliant Solutions",
+                "phone": "+84 812345568",
+                "fax": "+84 812345568",
+                "address": {
+                    "addrLine1": "123 Cong Hoa st, Ward 12",
+                    "addrLine2": "Tan Binh district",
+                    "city": "Ho Chi Minh",
+                    "country": "VN"
+                }
+            }
+        }
+    },
+    "updateTest4": {
+        "firstName": "Trung",
+        "middleName": "Ngoc",
+        "lastName": "Trung",
+        "email": "trungnguyen@kms-technology.com",
+        "photo": "http://abc.com/trungnguyen.jpg",
+        "mobile": "+84 863986234",
+        "gender": "M",
+        "birthday": "1900-01-01",
+        "home": {
+            "phone": "+84 812345568",
+            "fax": "+84 812345568",
+            "address": {
+                "street": "364 Cong Hoa st, Ward 13",
+                "city": "Ho Chi Minh",
+                "country": "VN"
+            }
+        },
+        "work": {
+            "title": "Software Architect",
+            "department": "CoE",
+            "companyId": "10",
+            "company": {
+                "name": "KMS Technology",
+                "logo": "http://kms-technology.com/logo.jpg",
+                "message": "Bright Minds, Brilliant Solutions",
+                "phone": "+84 812345568",
+                "fax": "+84 812345568",
+                "address": {
+                    "addrLine1": "123 Cong Hoa st, Ward 12",
+                    "addrLine2": "Tan Binh district",
+                    "city": "Ho Chi Minh",
+                    "country": "VN"
+                }
+            }
+        }
+    }
+}
+

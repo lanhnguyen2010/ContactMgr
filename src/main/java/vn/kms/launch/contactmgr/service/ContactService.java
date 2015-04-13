@@ -57,7 +57,7 @@ public class ContactService {
 
 	/**
 	 * Get a contact by id
-	 * 
+	 *
 	 * @param id
 	 *            is ID of the contact we will get.
 	 * @return a contact if found and null if not found.
@@ -69,7 +69,7 @@ public class ContactService {
 
 	/**
 	 * Service form function delete
-	 * 
+	 *
 	 */
 	@Transactional
 	public Contact saveContact(@Valid Contact contact) {
@@ -120,7 +120,7 @@ public class ContactService {
 
 	/**
 	 * Service form function delete
-	 * 
+	 *
 	 * @param ids
 	 * @return
 	 */
@@ -132,7 +132,7 @@ public class ContactService {
 	/**
 	 * Set search criteria to HashMap<K, V> , K - column name, V - criteria value
 	 * @param criteria
-	 * @return 
+	 * @return
 	 */
 	public LinkedHashMap<String, String> setSearchParam(ContactSearchCriteria criteria) {
 		LinkedHashMap<String, String> params = new LinkedHashMap<String, String>();
@@ -165,7 +165,7 @@ public class ContactService {
 		}
 		return params;
 	}
-	
+
 	/**
 	 * Get real page selected from request
 	 * @param page
@@ -188,7 +188,7 @@ public class ContactService {
 
 	/**
 	 * Search contact with given criterias
-	 * 
+	 *
 	 * @param criteria
 	 * @param page
 	 * @param pageSize
@@ -219,7 +219,7 @@ public class ContactService {
 				}
 				if (!StringUtils.isEmpty(criteria.getName()) && paramPos < 3) {
 					operator = " OR ";
-					
+
 				} else {
 					if (paramPos == 3) {
 						whereClause.append(")");
@@ -237,7 +237,7 @@ public class ContactService {
 
 		paramPos = 1;
 		for (String column : columnSet) {
-			if (column.equals(C_FIRST_NAME) || column.equals(C_MIDDLE_NAME) || column.equals(C_LAST_NAME) 
+			if (column.equals(C_FIRST_NAME) || column.equals(C_MIDDLE_NAME) || column.equals(C_LAST_NAME)
 					|| column.equals(C_MOBILE) || column.equals(C_EMAIL)
 					|| column.equals(C_WORK_TITLE) || column.equals(C_WORK_DEPARTMENT)
 					|| column.equals(C_WORK_COMPANY_NAME)) {
@@ -246,11 +246,11 @@ public class ContactService {
 			}
 			paramPos++;
 		}
-		
+
 		int realPage = getRealPageSelected(page, queryCount.getSingleResult().intValue(), pageSize);
 		query.setFirstResult(realPage * pageSize).setMaxResults((realPage + 1) * pageSize - 1);
 		List<Contact> contacts = query.getResultList();
-		
+
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		result.put("searchCriteria", criteria);
 		result.put("page", page);
