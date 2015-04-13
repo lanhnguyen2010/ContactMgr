@@ -1,7 +1,5 @@
 package vn.kms.launch.contactmgr.repository;
 
-import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -12,8 +10,6 @@ import vn.kms.launch.contactmgr.domain.contact.Contact;
 
 @Repository
 public interface ContactRepository extends JpaRepository<Contact, Integer> {
-
- 
 	
 	/**
 	 * Query function deleteContacts
@@ -23,5 +19,5 @@ public interface ContactRepository extends JpaRepository<Contact, Integer> {
 	 */
 	@Modifying
 	@Query("delete from Contact where id in (:ids)")
-	int deleteContacts(@Param("ids")Integer... ids);
+	int deleteContacts(@Param("ids")int... ids);
 }

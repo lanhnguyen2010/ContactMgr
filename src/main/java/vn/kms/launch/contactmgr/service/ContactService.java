@@ -1,10 +1,8 @@
 package vn.kms.launch.contactmgr.service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.EntityManager;
@@ -12,11 +10,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.validation.Valid;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -73,6 +67,10 @@ public class ContactService {
 		return contactRepo.findOne(id);
 	}
 
+	/**
+	 * Service form function delete
+	 * 
+	 */
 	@Transactional
 	public Contact saveContact(@Valid Contact contact) {
 
@@ -127,7 +125,7 @@ public class ContactService {
 	 * @return
 	 */
 	@Transactional
-	public int deleteContacts(Integer... ids) {
+	public int deleteContacts(int... ids) {
 		return contactRepo.deleteContacts(ids);
 	}
 
@@ -250,7 +248,7 @@ public class ContactService {
 		}
 		
 		int realPage = getRealPageSelected(page, queryCount.getSingleResult().intValue(), pageSize);
-		query.setFirstResult(realPage * pageSize).setMaxResults((realPage + 1) * pageSize - 1);
+		query.setFirstResult(realPage * pageSize).setMaxResults((realPage + 1) * pageSize);
 		List<Contact> contacts = query.getResultList();
 		
 		HashMap<String, Object> result = new HashMap<String, Object>();

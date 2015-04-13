@@ -7,6 +7,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.env.SimpleCommandLinePropertySource;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+
+
 @SpringBootApplication
 @ComponentScan
 @EnableAutoConfiguration
@@ -15,6 +17,7 @@ public class ContactMgrApp {
 
 	public static void main(String[] args) {
 		SpringApplication app = new SpringApplication(ContactMgrApp.class);
+		
 
 		SimpleCommandLinePropertySource source = new SimpleCommandLinePropertySource(
 				args);
