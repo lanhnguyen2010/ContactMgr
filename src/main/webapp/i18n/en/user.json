@@ -1,0 +1,18 @@
+{
+    "user": {
+        "button": {
+            "add-user": "Add User",
+            "search": "Search",
+            "delete": "Delete",
+            "activate":"Activate",
+            "inactivate":"Inactivate"
+        },
+        "user-field": {
+            "username": "Username",
+            "firstname": "First Name",
+            "lastname": "Last Name",
+            "email": "E-mail",
+            "role" : "Role"
+         }
+    }
+}

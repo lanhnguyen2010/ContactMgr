@@ -1,0 +1,18 @@
+{
+    "user": {
+        "button": {
+            "add-user": "Tạo người dùng",
+            "search": "Tìm Kiếm",
+            "delete": "Xóa",
+            "activate":"Kích hoạt",
+            "inactivate":"Khóa"
+        },
+        "user-field": {
+            "username": "Tên Tài Khoản",
+            "firstname": "Tên",
+            "lastname": "Họ",
+            "email": "E-mail",
+            "role" : "Vai trò"
+         }
+    }
+}

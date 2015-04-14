@@ -142,7 +142,6 @@ public class ContactService {
 			params.put(C_MIDDLE_NAME, criteria.getName());
 			params.put(C_LAST_NAME, criteria.getName());
 		}
-		System.out.println("name: " + criteria.getName());
 
 		if (!StringUtils.isEmpty(criteria.getMobile())) {
 			params.put(C_MOBILE, criteria.getMobile());

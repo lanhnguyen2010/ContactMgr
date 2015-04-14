@@ -2,37 +2,37 @@
 
 angular.module('contactmgrApp')
     .controller('ContactController', function($scope, ContactService, ngTableParams) {
-    	var dummyData = [];
+    	
+    	
+    	function init(){
+    		$scope.getCompanies();
+    	};
     	
     	$scope.filter = {
     		name: '',
+    		email:'',
     		mobile: '',
     		jobTitle: '',
     		department:'',
-    		email:'',
-    		company:'',
-    		page:''
+    		company:''
     	};
     	
     	var PAGE_SIZE = 10;
-    	$scope.currentPage = 1;
-    	//$scope.total = dummyData.length; // For dummy data
-    	$scope.searchContacts = function (isPaging) {
+    	var isFristSearchClicked = false;
+    	
+    	$scope.searchContacts = function (page) {
+    		isFristSearchClicked = true;
     		if($scope.isLoading){
     			return;
     		}
-    		
     		$scope.isLoading = true;
     		
-    		ContactService.searchContacts($scope.filter, $scope.currentPage, PAGE_SIZE)
+    		ContactService.searchContacts($scope.filter, page, PAGE_SIZE)
     		.success(function(data, status) {
-    			$scope.contacts = data['contact'];
-    			$scope.total = data['total'];
+    			$scope.contacts = data['data'];
+    			$scope.total = data['totalItem'];
     			$scope.isLoading = false;
-    			
-    			if (!isPaging) {
-    				$scope.contactsTableParams.reload();
-    			}
+    			$scope.contactsTableParams.reload();
     		})
     		.error(function(data, status) {
     			console.log(status);
@@ -41,22 +41,27 @@ angular.module('contactmgrApp')
     	
     	$scope.contactsTableParams = new ngTableParams({
     		page: 1, // Show the first page
-    		count: PAGE_SIZE // Count per page
+    		count: 10, // Count per page
     	}, {
     		counts: [],
-    		total: dummyData.length, // For dummy data
-    		//total: $scope.total, // For real data
     		getData: function ($defer, params) {
-    			$scope.currentPage = params.page();
-    			$defer.resolve($scope.contacts); // For real data
-    			//$defer.resolve($scope.contacts = dummyData.slice((params.page() - 1) * params.count(), params.page() * params.count())); // For dummy data
-    			$scope.searchContacts(true);
+    			if (!isFristSearchClicked)
+    				return;
+    			
+    			ContactService.searchContacts($scope.filter, params.page(), PAGE_SIZE)
+        		.success(function(data, status) {
+        			$scope.contacts = data['data'];
+        			params.total(data['totalItem']);
+        			$defer.resolve($scope.contacts);
+        		})
+        		.error(function(data, status) {
+        			console.log(status);
+        		});
     			
     			$scope.checkboxes = {
     		        'checked': false, 
     		        items: {}
     		    };
-    			
     			$scope.checkedIds = '';
     		}
     	});
@@ -138,5 +143,17 @@ angular.module('contactmgrApp')
             	$scope.checkedIds = $scope.checkedIds.substr(0, $scope.checkedIds.length - 1); 
             }
         }, true);
+        
+        $scope.getCompanies=function(){
+        	ContactService.getCompanies()
+        	.success(function(data,status){
+        		$scope.companies=data;
+        	})
+        	.error(function (data, status) {
+    			console.log("Error get companies", status);
+    		});
+        }
+        
+        init();
     });
 
