@@ -78,7 +78,15 @@ Ex:
         db.username=root
         db.password=123456
         db.driver=org.mariadb.jdbc.Driver
-		
+
+## Use flyway
+1. Run cmd and cd to db folder in your project
+2. If database  existed you must run command:
+> flyway clean
+> flyway baseline -Dflyway.baselineVersion=1 -Dflyway.baselineDescription="Base version" 
+3. Run : files .sql
+> flyway migrate
+
 [JDK 1.7]: http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html
 [Maven 3.3.x]: http://maven.apache.org/download.cgi
 [git-scm.com]: http://git-scm.com/
