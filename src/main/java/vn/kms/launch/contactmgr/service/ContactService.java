@@ -1,5 +1,6 @@
 package vn.kms.launch.contactmgr.service;
 
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -18,9 +19,11 @@ import org.springframework.util.StringUtils;
 import vn.kms.launch.contactmgr.domain.contact.Company;
 import vn.kms.launch.contactmgr.domain.contact.Contact;
 import vn.kms.launch.contactmgr.domain.contact.Work;
+import vn.kms.launch.contactmgr.domain.image.ContactImages;
 import vn.kms.launch.contactmgr.domain.search.ContactSearchCriteria;
 import vn.kms.launch.contactmgr.repository.CompanyRepository;
 import vn.kms.launch.contactmgr.repository.ContactRepository;
+import vn.kms.launch.contactmgr.repository.UploadRepository;
 
 @Service
 @Transactional(readOnly = true)
@@ -52,6 +55,7 @@ public class ContactService {
 	@Autowired
 	private CompanyRepository companyRepo;
 
+	
 	@PersistenceContext
 	private EntityManager em;
 
@@ -67,6 +71,7 @@ public class ContactService {
 		return contactRepo.findOne(id);
 	}
 
+	
 	/**
 	 * Service form function delete
 	 *
@@ -130,11 +135,14 @@ public class ContactService {
 	}
 
 	/**
-	 * Set search criteria to HashMap<K, V> , K - column name, V - criteria value
+	 * Set search criteria to HashMap<K, V> , K - column name, V - criteria
+	 * value
+	 * 
 	 * @param criteria
 	 * @return
 	 */
-	public LinkedHashMap<String, String> setSearchParam(ContactSearchCriteria criteria) {
+	public LinkedHashMap<String, String> setSearchParam(
+			ContactSearchCriteria criteria) {
 		LinkedHashMap<String, String> params = new LinkedHashMap<String, String>();
 
 		if (!StringUtils.isEmpty(criteria.getName())) {
@@ -167,12 +175,11 @@ public class ContactService {
 
 	/**
 	 * Get real page selected from request
+	 * 
 	 * @param page
 	 * @param total
 	 * @param pageSize
-	 * @return 0 if page < 1
-	 *         maxPage if page > maxPage
-	 *         page - 1 if others
+	 * @return 0 if page < 1 maxPage if page > maxPage page - 1 if others
 	 */
 	private int getRealPageSelected(int page, int total, int pageSize) {
 		page = page - 1;
@@ -193,10 +200,12 @@ public class ContactService {
 	 * @param pageSize
 	 * @return
 	 */
-	public HashMap<String, Object> searchContacts(ContactSearchCriteria criteria, int page, int pageSize) {
+	public HashMap<String, Object> searchContacts(
+			ContactSearchCriteria criteria, int page, int pageSize) {
 
 		StringBuilder queryString = new StringBuilder(SELECT_C_FROM_CONTACT_C);
-		StringBuilder queryCountString = new StringBuilder(SELECT_COUNT_FROM_CONTACT_C);
+		StringBuilder queryCountString = new StringBuilder(
+				SELECT_COUNT_FROM_CONTACT_C);
 
 		LinkedHashMap<String, String> paramsCriteria = setSearchParam(criteria);
 
@@ -231,23 +240,30 @@ public class ContactService {
 			queryCountString.append(whereClause);
 		}
 
-		TypedQuery<Contact> query = em.createQuery(queryString.toString(), Contact.class);
-		TypedQuery<Long> queryCount = em.createQuery(queryCountString.toString(), Long.class);
+		TypedQuery<Contact> query = em.createQuery(queryString.toString(),
+				Contact.class);
+		TypedQuery<Long> queryCount = em.createQuery(
+				queryCountString.toString(), Long.class);
 
 		paramPos = 1;
 		for (String column : columnSet) {
-			if (column.equals(C_FIRST_NAME) || column.equals(C_MIDDLE_NAME) || column.equals(C_LAST_NAME)
-					|| column.equals(C_MOBILE) || column.equals(C_EMAIL)
-					|| column.equals(C_WORK_TITLE) || column.equals(C_WORK_DEPARTMENT)
+			if (column.equals(C_FIRST_NAME) || column.equals(C_MIDDLE_NAME)
+					|| column.equals(C_LAST_NAME) || column.equals(C_MOBILE)
+					|| column.equals(C_EMAIL) || column.equals(C_WORK_TITLE)
+					|| column.equals(C_WORK_DEPARTMENT)
 					|| column.equals(C_WORK_COMPANY_NAME)) {
-				query.setParameter(paramPos, paramsCriteria.get(column).replace("*", "%"));
-				queryCount.setParameter(paramPos, paramsCriteria.get(column).replace("*", "%"));
+				query.setParameter(paramPos, paramsCriteria.get(column)
+						.replace("*", "%"));
+				queryCount.setParameter(paramPos, paramsCriteria.get(column)
+						.replace("*", "%"));
 			}
 			paramPos++;
 		}
 
-		int realPage = getRealPageSelected(page, queryCount.getSingleResult().intValue(), pageSize);
-		query.setFirstResult(realPage * pageSize).setMaxResults((realPage + 1) * pageSize);
+		int realPage = getRealPageSelected(page, queryCount.getSingleResult()
+				.intValue(), pageSize);
+		query.setFirstResult(realPage * pageSize).setMaxResults(
+				(realPage + 1) * pageSize);
 		List<Contact> contacts = query.getResultList();
 
 		HashMap<String, Object> result = new HashMap<String, Object>();

@@ -1,4 +1,6 @@
 spring:
-    jpa:
-        hibernate:
-            ddl-auto: validate
+    datasource:
+        url: "jdbc:mariadb://localhost/contacts_manager"
+        username: root
+        password: 
+        driver-class-name: org.mariadb.jdbc.Driver
