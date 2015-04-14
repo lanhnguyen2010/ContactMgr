@@ -57,9 +57,16 @@ public class ContactController {
     public HashMap<String, String> validateContact(@RequestBody @Valid Contact contact) {
     	HashMap<String, String> returnValue = new HashMap<String, String>();
     	ContactValidator contactValidator = new ContactValidator();
-//    	contactValidator.validate(contact, errors);
     	
-    	returnValue.put("displayName", "invalid displayName!");
+    	
+//    	returnValue.put("displayName", "invalid displayName!");
+    	returnValue.put("firstName", "invalid displayName!");
+    	returnValue.put("lastName", "invalid displayName!");
+    	returnValue.put("email", "invalid displayName!");
+    	returnValue.put("mobile", "invalid displayName!");
+    	returnValue.put("phone", "invalid displayName!");
+    	returnValue.put("fax", "invalid displayName!");
+    	returnValue.put("country", "invalid displayName!");
     	
         return returnValue;
     }
