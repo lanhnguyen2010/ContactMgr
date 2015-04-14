@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,8 +17,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import vn.kms.launch.contactmgr.domain.contact.Address;
 import vn.kms.launch.contactmgr.domain.contact.Company;
 import vn.kms.launch.contactmgr.domain.contact.Contact;
+import vn.kms.launch.contactmgr.domain.contact.Home;
 import vn.kms.launch.contactmgr.domain.contact.Work;
 import vn.kms.launch.contactmgr.domain.search.ContactSearchCriteria;
 import vn.kms.launch.contactmgr.repository.CompanyRepository;
@@ -58,8 +62,7 @@ public class ContactService {
 	/**
 	 * Get a contact by id
 	 * 
-	 * @param id
-	 *            is ID of the contact we will get.
+	 * @param id is ID of the contact we will get.
 	 * @return a contact if found and null if not found.
 	 */
 	@Transactional
@@ -261,12 +264,238 @@ public class ContactService {
 	}
 	
 	/**
+	 * Validate Contact
 	 * 
-	 * 
-	 * @return
+	 * @param contact 
+	 * @return format: {firstName: "", lastName: "", email: "", home: 
+	 *                 {phone: "", fax: "", address: {postalCode: "", country: ""}}, 
+	 *                 work{company: {phone: "", fax: "", address:{postalCode: "", country: ""}}}}
 	 */
-	public HashMap<String, Object> validateContacts() {
+	public HashMap<String, Object> validateContacts(@Valid Contact contact) {
+
+		//Contact
+		String firstName = contact.getFirstName();
+		String lastName = contact.getLastName();
+		String email = contact.getEmail();
+		String mobile = contact.getMobile();
 		
-		return null;
+		Home home = contact.getHome();
+		Work work = contact.getWork();
+	    
+	    HashMap<String, Object> resultContact = new HashMap<String, Object>();
+	    
+	    if ((firstName == null) || (firstName == "")){
+			resultContact.put("firstname", " must be required");
+		}else{
+			resultContact.put("firstname", firstName);
+		}
+		
+		if ((lastName == null) || (lastName == "")){
+			resultContact.put("lastName", " must be required");
+		}else{
+			resultContact.put("lastName", lastName);
+		}
+		
+		if (email != null){
+			String EMAIL_REGEX = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+					+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{1,})$";
+			Pattern emailPattern = Pattern.compile(EMAIL_REGEX);
+			Matcher emailMattcher = emailPattern.matcher(email);
+			
+			if (emailMattcher.find()){
+				resultContact.put("email", email);
+			}else{
+				resultContact.put("email", " must be a valid email format");
+			}
+		}else{
+			resultContact.put("email", null);
+		}
+		
+		if (mobile != null){
+			String MOBILE_REGEX = "^(\\+[0-9]{1,3}\\s)([0-9]{9,10})$";
+			Pattern mobilePattern = Pattern.compile(MOBILE_REGEX);
+			Matcher mobileMattcher = mobilePattern.matcher(mobile);
+			
+			if (mobileMattcher.find()){
+				resultContact.put("mobile", mobile);
+			}else{
+				resultContact.put("mobile", " must be a valid mobile format: +<1 to 3 digits> <9 to 10 digits>");
+			}
+		}else{
+			resultContact.put("mobile", null);
+		}
+		
+		if (home != null){
+			resultContact.put("home", validateHome(home));
+		}else{
+			resultContact.put("home", null);
+		}
+		
+		if (work != null){
+			resultContact.put("work", validateWork(work));
+		}else{
+			resultContact.put("work", null);
+		}
+		return resultContact;
 	}
+	
+	/**
+	 * Validate Home
+	 * 
+	 * @param home 
+	 * @return format: {phone: "", fax: "", address: {postalCode: "", country: ""}}
+	 */
+	private HashMap<String, Object> validateHome(@Valid Home home) {
+		
+		//Home
+		String phone = home.getPhone();
+		String fax = home.getFax();
+		Address address = home.getAddress();
+
+		HashMap<String, Object> resultHome = new HashMap<String, Object>();
+		
+		if(address != null){
+			resultHome.put("address", validateAddress(address));
+		}else{
+			resultHome.put("address", null);
+		}
+		
+		if(phone != null){
+			String PHONE_REGEX = "^(\\+[0-9]{1,3}\\s)([0-9]{9,10})$";
+			Pattern phonePattern = Pattern.compile(PHONE_REGEX);
+			Matcher phoneMattcher = phonePattern.matcher(phone);
+			
+			if (phoneMattcher.find()){
+				resultHome.put("phone", phone);
+			}else{
+				resultHome.put("phone", " must be a valid mobile format: +<1 to 3 digits> <9 to 10 digits>");
+			}
+		}else{
+			resultHome.put("phone", null);
+		}
+		
+		if(fax != null){
+			String FAX_REGEX = "^(\\+[0-9]{1,3}\\s)([0-9]{9,10})$";
+			Pattern faxPattern = Pattern.compile(FAX_REGEX);
+			Matcher faxMattcher = faxPattern.matcher(fax);
+			
+			if (faxMattcher.find()){
+				resultHome.put("fax", fax);
+			}else{
+				resultHome.put("fax", " must be a valid mobile format: +<1 to 3 digits> <9 to 10 digits>");
+			}
+		}else{
+			resultHome.put("fax", null);
+		}
+		return resultHome;
+	}
+
+	/**
+	 * Validate Work
+	 * 
+	 * @param work 
+	 * @return format: {company: {phone: "", fax: "", address:{postalCode: "", country: ""}}}
+	 */
+	private HashMap<String, Object> validateWork(@Valid Work work) {
+		//Work
+		Company company = work.getCompany();
+		
+		HashMap<String, Object> resultWork = new HashMap<String, Object>();
+		if(company != null){
+			resultWork.put("company", validateCompany(company));
+		}else{
+			resultWork.put("company", null);
+		}
+		
+		return resultWork;
+	}
+	
+	/**
+	 * Validate Company
+	 * 
+	 * @param company 
+	 * @return format: {phone: "", fax: "", address:{postalCode: "", country: ""}}
+	 */
+	private Object validateCompany(@Valid Company company) {
+		//Company
+		String phone = company.getPhone();
+		String fax = company.getFax();
+		Address address = company.getAddress();
+		
+		HashMap<String, Object> resultCompany = new HashMap<String, Object>();
+		
+		if(phone != null){
+			String PHONE_REGEX = "^(\\+[0-9]{1,3}\\s)([0-9]{9,10})$";
+			Pattern phonePattern = Pattern.compile(PHONE_REGEX);
+			Matcher phoneMattcher = phonePattern.matcher(phone);
+			
+			if (phoneMattcher.find()){
+				resultCompany.put("phone", phone);
+			}else{
+				resultCompany.put("phone", " must be a valid mobile format: +<1 to 3 digits> <9 to 10 digits>");
+			}
+		}else{
+			resultCompany.put("phone", null);
+		}
+		
+		if(fax != null){
+			String FAX_REGEX = "^(\\+[0-9]{1,3}\\s)([0-9]{9,10})$";
+			Pattern faxPattern = Pattern.compile(FAX_REGEX);
+			Matcher faxMattcher = faxPattern.matcher(fax);
+			
+			if (faxMattcher.find()){
+				resultCompany.put("fax", fax);
+			}else{
+				resultCompany.put("fax", " must be a valid mobile format: +<1 to 3 digits> <9 to 10 digits>");
+			}
+		}else{
+			resultCompany.put("fax", null);
+		}
+		
+		if(address != null){
+			resultCompany.put("address", validateAddress(address));
+		}
+		
+		return resultCompany;
+	}
+
+	/**
+	 * Validate Address
+	 * 
+	 * @param address 
+	 * @return format: {postalCode: "", country: ""}
+	 */
+	private HashMap<String, Object> validateAddress(@Valid Address address) {
+		//Address
+		Integer postalCode = address.getPostalCode();
+		String country = address.getCountry();
+		
+		HashMap<String, Object> resultAddress = new HashMap<String, Object>();
+		if(postalCode != null){
+			if((postalCode < 10000) || (postalCode > 99999)){
+				resultAddress.put("postalCode", " must be number in range [10000, 99999]");
+			}else{
+				resultAddress.put("postalCode", postalCode);
+			}
+		}else{
+			resultAddress.put("postalCode", 0);
+		}
+		
+		if(country != null){
+			String COUNTRY_REGEX = "^([A-Z]{2})$";
+			Pattern countryPattern = Pattern.compile(COUNTRY_REGEX);
+			Matcher countryMattcher = countryPattern.matcher(country);
+			
+			if (countryMattcher.find()){
+				resultAddress.put("country", country);
+			}else{
+				resultAddress.put("country", " must be two letter in uppercase");
+			}
+		}else{
+			resultAddress.put("country", null);
+		}
+		
+		return resultAddress;
+	}
+
 }

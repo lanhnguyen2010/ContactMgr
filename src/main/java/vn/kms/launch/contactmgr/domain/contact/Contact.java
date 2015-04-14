@@ -16,7 +16,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class Contact extends vn.kms.launch.contactmgr.domain.Entity {
 	private static final long serialVersionUID = 1L;
 
-    @NotEmpty(message = "must be required")
+    @NotEmpty(message = "{org.hibernate.validator.constraints.not-empty.message}")
 	@Column(name = "FIRST_NAME")
 	private String firstName;
 	
