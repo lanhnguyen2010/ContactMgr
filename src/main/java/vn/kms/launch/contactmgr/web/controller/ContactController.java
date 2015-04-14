@@ -90,8 +90,8 @@ public class ContactController {
     }
 
 	/**
-	 * Return 404 not found code if not contact associated to ID is not found
-	 * Return 200 success code if deleted successfully
+	 * Return 404(Not Found)  code if not contact associated to ID is not found
+	 * Return 204(No Content)  code if deleted successfully
 	 */
 	@RequestMapping(value = "/{id}", method = DELETE)
 	public ResponseEntity<Void> deleteContact(@PathVariable int id) {
@@ -107,8 +107,9 @@ public class ContactController {
 	}
 
 	/**
-	 * Return 404 not found code if not contact associated to ID is not found
-	 * Return 200 success code if deleted successfully
+	 * Return 400(Bad Request)  code if ids param is null
+	 * Return 404(Not Found)  code if not contact associated to ID is not found
+	 * Return 200(OK) code and the actual number of Contact that deleted
 	 */
 	@RequestMapping(method = DELETE)
 	public ResponseEntity<Integer> deleteContacts(@RequestParam int... ids) {
