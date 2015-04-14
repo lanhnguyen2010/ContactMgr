@@ -8,7 +8,7 @@ import javax.persistence.ManyToOne;
 @Embeddable
 public class Work {
 	
-	@Column(name = "TITLE")
+	@Column(name = "JOB_TITLE")
 	private String title;
 
 	@Column(name = "DEPARTMENT")

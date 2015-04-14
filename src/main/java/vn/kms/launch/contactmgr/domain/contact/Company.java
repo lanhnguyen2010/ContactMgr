@@ -10,9 +10,6 @@ import javax.persistence.Table;
 public class Company extends vn.kms.launch.contactmgr.domain.Entity{
 	private static final long serialVersionUID = 1L;
 
-	@Column(name = "CODE")
-	private String code;
-
 	@Column(name = "NAME")
 	private String name;
 
@@ -80,14 +77,6 @@ public class Company extends vn.kms.launch.contactmgr.domain.Entity{
 
 	public void setWebsite(String website) {
 		this.website = website;
-	}
-
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
 	}
 
 	public String getName() {
