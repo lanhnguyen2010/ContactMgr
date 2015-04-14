@@ -4,7 +4,7 @@
 	<hr>
 
 	<form name="contact_form" novalidate class="form-horizontal"
-		role="form" ng-submit="searchContacts(false)">
+		role="form" ng-submit="searchContacts(1)">
 		<div class="container">
 			<div class="row">
 				<div class="form-group col-sm-6">
@@ -15,10 +15,10 @@
 					</div>
 				</div>
 				<div class="form-group col-sm-6">
-					<label for="jobtitle" class="control-label col-sm-3"
+					<label for="jobTitle" class="control-label col-sm-3"
 						translate="contact.contact-field.job-title">Job Title</label>
 					<div class="col-sm-9">
-						<input type="text" class="form-control" name="jobtitle" ng-model="filter.jobtitle">
+						<input type="text" class="form-control" name="jobTitle" ng-model="filter.jobTitle">
 					</div>
 				</div>
 			</div>
@@ -53,11 +53,9 @@
 					<label for="company" class="control-label col-sm-3"
 						translate="contact.contact-field.company">Company</label>
 					<div class="col-sm-9">
-						<select class="form-control">
+						<select class="form-control" ng-model="filter.company">
 							<option value=""></option>
-							<option value="KMS">KMS Company</option>
-							<option value="KMS">KMS Company1</option>
-							<option value="KMS">KMS Company2</option>
+							<option ng-repeat="company in companies" value="{{company.name}}">{{company.name}}</option>
 						</select>
 					</div>
 				</div>
@@ -83,7 +81,7 @@
 				ng-click="deleteContacts()" 
 				ng-disabled="!checkedIds.length">
 			Delete
-		</button>		
+		</button>
 		<table ng-table="contactsTableParams" class="table">
 			<th>
 				<input type="checkbox" ng-model="checkboxes.checked" 
@@ -101,8 +99,11 @@
 					header="'ng-table/headers/checkbox.html'">
 					<input type="checkbox" ng-model="checkboxes.items[contact.id]" />
 				</td>
-				<td data-title="'Name'">{{contact.firstName}}</td>
-				<td data-title="'Mobile'">{{contact.mobile}}</td>
+				<td data-title="'Name'">
+					<a href="">{{contact.lastName + " " + contact.middleName + " " + contact.firstName }}</a>
+				</td>
+				<td data-title="'Mobile'">{{contact.mobile}}
+				</td>
 				<td data-title="'Email'">{{contact.email}}</td>
 				<td data-title="'Job Title'">{{contact.work.title}}</td>
 				<td data-title="'Department'">{{contact.work.department}}</td>
@@ -114,40 +115,70 @@
 	</div>
 
 	<!-- Modal -->
-		<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-			aria-labelledby="myModalLabel" aria-hidden="true">
-			<div class="vertical-alignment-helper">
-				<div class="modal-dialog vertical-align-center">
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal">
-								<span aria-hidden="true">&times; </span> <span class="sr-only">Close</span>
-							</button>
-							<h3 class="modal-title" id="myModalLabel" style="color: white">Company
-								Information</h3>
-						</div>
-						<div class="modal-body">
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="vertical-alignment-helper">
+			<div class="modal-dialog vertical-align-center">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">
+							<span aria-hidden="true">&times; </span> <span class="sr-only">Close</span>
+						</button>
+						<h3 class="modal-title" id="myModalLabel" style="color: white">Company
+							Info</h3>
+					</div>
 
-							<div class="container-fluid">
-								<div class="row">
-									<div class="col-md-6">
-										Name: {{selectedContact.work.company.name}} </br> Logo </br> </br> Message: {{selectedContact.work.company.message}} </br>
-										Website: <a href="">{{selectedContact.work.company.website}}</a> </br> Phone: {{selectedContact.mobile}}</br> Fax: {{selectedContact.mobile}}</br>
-
-									</div>
-									<div class="col-md-6">
-										</br> Addr. line 1: </br> Addr. line 2: </br> City: </br> State: </br> Zip Code: </br>
-										Country: </br>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-primary"
-								data-dismiss="modal">Close</button>
-						</div>
+					<div class="modal-body">
+						<table style="width:100%">
+							<tr>
+								<td align="right">Name &nbsp</td>
+								<td><strong>{{selectedContact.work.company.name}}</strong></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td><img src="{{selectedContact.work.company.logo}}" /></td>
+								<td align="right">Addr. line 1 &nbsp</td> 
+								<td>{{selectedContact.home.address.addrLine1}}</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td></td>
+								<td align="right">Addr. line 2 &nbsp</td>
+								<td>{{selectedContact.home.address.addrLine2}}</td>
+							</tr>
+							<tr>
+								<td align="right">Message &nbsp</td>
+								<td><strong>{{selectedContact.work.company.message}}</strong></td>
+								<td align="right">City &nbsp</td>
+								<td><strong>{{selectedContact.home.address.city}}</strong></td>
+							</tr>
+							<tr>
+								<td align="right">Website &nbsp</td>
+								<td><a href=""><strong>{{selectedContact.work.company.website}}</strong> </a></td>
+								<td align="right">State &nbsp</td>
+								<td>{{selectedContact.home.address.state}}</td>
+							</tr>
+							<tr>
+								<td align="right">Phone &nbsp</td>
+								<td><strong>{{selectedContact.mobile}}</strong></td>
+								<td align="right">Zip Code &nbsp</td>
+								<td><strong>{{selectedContact.home.address.postalCode}}</strong></td>
+							</tr>
+							<tr>
+								<td align="right">Fax &nbsp</td>
+								<td><strong>{{selectedContact.home.fax}}</strong></td>
+								<td align="right">Country &nbsp</td>
+								<td><strong>{{selectedContact.home.address.country}}</strong></td>
+							</tr>
+						</table>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
 					</div>
 				</div>
 			</div>
 		</div>
+	</div>
 </div>
