@@ -7,7 +7,8 @@ import javax.persistence.ManyToOne;
 
 @Embeddable
 public class Work {
-	
+
+
 	@Column(name = "JOB_TITLE")
 	private String title;
 
@@ -16,7 +17,7 @@ public class Work {
 
 	@Column(name = "COMPANY_ID", insertable = false, updatable = false)
 	private Integer companyId;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "COMPANY_ID")
 	private Company company;

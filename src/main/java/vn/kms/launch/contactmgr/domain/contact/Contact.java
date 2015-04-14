@@ -10,6 +10,7 @@ import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "CONTACT")
@@ -17,23 +18,27 @@ public class Contact extends vn.kms.launch.contactmgr.domain.Entity {
 	private static final long serialVersionUID = 1L;
 
     @NotEmpty(message = "{validation.not-empty.message}")
+    @Column(name = "DISPLAY_NAME")
+    private String displayName;
+
+    @NotEmpty(message = "{validation.not-empty.message}")
 	@Column(name = "FIRST_NAME")
 	private String firstName;
-	
+
 	@Column(name = "MIDDLE_NAME")
 	private String middleName;
-	
+
 	@NotEmpty(message = "{validation.not-empty.message}")
 	@Column(name = "LAST_NAME")
 	private String lastName;
-	
+
 	@Email(message = "{validation.email.message}")
 	@Column(name = "EMAIL")
 	private String email;
 
 	@Column(name = "PHOTO")
 	private String photo;
-	
+
 	@Pattern(regexp = "(\\+[0-9]{1,3}\\s)([0-9]{9,10})", message = "{validation.mobile.message}")
 	@Column(name = "MOBILE")
 	private String mobile;
@@ -42,6 +47,7 @@ public class Contact extends vn.kms.launch.contactmgr.domain.Entity {
 	private String gender;
 
 	@Column(name = "BIRTHDAY")
+    @DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date birthday;
 
 	@Embedded
@@ -50,7 +56,15 @@ public class Contact extends vn.kms.launch.contactmgr.domain.Entity {
 	@Embedded
 	private Work work;
 
-	public String getFirstName() {
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
+
+    public String getFirstName() {
 		return firstName;
 	}
 

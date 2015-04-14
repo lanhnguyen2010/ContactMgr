@@ -1,4 +1,5 @@
-CREATE TABLE company (
+
+﻿CREATE TABLE company (
     id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(100),
     website VARCHAR(255),

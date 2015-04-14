@@ -1,5 +1,6 @@
 package vn.kms.launch.contactmgr.domain.greeting;
 
+import org.hibernate.validator.constraints.NotEmpty;
 import vn.kms.launch.contactmgr.domain.Entity;
 
 import javax.persistence.Column;
@@ -12,6 +13,7 @@ import javax.persistence.Transient;
 @javax.persistence.Entity
 @Table(name = "GREETINGS")
 public class Greeting extends Entity {
+    @NotEmpty(message = "{validation.not-empty.message}")
     @Column(name = "CODE", unique = true)
     private String code;
 

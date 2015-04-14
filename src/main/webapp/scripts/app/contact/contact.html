@@ -4,7 +4,7 @@
 	<hr>
 
 	<form name="contact_form" novalidate class="form-horizontal"
-		role="form" ng-submit="searchContacts(1)">
+		role="form" ng-submit="searchContacts(false)">
 		<div class="container">
 			<div class="row">
 				<div class="form-group col-sm-6">
@@ -53,7 +53,7 @@
 					<label for="company" class="control-label col-sm-3"
 						translate="contact.contact-field.company">Company</label>
 					<div class="col-sm-9">
-						<select class="form-control" ng-model="filter.company">
+						<select class="form-control">
 							<option value=""></option>
 							<option ng-repeat="company in companies" value="{{company.name}}">{{company.name}}</option>
 						</select>
@@ -99,11 +99,8 @@
 					header="'ng-table/headers/checkbox.html'">
 					<input type="checkbox" ng-model="checkboxes.items[contact.id]" />
 				</td>
-				<td data-title="'Name'">
-					<a href="">{{contact.lastName + " " + contact.middleName + " " + contact.firstName }}</a>
-				</td>
-				<td data-title="'Mobile'">{{contact.mobile}}
-				</td>
+				<td data-title="'Name'">{{contact.firstName}}</td>
+				<td data-title="'Mobile'">{{contact.mobile}}</td>
 				<td data-title="'Email'">{{contact.email}}</td>
 				<td data-title="'Job Title'">{{contact.work.title}}</td>
 				<td data-title="'Department'">{{contact.work.department}}</td>

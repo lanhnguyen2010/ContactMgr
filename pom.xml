@@ -5,7 +5,7 @@
     <groupId>vn.kms.launch</groupId>
     <artifactId>contactmgr</artifactId>
     <name>Contact Manager</name>
-    <version>0.1.1-SNAPSHOT</version>
+    <version>0.1.1</version>
     <packaging>war</packaging>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -20,21 +20,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.mariadb.jdbc</groupId>
-            <artifactId>mariadb-java-client</artifactId>
-            <version>1.1.8</version>
-        </dependency>
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.mangofactory</groupId>
@@ -55,11 +40,27 @@
                 </exclusion>
             </exclusions>
         </dependency>
-    <dependency>
-       <groupId>org.json</groupId>
-       <artifactId>json</artifactId>
-       <version>20090211</version>
-	</dependency>
+        <dependency>
+            <groupId>org.mariadb.jdbc</groupId>
+            <artifactId>mariadb-java-client</artifactId>
+            <version>1.1.8</version>
+        </dependency>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20090211</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
