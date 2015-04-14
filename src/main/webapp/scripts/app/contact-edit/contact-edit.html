@@ -3,31 +3,115 @@
 	<form name="contact_form" novalidate class="form-horizontal"
 		role="form" ng-submit="#">
 		<div class="row">
-			<div class="col-md-6"></div>
+            <div class="col-md-6">
+                <h3>General</h3>
+                <hr style="border-color: black;">
+                <div class="form-group">
+                    <label class="control-label col-sm-3">Name</label>
+                    <div class="col-sm-3" class="form-group" >
+                        <input type="text" name="name" class="form-control" style="margin-bottom: 10px" placeholder="First Name">
+                    </div>
+                    <div class="col-sm-3" class="form-group">
+                        <input type="text" name="name" class="form-control" style="margin-bottom: 10px" placeholder="Middle Name">
+                    </div>
+                    <div class="col-sm-3" class="form-group">
+                        <input type="text" name="name" class="form-control" style="margin-bottom: 10px" placeholder="Last name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3">FullName</label>
+                    <div class="col-sm-9">
+                        <select class="form-control">
+                            <option>1</option>
+                            <option>2</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3">Email</label>
+                    <div class="col-sm-9">
+                        <input type="text" name="name" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3">Mobile</label>
+                    <div class="col-sm-9">
+                        <input type="text" name="name" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3">Photo</label>
+                    <div class="col-sm-9">
+                        <a class="thumbnail" href="#" style="width: 128px; height: 100px;"
+                            align="center">Photo</a>
+                    </div>
+                </div>
+                <h3>Home</h3>
+                <hr style="border-color: black;">
+                <div class="form-group">
+                    <label class="control-label col-sm-3" >Add. Line 1</label>
+                    <div class="col-sm-9">
+                        <input type="text" name="name" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3"  >Add. Line 2</label>
+                    <div class="col-sm-9">
+                        <input type="text" name="name" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3" >City</label>
+                    <div class="col-sm-9">
+                        <input type="text" name="name" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3" >Zip Code</label>
+                    <div class="col-sm-3" style="width: 100px;">
+                        <input type="text" name="name" class="form-control" maxlength="5">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3">Country</label>
+                    <div class="col-sm-9">
+                        <select class="form-control">
+                            <option>Viet Nam</option>
+                            <option>US</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3" >Phone</label>
+                    <div class="col-sm-9">
+                        <input type="text" name="name" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3">Fax</label>
+                    <div class="col-sm-9">
+                        <input type="text" name="name" class="form-control">
+                    </div>
+                </div>
+            </div>
 			<div class="col-md-6">
 				<!-- Begin Work Group-->
 				<h3>Work</h3>
-				<hr style="border-color: gray" />
+				<hr style="border-color: black;" />
 				<div class="form-group">
-				    <div class="col-sm-3">
-				        <label for="inputEmail">Email</label> 
-				    </div>
+			        <label for="inputEmail" class="control-label col-sm-3">Email</label> 
 					<div class="col-sm-9">
 					   <input type="email" class="form-control" id="inputEmail">
 					</div>
 				</div>
 				<div class="form-group">
-                    <div class="col-sm-3">
-                        <label for="inputMobile">Mobile</label> 
-                    </div>
+                    <label for="inputMobile" class="control-label col-sm-3">Mobile</label> 
                     <div class="col-sm-9">
                        <input type="number" class="form-control" id="inputMobile">
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-sm-3">
-                        <label for="inputMobile2">Company Name</label> 
-                    </div>
+                    <label for="inputMobile2" class="control-label col-sm-3">Company Name</label>
                     <div class="col-sm-5 col-xs-6">
                          <select class="form-control">
                              <option>Viet Nam</option>
@@ -47,71 +131,55 @@
                 <div class="form-group">
                     <div class="col-sm-3"></div>
                     <div class="col-sm-9" class="thumbnail">
-                        <a href="#" class="thumbnail" style="width: 128px; height: 128px">
+                        <a href="#" class="thumbnail" style="width: 128px; height: 100px">
                             Logo
                         </a>
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-sm-3">
-                        <label for="inputMessage">Message</label> 
-                    </div>
+                    <label for="inputMessage" class="control-label col-sm-3">Message</label> 
                     <div class="col-sm-9">
                        <input class="form-control" id="inputMessage">
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-sm-3">
-                        <label for="inputWebsite">Website</label> 
-                    </div>
+                    <label for="inputWebsite" class="control-label col-sm-3">Website</label> 
                     <div class="col-sm-9">
                        <input class="form-control" id="inputWebsite">
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-sm-3">
-                        <label for="inputAddrLine1">Addr. line1</label> 
-                    </div>
+                    <label for="inputAddrLine1" class="control-label col-sm-3">Addr. line1</label> 
                     <div class="col-sm-9">
                        <input class="form-control" id="inputAddrLine1">
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-sm-3">
-                        <label for="inputAddrLine2">Addr. line2</label> 
-                    </div>
+                    <label for="inputAddrLine2" class="control-label col-sm-3">Addr. line2</label> 
                     <div class="col-sm-9">
                        <input class="form-control" id="inputAddrLine2">
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-sm-3">
-                        <label for="inputCity">City</label> 
-                    </div>
+                    <label for="inputCity" class="control-label col-sm-3">City</label> 
                     <div class="col-sm-9">
                        <input class="form-control" id="inputCity">
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-sm-3">
-                        <label for="inputState">State</label> 
-                    </div>
+                    <label for="inputState" class="control-label col-sm-3">State</label> 
                     <div class="col-sm-9">
                        <input class="form-control" id="inputState">
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-sm-3">
-                        <label for="inputZipCode">Zip Code</label> 
-                    </div>
+                    <label for="inputZipCode" class="control-label col-sm-3">Zip Code</label> 
                     <div class="col-sm-9">
                        <input type="number" class="form-control" id="inputZipCode" style="width: 100px" maxlength="5" size="5">
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-sm-3">
-                        <label for="selectCountry">Country</label> 
-                    </div>
+                    <label for="selectCountry" class="control-label col-sm-3">Country</label>
                     <div class="col-sm-9">
                         <select class="form-control" id="selectCountry">
                              <option>Viet Nam</option>
@@ -123,17 +191,13 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-sm-3">
-                        <label for="inputPhone">Phone</label> 
-                    </div>
+                    <label for="inputPhone" class="control-label col-sm-3">Phone</label> 
                     <div class="col-sm-9">
                        <input type="number" class="form-control" id="inputPhone">
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-sm-3">
-                        <label for="input">Fax</label> 
-                    </div>
+                    <label for="input" class="control-label col-sm-3">Fax</label> 
                     <div class="col-sm-9">
                        <input type="number" class="form-control" id="inputFax">
                     </div>
