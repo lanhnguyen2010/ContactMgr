@@ -26,13 +26,11 @@ public class Company extends vn.kms.launch.contactmgr.domain.Entity{
 	@Column(name = "MESSAGE")
 	private String message;
 	
-	@Pattern(regexp = "(\\+[0-9]{1,3}\\s)([0-9]{9,10})", 
-			message = "must be a valid phone format: +<1 to 3 digits> <9 to 10 digits>")
+	@Pattern(regexp = "(\\+[0-9]{1,3}\\s)([0-9]{9,10})", message = "{validation.phone.message}")
 	@Column(name = "PHONE")
 	private String phone;
 
-	@Pattern(regexp = "(\\+[0-9]{1,3}\\s)([0-9]{9,10})", 
-			message = "must be a valid fax format: +<1 to 3 digits> <9 to 10 digits>")
+	@Pattern(regexp = "(\\+[0-9]{1,3}\\s)([0-9]{9,10})", message = "{validation.fax.message}")
 	@Column(name = "FAX")
 	private String fax;
 

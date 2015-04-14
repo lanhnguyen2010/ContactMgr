@@ -19,7 +19,7 @@ public class AddressValidator implements Validator{
 		
 		if((address.getPostalCode().toString().length() != 5 )){
 			errors.rejectValue("postalCode", "postalCode.invalid", new Object[]{address.getPostalCode()},
-					"must be a valid postalCode format: <5 digits>");
+					"{validation.postalCode.message}");
 		}
 	}
 
