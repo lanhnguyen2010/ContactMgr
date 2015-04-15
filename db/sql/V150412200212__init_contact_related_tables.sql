@@ -1,4 +1,4 @@
-CREATE TABLE company (
+﻿CREATE TABLE companies (
     id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(100),
     website VARCHAR(255),
@@ -19,7 +19,7 @@ CREATE TABLE company (
     PRIMARY KEY(id)
 );
 
-CREATE TABLE contact (
+CREATE TABLE contacts (
     id INT NOT NULL AUTO_INCREMENT,
     display_name VARCHAR(150) NOT NULL,
     first_name VARCHAR(50),
@@ -48,26 +48,7 @@ CREATE TABLE contact (
     PRIMARY KEY(id)
 );
 
-ALTER TABLE contact
+ALTER TABLE contacts
 ADD CONSTRAINT fk_contact_company
 FOREIGN KEY (company_id)
-REFERENCES company(id);
-
-CREATE TABLE `user` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
-  `USERNAME` varchar(100) NOT NULL,
-  `PASSWORD` varchar(100) DEFAULT NULL,
-  `FIRST_NAME` varchar(45) DEFAULT NULL,
-  `LAST_NAME` varchar(45) DEFAULT NULL,
-  `ROLE` enum('ADMINISTRATOR','DESIGNER','EDITOR') DEFAULT NULL,
-  `EXPIRED_DATE` date DEFAULT NULL,
-  `ACTIVE` int(11) DEFAULT NULL,
-  `CREATED_AT` date DEFAULT NULL,
-  `CREATED_BY` varchar(100) DEFAULT NULL,
-  `UPDATED_AT` date DEFAULT NULL,
-  `UPDATED_BY` varchar(100) DEFAULT NULL,
-  `EMAIL` varchar(100) DEFAULT NULL,
-  `LANGUAGE` enum('English','Vietnamese') DEFAULT 'English',
-  `ASSIGNED_COMPANIES` varchar(5000) DEFAULT NULL,
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+REFERENCES companies(id);

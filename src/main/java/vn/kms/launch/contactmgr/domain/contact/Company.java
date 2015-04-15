@@ -7,97 +7,85 @@ import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 
 @Entity
-@Table(name = "Company")
-public class Company extends vn.kms.launch.contactmgr.domain.Entity{
-	private static final long serialVersionUID = 1L;
+@Table(name = "COMPANIES")
+public class Company extends vn.kms.launch.contactmgr.domain.Entity {
+    private static final long serialVersionUID = 1L;
 
-	@Column(name = "CODE")
-	private String code;
+    @Column(name = "NAME")
+    private String name;
 
-	@Column(name = "NAME")
-	private String name;
+    @Column(name = "WEBSITE")
+    private String website;
 
-	@Column(name = "WEBSITE")
-	private String website;
+    @Column(name = "LOGO")
+    private String logo;
 
-	@Column(name = "LOGO")
-	private String logo;
+    @Column(name = "MESSAGE")
+    private String message;
 
-	@Column(name = "MESSAGE")
-	private String message;
-	
-	@Column(name = "PHONE")
-	@Pattern(regexp = "^(\\+[0-9]{1,3}\\s)([0-9]{9,10})$", message = "{validation.phone.message}")
-	private String phone;
+    @Pattern(regexp = "(\\+[0-9]{1,3}\\s)([0-9]{9,10})", message = "{validation.phone.message}")
+    @Column(name = "PHONE")
+    private String phone;
 
-	@Column(name = "FAX")
-	@Pattern(regexp = "^(\\+[0-9]{1,3}\\s)([0-9]{9,10})$", message = "{validation.fax.message}")
-	private String fax;
+    @Column(name = "FAX")
+    private String fax;
 
-	@Embedded
-	private Address address;
+    @Embedded
+    private Address address;
 
-	public String getPhone() {
-		return phone;
-	}
+    public String getPhone() {
+        return phone;
+    }
 
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
-	public String getFax() {
-		return fax;
-	}
+    public String getFax() {
+        return fax;
+    }
 
-	public void setFax(String fax) {
-		this.fax = fax;
-	}
+    public void setFax(String fax) {
+        this.fax = fax;
+    }
 
-	public Address getAddress() {
-		return address;
-	}
+    public Address getAddress() {
+        return address;
+    }
 
-	public void setAddress(Address address) {
-		this.address = address;
-	}
+    public void setAddress(Address address) {
+        this.address = address;
+    }
 
-	public String getLogo() {
-		return logo;
-	}
+    public String getLogo() {
+        return logo;
+    }
 
-	public void setLogo(String logo) {
-		this.logo = logo;
-	}
+    public void setLogo(String logo) {
+        this.logo = logo;
+    }
 
-	public String getMessage() {
-		return message;
-	}
+    public String getMessage() {
+        return message;
+    }
 
-	public void setMessage(String message) {
-		this.message = message;
-	}
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
-	public String getWebsite() {
-		return website;
-	}
+    public String getWebsite() {
+        return website;
+    }
 
-	public void setWebsite(String website) {
-		this.website = website;
-	}
+    public void setWebsite(String website) {
+        this.website = website;
+    }
 
-	public String getCode() {
-		return code;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setCode(String code) {
-		this.code = code;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 }

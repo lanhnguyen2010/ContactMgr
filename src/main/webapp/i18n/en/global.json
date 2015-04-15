@@ -5,12 +5,14 @@
             "home": "Home",
             "contacts": {
                 "main": "Contacts",
-                "add": "Add new Contact"
+                "new": "Add new Contact",
+                "manage": "Manage Contacts"
             },
             "cards": {
                 "main": "Cards",
-                "add": "Design new Card template",
-                "generate": "Generate Cards"
+                "new": "Design new Card",
+                "generate": "Generate Cards",
+                "manage": "Manage Cards"
             },
             "admin": {
                 "main": "Administrator",

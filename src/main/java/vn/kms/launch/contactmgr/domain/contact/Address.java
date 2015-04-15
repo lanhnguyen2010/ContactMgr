@@ -1,76 +1,82 @@
 package vn.kms.launch.contactmgr.domain.contact;
 
+import vn.kms.launch.contactmgr.domain.ValueObject;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
 
 @Embeddable
-public class Address {
+public class Address extends ValueObject<Address> {
 
-	@Column(name = "ADDR_LINE1")
-	private String addrLine1;
-	
-	@Column(name = "ADDR_LINE2")
-	private String addrLine2;
+    @Column(name = "ADDR_LINE1")
+    private String addrLine1;
 
-	@Column(name = "CITY")
-	private String city;
+    @Column(name = "ADDR_LINE2")
+    private String addrLine2;
 
-	@Column(name = "STATE")
-	private String state;
+    @Column(name = "CITY")
+    private String city;
 
-	@Column(name = "POSTAL_CODE")
-	private Integer postalCode;
-	
-	@Column(name = "COUNTRY")
-    @Pattern(regexp = "^([A-Z]{2})$", message = "{validation.country.message}")
-	private String country;
+    @Column(name = "STATE")
+    private String state;
 
-	public String getAddrLine1() {
-		return addrLine1;
-	}
+    @Min(value = 10000, message = "{validation.postalCode.message}")
+    @Max(value = 99999, message = "{validation.postalCode.message}")
+    @Column(name = "POSTAL_CODE")
+    private Integer postalCode;
 
-	public void setAddrLine1(String addrLine1) {
-		this.addrLine1 = addrLine1;
-	}
+    @Pattern(regexp = "([A-Z]{2})", message = "{validation.country.message}")
+    @Column(name = "COUNTRY")
+    private String country;
 
-	public String getAddrLine2() {
-		return addrLine2;
-	}
+    public String getAddrLine1() {
+        return addrLine1;
+    }
 
-	public void setAddrLine2(String addrLine2) {
-		this.addrLine2 = addrLine2;
-	}
+    public void setAddrLine1(String addrLine1) {
+        this.addrLine1 = addrLine1;
+    }
 
-	public String getCity() {
-		return city;
-	}
+    public String getAddrLine2() {
+        return addrLine2;
+    }
 
-	public void setCity(String city) {
-		this.city = city;
-	}
+    public void setAddrLine2(String addrLine2) {
+        this.addrLine2 = addrLine2;
+    }
 
-	public String getState() {
-		return state;
-	}
+    public String getCity() {
+        return city;
+    }
 
-	public void setState(String state) {
-		this.state = state;
-	}
+    public void setCity(String city) {
+        this.city = city;
+    }
 
-	public Integer getPostalCode() {
-		return postalCode;
-	}
+    public String getState() {
+        return state;
+    }
 
-	public void setPostalCode(Integer postalCode) {
-		this.postalCode = postalCode;
-	}
+    public void setState(String state) {
+        this.state = state;
+    }
 
-	public String getCountry() {
-		return country;
-	}
+    public Integer getPostalCode() {
+        return postalCode;
+    }
 
-	public void setCountry(String country) {
-		this.country = country;
-	}
+    public void setPostalCode(Integer postalCode) {
+        this.postalCode = postalCode;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
 }
