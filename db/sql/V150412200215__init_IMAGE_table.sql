@@ -1,8 +1,7 @@
 ﻿CREATE TABLE image (
   id INT NOT NULL AUTO_INCREMENT,
-  url VARCHAR(256), --
+  pathFull VARCHAR(256), 
+  fileName VARCHAR(100),  
+  contentType VARCHAR (90),
   PRIMARY KEY(id)
-  --fileName: relative
-  --contentType images/jpeg
-  --
 );

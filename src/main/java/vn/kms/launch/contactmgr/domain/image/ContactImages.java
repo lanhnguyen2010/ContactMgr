@@ -1,6 +1,7 @@
 package vn.kms.launch.contactmgr.domain.image;
 import java.util.Date;
 
+import org.apache.http.entity.ContentType;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -19,15 +20,21 @@ import javax.validation.constraints.Pattern;
  * Created by diule on April, 14;
  */
 @javax.persistence.Entity
-@Table(name = "contactImages")
+@Table(name = "IMAGE")
 public class ContactImages extends Entity {
 
 	//@NotEmpty(message = "{validation.not-empty.message}")
     @Column(name = "ID")
-    private int id;
+    private Integer id;
 
-	@Column(name = "URL")
-	private String url;
+	@Column(name = "pathFull")
+	private String pathFull;
+	
+	@Column(name = "fileName")
+	private String fileName;
+	
+	@Column(name = "contentType")
+	private String ContentType;
 
 	public Integer getId() {
 		return id;
@@ -37,11 +44,27 @@ public class ContactImages extends Entity {
 		this.id = id;
 	}
 
-	public String getUrl() {
-		return url;
+	public String getPathFull() {
+		return pathFull;
 	}
 
-	public void setUrl(String url) {
-		this.url = url;
+	public void setPathFull(String pathFull) {
+		this.pathFull = pathFull;
 	}
+
+	public String getFileName() {
+		return fileName;
 	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+	public String getContentType() {
+		return ContentType;
+	}
+
+	public void setContentType(String contentType) {
+		ContentType = contentType;
+	}
+}

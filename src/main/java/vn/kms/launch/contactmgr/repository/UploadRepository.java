@@ -1,11 +1,14 @@
 package vn.kms.launch.contactmgr.repository;
 
+import java.io.ObjectInputStream.GetField;
+
 import javax.transaction.Transactional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import vn.kms.launch.contactmgr.domain.contact.Contact;
 import vn.kms.launch.contactmgr.domain.image.*;
+import vn.kms.launch.contactmgr.service.UploadService;
 
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -26,6 +29,10 @@ public interface UploadRepository extends JpaRepository <ContactImages, Integer>
 	 * @param ids
 	 * @return
 	 */
+//	@Modifying
+//	@Transactional
+//	@Query("select id from Image where id in (:ids)")
+//	//int get;
 	
 	/**
 	 * Query function getAll()
@@ -40,10 +47,9 @@ public interface UploadRepository extends JpaRepository <ContactImages, Integer>
 	 * @param 
 	 * @return
 	 */
-	@Modifying
+	/*@Modifying
 	@Transactional
-	
 	@Query("insert from Contact where id in (:ids)")
-	int deleteContacts(@Param("ids")int... ids);
+	int deleteContacts(@Param("ids")int... ids);*/
 
 }

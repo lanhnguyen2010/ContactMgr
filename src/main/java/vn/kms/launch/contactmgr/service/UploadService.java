@@ -68,13 +68,13 @@ public class UploadService {
 		}
 
 		@Transactional
-		public InputStream getFile(int photoId){
-		return null;	
+		public ContactImages getFile(int photoId){
+			return uploadRepository.findOne(photoId);	
 		}
 		
 		@Transactional
-		public List<ContactImages> getAll(){
-			return null;
+		public List<ContactImages> getAllPhotoId(){
+			return uploadRepository.findAll();
 		}
 
 }

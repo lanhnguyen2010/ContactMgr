@@ -26,6 +26,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.multipart.MultipartFile;
@@ -56,9 +57,14 @@ public class UploadController {
 	@Autowired
 	private MultipartResolver multipartResolver;
 
+	
 	@Autowired
-	ContactService contactService;
 	UploadService uploadService;
+	
+	/*Upload image WS: an image with format PNG, JPEG
+	 * @return ""
+	 * if user upload an image illegal format, "HTTP Error 412 - Precondition failed";
+	 * */
 
 	@RequestMapping(value="/upload",method = POST)
 	public ResponseEntity uploadPhoto(HttpServletRequest request)
@@ -81,19 +87,28 @@ public class UploadController {
 		//
 	}
 
-
+	/*
+	 * Show all images on Dialog;
+	 * */
 	@RequestMapping(method = GET)
-	public ResponseEntity<?> getaLLPhoto(@PathVariable("photoId") int photoId,
+	public @ResponseBody ResponseEntity<?> getAllPhoto(@PathVariable("photoId") int photoId,
 			WebRequest request){
-		return null;
+		
+		//ContactImages contactImage = (ContactImages) uploadService.getAllPhotoId();
+		//Get all image and show on Dialog to user;
+		return new ResponseEntity<Integer>(photoId, HttpStatus.OK);
 	}
 	
+	/*Get photoId return user
+	 * @return ""
+	 * 
+	 * */
 	@RequestMapping(value = "/{photoId}", method = GET)
 	public void getPhoto(@PathVariable("photoId") int photoId,
 			WebRequest request, HttpServletResponse response) throws IOException {
-		InputStream in = uploadService.getFile(photoId);
+		ContactImages ci = uploadService.getFile(photoId);
 		
-		if (null == in)
+		if (null == ci)
 			response.setStatus(HttpStatus.NOT_FOUND.value());
 		else{
 		response.setStatus(HttpStatus.OK.value());
