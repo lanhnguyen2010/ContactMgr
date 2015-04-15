@@ -10,6 +10,7 @@ import vn.kms.launch.contactmgr.domain.Itemized;
 import vn.kms.launch.contactmgr.domain.greeting.Greeting;
 import vn.kms.launch.contactmgr.domain.greeting.GreetingRepository;
 import vn.kms.launch.contactmgr.domain.greeting.GreetingSearchCriteria;
+import vn.kms.launch.contactmgr.util.EntityNotFoundException;
 import vn.kms.launch.contactmgr.util.SearchResult;
 import vn.kms.launch.contactmgr.util.ValidationException;
 
@@ -34,10 +35,13 @@ public class GreetingService {
 
     @Transactional
     public Greeting saveGreeting(String code, String message) throws ValidationException {
-        Greeting greeting = greetingRepo.findByCode(code);
-        if (greeting == null) {
-            greeting = new Greeting(code, message);
-        } else {
+        Greeting greeting = new Greeting(code, message);
+        if (code != null) {
+            greeting = greetingRepo.findByCode(code);
+            if (greeting == null) {
+                throw new EntityNotFoundException();
+            }
+
             greeting.setMessage(message);
         }
 

@@ -4,6 +4,8 @@ import vn.kms.launch.contactmgr.domain.ValueObject;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
 
 @Embeddable
@@ -21,7 +23,8 @@ public class Address extends ValueObject<Address> {
     @Column(name = "STATE")
     private String state;
 
-    @Pattern(regexp = "([0-9]{7})", message = "{validation.postalCode.message}")
+    @Min(value = 10000, message = "{validation.postalCode.message}")
+    @Max(value = 99999, message = "{validation.postalCode.message}")
     @Column(name = "POSTAL_CODE")
     private Integer postalCode;
 

@@ -291,7 +291,7 @@ module.exports = function (grunt) {
                 constants: {
                     ENV: 'dev',
                     VERSION: parseVersionFromPomXml(),
-                    PAGE_SIZE: 15
+                    PAGE_SIZE: 10
                 }
             },
             prod: {
@@ -301,7 +301,7 @@ module.exports = function (grunt) {
                 constants: {
                     ENV: 'prod',
                     VERSION: parseVersionFromPomXml(),
-                    PAGE_SIZE: 15
+                    PAGE_SIZE: 10
                 }
             }
         }

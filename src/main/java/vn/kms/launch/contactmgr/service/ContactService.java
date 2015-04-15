@@ -11,6 +11,7 @@ import vn.kms.launch.contactmgr.domain.contact.ContactRepository;
 import vn.kms.launch.contactmgr.domain.contact.ContactSearchCriteria;
 import vn.kms.launch.contactmgr.domain.contact.Work;
 import vn.kms.launch.contactmgr.domain.greeting.Greeting;
+import vn.kms.launch.contactmgr.util.EntityNotFoundException;
 import vn.kms.launch.contactmgr.util.SearchResult;
 import vn.kms.launch.contactmgr.util.ValidationException;
 
@@ -36,11 +37,16 @@ public class ContactService {
     }
 
     @Transactional
-    public Contact saveContact(Contact contact) throws ValidationException {
+    public Contact saveContact(Contact contact, Integer contactId) throws ValidationException {
         if (contact == null) {
             return null;
         }
 
+        if (contactId != null && !contactRepo.exists(contactId)) {
+            throw new EntityNotFoundException();
+        }
+
+        contact.setId(contactId);
         validateContact(contact);
 
         Work work = contact.getWork();

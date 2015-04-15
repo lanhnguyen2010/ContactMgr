@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import vn.kms.launch.contactmgr.domain.contact.Contact;
 import vn.kms.launch.contactmgr.domain.contact.ContactSearchCriteria;
 import vn.kms.launch.contactmgr.service.ContactService;
+import vn.kms.launch.contactmgr.util.EntityNotFoundException;
 import vn.kms.launch.contactmgr.util.SearchResult;
 import vn.kms.launch.contactmgr.util.ValidationException;
 
@@ -82,10 +83,11 @@ public class ContactController {
     }
 
     private ResponseEntity<?> saveContact(Contact contact, Integer contactId) {
-        contact.setId(contactId);
         try {
-            Contact savedContact = contactService.saveContact(contact);
+            Contact savedContact = contactService.saveContact(contact, contactId);
             return new ResponseEntity<>(savedContact, OK);
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity<>(NOT_FOUND);
         } catch (ValidationException e) {
             Map<String, Object> returnObj = new HashMap<>();
             returnObj.put("data", contact);

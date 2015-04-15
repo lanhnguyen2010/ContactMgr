@@ -4,7 +4,7 @@ import javax.validation.ConstraintViolation;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ValidationException extends Exception {
+public class ValidationException extends RuntimeException {
     private Map<String, Object> errors;
 
     public ValidationException(ConstraintViolation<?>... violations) {

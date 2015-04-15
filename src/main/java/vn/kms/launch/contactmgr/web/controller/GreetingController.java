@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import vn.kms.launch.contactmgr.domain.greeting.Greeting;
 import vn.kms.launch.contactmgr.domain.greeting.GreetingSearchCriteria;
 import vn.kms.launch.contactmgr.service.GreetingService;
+import vn.kms.launch.contactmgr.util.EntityNotFoundException;
 import vn.kms.launch.contactmgr.util.SearchResult;
 import vn.kms.launch.contactmgr.util.ValidationException;
 
@@ -86,11 +87,13 @@ public class GreetingController {
         try {
             Greeting savedGreeting = greetingService.saveGreeting(code, greeting.getMessage());
             return new ResponseEntity<>(savedGreeting, OK);
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity<>(null, NOT_FOUND);
         } catch (ValidationException e) {
             Map<String, Object> returnObj = new HashMap<>();
             returnObj.put("data", greeting);
             returnObj.put("errors", e.getErrors());
-            return new ResponseEntity<>(returnObj, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(returnObj, BAD_REQUEST);
         }
     }
 }
