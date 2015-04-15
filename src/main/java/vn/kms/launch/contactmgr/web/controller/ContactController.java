@@ -47,14 +47,6 @@ public class ContactController {
     @RequestMapping(value="/search", method = POST)
     public HashMap<String, Object> searchContact(@RequestParam ("page") int page,
                                               @RequestParam (value="pageSize", defaultValue="10") int pageSize,
-<<<<<<< HEAD
-<<<<<<< HEAD
-                                              @RequestBody ContactSearchCriteria criteria) {
-=======
-                                              @RequestBody ContactSearchCriteria criteria){
->>>>>>> 5a7f5e76d9744265037b80c59d0ee6acaaea615e
-           return contactService.searchContacts(criteria, page, pageSize);
-=======
                                               @RequestBody ContactSearchCriteria criteria) {
         return contactService.searchContacts(criteria, page, pageSize);
     }
@@ -62,7 +54,6 @@ public class ContactController {
     @RequestMapping(value="/validate", method = POST)
     public HashMap<String, Object> validateContact(@RequestBody Contact contact) {
         return contactService.validateContacts(contact);
->>>>>>> e47a6455e5eab652629676d6ef6e63a96fcac109
     }
     
     /**

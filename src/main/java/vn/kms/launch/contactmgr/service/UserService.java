@@ -56,7 +56,6 @@ public class UserService {
 		return userRepository.save(user);
 	}
 	
-<<<<<<< HEAD
 	@Transactional
 	public User updateUser(@Valid User oldUser){
 		if(null ==  oldUser){
@@ -209,8 +208,5 @@ public class UserService {
 
 		return params;
 	}
-
-=======
->>>>>>> e47a6455e5eab652629676d6ef6e63a96fcac109
 
 }

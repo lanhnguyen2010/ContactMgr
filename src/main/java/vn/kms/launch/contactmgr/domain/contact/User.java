@@ -110,7 +110,6 @@ public class User extends vn.kms.launch.contactmgr.domain.Entity {
 		return active;
 	}
 	
-<<<<<<< HEAD
 	public String getEmail() {
 		return email;
 	}
@@ -118,7 +117,5 @@ public class User extends vn.kms.launch.contactmgr.domain.Entity {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-=======
-	
->>>>>>> e47a6455e5eab652629676d6ef6e63a96fcac109
+
 }
