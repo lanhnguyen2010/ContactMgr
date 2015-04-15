@@ -321,6 +321,11 @@ module.exports = function (grunt) {
         grunt.task.run([target ? ('serve:' + target) : 'serve']);
     });
 
+    grunt.registerTask('dev-build', [
+        'wiredep',
+        'ngconstant:dev'
+    ]);
+
     grunt.registerTask('build', [
         'clean:dist',
         'wiredep:app',
