@@ -30,8 +30,7 @@ public class ContactServiceTest {
         // Get an existing contact
         Contact contact = contactService.getContact(1);
         assertNotNull(contact);
-        assertEquals("Trang", contact.getFirstName());
-        //assertEquals("AB", contact.getWork().getCompany().getCode());
+        assertEquals("first_name1", contact.getFirstName());
         
         // Id invalid
         contact = contactService.getContact(-1);

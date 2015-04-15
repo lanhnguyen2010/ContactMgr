@@ -9,7 +9,6 @@ public class ContactMgrApp {
     public static void main(String[] args) {
         SpringApplication app = new SpringApplication(ContactMgrApp.class);
 
-
         SimpleCommandLinePropertySource source = new SimpleCommandLinePropertySource(args);
         addDefaultProfile(app, source);
 

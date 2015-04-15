@@ -1,140 +1,99 @@
 package vn.kms.launch.contactmgr.web.controller;
 
-import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
-import static org.springframework.web.bind.annotation.RequestMethod.PUT;
-
-import java.util.HashMap;
-
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import vn.kms.launch.contactmgr.domain.contact.Contact;
-import vn.kms.launch.contactmgr.domain.search.ContactSearchCriteria;
+import vn.kms.launch.contactmgr.domain.contact.ContactSearchCriteria;
 import vn.kms.launch.contactmgr.service.ContactService;
+import vn.kms.launch.contactmgr.util.EntityNotFoundException;
+import vn.kms.launch.contactmgr.util.SearchResult;
+import vn.kms.launch.contactmgr.util.ValidationException;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.NO_CONTENT;
+import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
 @RestController
 @RequestMapping(value = "/api/contacts")
 public class ContactController {
-	@Autowired
-	private ContactService contactService;
+    @Autowired
+    private ContactService contactService;
 
-	/**
-	 * Get detail of an existing contact
-	 *
-	 * @param id is ID of the contact we need get.
-	 * @return "404 code" if not found or "200 code and data of contact"
-	 */
-	@RequestMapping(value = "/{id}", method = GET)
-	public ResponseEntity<Contact> getContact(@PathVariable int id) {
-		Contact contact = contactService.getContact(id);
-		if (contact == null) {
-			return new ResponseEntity<Contact>(HttpStatus.NOT_FOUND);
-		}
-
-		return new ResponseEntity<Contact>(contact, HttpStatus.OK);
-	}
+    @RequestMapping(value = "/{id}", method = GET)
+    public ResponseEntity<Contact> getContact(@PathVariable int id) {
+        Contact contact = contactService.getContact(id);
+        return new ResponseEntity<>(contact, (contact == null)? NOT_FOUND : OK);
+    }
 
     @RequestMapping(value="/search", method = POST)
-    public HashMap<String, Object> searchContact(@RequestParam ("page") int page,
-                                              @RequestParam (value="pageSize", defaultValue="10") int pageSize,
-                                              @RequestBody ContactSearchCriteria criteria) {
-           return contactService.searchContacts(criteria, page, pageSize);
+    public SearchResult<Contact> searchContact(@RequestBody ContactSearchCriteria criteria) {
+           return contactService.searchContacts(criteria);
     }
 
-    /**
-     * To update contact info(s),
-     * @param id
-     * @param contact
-     * @return
-     */
+    @RequestMapping(value = "/validate", method = POST)
+    public ResponseEntity<Object> validateContact(@RequestBody Contact contact) {
+        try {
+            contactService.validateContact(contact);
+            return new ResponseEntity<>(OK);
+        } catch (ValidationException e) {
+            return new ResponseEntity<Object>(e.getErrors(), BAD_REQUEST);
+        }
+    }
+
+    @RequestMapping(method = POST)
+    public ResponseEntity<?> createContact(@RequestBody Contact contact) {
+        return saveContact(contact, null);
+    }
+
     @RequestMapping(value = "/{id}", method = PUT)
-    public ResponseEntity<HashMap<String, Object>> updateContact(@PathVariable int id,
-                                                                 @RequestBody @Valid Contact contact) {
-        Contact returnContact;
-        HashMap<String, Object> bodyReturn = new HashMap<String, Object>();
-
-        contact.setId(id);
-		returnContact = contactService.saveContact(contact);
-		if (returnContact == null) {
-            bodyReturn.put("data", contact);
-            HashMap<String, String> errors = new HashMap<String, String>();
-            errors.put("companyId", "No companyId found");
-            bodyReturn.put("errors",errors);
-    		return new ResponseEntity<HashMap<String, Object>>(bodyReturn, HttpStatus.BAD_REQUEST);
-    	} else {
-            bodyReturn.put("data", returnContact);
-            return new ResponseEntity<HashMap<String, Object>>(bodyReturn, HttpStatus.OK);
-        }
+    public ResponseEntity<?> updateContact(@PathVariable int id,
+                                           @RequestBody Contact contact) {
+        return saveContact(contact, id);
     }
 
-	/**
-	 * Return 404(Not Found)  code if not contact associated to ID is not found
-	 * Return 204(No Content)  code if deleted successfully
-	 */
-	@RequestMapping(value = "/{id}", method = DELETE)
-	public ResponseEntity<Void> deleteContact(@PathVariable int id) {
+    @RequestMapping(value = "/{id}", method = DELETE)
+    public ResponseEntity<Void> deleteContact(@PathVariable int id) {
+        int deleteId = contactService.deleteContacts(id);
 
-		int deleteId = contactService.deleteContacts(id);
-		//receive  id with method deleteContact() from UI
+        return new ResponseEntity<>((deleteId == 0)? NOT_FOUND : NO_CONTENT);
+    }
 
-		if (deleteId == 0) {
-			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
-		}
+    @RequestMapping(method = DELETE)
+    public ResponseEntity<?> deleteContacts(@RequestParam int... ids) {
 
-		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
-	}
-
-	/**
-	 * Return 400(Bad Request)  code if ids param is null
-	 * Return 404(Not Found)  code if not contact associated to ID is not found
-	 * Return 200(OK) code and the actual number of Contact that deleted
-	 */
-	@RequestMapping(method = DELETE)
-	public ResponseEntity<Integer> deleteContacts(@RequestParam int... ids) {
-
-		if(ids.length == 0){
-			return new ResponseEntity<Integer>(HttpStatus.BAD_REQUEST);
-		}
-
-		int deleteId = contactService.deleteContacts(ids);
-		if (deleteId == 0) {
-			return new ResponseEntity<Integer>(HttpStatus.NOT_FOUND);
-		}
-
-		return new ResponseEntity<Integer>(deleteId,HttpStatus.OK);
-	}
-
-	/**
-	 * Create a new contact
-	 * @param contact
-	 * @return
-	 */
-	@RequestMapping(method = POST)
-	public ResponseEntity<HashMap<String, Object>> createContact(@RequestBody @Valid Contact contact) {
-        Contact returnContact;
-        HashMap<String, Object> bodyReturn = new HashMap<String, Object>();
-
-        returnContact = contactService.saveContact(contact);
-        if (returnContact == null) {
-            bodyReturn.put("data", contact);
-            HashMap<String, String> errors = new HashMap<String, String>();
-            errors.put("companyId", "No companyId found");
-            bodyReturn.put("errors",errors);
-            return new ResponseEntity<HashMap<String, Object>>(bodyReturn, HttpStatus.BAD_REQUEST);
-        } else {
-            bodyReturn.put("data", returnContact);
-            return new ResponseEntity<HashMap<String, Object>>(bodyReturn, HttpStatus.OK);
+        if(ids.length == 0) {
+            return new ResponseEntity<>(BAD_REQUEST);
         }
-	}
+
+        int deleteId = contactService.deleteContacts(ids);
+        return new ResponseEntity<>((deleteId == 0)? NOT_FOUND : OK);
+    }
+
+    private ResponseEntity<?> saveContact(Contact contact, Integer contactId) {
+        try {
+            Contact savedContact = contactService.saveContact(contact, contactId);
+            return new ResponseEntity<>(savedContact, OK);
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity<>(NOT_FOUND);
+        } catch (ValidationException e) {
+            Map<String, Object> returnObj = new HashMap<>();
+            returnObj.put("data", contact);
+            returnObj.put("errors", e.getErrors());
+            return new ResponseEntity<>(returnObj, BAD_REQUEST);
+        }
+    }
 
 }

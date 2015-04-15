@@ -1,5 +1,4 @@
-
-﻿CREATE TABLE company (
+CREATE TABLE companies (
     id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(100),
     website VARCHAR(255),
@@ -20,7 +19,7 @@
     PRIMARY KEY(id)
 );
 
-CREATE TABLE contact (
+CREATE TABLE contacts (
     id INT NOT NULL AUTO_INCREMENT,
     display_name VARCHAR(150) NOT NULL,
     first_name VARCHAR(50),
@@ -49,7 +48,7 @@ CREATE TABLE contact (
     PRIMARY KEY(id)
 );
 
-ALTER TABLE contact
+ALTER TABLE contacts
 ADD CONSTRAINT fk_contact_company
 FOREIGN KEY (company_id)
-REFERENCES company(id);
+REFERENCES companies(id);
