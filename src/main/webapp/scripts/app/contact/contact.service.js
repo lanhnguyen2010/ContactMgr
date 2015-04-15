@@ -18,4 +18,8 @@ angular.module('contactmgrApp')
         this.createContact = function (data) {
             return $http.post('/api/contacts', data);
         };
+        
+        this.getCountries = function() {
+            return $http.get("/api/countries");
+        };
     });
