@@ -1,6 +1,7 @@
 package vn.kms.launch.contactmgr.service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -59,13 +60,22 @@ public class UserService {
 	}
 	
 	@Transactional
+	public List<String> getRoles(){
+		Role[] roles = Role.values();
+	    List<String> result = new ArrayList<String>();
+	    for (int i = 0; i < roles.length; i++) {
+	        result.add(roles[i].name());
+	    }
+	    return result;
+	}
+	
+	@Transactional
 	public User saveUser(@Valid User user){
 		if(null == user) {
 			return null;
 		}
 		return userRepository.save(user);
 	}
-	
 	
 	/**
 	 * Service form function delete

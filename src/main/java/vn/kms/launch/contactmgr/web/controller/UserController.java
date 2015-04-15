@@ -1,9 +1,11 @@
 package vn.kms.launch.contactmgr.web.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
@@ -100,13 +103,27 @@ public class UserController {
 		return new ResponseEntity<List<Integer>>(result, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/setdeacctive/", method = PUT)
+	@RequestMapping(value = "/setdeactive/", method = PUT)
 	public ResponseEntity<List<Integer>> deactiveUser(@RequestParam int... ids){
 		List<Integer> result = userService.deactiveUser(ids);
 		if(null == result){
 			return new ResponseEntity<List<Integer>>(result,HttpStatus.BAD_REQUEST);
 		}
 		return new ResponseEntity<List<Integer>>(result, HttpStatus.OK);
+	}
+	
+	/**
+	 * Return 404(Not Found)  code if not contact associated to ID is not found
+	 * Return 204(No Content)  code if deleted successfully
+	 */
+	@RequestMapping(value = "/roles", method = GET)
+	public ResponseEntity<List<String>> getRoles() {
+		List<String> result = userService.getRoles();
+		
+		if (null == result){
+			return new ResponseEntity<List<String>>(result,HttpStatus.BAD_REQUEST);
+		}
+		return new ResponseEntity<List<String>>(result, HttpStatus.OK);
 	}
 	
 	

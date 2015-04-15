@@ -117,4 +117,5 @@ public class User extends vn.kms.launch.contactmgr.domain.Entity {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
 }
