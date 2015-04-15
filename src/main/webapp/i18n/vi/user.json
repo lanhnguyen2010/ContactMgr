@@ -9,10 +9,17 @@
         },
         "user-field": {
             "username": "Tên Tài Khoản",
+            "firstlastname": "Tên/ Họ",
             "firstname": "Tên",
             "lastname": "Họ",
             "email": "E-mail",
-            "role" : "Vai trò"
+            "role" : "Vai trò",
+            "assignedcompanies": "Công ty chỉ định",
+            "createdfrom": "Tạo Từ",
+            "createdto": "Đến",
+            "result": "Kết quả tìm kiếm",
+            "noresult": "Không tìm thấy tài khoản nào",
+            "status": "Trạng thái"
          }
     }
 }

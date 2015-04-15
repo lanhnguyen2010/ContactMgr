@@ -3,24 +3,20 @@
 angular.module('contactmgrApp').controller('UsersController',
 		function($scope,UsersService, ngTableParams) {
 
-			var dummy = [ 
-			              {
-				id : '1',
-				username : 'Lanhnguyen',
-				firstName : 'Lanh',
-				lastName : 'Nguyen',
-				email : 'lanhnguyen@kms',
-				role : 'admin'
-			} 
-			              ]
 	    	function init(){
 	    		$scope.getRoles();
 	    	};
+	    	function init(){
+	    		$scope.getCompanies();
+	    	};
 			$scope.filter = {
-				firstName : '',
-				lastName : '',
+				userName : '',
+				firstlastName : '',
 				email : '',
 				role : '',
+				createdFrom:'',
+				createdTo:'',
+			    assignedCompanies:''
 			};
 			var PAGE_SIZE = 10;
 			var isFristSearchClicked = false;
@@ -35,6 +31,13 @@ angular.module('contactmgrApp').controller('UsersController',
 	    		UsersService.searchUsers($scope.filter, page, PAGE_SIZE)
 	    		.success(function(data, status) {
 	    			$scope.users = data['data'];
+        			for (var i=0; i<$scope.users.length; i++) {
+	        			if ($scope.users[i]['active'] == 1){
+	        				$scope.users[i]['active'] = "Active";
+	        			} else {
+	        				$scope.users[i]['active'] = "Inactive";
+	        			}
+                    }
 	    			$scope.total = data['totalItem'];
 	    			$scope.isLoading = false;
 	    			$scope.usersTableParams.reload();
@@ -53,8 +56,14 @@ angular.module('contactmgrApp').controller('UsersController',
 	    				return;
 	    			UsersService.searchUsers($scope.filter, params.page(), PAGE_SIZE)
 	        		.success(function(data, status) {
-	        			$scope.users = dummy;
-	        			
+	        			$scope.users = data['data'];
+	        			for (var i=0; i<$scope.users.length; i++) {
+		        			if ($scope.users[i]['active'] == 1){
+		        				$scope.users[i]['active'] = "Active";
+		        			} else {
+		        				$scope.users[i]['active'] = "Inactive";
+		        			}
+	                    }
 	        			console.log($scope.users)
 	        			params.total(data['totalItem']);
 	        			$defer.resolve($scope.users);
@@ -174,6 +183,7 @@ angular.module('contactmgrApp').controller('UsersController',
 	                $scope.checkedIds = $scope.checkedIds.substr(0, $scope.checkedIds.length - 1); 
 	            }
 	        }, true);
+
 	        
 	        $scope.getRoles=function(){
 	        	UsersService.getRoles()
@@ -184,5 +194,14 @@ angular.module('contactmgrApp').controller('UsersController',
 	    			console.log("Error get companies", status);
 	    		});
 	        };
-	        	      	    	
+	        $scope.getCompanies=function(){
+	        	UsersService.getCompanies()
+	        	.success(function(data,status){
+	        		$scope.assignedcompanies=data;
+	        	})
+	        	.error(function (data, status) {
+	    			console.log("Error get companies", status);
+	    		});
+	        }
+	        init();      	    	
 		})

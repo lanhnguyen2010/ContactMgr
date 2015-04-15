@@ -9,10 +9,17 @@
         },
         "user-field": {
             "username": "Username",
+            "firstlastname": "First Name/ LastName",
             "firstname": "First Name",
             "lastname": "Last Name",
             "email": "E-mail",
-            "role" : "Role"
+            "role" : "Role",
+            "assignedcompanies": "Assigned By Companies",
+            "createdfrom": "Created From",
+            "createdto": "To",
+            "result": "Search Results",
+            "noresult": "No Result",
+            "status" : "Status"
          }
     }
 }
