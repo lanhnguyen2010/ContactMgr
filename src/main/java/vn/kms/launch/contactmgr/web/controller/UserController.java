@@ -1,7 +1,10 @@
 package vn.kms.launch.contactmgr.web.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
+import org.junit.validator.PublicClassValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import vn.kms.launch.contactmgr.domain.contact.User;
 import vn.kms.launch.contactmgr.service.UserService;
 
@@ -40,5 +44,15 @@ public class UserController {
 			return new ResponseEntity<User>(userUpdate,HttpStatus.BAD_REQUEST);
 		}
 		return new ResponseEntity<User>(userUpdate, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value ="/roles", method = GET)
+	public List<String> getRoles(){
+		return userService.getRoles();
+	}
+	
+	@RequestMapping(value = "/languages", method = GET)
+	public List<String> getLanguages(){
+		return userService.getLanguages();
 	}
 }
