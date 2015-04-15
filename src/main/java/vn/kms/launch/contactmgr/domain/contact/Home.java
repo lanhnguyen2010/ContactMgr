@@ -8,11 +8,12 @@ import javax.validation.constraints.Pattern;
 public class Home {
 	private Address address;
 
-	@Pattern(regexp = "(\\+[0-9]{1,3}\\s)([0-9]{9,10})", message = "{validation.phone.message}")
 	@Column(name = "PHONE")
+	@Pattern(regexp = "^(\\+[0-9]{1,3}\\s)([0-9]{9,10})$", message = "{validation.phone.message}")
 	private String phone;
 
 	@Column(name = "FAX")
+	@Pattern(regexp = "^(\\+[0-9]{1,3}\\s)([0-9]{9,10})$", message = "{validation.fax.message}")
 	private String fax;
 
 	public Home() {
