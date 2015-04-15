@@ -75,6 +75,13 @@ Hide ng-cloak on page load, https://docs.angularjs.org/api/ng/directive/ngCloak
 .delete-contact-button {
 	margin-bottom: 10px;
 }
+.delete-user-button {
+    margin-bottom: 10px;
+}
+.activate-user-button{
+    margin-bottom: 10px;
+    margin-right:10px
+}
 
 .data-table-title {
 	text-align: left !important;

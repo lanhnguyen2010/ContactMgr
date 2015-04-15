@@ -25,6 +25,9 @@ public class User extends vn.kms.launch.contactmgr.domain.Entity {
 	@Column(name="LAST_NAME")
 	private String lastName;
 	
+	@Column(name="EMAIL")
+	private String email;
+	
 	@Enumerated(EnumType.STRING)
 	private Role role;
 	
@@ -107,5 +110,12 @@ public class User extends vn.kms.launch.contactmgr.domain.Entity {
 		return active;
 	}
 	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
 	
 }
