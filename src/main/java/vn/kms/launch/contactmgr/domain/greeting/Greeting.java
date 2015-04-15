@@ -1,23 +1,25 @@
 package vn.kms.launch.contactmgr.domain.greeting;
 
-import vn.kms.launch.contactmgr.domain.Entity;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.Pattern;
 
-/**
- * Created by trungnguyen on 4/8/15.
- */
-@javax.persistence.Entity
+@Entity
 @Table(name = "GREETINGS")
-public class Greeting extends Entity {
+public class Greeting extends vn.kms.launch.contactmgr.domain.Entity {
+    @NotEmpty(message = "{validation.not-empty.message}")
+    @Pattern(regexp = "(\\[A-Za-z]{2})", message = "{validation.iso-3166-code.message}")
     @Column(name = "CODE", unique = true)
     private String code;
 
     @Transient
     private String language;
 
+    @NotEmpty(message = "{validation.not-empty.message}")
     @Column(name = "MESSAGE")
     private String message;
 

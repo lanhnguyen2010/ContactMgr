@@ -1,0 +1,9 @@
+diff a/pom.xml b/pom.xml	(rejected hunks)
+@@ -14,7 +14,6 @@
+ 		<artifactId>spring-boot-starter-parent</artifactId>
+ 		<version>1.2.3.RELEASE</version>
+ 	</parent>
+-	<dependencies>
+     <dependencies>
+         <dependency>
+             <groupId>org.springframework.boot</groupId>

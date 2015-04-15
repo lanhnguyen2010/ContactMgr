@@ -1,5 +1,7 @@
 package vn.kms.launch.contactmgr.domain;
 
+import vn.kms.launch.contactmgr.Constants;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -7,10 +9,9 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 
-/**
- * Created by trungnguyen on 4/5/15.
- */
 @MappedSuperclass
 public class Entity implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -70,5 +71,17 @@ public class Entity implements Serializable {
 
     public void setUpdatedBy(String updatedBy) {
         this.updatedBy = updatedBy;
+    }
+
+    @PrePersist
+    public void auditForInsert() {
+        setCreatedAt(new Date());
+        setCreatedBy(Constants.SYSTEM_USER);
+    }
+
+    @PreUpdate
+    public void auditForUpdate() {
+        setUpdatedAt(new Date());
+        setUpdatedBy(Constants.SYSTEM_USER);
     }
 }

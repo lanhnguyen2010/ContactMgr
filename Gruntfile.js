@@ -1,16 +1,22 @@
+// Generated on 2015-04-09 using generator-jhipster 2.7.0
 'use strict';
 var fs = require('fs');
 
 var parseString = require('xml2js').parseString;
-
 // Returns the second occurence of the version number
 var parseVersionFromPomXml = function() {
     var version;
     var pomXml = fs.readFileSync('pom.xml', "utf8");
-    parseString(pomXml, function(err, result) {
+    parseString(pomXml, function (err, result){
         version = result.project.version[0];
     });
     return version;
+};
+
+// usemin custom step
+var useminAutoprefixer = {
+    name: 'autoprefixer',
+    createConfig: require('grunt-usemin/lib/config/cssmin').createConfig // Reuse cssmins createConfig
 };
 
 module.exports = function (grunt) {
@@ -36,30 +42,24 @@ module.exports = function (grunt) {
                 files: ['src/main/webapp/assets/styles/**/*.css']
             }
         },
+        autoprefixer: {
+        // not used since Uglify task does autoprefixer,
+        //    options: ['last 1 version'],
+        //    dist: {
+        //        files: [{
+        //            expand: true,
+        //            cwd: '.tmp/styles/',
+        //            src: '**/*.css',
+        //            dest: '.tmp/styles/'
+        //        }]
+        //    }
+        },
         wiredep: {
             app: {
                 src: ['src/main/webapp/index.html'],
                 exclude: [
-                    /angular-i18n/,  // localizations are loaded dynamically
-                    /swagger-ui/
+                    /angular-i18n/ // localizations are loaded dynamically
                 ]
-            },
-            test: {
-                src: 'src/test/javascript/karma.conf.js',
-                exclude: [/angular-i18n/, /swagger-ui/, /angular-scenario/],
-                ignorePath: /\.\.\/\.\.\//, // remove ../../ from paths of injected javascripts
-                devDependencies: true,
-                fileTypes: {
-                    js: {
-                        block: /(([\s\t]*)\/\/\s*bower:*(\S*))(\n|\r|.)*?(\/\/\s*endbower)/gi,
-                        detect: {
-                            js: /'(.*\.js)'/gi
-                        },
-                        replace: {
-                            js: '\'{{filePath}}\','
-                        }
-                    }
-                }
             }
         },
         browserSync: {
@@ -103,6 +103,11 @@ module.exports = function (grunt) {
                 'src/main/webapp/scripts/components/**/*.js'
             ]
         },
+        concat: {
+        // not used since Uglify task does concat,
+        // but still available if needed
+        //    dist: {}
+        },
         rev: {
             dist: {
                 files: {
@@ -122,8 +127,8 @@ module.exports = function (grunt) {
                 flow: {
                     html: {
                         steps: {
-                            js: ['uglifyjs'],
-                            css: ['cssmin'] // Let cssmin concat files so it corrects relative paths to fonts and images
+                            js: ['concat', 'uglifyjs'],
+                            css: ['cssmin', useminAutoprefixer] // Let cssmin concat files so it corrects relative paths to fonts and images
                         },
                             post: {}
                         }
@@ -165,6 +170,17 @@ module.exports = function (grunt) {
             }
         },
         cssmin: {
+            // By default, your `index.html` <!-- Usemin Block --> will take care of
+            // minification. This option is pre-configured if you do not wish to use
+            // Usemin blocks.
+            // dist: {
+            //     files: {
+            //         '<%= yeoman.dist %>/styles/main.css': [
+            //             '.tmp/styles/**/*.css',
+            //             'styles/**/*.css'
+            //         ]
+            //     }
+            // }
             options: {
                 root: 'src/main/webapp' // Replace relative paths for static resources with absolute path
             }
@@ -225,7 +241,9 @@ module.exports = function (grunt) {
                         '*.html',
                         'scripts/**/*.html',
                         'assets/images/**/*.{png,gif,webp,jpg,jpeg,svg}',
-                        'assets/fonts/*'
+                        'assets/fonts/*',
+                        'i18n/**/*',
+                        'favicon.ico'
                     ]
                 }, {
                     expand: true,
@@ -240,18 +258,10 @@ module.exports = function (grunt) {
         concurrent: {
             server: [
             ],
-            test: [
-            ],
             dist: [
                 'imagemin',
                 'svgmin'
             ]
-        },
-        karma: {
-            unit: {
-                configFile: 'src/test/javascript/karma.conf.js',
-                singleRun: true
-            }
         },
         cdnify: {
             dist: {
@@ -268,14 +278,6 @@ module.exports = function (grunt) {
                 }]
             }
         },
-        buildcontrol: {
-            options: {
-                commit: true,
-                push: false,
-                connectCommits: false,
-                message: 'Built %sourceName% from commit %sourceCommit% on branch %sourceBranch%'
-            }
-        },
         ngconstant: {
             options: {
                 name: 'contactmgrApp',
@@ -289,8 +291,7 @@ module.exports = function (grunt) {
                 constants: {
                     ENV: 'dev',
                     VERSION: parseVersionFromPomXml(),
-                    MULTI_DELETE_CONTACT_API: '/api/contacts/deletes?ids=',
-                    SEARCH_CONTACT_API: '/api/contacts/search'
+                    PAGE_SIZE: 10
                 }
             },
             prod: {
@@ -300,8 +301,7 @@ module.exports = function (grunt) {
                 constants: {
                     ENV: 'prod',
                     VERSION: parseVersionFromPomXml(),
-                    MULTI_DELETE_CONTACT_API: '/api/contacts/deletes?ids=',
-                    SEARCH_CONTACT_API: '/api/contacts/search'
+                    PAGE_SIZE: 10
                 }
             }
         }
@@ -321,12 +321,9 @@ module.exports = function (grunt) {
         grunt.task.run([target ? ('serve:' + target) : 'serve']);
     });
 
-    grunt.registerTask('test', [
-        'clean:server',
-        'wiredep:test',
-        'ngconstant:dev',
-        'concurrent:test',
-        'karma'
+    grunt.registerTask('dev-build', [
+        'wiredep',
+        'ngconstant:dev'
     ]);
 
     grunt.registerTask('build', [
@@ -336,9 +333,11 @@ module.exports = function (grunt) {
         'useminPrepare',
         'ngtemplates',
         'concurrent:dist',
+        'concat',
         'copy:dist',
         'ngAnnotate',
         'cssmin',
+        'autoprefixer',
         'uglify',
         'rev',
         'usemin',
@@ -346,7 +345,6 @@ module.exports = function (grunt) {
     ]);
 
     grunt.registerTask('default', [
-        //'test',
         'build'
     ]);
 };
