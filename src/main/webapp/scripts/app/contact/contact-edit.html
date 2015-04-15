@@ -1,42 +1,41 @@
 <div ng-cloak>
-
-	<form name="contact_form" novalidate class="form-horizontal"
-		role="form" ng-submit="#">
-		<div class="row">
+    <form name="contact_form" novalidate class="form-horizontal" role="form"
+        ng-submit="saveContact()">
+        <div class="row">
             <div class="col-md-6">
                 <h3>General</h3>
                 <hr style="border-color: black;">
                 <div class="form-group">
                     <label class="control-label col-sm-3">Name</label>
                     <div class="col-sm-3" class="form-group" >
-                        <input type="text" name="name" class="form-control" style="margin-bottom: 10px" placeholder="First Name">
+                        <input ng-model="contact.firstName" type="text" name="name" class="form-control" style="margin-bottom: 10px" placeholder="First Name">
                     </div>
                     <div class="col-sm-3" class="form-group">
-                        <input type="text" name="name" class="form-control" style="margin-bottom: 10px" placeholder="Middle Name">
+                        <input ng-model="contact.middleName" type="text" name="name" class="form-control" style="margin-bottom: 10px" placeholder="Middle Name">
                     </div>
                     <div class="col-sm-3" class="form-group">
-                        <input type="text" name="name" class="form-control" style="margin-bottom: 10px" placeholder="Last name">
+                        <input ng-model="contact.lastName" type="text" name="name" class="form-control" style="margin-bottom: 10px" placeholder="Last name">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-3">FullName</label>
                     <div class="col-sm-9">
-                        <select class="form-control">
-                            <option>1</option>
-                            <option>2</option>
+                        <select class="form-control" ng-model="contact.displayName">
+                            <option>Trieu</option>
+                            <option>Trieu Doan</option>
                         </select>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-3">Email</label>
                     <div class="col-sm-9">
-                        <input type="text" name="name" class="form-control">
+                        <input ng-model="contact.email" type="text" name="name" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-3">Mobile</label>
                     <div class="col-sm-9">
-                        <input type="text" name="name" class="form-control">
+                        <input ng-model="contact.mobile" type="text" name="name" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
@@ -51,31 +50,31 @@
                 <div class="form-group">
                     <label class="control-label col-sm-3" >Add. Line 1</label>
                     <div class="col-sm-9">
-                        <input type="text" name="name" class="form-control">
+                        <input ng-model="contact.home.address.addrLine1" type="text" name="name" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-3"  >Add. Line 2</label>
                     <div class="col-sm-9">
-                        <input type="text" name="name" class="form-control">
+                        <input ng-model="contact.home.address.addrLine2" type="text" name="name" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-3" >City</label>
                     <div class="col-sm-9">
-                        <input type="text" name="name" class="form-control">
+                        <input ng-model="contact.home.address.city" type="text" name="name" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-3" >Zip Code</label>
                     <div class="col-sm-3" style="width: 100px;">
-                        <input type="text" name="name" class="form-control" maxlength="5">
+                        <input ng-model="contact.home.address.postalCode" type="text" name="name" class="form-control" maxlength="5">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-3">Country</label>
                     <div class="col-sm-9">
-                        <select class="form-control">
+                        <select class="form-control" ng-model="contact.home.address.country">
                             <option>Viet Nam</option>
                             <option>US</option>
                         </select>
@@ -84,13 +83,13 @@
                 <div class="form-group">
                     <label class="control-label col-sm-3" >Phone</label>
                     <div class="col-sm-9">
-                        <input type="text" name="name" class="form-control">
+                        <input ng-model="contact.home.phone" type="text" name="name" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-3">Fax</label>
                     <div class="col-sm-9">
-                        <input type="text" name="name" class="form-control">
+                        <input ng-model="contact.home.fax" type="text" name="name" class="form-control">
                     </div>
                 </div>
             </div>
@@ -99,26 +98,26 @@
 				<h3>Work</h3>
 				<hr style="border-color: black;" />
 				<div class="form-group">
-			        <label for="inputEmail" class="control-label col-sm-3">Email</label> 
+			        <label for="inputEmail" class="control-label col-sm-3">Job Title</label> 
 					<div class="col-sm-9">
-					   <input type="email" class="form-control" id="inputEmail">
+					   <input ng-model="contact.work.title" type="text" class="form-control" id="inputEmail">
 					</div>
 				</div>
 				<div class="form-group">
-                    <label for="inputMobile" class="control-label col-sm-3">Mobile</label> 
+                    <label for="inputMobile" class="control-label col-sm-3">Department</label> 
                     <div class="col-sm-9">
-                       <input type="number" class="form-control" id="inputMobile">
+                       <input ng-model="contact.work.department" type="text" class="form-control" id="inputMobile">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputMobile2" class="control-label col-sm-3">Company Name</label>
+                    <label for="selectCompany" class="control-label col-sm-3">Company Name</label>
                     <div class="col-sm-5 col-xs-6">
-                         <select class="form-control">
-                             <option>Viet Nam</option>
-                             <option>United States</option>
-                             <option>Japan</option>
-                             <option>Lao</option>
-                             <option>Campuchia</option>
+                         <select class="form-control" id = "selectCompany" ng-model="contact.work.companyId">
+                             <option>1</option>
+                             <option>2</option>
+                             <option>3</option>
+                             <option>4</option>
+                             <option>5</option>
                          </select>
                      </div>
                     <div class="col-md-2 col-xs-2">
@@ -139,49 +138,49 @@
                 <div class="form-group">
                     <label for="inputMessage" class="control-label col-sm-3">Message</label> 
                     <div class="col-sm-9">
-                       <input class="form-control" id="inputMessage">
+                       <input ng-model="contact.work.company.message" class="form-control" id="inputMessage" readonly>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputWebsite" class="control-label col-sm-3">Website</label> 
                     <div class="col-sm-9">
-                       <input class="form-control" id="inputWebsite">
+                       <input ng-model="contact.work.company.website" class="form-control" id="inputWebsite" readonly>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputAddrLine1" class="control-label col-sm-3">Addr. line1</label> 
                     <div class="col-sm-9">
-                       <input class="form-control" id="inputAddrLine1">
+                       <input ng-model="contact.work.company.address.addrLine1" class="form-control" id="inputAddrLine1" readonly>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputAddrLine2" class="control-label col-sm-3">Addr. line2</label> 
                     <div class="col-sm-9">
-                       <input class="form-control" id="inputAddrLine2">
+                       <input ng-model="contact.work.company.address.addrLine2" class="form-control" id="inputAddrLine2" readonly>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputCity" class="control-label col-sm-3">City</label> 
                     <div class="col-sm-9">
-                       <input class="form-control" id="inputCity">
+                       <input ng-model="contact.work.company.address.city" class="form-control" id="inputCity" readonly>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputState" class="control-label col-sm-3">State</label> 
                     <div class="col-sm-9">
-                       <input class="form-control" id="inputState">
+                       <input ng-model="contact.work.company.address.state" class="form-control" id="inputState" readonly>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputZipCode" class="control-label col-sm-3">Zip Code</label> 
                     <div class="col-sm-9">
-                       <input type="number" class="form-control" id="inputZipCode" style="width: 100px" maxlength="5" size="5">
+                       <input ng-model="contact.work.company.address.postalCode" type="number" class="form-control" id="inputZipCode" style="width: 100px" min="5" max="5" readonly>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="selectCountry" class="control-label col-sm-3">Country</label>
                     <div class="col-sm-9">
-                        <select class="form-control" id="selectCountry">
+                        <select class="form-control" id="selectCountry" disabled ng-model="contact.work.company.address.country">
                              <option>Viet Nam</option>
                              <option>United States</option>
                              <option>Japan</option>
@@ -193,13 +192,13 @@
                 <div class="form-group">
                     <label for="inputPhone" class="control-label col-sm-3">Phone</label> 
                     <div class="col-sm-9">
-                       <input type="number" class="form-control" id="inputPhone">
+                       <input ng-model="contact.work.company.phone" type="text" class="form-control" id="inputPhone" readonly>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="input" class="control-label col-sm-3">Fax</label> 
                     <div class="col-sm-9">
-                       <input type="number" class="form-control" id="inputFax">
+                       <input ng-model="contact.work.company.fax" type="text" class="form-control" id="inputFax" readonly>
                     </div>
                 </div>
 				<!-- End Work Group-->

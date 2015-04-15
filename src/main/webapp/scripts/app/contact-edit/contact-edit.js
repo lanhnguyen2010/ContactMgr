@@ -5,13 +5,14 @@ angular.module('contactmgrApp')
         $stateProvider
             .state('contact-edit', {
                 parent: 'site',
-                url: '/contact-edit',
+                url: '/contact/edit',
                 data: {
                     roles: []
                 },
                 views: {
                     'content@': {
-                        templateUrl: 'scripts/app/contact-edit/contact-edit.html'
+                        templateUrl: 'scripts/app/contact-edit/contact-edit.html',
+                        controller: 'EditContactController'
                     }
                 },
                 resolve: {
