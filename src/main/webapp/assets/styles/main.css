@@ -76,8 +76,10 @@ Hide ng-cloak on page load, https://docs.angularjs.org/api/ng/directive/ngCloak
 .voffset9 { margin-top: 150px; }
 
 .logo {
-    width: 24px;
-    height: 24px;
+    width: 42px;
+    height: 42px;
+    padding: 2px;
+    margin-top: 5px;
     float: left;
 }
 
@@ -85,28 +87,28 @@ Hide ng-cloak on page load, https://docs.angularjs.org/api/ng/directive/ngCloak
     display: inline-block;
     width: 256px;
     height: 256px;
-    background: url("../images/banner.png") no-repeat center middle;
+    background: url("../images/banner.png") no-repeat center;
     background-size: contain;
 }
 
 .search-form {
-	border: solid #E6E6E6;
+    border: solid #E6E6E6;
     border-width: 2px;
-	height: 100px;
-	margin-top: 10px;
+    height: 100px;
+    margin-top: 10px;
 }
 
 .search-contact-button {
-	display: block;
-	margin: auto;
+    display: block;
+    margin: auto;
 }
 
 .delete-contact-button {
-	margin-bottom: 10px;
+    margin-bottom: 10px;
 }
 
 .data-table-title {
-	text-align: left !important;
+    text-align: left !important;
 }
 
 .modal-header {
