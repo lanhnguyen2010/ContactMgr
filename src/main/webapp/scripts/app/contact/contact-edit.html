@@ -3,76 +3,103 @@
         ng-submit="saveContact()">
         <div class="row">
             <div class="col-md-6">
-                <h3>General</h3>
+                <h3 translate="contact-edit.general.title-general"></h3>
                 <hr style="border-color: black;">
                 <div class="form-group">
-                    <label class="control-label col-sm-3">Name</label>
-                    <div class="col-sm-3" class="form-group" >
-                        <input ng-model="contact.firstName" type="text" name="name" class="form-control" style="margin-bottom: 10px" placeholder="First Name">
+                    <label class="control-label col-sm-3"
+                        translate="contact-edit.general.contact-name">Name</label>
+                    <div class="col-sm-3" class="form-group">
+                        <input ng-model="contact.firstName" type="text" name="name" class="form-control"
+                            style="margin-bottom: 10px"
+                            placeholder="{{'contact-edit.placeholder.first-name'|translate}}"
+                            data-toggle="tooltip" title="Chay">
                     </div>
                     <div class="col-sm-3" class="form-group">
-                        <input ng-model="contact.middleName" type="text" name="name" class="form-control" style="margin-bottom: 10px" placeholder="Middle Name">
+                        <input ng-model="contact.middleName" type="text" name="name" class="form-control"
+                            style="margin-bottom: 10px"
+                            placeholder="{{'contact-edit.placeholder.middle-name'|translate}}">
                     </div>
                     <div class="col-sm-3" class="form-group">
-                        <input ng-model="contact.lastName" type="text" name="name" class="form-control" style="margin-bottom: 10px" placeholder="Last name">
+                        <input ng-model="contact.lastName" type="text" name="name" class="form-control"
+                            style="margin-bottom: 10px"
+                            placeholder="{{'contact-edit.placeholder.last-name'|translate}}">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-sm-3">FullName</label>
+                    <label class="control-label col-sm-3"
+                        translate="contact-edit.general.display-name"></label>
                     <div class="col-sm-9">
                         <select class="form-control" ng-model="contact.displayName">
                             <option>Trieu</option>
-                            <option>Trieu Doan</option>
                         </select>
+
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-sm-3">Email</label>
+                    <label class="control-label col-sm-3"
+                        translate="contact-edit.general.email"></label>
                     <div class="col-sm-9">
-                        <input ng-model="contact.email" type="text" name="name" class="form-control">
+                        <input ng-model="contact.email" type="text" name="name" class="form-control"
+                            placeholder="{{'contact-edit.placeholder.email'|translate}}">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-sm-3">Mobile</label>
+                    <label class="control-label col-sm-3"
+                        translate="contact-edit.general.mobile"></label>
                     <div class="col-sm-9">
-                        <input ng-model="contact.mobile" type="text" name="name" class="form-control">
+                        <input ng-model="contact.mobile" type="text" name="name" class="form-control"
+                            placeholder="{{'contact-edit.placeholder.mobile'|translate}}">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-sm-3">Photo</label>
+                    <label class="control-label col-sm-3"
+                        translate="contact-edit.general.photo"></label>
                     <div class="col-sm-9">
                         <a class="thumbnail" href="#" style="width: 128px; height: 100px;"
                             align="center">Photo</a>
                     </div>
                 </div>
-                <h3>Home</h3>
+                <h3 translate="contact-edit.home.title-home"></h3>
                 <hr style="border-color: black;">
                 <div class="form-group">
-                    <label class="control-label col-sm-3" >Add. Line 1</label>
+                    <label class="control-label col-sm-3"
+                        translate="contact-edit.home.add-line1"></label>
                     <div class="col-sm-9">
                         <input ng-model="contact.home.address.addrLine1" type="text" name="name" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-sm-3"  >Add. Line 2</label>
+                    <label class="control-label col-sm-3"
+                        translate="contact-edit.home.add-line2"></label>
                     <div class="col-sm-9">
                         <input ng-model="contact.home.address.addrLine2" type="text" name="name" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-sm-3" >City</label>
+                    <label class="control-label col-sm-3"
+                        translate="contact-edit.home.city"></label>
+                    <div class="col-sm-9">
+                        <input type="text" name="name" class="form-control"
+                            placeholder="{{'contact-edit.placeholder.city'|translate}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3"
+                        translate="contact-edit.home.state"></label>
                     <div class="col-sm-9">
                         <input ng-model="contact.home.address.city" type="text" name="name" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-sm-3" >Zip Code</label>
+                    <label class="control-label col-sm-3"
+                        translate="contact-edit.home.zip-code"></label>
                     <div class="col-sm-3" style="width: 100px;">
                         <input ng-model="contact.home.address.postalCode" type="text" name="name" class="form-control" maxlength="5">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-sm-3">Country</label>
+                    <label class="control-label col-sm-3"
+                        translate="contact-edit.home.country"></label>
                     <div class="col-sm-9">
                         <select class="form-control" ng-model="contact.home.address.country">
                             <option>Viet Nam</option>
@@ -81,36 +108,38 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-sm-3" >Phone</label>
+                    <label class="control-label col-sm-3"
+                        translate="contact-edit.home.phone"></label>
                     <div class="col-sm-9">
                         <input ng-model="contact.home.phone" type="text" name="name" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-sm-3">Fax</label>
+                    <label class="control-label col-sm-3"
+                        translate="contact-edit.home.fax">Fax</label>
                     <div class="col-sm-9">
                         <input ng-model="contact.home.fax" type="text" name="name" class="form-control">
                     </div>
                 </div>
             </div>
-			<div class="col-md-6">
-				<!-- Begin Work Group-->
-				<h3>Work</h3>
-				<hr style="border-color: black;" />
-				<div class="form-group">
-			        <label for="inputEmail" class="control-label col-sm-3">Job Title</label> 
-					<div class="col-sm-9">
-					   <input ng-model="contact.work.title" type="text" class="form-control" id="inputEmail">
-					</div>
-				</div>
-				<div class="form-group">
-                    <label for="inputMobile" class="control-label col-sm-3">Department</label> 
+            <div class="col-md-6">
+                <!-- Begin Work Group-->
+                <h3>Work</h3>
+                <hr style="border-color: black;" />
+                <div class="form-group">
+                    <label for="inputEmail" class="control-label col-sm-3" translate="contact-edit.work.job-title">Job Title</label> 
+                    <div class="col-sm-9">
+                       <input ng-model="contact.work.title" type="text" class="form-control" id="inputEmail">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputMobile" class="control-label col-sm-3" translate="contact-edit.work.department">Department</label> 
                     <div class="col-sm-9">
                        <input ng-model="contact.work.department" type="text" class="form-control" id="inputMobile">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="selectCompany" class="control-label col-sm-3">Company Name</label>
+                    <label for="selectCompany" class="control-label col-sm-3" translate="contact-edit.work.company-name">Company Name</label>
                     <div class="col-sm-5 col-xs-6">
                          <select class="form-control" id = "selectCompany" ng-model="contact.work.companyId">
                              <option>1</option>
@@ -121,64 +150,74 @@
                          </select>
                      </div>
                     <div class="col-md-2 col-xs-2">
-                        <input class="btn btn-default" type="button" value="Edit"/>
+                        <button class="btn btn-default"
+                            translate="contact-edit.button.edit-company"></button>
                     </div>
                     <div class="col-md-2 col-xs-2">
-                        <input class="btn btn-default" type="button" value="New"/>
+                        <button class="btn btn-default"
+                            translate="contact-edit.button.new-company"></button>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-3"></div>
                     <div class="col-sm-9" class="thumbnail">
                         <a href="#" class="thumbnail" style="width: 128px; height: 100px">
-                            Logo
-                        </a>
+                            Logo </a>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputMessage" class="control-label col-sm-3">Message</label> 
+                    <label for="inputMessage" class="control-label col-sm-3"
+                        translate="contact-edit.work.message"></label>
                     <div class="col-sm-9">
                        <input ng-model="contact.work.company.message" class="form-control" id="inputMessage" readonly>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputWebsite" class="control-label col-sm-3">Website</label> 
+                    <label for="inputWebsite" class="control-label col-sm-3"
+                        translate="contact-edit.work.website"></label>
                     <div class="col-sm-9">
                        <input ng-model="contact.work.company.website" class="form-control" id="inputWebsite" readonly>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputAddrLine1" class="control-label col-sm-3">Addr. line1</label> 
+                    <label for="inputAddrLine1" class="control-label col-sm-3"
+                        translate="contact-edit.home.add-line1"> </label>
                     <div class="col-sm-9">
                        <input ng-model="contact.work.company.address.addrLine1" class="form-control" id="inputAddrLine1" readonly>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputAddrLine2" class="control-label col-sm-3">Addr. line2</label> 
+                    <label for="inputAddrLine2" class="control-label col-sm-3"
+                        translate="contact-edit.home.add-line2"></label>
                     <div class="col-sm-9">
                        <input ng-model="contact.work.company.address.addrLine2" class="form-control" id="inputAddrLine2" readonly>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputCity" class="control-label col-sm-3">City</label> 
+                    <label for="inputCity" class="control-label col-sm-3"
+                        translate="contact-edit.home.city"></label>
                     <div class="col-sm-9">
                        <input ng-model="contact.work.company.address.city" class="form-control" id="inputCity" readonly>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputState" class="control-label col-sm-3">State</label> 
+                    <label for="inputState" class="control-label col-sm-3"
+                        translate="contact-edit.home.state">State</label>
                     <div class="col-sm-9">
                        <input ng-model="contact.work.company.address.state" class="form-control" id="inputState" readonly>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputZipCode" class="control-label col-sm-3">Zip Code</label> 
+                    <label for="inputZipCode" class="control-label col-sm-3"
+                        translate="contact-edit.home.zip-code"></label>
                     <div class="col-sm-9">
-                       <input ng-model="contact.work.company.address.postalCode" type="number" class="form-control" id="inputZipCode" style="width: 100px" min="5" max="5" readonly>
+                       <input ng-model="contact.work.company.address.postalCode" type="number" class="form-control" 
+                           id="inputZipCode" style="width: 100px" min="5" max="5" readonly>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="selectCountry" class="control-label col-sm-3">Country</label>
+                    <label for="selectCountry" class="control-label col-sm-3"
+                        translate="contact-edit.home.country">Country</label>
                     <div class="col-sm-9">
                         <select class="form-control" id="selectCountry" disabled ng-model="contact.work.company.address.country">
                              <option>Viet Nam</option>
@@ -190,30 +229,32 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputPhone" class="control-label col-sm-3">Phone</label> 
+                    <label for="inputPhone" class="control-label col-sm-3"
+                        translate="contact-edit.home.phone"></label>
                     <div class="col-sm-9">
                        <input ng-model="contact.work.company.phone" type="text" class="form-control" id="inputPhone" readonly>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="input" class="control-label col-sm-3">Fax</label> 
+                    <label for="input" class="control-label col-sm-3"
+                        translate="contact-edit.home.fax"></label>
                     <div class="col-sm-9">
                        <input ng-model="contact.work.company.fax" type="text" class="form-control" id="inputFax" readonly>
                     </div>
                 </div>
-				<!-- End Work Group-->
-			</div>
-		</div>
-		<div class="form-group" class="row">
-			<div class="col-md-6 col-xs-6">
-				<input class="btn btn-default" type="submit" value="Save"
-					style="float: right; width: 100px">
-			</div>
-			<div class="col-md-6 col-xs-6">
-				<input class="btn btn-default" type="button" value="Cancel"
-					style="width: 100px">
-			</div>
-		</div>
-	</form>
+                <!-- End Work Group-->
+            </div>
+        </div>
+        <div class="form-group" class="row">
+            <div class="col-md-6 col-xs-6">
+                <button class="btn btn-default" style="float: right; width: 100px"
+                    translate="contact-edit.button.save-contact"></button>
+            </div>
+            <div class="col-md-6 col-xs-6">
+                <button class="btn btn-default" style="width: 100px"
+                    translate="contact-edit.button.cancel-contact"></button>
+            </div>
+        </div>
+    </form>
 
 </div>

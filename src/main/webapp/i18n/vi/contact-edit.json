@@ -1,17 +1,45 @@
 {
-    "contact": {
-    	"button": {
-    		"add-contact": "Thêm mới",
-    		"search": "Tìm Kiếm",
-    		"delete": "Xóa"
-    	},
-    	"contact-field": {
-    		"name": "Tên nhân viên",
+    "contact-edit": {
+    	"general": {
+    		"title-general": "Thông tin chung",
+    		"contact-name": "Họ Tên",
+    		"display-name": "Tên truy cập",
+    		"email": "Email",
     		"mobile": "Điện thoại",
-    		"email": "E-mail",
-    		"job-title": "Chức vụ",
-    		"department": "Phòng ban",
-    		"company": "Tên công ty"
+    		"photo": "Hình Ảnh"
+    	},
+    	"home": {
+    		"title-home": "Nơi Cư Trú",
+    		"add-line1": "Địa chỉ 1",
+    		"add-line2": "Địa chỉ 2",
+    		"city": "Thành phố",
+    		"state":"Quận",
+    		"zip-code": "Zip code",
+    		"country":"Quốc gia",
+    		"phone":"Điện thoại",
+    		"fax":"Fax"
+    	},
+    	"work":{
+    		"title-work":"Nơi Làm Việc",
+    		"company-name":"Tên công ty",
+    		"message":"Mô Tả",
+    		"website": "Website",
+    		"job-title":"Tiêu đề",
+    		"department":"Phòng ban"
+    	},
+    	"button": {
+    		"edit-company":"Sửa",
+    		"new-company": "Tạo mới",
+    		"save-contact":"Lưu",
+    		"cancel-contact":"Hủy"
+    	},
+    	"placeholder":{
+    		"first-name": "Tên",
+    		"middle-name": "Tên đệm",
+    		"last-name": "Họ",
+    		"email":"Trung N.Nguyen",
+    		"mobile":"+84 9079xxx",
+    		"city":"Ho Chi Minh"
     	}
     }
 }

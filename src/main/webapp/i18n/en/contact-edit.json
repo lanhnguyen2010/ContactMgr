@@ -1,17 +1,45 @@
 {
-    "contact": {
-        "button": {
-            "add-contact": "Add Contact",
-            "search": "Search",
-            "delete": "Delete"
-        },
-        "contact-field": {
-            "name": "Name",
-            "mobile": "Mobile",
-            "email": "E-mail",
-            "job-title": "Job Title",
-            "department": "Department",
-            "company": "Company"
-        }
+    "contact-edit": {
+    	"general": {
+    		"title-general": "General",
+    		"contact-name": "Name",
+    		"display-name": "Display Name",
+    		"email": "E-mail",
+    		"mobile": "Mobile",
+    		"photo": "Photo"
+    	},
+    	"home": {
+    		"title-home": "Home",
+    		"add-line1": "Addr. line 1",
+    		"add-line2": "Addr. line 2",
+    		"city": "City",
+    		"state":"State",
+    		"zip-code": "Zip Code",
+    		"country":"Country",
+    		"phone":"Phone",
+    		"fax":"Fax"
+    	},
+    	"work":{
+    		"title-work":"Work",
+    		"company-name":"Company",
+    		"message":"Message",
+    		"website": "Website",
+    		"job-title":"Job Title",
+    		"department":"Department"
+    	},
+    	"button": {
+    		"edit-company":"Edit",
+    		"new-company": "New",
+    		"save-contact":"Save",
+    		"cancel-contact":"Cancel"
+    	},
+    	"placeholder":{
+    		"first-name": "First Name",
+    		"middle-name": "Middle Name",
+    		"last-name": "Last Name",
+    		"email":"Trung N.Nguyen",
+    		"mobile":"+84 9079xxx",
+    		"city":"Ho Chi Minh"
+    	}
     }
 }
