@@ -1,6 +1,0 @@
-spring:
-    datasource:
-        url: "jdbc:mariadb://localhost/contactmgr"
-        username: contactmgr
-        password: contactmgr123
-        driver-class-name: org.mariadb.jdbc.Driver
