@@ -71,6 +71,7 @@ java -jar contactmgr-[version].war --spring.profiles.active=prod
 ```
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 ## Connect database
 1. Run file contactmgr.sql in src/main/resources to create database
@@ -95,6 +96,8 @@ Ex:
 > flyway migrate
 
 >>>>>>> 5a6757f68dadecbac6aa5725abec29133b7a5b8f
+=======
+>>>>>>> 1d888ed62f45d76adc497911d56eece8df3c17f7
 [JDK 1.7]: http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html
 [Maven 3.3.x]: http://maven.apache.org/download.cgi
 [git-scm.com]: http://git-scm.com/

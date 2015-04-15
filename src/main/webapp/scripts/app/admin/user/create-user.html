@@ -1,0 +1,121 @@
+
+<div ng-cloak>
+	<a href="" data-toggle="modal" data-target="#myModal"
+		ng-click="setSelectedContact(contact)">add user</a>
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="false">
+		<div class="vertical-alignment-helper">
+			<div class="vertical-alignment-helper">
+				<div class="modal-dialog vertical-align-center">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">
+								<span aria-hidden="true">&times; </span> <span class="sr-only">Close</span>
+							</button>
+							<h3 class="modal-title" id="myModalLabel" style="color: white"
+								translate="user.field.title">Add/Edit user</h3>
+						</div>
+						<div class="modal-body" id="size-dialog">
+							<div class="row">
+								<div class="col-md-6 form-horizontal">
+									<div class="form-group">
+										<label for="username" class="col-sm-5 control-label"
+											translate="user.field.username">Username</label>
+										<div class="col-sm-7">
+											<input type="text" class="form-control" name="username">
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="password" class="col-sm-5 control-label"
+											translate="user.field.pass">New Password</label>
+										<div class="col-sm-7">
+											<input type="text" class="form-control" name="password">
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="confirm-password" class="col-sm-5 control-label"
+											translate="user.field.pass-conf">Confirm New Password</label>
+										<div class="col-sm-7">
+											<input type="text" class="form-control"
+												name="confirm-password">
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="language" class="col-sm-5 control-label"
+											translate="user.field.language">Language</label>
+										<div class="col-sm-7">
+											<select class="form-control"></select>
+										</div>
+
+									</div>
+									<div class="form-group">
+										<label for="role" class="col-sm-5 control-label"
+											translate="user.field.role">Role</label>
+										<div class="col-sm-7">
+											<select class="form-control"></select>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6 form-horizontal">
+									<div class="form-group">
+										<label for="first_name" class="col-sm-5 control-label"
+											translate="user.field.first-name">First Name</label>
+										<div class="col-sm-7">
+											<input type="text" class="form-control" name="first_name">
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="last_name" class="col-sm-5 control-label"
+											translate="user.field.last-name">Last Name</label>
+										<div class="col-sm-7">
+											<input type="text" class="form-control" name="last_name">
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="ass_company" class="col-sm-5 control-label"
+											translate="user.field.ass-com">Assigned Companies</label>
+										<div class="col-sm-7">
+											<select class="form-control"></select>
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="expired_date" class="col-sm-5 control-label"
+											translate="user.field.ex-date">Expired Date</label>
+										<div class="col-sm-7" ng-controller="DateController">
+											<input type="date" class="form-control" name="expired_date"
+												ng-model="value" min="2015-04-15">
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="active" class="col-sm-5 control-label"
+											translate="user.field.active">Active</label>
+										<div class="col-sm-7">
+											<input type="radio" name="active" value="yes"> <label
+												for="yes" class="control-label"
+												translate="user.field.yes-active">Yes</label> <input
+												type="radio" name="active" value="no" checked="checked">
+											<label for="no" class="control-label"
+												translate="user.field.no-active">No</label>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6 col-xs-6">
+									<button type="submit" class="btn btn-primary save-user-button"
+										style="float: right; width: 80px" value="save"
+										translate="user.button.btn-save">Save</button>
+								</div>
+								<div class="col-md-6 col-xs-6">
+									<button type="button" class="btn btn-primary"
+										style="width: 80px" value="cancel"
+										translate="user.button.btn-cancel" data-dismiss="modal">Cancel</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

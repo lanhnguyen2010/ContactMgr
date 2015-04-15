@@ -12,9 +12,6 @@ import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StopWatch;
 
-/**
- * Created by trungnguyen on 4/9/15.
- */
 @Configuration
 @EnableSwagger
 public class SwaggerConfig implements EnvironmentAware {
@@ -27,9 +24,6 @@ public class SwaggerConfig implements EnvironmentAware {
         this.propertyResolver = new RelaxedPropertyResolver(environment, "swagger.");
     }
 
-    /**
-     * Swagger Spring MVC configuration.
-     */
     @Bean
     public SwaggerSpringMvcPlugin swaggerSpringMvcPlugin(SpringSwaggerConfig springSwaggerConfig) {
         StopWatch watch = new StopWatch();

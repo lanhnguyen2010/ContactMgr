@@ -12,9 +12,6 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 
-/**
- * Created by trungnguyen on 4/5/15.
- */
 @MappedSuperclass
 public class Entity implements Serializable {
     private static final long serialVersionUID = 1L;

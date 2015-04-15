@@ -1,139 +1,116 @@
 'use strict';
 
 angular.module('contactmgrApp')
-    .controller('ContactController', function($scope, ContactService, ngTableParams) {
-    	
-    	$scope.filter = {
-    		name: '',
-    		email:'',
-    		mobile: '',
-    		jobTitle: '',
-    		department:'',
-    		company:''
-    	};
-    	
-    	var PAGE_SIZE = 1000;
-    	$scope.currentPage = 1;
-    	
-    	$scope.searchContacts = function (isPaging) {
-    		
-    		if($scope.isLoading){
-    			return;
-    		}
-    		$scope.isLoading = true;
-    		
-    		ContactService.searchContacts($scope.filter, $scope.currentPage, PAGE_SIZE)
-    		.success(function(data, status) {
-    			$scope.contacts = data['data'];
-    			$scope.total = data['totalItem'];
-    			$scope.isLoading = false;
-    			
-    			if (!isPaging) {
-    				$scope.contactsTableParams.reload();
-    			}
-    		})
-    		.error(function(data, status) {
-    			console.log(status);
-    		});
-    	}
-    	
-    	$scope.contactsTableParams = new ngTableParams({
-    		page: 1, // Show the first page
-    		count: 1000, // Count per page
-    	}, {
-    		counts: [],
-    		total: $scope.total,
-    		getData: function ($defer, params) {
-    			$scope.currentPage = params.page();
-    			$defer.resolve($scope.contacts);
-    			
-    			$scope.searchContacts(true);
-    			
-    			$scope.checkboxes = {
-    		        'checked': false, 
-    		        items: {}
-    		    };
-    			
-    			$scope.checkedIds = '';
-    		}
-    	});
-    	
-    	$scope.selectedContact = {};
-    	$scope.setSelectedContact = function(contact) {
-    		$scope.selectedContact = contact;
-    	};
-    	
-    	function findAndRemove(array, property, value) {
-    		$.each(array, function(index, result) {
-    			if(result[property] == value) {
-    				array.splice(index, 1);
-    		    }    
-    		});
-    	}
-    	
-    	// Delete contacts
-    	$scope.deleteContacts = function () {
-    		if (confirm("Do you want to delete?")) {
-	    		ContactService.deleteContacts($scope.checkedIds)
-	    		.success(function (data, status) {
-	    			console.log("Deleted " + data + " contact(s)");
-	    			$scope.searchContacts(false);
-	    		})
-	    		.error(function (data, status) {
-	    			console.log("Error", status);
-	    		});
-    		}
-    	};
+    .controller('ContactController', function($scope, ContactService, ngTableParams, PAGE_SIZE) {
+        function init(){
+            $scope.getCompanies();
+        };
 
-        $scope.checkboxes = {
-    	    'checked': false, 
-    	    items: {}
-     	};
+        $scope.criteria = {
+            name: '',
+            email: '',
+            mobile: '',
+            jobTitle: '',
+            department: '',
+            company: '',
+            pageIndex: 1
+        };
 
-     	$scope.checkedIds = '';
-
-        // watch for check all checkbox
-        $scope.$watch('checkboxes.checked', function(value) {
-            angular.forEach($scope.contacts, function(item) {
-                if (angular.isDefined(item.id)) {
-                    $scope.checkboxes.items[item.id] = value;
-                }
-            });
-        });
-
-        // watch for data checkboxes
-        $scope.$watch('checkboxes.items', function(values) {
-            if (!$scope.contacts) {
+        $scope.contacts = [];
+        $scope.searchClicked = false;
+        $scope.searchContacts = function() {
+            if ($scope.isLoading) {
                 return;
             }
 
-            var checked = 0, unchecked = 0,
-                total = $scope.contacts.length;
+            $scope.searchClicked = true;
+            $scope.isLoading = true;
+            $scope.tableParams.reload();
+        }
 
-            angular.forEach($scope.contacts, function(item) {
-                checked += ($scope.checkboxes.items[item.id]) || 0;
-                unchecked += (!$scope.checkboxes.items[item.id]) || 0;
-            });
+        $scope.tableParams = new ngTableParams({
+            count: 15
+        }, {
+            counts: [],
+            getData: function ($defer, params) {
+                if (!$scope.searchClicked) {
+                    return;
+                }
 
-            if ((unchecked == 0) || (checked == 0)) {
-                $scope.checkboxes.checked = (checked == total);
+                $scope.criteria.pageIndex = params.page();
+                $scope.criteria.pageSize = params.count();
+                ContactService.searchContacts($scope.criteria)
+                    .success(function(data, status) {
+                        params.total(data.totalItems);
+                        $scope.contacts = data.items;
+                        $defer.resolve(data.items);
+
+                        $scope.isLoading = false;
+                    })
+                    .error(function(data, status) {
+                        console.log(status);
+                    });
+
+                $scope.checkboxes = {
+                    'checked': false,
+                    items: {}
+                };
+                $scope.checkedIds = '';
             }
+        });
 
-            // grayed checkbox
-            angular.element(document.getElementById("select_all")).prop("indeterminate", (checked != 0 && unchecked != 0));
+        $scope.selectedCompany = {};
+        $scope.setSelectedCompany = function(contact) {
+            if (contact.work) {
+                $scope.selectedCompany = contact.work.company || {};
+            }
+        };
 
-            // Create checked id list
-            $scope.checkedIds = '';
-            for (var item in $scope.checkboxes.items) {
-            	if ($scope.checkboxes.items[item]) {
-            		$scope.checkedIds = $scope.checkedIds + item + ',';
-            	}
+        $scope.selectedIds = [];
+        $scope.deleteContacts = function() {
+            if (confirm('Do you want to delete?')) {
+                ContactService.deleteContacts($scope.selectedIds)
+                    .success(function (data, status) {
+                        console.log('Deleted ' + data + ' contact(s)');
+                        $scope.tableParams.reload();
+                    })
+                    .error(function (data, status) {
+                        console.log('Error', status);
+                    });
             }
-            
-            // Remove the final ','
-            if ($scope.checkedIds.length > 0) {
-            	$scope.checkedIds = $scope.checkedIds.substr(0, $scope.checkedIds.length - 1); 
+        };
+
+        // watch selected contacts
+        $scope.$watch('contacts|filter:{checked:true}', function(results) {
+                $scope.selectedIds = results.map(function(contact) {
+                    return contact.id;
+                });
+
+                var count = $scope.selectedIds.length;
+                var total = $scope.contacts.length;
+                $scope.contacts.checked = (count == total);
+                // grayed checkbox
+                angular.element(document.getElementById('check_all'))
+                       .prop('indeterminate', (count > 0 && count < total));
+
+            }, true);
+
+        $scope.toggleCheckAll = function(e) {
+            var checked = (document.getElementById('check_all').checked);
+            for (var i=0; i<$scope.contacts.length; i++) {
+                $scope.contacts[i].checked = checked;
             }
-        }, true);
+        }
+
+        $scope.getCompanies = function() {
+            ContactService.getCompanies()
+                .success(function(data,status) {
+                    $scope.companies=data;
+                })
+                .error(function (data, status) {
+                    console.log('Error get companies', status);
+                });
+        }
+
+        init();
     });
-

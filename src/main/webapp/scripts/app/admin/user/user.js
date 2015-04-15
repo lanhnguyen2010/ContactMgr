@@ -12,7 +12,8 @@ angular.module('contactmgrApp')
                 views: {
                     'content@': {
                         templateUrl: 'scripts/app/admin/user/user.html',
-                        controller: 'UserController'
+                        controller: 'UsersController'
+
                     }
                 },
                 resolve: {
@@ -21,5 +22,25 @@ angular.module('contactmgrApp')
                         return $translate.refresh();
                     }]
                 }
-            });
+            })
+        .state('create-user', {
+            parent: 'site',
+            url: '/admin/user/new',
+            data: {
+                roles: []
+            },
+            views: {
+                'content@': {
+                    templateUrl: 'scripts/app/admin/user/create-user.html',
+                    controller: 'UsersController'
+
+                }
+            },
+            resolve: {
+                mainTranslatePartialLoader: ['$translate', '$translatePartialLoader', function($translate,$translatePartialLoader) {
+                    $translatePartialLoader.addPart('user');
+                    return $translate.refresh();
+                }]
+            }
     });
+});

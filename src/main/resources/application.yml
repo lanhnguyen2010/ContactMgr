@@ -2,3 +2,8 @@ spring:
     jpa:
         hibernate:
             ddl-auto: validate
+        properties:
+            javax:
+                persistence:
+                    validation:
+                        mode: none
