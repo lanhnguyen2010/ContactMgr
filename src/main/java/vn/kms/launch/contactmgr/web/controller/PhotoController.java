@@ -60,21 +60,14 @@ public class PhotoController {
 	@Autowired
 	private MultipartResolver multipartResolver;
 
-	
 	@Autowired
 	PhotoService uploadService;
 	
-	/*Upload image WS: an image with format PNG, JPEG
-	 * @return ""
-	 * if user upload an image illegal format, "HTTP Error 412 - Precondition failed";
-	 * */
-
 	@RequestMapping(value="/upload",method = POST)
 	public ResponseEntity uploadPhoto(HttpServletRequest request)
 			throws IOException {
 
-		MultipartHttpServletRequest multipartRequest = multipartResolver
-				.resolveMultipart(request);
+		MultipartHttpServletRequest multipartRequest = multipartResolver.resolveMultipart(request);
 
 		MultipartFile file = multipartRequest.getFile("file");
 		InputStream in = file.getInputStream();
@@ -92,15 +85,11 @@ public class PhotoController {
 		int returnValue = choose.showOpenDialog(null);
 		
 		if(returnValue == JFileChooser.APPROVE_OPTION){
-			
+			File selectFile = new File(choose.getSelectedFile().getAbsolutePath());
 		}
 		
 		Photo ci = uploadService.uploadImage(in, fileName, contentType);
-		// TODO:ff
-		
-		// "url":"/api/";
 		return new ResponseEntity<Photo>(ci, HttpStatus.CREATED);
-		//
 	}
 
 	/*
@@ -115,10 +104,6 @@ public class PhotoController {
 		return new ResponseEntity<Integer>(photoId, HttpStatus.OK);
 	}
 	
-	/*Get photoId return user
-	 * @return ""
-	 * 
-	 * */
 	@RequestMapping(value = "/{photoId}", method = GET)
 	public void getPhoto(@PathVariable("photoId") int photoId,
 			WebRequest request, HttpServletResponse response) throws IOException {
@@ -126,52 +111,11 @@ public class PhotoController {
 		
 		if (null == ci){
 			response.setStatus(HttpStatus.NOT_FOUND.value());
-		}
-			
+		}	
 		else{
-		response.setStatus(HttpStatus.OK.value());
-		//copy input to output stream of response
+			response.setStatus(HttpStatus.OK.value());
+			//copy input to output stream of response
 		}
-//		
-//		File photoFile = new File(photoDir, photoId + "." + EXT_NAME);
-//		if (!photoFile.exists()) {
-//			photoFile = new File(photoDir, DEFAULT_PHOTO);
-//		}
-//
-//		if (request.checkNotModified(photoFile.lastModified())) {
-//			return null; // return 304 code
-//		}
-//
-//		byte[] photo = Files.readAllBytes(Paths.get(photoFile.getPath()));
-//
-//		HttpHeaders headers = new HttpHeaders();
-//		headers.setContentType(MediaType.IMAGE_PNG);
-//		// headers.setContentType(MediaType.IMAGE_JPEG);
-//
-//		headers.setContentLength(photo.length);
-//		headers.setLastModified(photoFile.lastModified());
-//		return new HttpEntity<byte[]>(photo, headers);
-	}
-
-	// ----------------------------------------------
-
-	private static BufferedImage scaleImage(BufferedImage image, int width,
-			int height) throws IOException {
-		int type = image.getType() == 0 ? BufferedImage.TYPE_INT_ARGB : image
-				.getType();
-		int imageWidth = image.getWidth();
-		int imageHeight = image.getHeight();
-
-		double scaleX = (double) width / imageWidth;
-		double scaleY = (double) height / imageHeight;
-		AffineTransform scaleTransform = AffineTransform.getScaleInstance(
-				scaleX, scaleY);
-		AffineTransformOp bilinearScaleOp = new AffineTransformOp(
-				scaleTransform, AffineTransformOp.TYPE_BILINEAR);
-
-		image = bilinearScaleOp.filter(image, new BufferedImage(width, height,
-				type));
-		return image.getSubimage(0, (height - width) / 2, width, width);
 	}
 
 }

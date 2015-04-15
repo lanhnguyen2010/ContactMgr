@@ -27,13 +27,13 @@ public class Photo extends Entity {
     @Column(name = "ID")
     private Integer id;
 
-	@Column(name = "pathFull")
+	@Column(name = "PATHFULL")
 	private String pathFull;
 	
-	@Column(name = "fileName")
+	@Column(name = "FILENAME")
 	private String fileName;
 	
-	@Column(name = "contentType")
+	@Column(name = "CONTENTTYPE")
 	private String ContentType;
 
 	public Integer getId() {

@@ -44,29 +44,21 @@ public class PhotoService {
 		@Autowired
 		private PhotoRepository uploadRepository;
 		
-		@Transactional
-		public Photo uploadImage(InputStream in, String fileName,
-				String contentType) {
-			
-			
-			 //@Value("${contact.photo.storage}")
-			  String photoDir;
 
-			// File uploadFile = File.createTempFile("photo-", photoId);
-			// file.transferTo(uploadFile);
-			//
-			// BufferedImage originalImage = ImageIO.read(uploadFile);
-			// // BufferedImage resizedImage = scaleImage(originalImage);
-			//
-			 //File photoFile = new File(photoDir, photoId + "." + EXT_NAME);
-			// ImageIO.write(resizedImage, EXT_NAME, photoFile);
+		// ext_name image allow upload format png, jpeg
+		private static final String EXT_NAME[] = { "png", "jpeg" };
+
+		private static final String DEFAULT_PHOTO = "contact-photo.png";
+
+		@Value("${contacts.photo.storage}")
+		private String photoDir;
+	
+		@Transactional
+		
+		public Photo uploadImage(InputStream in, String fileName, String contentType) {
 			
-			//store file
-			
-			//push db
-			
-			Photo ci = new  Photo();
-			
+			String photoDir;
+			Photo ci = new  Photo();			
 			return uploadRepository.save(ci);
 		}
 
