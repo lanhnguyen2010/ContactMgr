@@ -3,7 +3,7 @@ server:
 
 spring:
     datasource:
-        url: "jdbc:mariadb://localhost/contactmgr"
+        url: "jdbc:mysql://localhost:3306/contactmgr"
         username: contactmgr
         password: contactmgr123
         driver-class-name: org.mariadb.jdbc.Driver

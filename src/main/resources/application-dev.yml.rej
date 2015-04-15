@@ -1,7 +1,0 @@
-diff a/src/main/resources/application-dev.yml b/src/main/resources/application-dev.yml	(rejected hunks)
-@@ -2,4 +2,5 @@
-     datasource:
-         url: "jdbc:mysql://localhost:3306/contacts_manager"
-         username: root
-+        password: root
-         driver-class-name: org.mariadb.jdbc.Driver
