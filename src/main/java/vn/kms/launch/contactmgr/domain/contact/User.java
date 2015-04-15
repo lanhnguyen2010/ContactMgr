@@ -34,6 +34,28 @@ public class User extends vn.kms.launch.contactmgr.domain.Entity {
 	@Column(name="ACTIVE")
 	private int active;
 	
+	@Enumerated(EnumType.STRING)
+	private Language language;
+	
+	@Column(name="ASSIGNED_COMPANIES")
+	private String assigned_companies;
+	
+	public void setLanguage(Language language) {
+		this.language = language;
+	}
+	
+	public Language getLanguage() {
+		return language;
+	}
+	
+	public String getAssigned_companies() {
+		return assigned_companies;
+	}
+
+	public void setAssigned_companies(String assigned_companies) {
+		this.assigned_companies = assigned_companies;
+	}
+
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
@@ -84,4 +106,6 @@ public class User extends vn.kms.launch.contactmgr.domain.Entity {
 	public int getActive() {
 		return active;
 	}
+	
+	
 }

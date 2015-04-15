@@ -30,12 +30,5 @@ public class UserService {
 		return userRepository.save(user);
 	}
 	
-	@Transactional
-	public User updateUser(@Valid User oldUser){
-		if(null ==  oldUser){
-			return null;
-		}
-		return userRepository.save(oldUser);
-	}
 
 }
