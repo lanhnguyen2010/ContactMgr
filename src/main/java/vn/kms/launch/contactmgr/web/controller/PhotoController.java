@@ -15,6 +15,9 @@ import java.nio.file.Paths;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,18 +36,18 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.MultipartResolver;
 
-import vn.kms.launch.contactmgr.domain.image.ContactImages;
-import vn.kms.launch.contactmgr.repository.UploadRepository;
+import vn.kms.launch.contactmgr.domain.image.Photo;
+import vn.kms.launch.contactmgr.repository.PhotoRepository;
 import vn.kms.launch.contactmgr.service.ContactService;
-import vn.kms.launch.contactmgr.service.UploadService;
+import vn.kms.launch.contactmgr.service.PhotoService;
 
 /**
  * Created by diule on 4/14/2015.
  */
 
 @Controller
-@RequestMapping(value = "/api/photo")
-public class UploadController {
+@RequestMapping(value = "/api/photos")
+public class PhotoController {
 
 	// ext_name image allow upload format png, jpeg
 	private static final String EXT_NAME[] = { "png", "jpeg" };
@@ -59,7 +62,7 @@ public class UploadController {
 
 	
 	@Autowired
-	UploadService uploadService;
+	PhotoService uploadService;
 	
 	/*Upload image WS: an image with format PNG, JPEG
 	 * @return ""
@@ -78,12 +81,25 @@ public class UploadController {
 		String fileName = file.getName();
 	
 		String contentType = file.getContentType();
-		//TODO: Filter contentType format image;	
-		ContactImages ci = uploadService.uploadImage(in, fileName, contentType);
+		JFileChooser choose = new JFileChooser();
+		
+		//TODO: Filter contentType format image;
+		//EXT_NAME contain: JPEG, PNG;
+		FileFilter filter = new FileNameExtensionFilter("JPEG file", EXT_NAME);
+		choose.setFileFilter(filter);
+		
+		choose.addChoosableFileFilter(filter);
+		int returnValue = choose.showOpenDialog(null);
+		
+		if(returnValue == JFileChooser.APPROVE_OPTION){
+			
+		}
+		
+		Photo ci = uploadService.uploadImage(in, fileName, contentType);
 		// TODO:ff
 		
 		// "url":"/api/";
-		return new ResponseEntity<ContactImages>(ci, HttpStatus.CREATED);
+		return new ResponseEntity<Photo>(ci, HttpStatus.CREATED);
 		//
 	}
 
@@ -106,10 +122,12 @@ public class UploadController {
 	@RequestMapping(value = "/{photoId}", method = GET)
 	public void getPhoto(@PathVariable("photoId") int photoId,
 			WebRequest request, HttpServletResponse response) throws IOException {
-		ContactImages ci = uploadService.getFile(photoId);
+		Photo ci = uploadService.getFile(photoId);
 		
-		if (null == ci)
+		if (null == ci){
 			response.setStatus(HttpStatus.NOT_FOUND.value());
+		}
+			
 		else{
 		response.setStatus(HttpStatus.OK.value());
 		//copy input to output stream of response

@@ -1,6 +1,5 @@
 package vn.kms.launch.contactmgr.service;
 
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -19,11 +18,9 @@ import org.springframework.util.StringUtils;
 import vn.kms.launch.contactmgr.domain.contact.Company;
 import vn.kms.launch.contactmgr.domain.contact.Contact;
 import vn.kms.launch.contactmgr.domain.contact.Work;
-import vn.kms.launch.contactmgr.domain.image.ContactImages;
 import vn.kms.launch.contactmgr.domain.search.ContactSearchCriteria;
 import vn.kms.launch.contactmgr.repository.CompanyRepository;
 import vn.kms.launch.contactmgr.repository.ContactRepository;
-import vn.kms.launch.contactmgr.repository.UploadRepository;
 
 @Service
 @Transactional(readOnly = true)

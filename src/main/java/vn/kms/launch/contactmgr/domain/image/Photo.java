@@ -21,7 +21,7 @@ import javax.validation.constraints.Pattern;
  */
 @javax.persistence.Entity
 @Table(name = "IMAGE")
-public class ContactImages extends Entity {
+public class Photo extends Entity {
 
 	//@NotEmpty(message = "{validation.not-empty.message}")
     @Column(name = "ID")
