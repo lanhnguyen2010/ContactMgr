@@ -1,6 +1,10 @@
 spring:
     datasource:
+<<<<<<< HEAD
         url: "jdbc:mysql://localhost:3306/contacts_manager"
+=======
+        url: "jdbc:mysql://192.168.55.145/contacts_manager"
+>>>>>>> 5a7f5e76d9744265037b80c59d0ee6acaaea615e
         username: contactmgr
         password: contactmgr123
         driver-class-name: org.mariadb.jdbc.Driver

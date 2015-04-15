@@ -47,7 +47,11 @@ public class ContactController {
     @RequestMapping(value="/search", method = POST)
     public HashMap<String, Object> searchContact(@RequestParam ("page") int page,
                                               @RequestParam (value="pageSize", defaultValue="10") int pageSize,
+<<<<<<< HEAD
                                               @RequestBody ContactSearchCriteria criteria) {
+=======
+                                              @RequestBody ContactSearchCriteria criteria){
+>>>>>>> 5a7f5e76d9744265037b80c59d0ee6acaaea615e
            return contactService.searchContacts(criteria, page, pageSize);
     }
     
