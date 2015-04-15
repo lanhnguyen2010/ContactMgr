@@ -9,7 +9,6 @@ import java.util.HashMap;
 
 import javax.validation.Valid;
 
-import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,8 +47,13 @@ public class ContactController {
     @RequestMapping(value="/search", method = POST)
     public HashMap<String, Object> searchContact(@RequestParam ("page") int page,
                                               @RequestParam (value="pageSize", defaultValue="10") int pageSize,
-                                              @RequestBody ContactSearchCriteria criteria) throws JSONException {
-           return contactService.searchContacts(criteria, page, pageSize);
+                                              @RequestBody ContactSearchCriteria criteria) {
+        return contactService.searchContacts(criteria, page, pageSize);
+    }
+    
+    @RequestMapping(value="/validate", method = POST)
+    public HashMap<String, Object> validateContact(@RequestBody Contact contact) {
+        return contactService.validateContacts(contact);
     }
     
     /**
@@ -60,6 +64,7 @@ public class ContactController {
      */
     @RequestMapping(value = "/{id}", method = PUT)
     public ResponseEntity<Contact> updateContact(@PathVariable int id, @RequestBody @Valid Contact contact) {
+    	
 		Contact returnContact = contactService.saveContact(contact);
     	
 		if (returnContact == null) { 
