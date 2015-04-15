@@ -6,131 +6,148 @@ import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@Table(name = "CONTACT")
+@Table(name = "CONTACTS")
 public class Contact extends vn.kms.launch.contactmgr.domain.Entity {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
 	@NotEmpty(message = "{validation.not-empty.message}")
 	@Column(name = "DISPLAY_NAME")
 	private String displayName;
 	
     @NotEmpty(message = "{validation.not-empty.message}")
-	@Column(name = "FIRST_NAME")
-	private String firstName;
-	
-	@Column(name = "MIDDLE_NAME")
-	private String middleName;
-	
-	@NotEmpty(message = "{validation.not-empty.message}")
-	@Column(name = "LAST_NAME")
-	private String lastName;
-	
-	@Email(message = "{validation.email.message}")
-	@Column(name = "EMAIL")
-	private String email;
+    @Column(name = "DISPLAY_NAME")
+    private String displayName;
 
-	@Column(name = "PHOTO")
-	private String photo;
-	
-	@Pattern(regexp = "(\\+[0-9]{1,3}\\s)([0-9]{9,10})", message = "{validation.mobile.message}")
-	@Column(name = "MOBILE")
-	private String mobile;
+    @NotEmpty(message = "{validation.not-empty.message}")
+    @Column(name = "FIRST_NAME")
+    private String firstName;
 
-	@Column(name = "GENDER")
-	private String gender;
+    @Column(name = "MIDDLE_NAME")
+    private String middleName;
 
-	@Column(name = "BIRTHDAY")
-	private Date birthday;
+    @NotEmpty(message = "{validation.not-empty.message}")
+    @Column(name = "LAST_NAME")
+    private String lastName;
 
-	@Embedded
-	private Home home;
+    @Email(message = "{validation.email.message}")
+    @Column(name = "EMAIL")
+    private String email;
 
-	@Embedded
-	private Work work;
+    @Column(name = "PHOTO")
+    private String photo;
 
-	public String getFirstName() {
-		return firstName;
-	}
+    @Pattern(regexp = "(\\+[0-9]{1,3}\\s)([0-9]{9,10})", message = "{validation.mobile.message}")
+    @Column(name = "MOBILE")
+    private String mobile;
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
+    @Column(name = "GENDER")
+    private String gender;
 
-	public String getMiddleName() {
-		return middleName;
-	}
+    @Column(name = "BIRTHDAY")
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date birthday;
 
-	public void setMiddleName(String middleName) {
-		this.middleName = middleName;
-	}
+    @Embedded
+    @Valid
+    private Home home;
 
-	public String getLastName() {
-		return lastName;
-	}
+    @Embedded
+    @Valid
+    private Work work;
 
-	public void setLastName(String lastname) {
-		this.lastName = lastname;
-	}
+    public String getDisplayName() {
+        return displayName;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public String getFirstName() {
+        return firstName;
+    }
 
-	public String getPhoto() {
-		return photo;
-	}
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
-	public void setPhoto(String photo) {
-		this.photo = photo;
-	}
+    public String getMiddleName() {
+        return middleName;
+    }
 
-	public String getMobile() {
-		return mobile;
-	}
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
+    }
 
-	public void setMobile(String mobile) {
-		this.mobile = mobile;
-	}
+    public String getLastName() {
+        return lastName;
+    }
 
-	public String getGender() {
-		return gender;
-	}
+    public void setLastName(String lastname) {
+        this.lastName = lastname;
+    }
 
-	public void setGender(String gender) {
-		this.gender = gender;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public Date getBirthday() {
-		return birthday;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public void setBirthday(Date birthday) {
-		this.birthday = birthday;
-	}
+    public String getPhoto() {
+        return photo;
+    }
 
-	public Home getHome() {
-		return home;
-	}
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
 
-	public void setHome(Home home) {
-		this.home = home;
-	}
+    public String getMobile() {
+        return mobile;
+    }
 
-	public Work getWork() {
-		return work;
-	}
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
 
-	public void setWork(Work work) {
-		this.work = work;
-	}
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+
+    public Home getHome() {
+        return home;
+    }
+
+    public void setHome(Home home) {
+        this.home = home;
+    }
+
+    public Work getWork() {
+        return work;
+    }
+
+    public void setWork(Work work) {
+        this.work = work;
+    }
 }

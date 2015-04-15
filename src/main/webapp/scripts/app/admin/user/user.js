@@ -13,6 +13,7 @@ angular.module('contactmgrApp')
                     'content@': {
                         templateUrl: 'scripts/app/admin/user/user.html',
                         controller: 'UserController'
+
                     }
                 },
                 resolve: {
@@ -22,4 +23,3 @@ angular.module('contactmgrApp')
                     }]
                 }
             });
-    });
