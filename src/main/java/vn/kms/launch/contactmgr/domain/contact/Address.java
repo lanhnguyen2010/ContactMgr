@@ -22,8 +22,8 @@ public class Address {
 	@Column(name = "POSTAL_CODE")
 	private Integer postalCode;
 	
-    @Pattern(regexp = "([A-Z]{2})", message = "{validation.country.message}")
 	@Column(name = "COUNTRY")
+    @Pattern(regexp = "^([A-Z]{2})$", message = "{validation.country.message}")
 	private String country;
 
 	public String getAddrLine1() {

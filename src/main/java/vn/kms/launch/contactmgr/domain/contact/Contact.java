@@ -16,15 +16,15 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class Contact extends vn.kms.launch.contactmgr.domain.Entity {
 	private static final long serialVersionUID = 1L;
 
-    @NotEmpty(message = "{validation.not-empty.message}")
 	@Column(name = "FIRST_NAME")
+    @NotEmpty(message = "{validation.not-empty.message}")
 	private String firstName;
 	
 	@Column(name = "MIDDLE_NAME")
 	private String middleName;
 	
-	@NotEmpty(message = "{validation.not-empty.message}")
 	@Column(name = "LAST_NAME")
+	@NotEmpty(message = "{validation.not-empty.message}")
 	private String lastName;
 	
 	@Email
@@ -34,8 +34,8 @@ public class Contact extends vn.kms.launch.contactmgr.domain.Entity {
 	@Column(name = "PHOTO")
 	private String photo;
 	
-	@Pattern(regexp = "(\\+[0-9]{1,3}\\s)([0-9]{9,10})", message = "{validation.mobile.message}")
 	@Column(name = "MOBILE")
+	@Pattern(regexp = "^(\\+[0-9]{1,3}\\s)([0-9]{9,10})$", message = "{validation.mobile.message}")
 	private String mobile;
 
 	@Column(name = "GENDER")

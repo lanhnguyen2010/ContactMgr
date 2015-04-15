@@ -272,7 +272,6 @@ public class ContactService {
 	 *                 work{company: {phone: "", fax: "", address:{postalCode: "", country: ""}}}}
 	 */
 	public HashMap<String, Object> validateContacts(@Valid Contact contact) {
-
 		//Contact
 		String firstName = contact.getFirstName();
 		String lastName = contact.getLastName();
