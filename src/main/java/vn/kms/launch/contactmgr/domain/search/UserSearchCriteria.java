@@ -2,25 +2,20 @@ package vn.kms.launch.contactmgr.domain.search;
 
 public class UserSearchCriteria {
 
-	private String firstName;
-	private String lastName;
+	private String userName;
+	private String firstlastName;
 	private String email;
 	private String role;
-
-	public String getFirstName() {
-		return firstName;
+	private String assignedCompanies;
+	private String createdFrom;
+	private String createdTo;
+	
+	public String getFirstlastName() {
+		return firstlastName;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setFirstlastName(String firstlastName) {
+		this.firstlastName = firstlastName;
 	}
 
 	public String getEmail() {
@@ -38,7 +33,37 @@ public class UserSearchCriteria {
 	public void setRole(String role) {
 		this.role = role;
 	}
-	
-	
 
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getAssignedCompanies() {
+		return assignedCompanies;
+	}
+
+	public void setAssignedCompanies(String assignedCompanies) {
+		this.assignedCompanies = assignedCompanies;
+	}
+
+	public String getCreatedFrom() {
+		return createdFrom;
+	}
+
+	public void setCreatedFrom(String createdFrom) {
+		this.createdFrom = createdFrom;
+	}
+
+	public String getCreatedTo() {
+		return createdTo;
+	}
+
+	public void setCreatedTo(String createdTo) {
+		this.createdTo = createdTo;
+	}
+	
 }

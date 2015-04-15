@@ -1,5 +1,6 @@
 package vn.kms.launch.contactmgr.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -10,6 +11,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.validation.Valid;
 
+import org.hibernate.hql.internal.classic.WhereParser;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,17 +26,25 @@ import vn.kms.launch.contactmgr.repository.UserRepository;
 @Transactional(readOnly=true)
 public class UserService {
 	
-	private static final String C_LAST_NAME = "c.lastName";
+	private static final String USERNAME = "c.userName";
 	
-	private static final String C_FIRST_NAME = "c.firstName";
+	private static final String FIRST_NAME = "c.firstName";
+	
+	private static final String LAST_NAME = "c.lastName";
 
-	private static final String C_EMAIL = "c.email";
+	private static final String EMAIL = "c.email";
 	
-	private static final String C_ROLE = "c.role";
+	private static final String ROLE = "c.role";
 
 	private static final String SELECT_C_FROM_USER_C = "select c from User c ";
 
 	private static final String SELECT_COUNT_FROM_USER_C = "select COUNT(c) from User c ";
+
+	private static final String ASSIGNED_COMPANY = "c.assignedcompanies";
+
+	private static final String CREATED_FROM = "c.created_at";
+
+	private static final String CREATED_TO = "c.created_at";
 	
 	@PersistenceContext
 	private EntityManager em;
@@ -76,17 +86,34 @@ public class UserService {
 	}
 	
 	@Transactional
-	public User activeUser(int id) {
-		User user = getUser(id);
-		user.setActive(1);
-		return userRepository.save(user);
+	public List<Integer> activeUser(int... ids) {
+		
+		List<Integer> deletedIds = new ArrayList<Integer>();
+		for (int id: ids){
+			User user = getUser(id);
+			if (user != null){
+				user.setActive(1);
+				if (userRepository.save(user) != null){
+					deletedIds.add(id);
+				}	
+			}
+		}
+		return deletedIds;
 	}
 
 	@Transactional
-	public User deactiveUser(int id) {
-		User user = getUser(id);
-		user.setActive(0);
-		return userRepository.save(user);
+	public List<Integer> deactiveUser(int... ids) {
+		List<Integer> deletedIds = new ArrayList<Integer>();
+		for (int id: ids){
+			User user = getUser(id);
+			if (user != null){
+				user.setActive(0);
+				if (userRepository.save(user) != null){
+					deletedIds.add(id);
+				}	
+			}
+		}
+		return deletedIds;
 	}
 	
 	/**
@@ -113,9 +140,13 @@ public class UserService {
 
 		int paramPos = 1;
 		for (String column : paramsCriteria.keySet()) {
-			if (column.compareToIgnoreCase(C_ROLE) == 0){
+			if (column.equalsIgnoreCase(ROLE)){
 				query.setParameter(paramPos, Role.valueOf(paramsCriteria.get(column)));
 				queryCount.setParameter(paramPos, Role.valueOf(paramsCriteria.get(column)));
+			} else if (column.equalsIgnoreCase(ASSIGNED_COMPANY)) {
+				String value = "%" + paramsCriteria.get(column) + "%";
+				query.setParameter(paramPos, value);
+				queryCount.setParameter(paramPos, value);
 			} else {
 				query.setParameter(paramPos, paramsCriteria.get(column).replace("*", "%"));
 				queryCount.setParameter(paramPos, paramsCriteria.get(column).replace("*", "%"));
@@ -145,21 +176,50 @@ public class UserService {
 		if (columnSet != null && !columnSet.isEmpty()) {
 			int paramPos = 1;
 			whereClause.append("where ");
-			
 			String operator = "";
+			
+			boolean isFristLastNameInserted = false;
 			for (String column : columnSet) {
 				whereClause.append(operator);
-				whereClause.append(column);
-				if (paramsCriteria.get(column).contains("*")) {
-					whereClause.append(" like ?" + paramPos);
+				if (column.equalsIgnoreCase(FIRST_NAME) || column.equalsIgnoreCase(LAST_NAME)){
+					if (isFristLastNameInserted) continue;
+					StringBuilder sb = new StringBuilder();
+					sb.append("( ");
+					sb.append(FIRST_NAME).append(" ");
+					sb.append(constructLikeOrEqualQuery(FIRST_NAME, paramsCriteria.get(FIRST_NAME), paramPos++));
+					sb.append(" OR ");
+					sb.append(LAST_NAME).append(" ");
+					sb.append(constructLikeOrEqualQuery(LAST_NAME, paramsCriteria.get(LAST_NAME), paramPos));
+					sb.append(" )");
+					isFristLastNameInserted = true;
+					whereClause.append(sb);
+					continue;
 				} else {
-					whereClause.append(" =?" + paramPos);
+					whereClause.append(column);
 				}
+				
+				whereClause.append(" ").append(constructLikeOrEqualQuery(column, paramsCriteria.get(column), paramPos));
 				operator = "AND";
 				paramPos++;
 			}
 		}
 		return whereClause;
+	}
+	
+	private String constructLikeOrEqualQuery(String column, String value, int paramPos){
+		String result = "";
+		
+		if (column.equalsIgnoreCase(ASSIGNED_COMPANY)){
+			result = "like ?" + paramPos;
+			return result;
+		}
+		
+		if (value.contains("*")){
+			result = "like ?" + paramPos;
+		} else {
+			result = "=?" + paramPos;
+		}
+		return result;
 	}
 	
 	/**
@@ -190,20 +250,33 @@ public class UserService {
 	private LinkedHashMap<String, String> setSearchParam(UserSearchCriteria criteria) {
 		LinkedHashMap<String, String> params = new LinkedHashMap<String, String>();
 
-		if (!StringUtils.isEmpty(criteria.getFirstName())) {
-			params.put(C_FIRST_NAME, criteria.getFirstName());
+		if (!StringUtils.isEmpty(criteria.getUserName())) {
+			params.put(USERNAME, criteria.getUserName());
 		}
 		
-		if (!StringUtils.isEmpty(criteria.getLastName())) {
-			params.put(C_LAST_NAME, criteria.getLastName());
+		if (!StringUtils.isEmpty(criteria.getFirstlastName())) {
+			params.put(FIRST_NAME, criteria.getFirstlastName());
+			params.put(LAST_NAME, criteria.getFirstlastName());
 		}
 		
 		if (!StringUtils.isEmpty(criteria.getEmail())) {
-			params.put(C_EMAIL, criteria.getEmail());
+			params.put(EMAIL, criteria.getEmail());
 		}
 
 		if (!StringUtils.isEmpty(criteria.getRole())) {
-			params.put(C_ROLE, criteria.getRole());
+			params.put(ROLE, criteria.getRole());
+		}
+		
+		if (!StringUtils.isEmpty(criteria.getAssignedCompanies())) {
+			params.put(ASSIGNED_COMPANY, criteria.getAssignedCompanies());
+		}
+		
+		if (!StringUtils.isEmpty(criteria.getCreatedFrom())) {
+			params.put(CREATED_FROM, criteria.getCreatedFrom());
+		}
+		
+		if (!StringUtils.isEmpty(criteria.getCreatedTo())) {
+			params.put(CREATED_TO, criteria.getCreatedTo());
 		}
 
 		return params;

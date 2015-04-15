@@ -1,10 +1,9 @@
 package vn.kms.launch.contactmgr.web.controller;
 
 import java.util.HashMap;
+import java.util.List;
 
 import javax.validation.Valid;
-
-import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -51,7 +50,7 @@ public class UserController {
     @RequestMapping(value="/search", method = POST)
     public HashMap<String, Object> searchUser(@RequestParam ("page") int page,
                                               @RequestParam (value="pageSize", defaultValue="10") int pageSize,
-                                              @RequestBody UserSearchCriteria criteria) throws JSONException {
+                                              @RequestBody UserSearchCriteria criteria){
            return userService.searchUsers(criteria, page, pageSize);
     }
     
@@ -92,22 +91,22 @@ public class UserController {
 		return new ResponseEntity<Integer>(deleteId,HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/setactive/{id}", method = PUT)
-	public ResponseEntity<User> activeUser(@PathVariable int id){
-		User userUpdate = userService.activeUser(id);
-		if(null == userUpdate){
-			return new ResponseEntity<User>(userUpdate,HttpStatus.BAD_REQUEST);
+	@RequestMapping(value = "/setactive/", method = PUT)
+	public ResponseEntity<List<Integer>> activeUser(@RequestParam int... ids){
+		List<Integer> result = userService.activeUser(ids);
+		if(null == result){
+			return new ResponseEntity<List<Integer>>(result,HttpStatus.BAD_REQUEST);
 		}
-		return new ResponseEntity<User>(userUpdate, HttpStatus.OK);
+		return new ResponseEntity<List<Integer>>(result, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/setdeacctive/{id}", method = PUT)
-	public ResponseEntity<User> deactiveUser(@PathVariable int id){
-		User userUpdate = userService.deactiveUser(id);
-		if(null == userUpdate){
-			return new ResponseEntity<User>(userUpdate,HttpStatus.BAD_REQUEST);
+	@RequestMapping(value = "/setdeacctive/", method = PUT)
+	public ResponseEntity<List<Integer>> deactiveUser(@RequestParam int... ids){
+		List<Integer> result = userService.deactiveUser(ids);
+		if(null == result){
+			return new ResponseEntity<List<Integer>>(result,HttpStatus.BAD_REQUEST);
 		}
-		return new ResponseEntity<User>(userUpdate, HttpStatus.OK);
+		return new ResponseEntity<List<Integer>>(result, HttpStatus.OK);
 	}
 	
 	
