@@ -37,8 +37,8 @@ public class User extends vn.kms.launch.contactmgr.domain.Entity {
 	@Enumerated(EnumType.STRING)
 	private Language language;
 	
-	@Column(name="ASSIGNED_COMPANIES")
-	private String assigned_companies;
+	@Column(name="ASSIGNEDCOMPANIES")
+	private String assignedcompanies;
 	
 	public void setLanguage(Language language) {
 		this.language = language;
@@ -48,12 +48,12 @@ public class User extends vn.kms.launch.contactmgr.domain.Entity {
 		return language;
 	}
 	
-	public String getAssigned_companies() {
-		return assigned_companies;
+	public String getAssignedcompanies() {
+		return assignedcompanies;
 	}
 
-	public void setAssigned_companies(String assigned_companies) {
-		this.assigned_companies = assigned_companies;
+	public void setAssignedcompanies(String assignedcompanies) {
+		this.assignedcompanies = assignedcompanies;
 	}
 
 	public void setUserName(String userName) {
