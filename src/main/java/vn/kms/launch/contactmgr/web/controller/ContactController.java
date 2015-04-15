@@ -48,11 +48,21 @@ public class ContactController {
     public HashMap<String, Object> searchContact(@RequestParam ("page") int page,
                                               @RequestParam (value="pageSize", defaultValue="10") int pageSize,
 <<<<<<< HEAD
+<<<<<<< HEAD
                                               @RequestBody ContactSearchCriteria criteria) {
 =======
                                               @RequestBody ContactSearchCriteria criteria){
 >>>>>>> 5a7f5e76d9744265037b80c59d0ee6acaaea615e
            return contactService.searchContacts(criteria, page, pageSize);
+=======
+                                              @RequestBody ContactSearchCriteria criteria) {
+        return contactService.searchContacts(criteria, page, pageSize);
+    }
+    
+    @RequestMapping(value="/validate", method = POST)
+    public HashMap<String, Object> validateContact(@RequestBody Contact contact) {
+        return contactService.validateContacts(contact);
+>>>>>>> e47a6455e5eab652629676d6ef6e63a96fcac109
     }
     
     /**
@@ -62,14 +72,10 @@ public class ContactController {
      * @return
      */
     @RequestMapping(value = "/{id}", method = PUT)
-    public ResponseEntity<Contact> updateContact(@PathVariable int id, @RequestBody @Valid Contact contact) {
-		Contact returnContact = contactService.saveContact(contact);
-    	
-		if (returnContact == null) { 
-    		return new ResponseEntity<Contact>(returnContact, HttpStatus.BAD_REQUEST);
-    	}
-
-        return new ResponseEntity<Contact>(returnContact, HttpStatus.OK);
+    public ResponseEntity<HashMap<String, Object>> updateContact(@PathVariable int id,
+                                                             @RequestBody @Valid Contact contact) {
+        contact.setId(id);
+        return saveContact(contact);
     }
 
 	/**
@@ -115,15 +121,26 @@ public class ContactController {
 	 * @return
 	 */
 	@RequestMapping(method = POST)
-	public ResponseEntity<Contact> create(@RequestBody @Valid Contact contact) {
-		
-		Contact returnContact = contactService.saveContact(contact);
-    	
-		if (returnContact == null) { 
-    		return new ResponseEntity<Contact>(returnContact, HttpStatus.BAD_REQUEST);
-    	}
+	public ResponseEntity<HashMap<String, Object>> createContact(@RequestBody @Valid Contact contact) {
+	    return saveContact(contact);
+	}
+	
+	
+	private ResponseEntity<HashMap<String, Object>> saveContact(@RequestBody @Valid Contact contact) {
+	    Contact returnContact;
+	    HashMap<String, Object> bodyReturn = new HashMap<String, Object>();
 
-        return new ResponseEntity<Contact>(returnContact, HttpStatus.OK);
+	    returnContact = contactService.saveContact(contact);
+	    if (returnContact == null) {
+	        bodyReturn.put("data", contact);
+	        HashMap<String, String> errors = new HashMap<String, String>();
+	        errors.put("companyId", "No companyId found");
+	        bodyReturn.put("errors",errors);
+	        return new ResponseEntity<HashMap<String, Object>>(bodyReturn, HttpStatus.BAD_REQUEST);
+	    } else {
+	        bodyReturn.put("data", returnContact);
+	        return new ResponseEntity<HashMap<String, Object>>(bodyReturn, HttpStatus.OK);
+	    }
 	}
 	
 }

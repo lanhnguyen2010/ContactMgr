@@ -15,12 +15,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 public class ContactMgrApp {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		SpringApplication app = new SpringApplication(ContactMgrApp.class);
 		
-
-		SimpleCommandLinePropertySource source = new SimpleCommandLinePropertySource(
-				args);
+		SimpleCommandLinePropertySource source = new SimpleCommandLinePropertySource(args);
 		addDefaultProfile(app, source);
 
 		app.run(args).getEnvironment();
