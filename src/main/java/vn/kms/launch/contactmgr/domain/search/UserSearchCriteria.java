@@ -2,68 +2,68 @@ package vn.kms.launch.contactmgr.domain.search;
 
 public class UserSearchCriteria {
 
-	private String userName;
-	private String firstlastName;
-	private String email;
-	private String role;
-	private String assignedCompanies;
-	private String createdFrom;
-	private String createdTo;
-	
-	public String getFirstlastName() {
-		return firstlastName;
-	}
+    private String userName;
+    private String firstlastName;
+    private String email;
+    private String role;
+    private String assignedCompanies;
+    private String createdFrom;
+    private String createdTo;
 
-	public void setFirstlastName(String firstlastName) {
-		this.firstlastName = firstlastName;
-	}
+    public String getFirstlastName() {
+        return firstlastName;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public void setFirstlastName(String firstlastName) {
+        this.firstlastName = firstlastName;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public String getRole() {
-		return role;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public void setRole(String role) {
-		this.role = role;
-	}
+    public String getRole() {
+        return role;
+    }
 
-	public String getUserName() {
-		return userName;
-	}
+    public void setRole(String role) {
+        this.role = role;
+    }
 
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
+    public String getUserName() {
+        return userName;
+    }
 
-	public String getAssignedCompanies() {
-		return assignedCompanies;
-	}
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
-	public void setAssignedCompanies(String assignedCompanies) {
-		this.assignedCompanies = assignedCompanies;
-	}
+    public String getAssignedCompanies() {
+        return assignedCompanies;
+    }
 
-	public String getCreatedFrom() {
-		return createdFrom;
-	}
+    public void setAssignedCompanies(String assignedCompanies) {
+        this.assignedCompanies = assignedCompanies;
+    }
 
-	public void setCreatedFrom(String createdFrom) {
-		this.createdFrom = createdFrom;
-	}
+    public String getCreatedFrom() {
+        return createdFrom;
+    }
 
-	public String getCreatedTo() {
-		return createdTo;
-	}
+    public void setCreatedFrom(String createdFrom) {
+        this.createdFrom = createdFrom;
+    }
 
-	public void setCreatedTo(String createdTo) {
-		this.createdTo = createdTo;
-	}
-	
+    public String getCreatedTo() {
+        return createdTo;
+    }
+
+    public void setCreatedTo(String createdTo) {
+        this.createdTo = createdTo;
+    }
+
 }

@@ -24,18 +24,16 @@ import javax.validation.Payload;
 @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
 @Retention(RUNTIME)
 public @interface ExistEntity {
-	String message() default "{org.hibernate.validator.constraints.ExistEntity.message}";
+    String message() default "{org.hibernate.validator.constraints.ExistEntity.message}";
 
-	Class<?>[] groups() default { };
+    Class<?>[] groups() default { };
 
-	Class<? extends Payload>[] payload() default { };
-	/**
-	 * Defines several {@code @Email} annotations on the same element.
-	 */
-	@Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
-	@Retention(RUNTIME)
-	@Documented
-	public @interface List {
-		ExistEntity[] value();
-	}
+    Class<? extends Payload>[] payload() default { };
+
+    @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
+    @Retention(RUNTIME)
+    @Documented
+    public @interface List {
+        ExistEntity[] value();
+    }
 }

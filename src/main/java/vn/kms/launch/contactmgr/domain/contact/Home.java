@@ -1,16 +1,18 @@
 package vn.kms.launch.contactmgr.domain.contact;
 
-import vn.kms.launch.contactmgr.domain.ValueObject;
-
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
 import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
 
+import vn.kms.launch.contactmgr.domain.ValueObject;
+
 @Embeddable
 public class Home extends ValueObject<Home> {
-    @Embedded
+	private static final long serialVersionUID = 1L;
+
+	@Embedded
     @Valid
     private Address address;
 

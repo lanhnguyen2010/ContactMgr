@@ -11,14 +11,14 @@ import vn.kms.launch.contactmgr.domain.contact.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
 
-	
-	/**
-	 * Query function deleteUsers
-	 * return 0,no row are deleted  
-	 * @param ids
-	 * @return
-	 */
-	@Modifying
-	@Query("delete from User where id in (:ids)")
-	int deleteUsers(@Param("ids")int... ids);
+
+    /**
+     * Query function deleteUsers
+     * return 0,no row are deleted  
+     * @param ids
+     * @return
+     */
+    @Modifying
+    @Query("delete from User where id in (:ids)")
+    int deleteUsers(@Param("ids")int... ids);
 }

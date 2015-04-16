@@ -11,7 +11,9 @@ import vn.kms.launch.contactmgr.service.validator.ExistEntity;
 
 @Embeddable
 public class Work extends ValueObject<Work> {
-    @Column(name = "JOB_TITLE")
+	private static final long serialVersionUID = 1L;
+
+	@Column(name = "JOB_TITLE")
     private String title;
 
     @Column(name = "DEPARTMENT")
