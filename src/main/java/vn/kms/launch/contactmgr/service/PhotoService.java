@@ -1,5 +1,6 @@
 package vn.kms.launch.contactmgr.service;
 
+import java.io.File;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -30,6 +31,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.apache.zookeeper.server.quorum.ReadOnlyBean;
+import org.hibernate.jpa.criteria.path.SetAttributeJoin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,19 +48,18 @@ public class PhotoService {
 		
 
 		// ext_name image allow upload format png, jpeg
-		private static final String EXT_NAME[] = { "png", "jpeg" };
+		//private static final String EXT_NAME[] = { "png", "jpeg" };
 
 		private static final String DEFAULT_PHOTO = "contact-photo.png";
 
-		@Value("${contacts.photo.storage}")
-		private String photoDir;
+		
 	
 		@Transactional
-		
 		public Photo uploadImage(InputStream in, String fileName, String contentType) {
 			
 			String photoDir;
-			Photo ci = new  Photo();			
+			Photo ci = new  Photo();
+			
 			return uploadRepository.save(ci);
 		}
 

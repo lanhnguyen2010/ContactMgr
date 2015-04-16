@@ -63,30 +63,20 @@ public class PhotoController {
 	@Autowired
 	PhotoService uploadService;
 	
-	@RequestMapping(value="/upload",method = POST)
-	public ResponseEntity uploadPhoto(HttpServletRequest request)
-			throws IOException {
+	@RequestMapping(value = "/upload", method = POST)
+	public ResponseEntity uploadPhoto(HttpServletRequest request) throws IOException {
 
 		MultipartHttpServletRequest multipartRequest = multipartResolver.resolveMultipart(request);
 
 		MultipartFile file = multipartRequest.getFile("file");
 		InputStream in = file.getInputStream();
 		String fileName = file.getName();
+		
+		
 	
 		String contentType = file.getContentType();
-		JFileChooser choose = new JFileChooser();
 		
-		//TODO: Filter contentType format image;
-		//EXT_NAME contain: JPEG, PNG;
-		FileFilter filter = new FileNameExtensionFilter("JPEG file", EXT_NAME);
-		choose.setFileFilter(filter);
-		
-		choose.addChoosableFileFilter(filter);
-		int returnValue = choose.showOpenDialog(null);
-		
-		if(returnValue == JFileChooser.APPROVE_OPTION){
-			File selectFile = new File(choose.getSelectedFile().getAbsolutePath());
-		}
+		FileFilter filter = new FileNameExtensionFilter(contentType, EXT_NAME);
 		
 		Photo ci = uploadService.uploadImage(in, fileName, contentType);
 		return new ResponseEntity<Photo>(ci, HttpStatus.CREATED);
@@ -109,7 +99,7 @@ public class PhotoController {
 			WebRequest request, HttpServletResponse response) throws IOException {
 		Photo ci = uploadService.getFile(photoId);
 		
-		if (null == ci){
+		if (ci == null){
 			response.setStatus(HttpStatus.NOT_FOUND.value());
 		}	
 		else{

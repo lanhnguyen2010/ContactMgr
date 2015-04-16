@@ -20,10 +20,10 @@ import javax.validation.constraints.Pattern;
  * Created by diule on April, 14;
  */
 @javax.persistence.Entity
-@Table(name = "IMAGE")
+@Table(name = "IMAGES")
 public class Photo extends Entity {
 
-	//@NotEmpty(message = "{validation.not-empty.message}")
+	
     @Column(name = "ID")
     private Integer id;
 
