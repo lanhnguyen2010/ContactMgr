@@ -1,16 +1,18 @@
 package vn.kms.launch.contactmgr.domain.contact;
 
-import vn.kms.launch.contactmgr.domain.ValueObject;
-
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.Valid;
 
+import vn.kms.launch.contactmgr.domain.ValueObject;
+
 @Embeddable
 public class Work extends ValueObject<Work> {
-    @Column(name = "JOB_TITLE")
+	private static final long serialVersionUID = 1L;
+
+	@Column(name = "JOB_TITLE")
     private String title;
 
     @Column(name = "DEPARTMENT")

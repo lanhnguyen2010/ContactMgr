@@ -11,11 +11,11 @@
 
 .select-editable input {
     position: absolute;
-    width: 95%;
+    width: 90%;
 }
 
 .select-editable select:focus, .select-editable input:focus {
-    outline: white;
+    outline: none;
 }
 </style>
 <div ng-cloak>
@@ -28,13 +28,13 @@
                 <hr style="border-color: black;">
                 <div class="form-group">
                     <label class="control-label col-sm-3"
-                        translate="contact-edit.general.contact-name">Name</label>
+                        translate="contact-edit.general.contact-name" >Name</label>
                     <div class="col-sm-3" class="form-group">
                         <input ng-model="contact.firstName" type="text" name="name"
-                            required="required" class="form-control"
+                             class="form-control"
                             style="margin-bottom: 10px"
                             placeholder="{{'contact-edit.placeholder.first-name'|translate}}"
-                            data-toggle="tooltip" title="Chay">
+                            data-toggle="tooltip" title="{{validator.firstName}}">
                     </div>
                     <div class="col-sm-3" class="form-group">
                         <input ng-model="contact.middleName" type="text" name="name"
@@ -54,14 +54,12 @@
                         <div class="select-editable">
                             <select onchange="this.nextElementSibling.value=this.value"
                                 class="form-control" ng-model="contact.displayName">
-                                <option>{{contact.lastName +" "+contact.middleName +" "
-                                    +contact.firstName}}</option>
-                                <option>{{contact.middleName +" "+contact.lastName +" "
-                                    +contact.firstName}}</option>
-                                <option>{{contact.lastName +" "+contact.firstName +" "
-                                    +contact.middleName}}</option>
-                            </select> <input class="form-control" type="text" name="format"
-                                ng-model="contact.displayName" />
+                                <option>{{contact.lastName +" "+contact.middleName +" "+contact.firstName}}</option>
+                                <option>{{contact.middleName +" "+contact.lastName +" "+contact.firstName}}</option>
+                                <option>{{contact.lastName +" "+contact.firstName +" "+contact.middleName}}</option>
+                            </select>
+                             <input class="form-control" type="text" name="format"
+                                ng-model="contact.displayName" data-toggle="tooltip" title="{{validator.displayName}}"/>
                         </div>
                     </div>
                 </div>
@@ -71,7 +69,7 @@
                         translate="contact-edit.general.email"></label>
                     <div class="col-sm-9">
                         <input ng-model="contact.email" type="email" name="name"
-                            class="form-control"
+                            class="form-control" data-toggle="tooltip" title="{{validator.email}}"
                             placeholder="{{'contact-edit.placeholder.email'|translate}}">
                     </div>
                 </div>
@@ -80,7 +78,7 @@
                         translate="contact-edit.general.mobile"></label>
                     <div class="col-sm-9">
                         <input ng-model="contact.mobile" type="text" name="name"
-                            class="form-control"
+                            class="form-control" data-toggle="tooltip" title="{{validator.mobile}}"
                             placeholder="{{'contact-edit.placeholder.mobile'|translate}}">
                     </div>
                 </div>
@@ -131,7 +129,7 @@
                     <label class="control-label col-sm-3"
                         translate="contact-edit.home.zip-code"></label>
                     <div class="col-sm-3" style="width: 100px;">
-                        <input ng-model="contact.home.address.postalCode" type="text"
+                        <input ng-model="contact.home.address.postalCode" type="text" data-toggle="tooltip" title="{{validator.postalCode}}"
                             name="name" class="form-control" maxlength="5">
                     </div>
                 </div>
@@ -149,7 +147,7 @@
                     <label class="control-label col-sm-3"
                         translate="contact-edit.home.phone"></label>
                     <div class="col-sm-9">
-                        <input ng-model="contact.home.phone" type="text" name="name"
+                        <input ng-model="contact.home.phone" type="text" name="name" data-toggle="tooltip" title="{{validator.phone}}"
                             class="form-control">
                     </div>
                 </div>
@@ -157,7 +155,7 @@
                     <label class="control-label col-sm-3"
                         translate="contact-edit.home.fax">Fax</label>
                     <div class="col-sm-9">
-                        <input ng-model="contact.home.fax" type="text" name="name"
+                        <input ng-model="contact.home.fax" type="text" name="name" data-toggle="tooltip" title="{{validator.fax}}" data-toggle="tooltip" title="fax"
                             class="form-control">
                     </div>
                 </div>

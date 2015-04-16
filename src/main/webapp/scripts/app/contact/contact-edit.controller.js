@@ -31,10 +31,11 @@ angular
                                         }
                                     });
                     $scope.countries;
+                    $scope.validator;
                     // save a contact
                     $scope.saveContact = function() {
                         console.log("Contact: " + $scope.contact);
-                        if (typeof $scope.contact === "undefined") {
+                        if (typeof $scope.contact ==='undefined' || $scope.contact.id==null) {
                             ContactService
                                     .createContact($scope.contact)
                                     .success(
@@ -43,14 +44,9 @@ angular
                                                 // the contact is saved
                                                 console.log("Saved contact!"
                                                         + status);
-                                            })
-                                    .error(
-                                            function(data, status, headers,
-                                                    config) {
+                                            }).error(function(data, status, headers,config) {
                                                 // has error
-                                                console
-                                                        .log("Error Create: "
-                                                                + data.errors.displayName);
+                                            	 $scope.validator = data.errors;
                                             });
                         } else {
                             ContactService.updateContact($scope.contact.id,
@@ -61,9 +57,9 @@ angular
                                     }).error(
                                     function(data, status, headers, config) {
                                         // has error
+                                    	$scope.validator = data.errors;
                                         console.log("Error Update: " + status);
                                     });
-
                         }
                     };
                     $scope.getCompanies = function() {

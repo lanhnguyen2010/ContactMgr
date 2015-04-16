@@ -1,19 +1,20 @@
 package vn.kms.launch.contactmgr.domain.greeting;
 
-import org.springframework.format.annotation.DateTimeFormat;
-import vn.kms.launch.contactmgr.util.SearchCriteria;
-
 import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import vn.kms.launch.contactmgr.util.SearchCriteria;
 
 public class GreetingSearchCriteria extends SearchCriteria {
     private String code;
 
     private String message;
 
-    @DateTimeFormat(pattern="yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date creationFrom;
 
-    @DateTimeFormat(pattern="yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date creationTo;
 
     public String getCode() {

@@ -40,7 +40,7 @@ public class Contact extends vn.kms.launch.contactmgr.domain.Entity {
     @Column(name = "PHOTO")
     private String photo;
 
-    @Pattern(regexp = "(\\+[0-9]{1,3}\\s)([0-9]{9,10})", message = "{validation.mobile.message}")
+    @Pattern(regexp = "^(\\+[0-9]{1,3}\\s)([0-9]{9,10})$", message = "{validation.mobile.message}")
     @Column(name = "MOBILE")
     private String mobile;
 
