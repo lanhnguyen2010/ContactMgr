@@ -1,6 +1,4 @@
-package vn.kms.launch.contactmgr.domain;
-
-import vn.kms.launch.contactmgr.domain.contact.Address;
+package vn.kms.launch.contactmgr.domain.contact;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -8,16 +6,21 @@ import javax.persistence.Embedded;
 import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
 
+import vn.kms.launch.contactmgr.domain.ValueObject;
+
 @Embeddable
 public class Home extends ValueObject<Home> {
-    @Embedded
+	private static final long serialVersionUID = 1L;
+
+	@Embedded
     @Valid
     private Address address;
 
-    @Pattern(regexp = "(\\+[0-9]{1,3}\\s)([0-9]{9,10})", message = "{validation.phone.message}")
+    @Pattern(regexp = "^(\\+[0-9]{1,3}\\s)([0-9]{9,10})$", message = "{validation.phone.message}")
     @Column(name = "PHONE")
     private String phone;
 
+    @Pattern(regexp = "^(\\+[0-9]{1,3}\\s)([0-9]{9,10})$", message = "{validation.fax.message}")
     @Column(name = "FAX")
     private String fax;
 

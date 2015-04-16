@@ -9,7 +9,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.Table;
 
 import vn.kms.launch.contactmgr.domain.Language;
-import vn.kms.launch.contactmgr.domain.Role;
 
 @Entity
 @Table(name = "USERS")

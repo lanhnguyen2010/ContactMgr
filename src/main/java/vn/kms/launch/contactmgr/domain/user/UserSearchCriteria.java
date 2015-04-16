@@ -1,9 +1,7 @@
 package vn.kms.launch.contactmgr.domain.user;
 
 import java.util.Date;
-import java.util.List;
 
-import vn.kms.launch.contactmgr.domain.Role;
 import vn.kms.launch.contactmgr.util.SearchCriteria;
 
 public class UserSearchCriteria extends SearchCriteria {
@@ -11,7 +9,7 @@ public class UserSearchCriteria extends SearchCriteria {
 	private String username;
 	private String firstlastName;
 	private String email;
-	private Role role;
+	private String role;
 	private String assignedCompanies;
 	private Date createdFrom;
 	private Date createdTo;
@@ -32,11 +30,11 @@ public class UserSearchCriteria extends SearchCriteria {
 		this.email = email;
 	}
 
-	public Role getRole() {
+	public String getRole() {
 		return role;
 	}
 
-	public void setRole(Role role) {
+	public void setRole(String role) {
 		this.role = role;
 	}
 

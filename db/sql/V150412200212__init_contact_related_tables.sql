@@ -1,4 +1,4 @@
-﻿CREATE TABLE companies (
+CREATE TABLE companies (
     id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(100),
     website VARCHAR(255),
