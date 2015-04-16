@@ -1,17 +1,18 @@
 package vn.kms.launch.contactmgr.domain.contact;
 
-import vn.kms.launch.contactmgr.domain.ValueObject;
-
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
 
+import vn.kms.launch.contactmgr.domain.ValueObject;
+
 @Embeddable
 public class Address extends ValueObject<Address> {
+	private static final long serialVersionUID = 1L;
 
-    @Column(name = "ADDR_LINE1")
+	@Column(name = "ADDR_LINE1")
     private String addrLine1;
 
     @Column(name = "ADDR_LINE2")
@@ -28,7 +29,7 @@ public class Address extends ValueObject<Address> {
     @Column(name = "POSTAL_CODE")
     private Integer postalCode;
 
-    @Pattern(regexp = "([A-Z]{2})", message = "{validation.country.message}")
+    @Pattern(regexp = "^([A-Z]{2})$", message = "{validation.country.message}")
     @Column(name = "COUNTRY")
     private String country;
 
