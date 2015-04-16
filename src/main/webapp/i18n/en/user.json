@@ -5,7 +5,7 @@
             "search": "Search",
             "delete": "Delete",
             "activate":"Activate",
-            "inactivate":"Inactivate"
+            "inactivate":"Deactivate"
          },
         "search-form": {
             "username": "Username",
