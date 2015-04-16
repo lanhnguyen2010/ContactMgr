@@ -59,6 +59,7 @@ public class ContactController {
     }
 
     @RequestMapping(value = "/{id}", method = PUT)
+<<<<<<< HEAD
     public ResponseEntity<?> updateContact(@PathVariable int id,
                                            @RequestBody Contact contact) {
         return saveContact(contact, id);
@@ -76,6 +77,24 @@ public class ContactController {
 
         if(ids.length == 0) {
             return new ResponseEntity<>(BAD_REQUEST);
+=======
+    public ResponseEntity<HashMap<String, Object>> updateContact(@PathVariable int id,
+                                                                 @RequestBody @Valid Contact contact) {
+        Contact returnContact;
+        HashMap<String, Object> bodyReturn = new HashMap<String, Object>();
+
+       
+		returnContact = contactService.saveContact(contact);
+		if (returnContact == null) {
+            bodyReturn.put("data", contact);
+            HashMap<String, String> errors = new HashMap<String, String>();
+            errors.put("companyId", "No companyId found");
+            bodyReturn.put("errors",errors);
+    		return new ResponseEntity<HashMap<String, Object>>(bodyReturn, HttpStatus.BAD_REQUEST);
+    	} else {
+            bodyReturn.put("data", returnContact);
+            return new ResponseEntity<HashMap<String, Object>>(bodyReturn, HttpStatus.OK);
+>>>>>>> ca9f332ad93f74520598c6339412620b7fee9bd9
         }
 
         int deleteId = contactService.deleteContacts(ids);

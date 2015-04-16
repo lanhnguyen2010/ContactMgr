@@ -1,50 +1,52 @@
 package vn.kms.launch.contactmgr.domain.image;
-import java.util.Date;
+import javax.persistence.Column;
+import javax.persistence.Table;
 
-import org.apache.http.entity.ContentType;
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.format.annotation.DateTimeFormat;
+import org.noggit.JSONUtil;
+
+import com.fasterxml.jackson.databind.JsonNode;
 
 import vn.kms.launch.contactmgr.domain.Entity;
-import vn.kms.launch.contactmgr.domain.contact.Home;
-import vn.kms.launch.contactmgr.domain.contact.Work;
-
-import javax.persistence.Column;
-import javax.persistence.Embedded;
-import javax.persistence.Table;
-import javax.persistence.Transient;
-import javax.validation.constraints.Pattern;
 
 /**
  * Created by diule on April, 14;
  */
 @javax.persistence.Entity
+<<<<<<< HEAD
 @Table(name = "IMAGES")
 public class Photo extends Entity {
 
 	
     @Column(name = "ID")
     private Integer id;
+=======
+@Table(name = "IMAGE")
+public class Photo {
+	private static final long serialVersionUID = 1L;
 
-	@Column(name = "PATHFULL")
+    @Column(name = "ID", insertable = false, updatable = false)
+    private String id;
+>>>>>>> ca9f332ad93f74520598c6339412620b7fee9bd9
+
+	@Column(name = "PATH_FULL")
 	private String pathFull;
 	
-	@Column(name = "FILENAME")
+	@Column(name = "FILE_NAME")
 	private String fileName;
 	
-	@Column(name = "CONTENTTYPE")
+	@Column(name = "CONTENT_TYPE")
 	private String ContentType;
+	
 
-	public Integer getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setId(String photoId) {
+		this.id = photoId;
 	}
 
-	public String getPathFull() {
+	public String getPathFull( String pathFull) {
 		return pathFull;
 	}
 
@@ -66,5 +68,31 @@ public class Photo extends Entity {
 
 	public void setContentType(String contentType) {
 		ContentType = contentType;
+	}
+	
+	public String toJson(){
+		return JSONUtil.toJSON(this);
+	}
+	
+	public Photo toDo(){
+		
+		Photo res = new Photo();
+		res.setId(id);
+		res.setFileName(fileName);
+		res.setPathFull(pathFull);
+		res.setContentType(ContentType);
+		
+		return res;	
+	}
+	public Photo(){
+		
+	}
+	//GET object;
+	public Photo(Photo res){
+		id = res.getId();
+		fileName = res.fileName;
+		ContentType = res.ContentType;
+		pathFull = res.pathFull;
+		
 	}
 }

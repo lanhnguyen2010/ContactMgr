@@ -2,26 +2,16 @@ package vn.kms.launch.contactmgr.service;
 
 import java.io.File;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Set;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
-import javax.validation.Valid;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.PathVariable;
 
-import vn.kms.launch.contactmgr.domain.contact.Company;
-import vn.kms.launch.contactmgr.domain.contact.Contact;
-import vn.kms.launch.contactmgr.domain.contact.Work;
 import vn.kms.launch.contactmgr.domain.image.Photo;
+<<<<<<< HEAD
 import vn.kms.launch.contactmgr.domain.search.ContactSearchCriteria;
 import vn.kms.launch.contactmgr.repository.CompanyRepository;
 import vn.kms.launch.contactmgr.repository.ContactRepository;
@@ -35,23 +25,31 @@ import org.hibernate.jpa.criteria.path.SetAttributeJoin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+=======
+>>>>>>> ca9f332ad93f74520598c6339412620b7fee9bd9
 import vn.kms.launch.contactmgr.repository.PhotoRepository;
+import vn.kms.launch.contactmgr.utils.PhotoUtils;
 
 
 @Service
 @Transactional
-public class PhotoService {
-	
+public class PhotoService{
+
 	// Upload image;
-		@Autowired
+		//@Autowired(required = true)
 		private PhotoRepository uploadRepository;
+<<<<<<< HEAD
 		
 
 		// ext_name image allow upload format png, jpeg
 		//private static final String EXT_NAME[] = { "png", "jpeg" };
+=======
+>>>>>>> ca9f332ad93f74520598c6339412620b7fee9bd9
 
-		private static final String DEFAULT_PHOTO = "contact-photo.png";
+		//@Autowired(required = true)
+		//private Photo photo;
 
+<<<<<<< HEAD
 		
 	
 		@Transactional
@@ -61,16 +59,46 @@ public class PhotoService {
 			Photo ci = new  Photo();
 			
 			return uploadRepository.save(ci);
+=======
+		@Transactional
+		public Photo getPhotoId(int photoId){
+			return uploadRepository.findOne(photoId);
+>>>>>>> ca9f332ad93f74520598c6339412620b7fee9bd9
+		}
+
+//		@Transactional
+//		public List<Photo> getAllPhotoId(){
+//			return uploadRepository.findAll();
+//		}
+		@Transactional
+		public Photo uploadImage(@PathVariable String photoId,
+								  InputStream in,
+								  String originalFilename,
+								  String contentType) throws Exception {
+
+			String relativePath = String.format("%s/%s", photoId, UUID.randomUUID().toString());
+
+			String pathFull = getPathFull(relativePath);
+
+			PhotoUtils.storeFile(in, pathFull);
+
+			Photo res = new Photo();
+
+			res.setId(photoId);
+			res.setFileName(originalFilename);
+			res.setContentType(contentType);
+			res.setPathFull(relativePath);
+			
+			return uploadRepository.saveAndFlush(res.toDo());
 		}
 
 		@Transactional
-		public Photo getFile(int photoId){
-			return uploadRepository.findOne(photoId);	
-		}
-		
-		@Transactional
-		public List<Photo> getAllPhotoId(){
+		public List<Photo> getAllPhoto(int photoId) {
 			return uploadRepository.findAll();
+        }
+
+		private String getPathFull(String relativePath){
+			return String.format("%s/%s", relativePath);
 		}
 
 }
