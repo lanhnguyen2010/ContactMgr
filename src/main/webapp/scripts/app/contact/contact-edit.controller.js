@@ -42,8 +42,7 @@ angular
                                             function(data, status, headers,
                                                     config) {
                                                 // the contact is saved
-                                                console.log("Saved contact!"
-                                                        + status);
+                                                console.log("Saved contact!");
                                             }).error(function(data, status, headers,config) {
                                                 // has error
                                             	 $scope.validator = data.errors;
