@@ -1,61 +1,66 @@
 <div ng-loak>
-    <a href="#user/new" class="btn btn-default" translate="user.button.add-user"></a>
+    <a href="" class="btn btn-default " data-toggle="modal"
+        data-target="#userModal">Add user</a>
 
     <hr>
 
-    <form name="user_form" novalidate class="form-horizontal"
-        role="form" ng-submit="searchUsers(1)">
+    <form name="user_form" novalidate class="form-horizontal" role="form"
+        ng-submit="searchUsers(1)">
         <div class="container">
             <div class="row">
                 <div class="form-group col-md-6">
-                <label for="firstname"class="control-label col-md-3"
-                    translate="user.user-field.username"></label>
+                    <label for="firstname" class="control-label col-md-3"
+                        translate="user.user-field.username"></label>
                     <div class="col-md-9">
-                        <input type="text" name="firstName" class="form-control" ng-model="filter.userName">
+                        <input type="text" name="firstName" class="form-control"
+                            ng-model="filter.userName">
                     </div>
                 </div>
                 <div class="form-group col-md-6">
-                <label for="lastname"class="control-label col-md-3"
-                    translate="user.user-field.email"></label>
+                    <label for="lastname" class="control-label col-md-3"
+                        translate="user.user-field.email"></label>
                     <div class="col-md-9">
-                        <input type="text" name="email" class="form-control" ng-model="filter.email">
+                        <input type="text" name="email" class="form-control"
+                            ng-model="filter.email">
                     </div>
                 </div>
             </div>
 
             <div class="row">
                 <div class="form-group col-md-6">
-                    <label for="name"class="control-label col-md-3"
-                        translate="user.user-field.firstlastname">
-                    </label>
+                    <label for="name" class="control-label col-md-3"
+                        translate="user.user-field.firstlastname"> </label>
                     <div class="col-md-9">
-                        <input type="text" name="firstlastname" class="form-control" ng-model="filter.firstlastName">
+                        <input type="text" name="firstlastname" class="form-control"
+                            ng-model="filter.firstlastName">
                     </div>
                 </div>
                 <div class="form-group col-md-6">
                     <label class="control-label col-md-3"
-                        translate="user.user-field.createdfrom">
-                    </label>
+                        translate="user.user-field.createdfrom"> </label>
                     <div class="col-md-4">
-                        <input type="date" placeholder="MM/DD/YYYY h:m A"  name="createdFrom" class="form-control" ng-model="filter.createdFrom">
+                        <input type="date" placeholder="MM/DD/YYYY h:m A"
+                            name="createdFrom" class="form-control"
+                            ng-model="filter.createdFrom">
                     </div>
                     <label class="control-label col-md-1"
-                        translate="user.user-field.createdto">
-                    </label>
+                        translate="user.user-field.createdto"> </label>
                     <div class="col-md-4">
-                        <input type="date" value="yyyy-MM-dd" name="createdTo" class="form-control" ng-model="filter.createdTo">
+                        <input type="date" value="yyyy-MM-dd" name="createdTo"
+                            class="form-control" ng-model="filter.createdTo">
                     </div>
                 </div>
             </div>
 
-            <div class = "row">
+            <div class="row">
                 <div class="form-group col-md-6">
                     <label for="assignedcompanies" class="control-label col-md-3"
                         translate="user.user-field.assignedcompanies"></label>
                     <div class="col-md-9">
                         <select class="form-control" ng-model="filter.assignedCompanies">
                             <option value=""></option>
-                            <option ng-repeat="assignedcompany in assignedcompanies" value="{{assignedcompany.name}}">{{assignedcompany.name}}</option>
+                            <option ng-repeat="assignedcompany in assignedcompanies"
+                                value="{{assignedcompany.name}}">{{assignedcompany.name}}</option>
                         </select>
                     </div>
                 </div>
@@ -71,7 +76,8 @@
                 </div>
             </div>
             <div class="form-group">
-                <button type="submit" class="btn btn-default search-contact-button" translate="user.button.search"></button>
+                <button type="submit" class="btn btn-default search-contact-button"
+                    translate="user.button.search"></button>
             </div>
         </div>
     </form>
@@ -80,31 +86,20 @@
     <div ng-hide="users.length" translate="user.user-field.noresult">
 
     </div>
-    <div ng-show="users.length" >
+    <div ng-show="users.length">
         <div translate="user.user-field.result"></div>
         <button class="btn btn-default pull-right delete-user-button"
-                translate="user.button.delete"
-                ng-click="deleteUsers()"
-                ng-disabled="!checkedIds.length">
-            Delete
-        </button>
+            translate="user.button.delete" ng-click="deleteUsers()"
+            ng-disabled="!checkedIds.length">Delete</button>
         <button class="btn btn-default pull-right activate-user-button"
-                translate="user.button.activate"
-                ng-click="activateUsers()"
-                ng-disabled="!checkedIds.length">
-            Activate
-        </button>
+            translate="user.button.activate" ng-click="activateUsers()"
+            ng-disabled="!checkedIds.length">Activate</button>
         <button class="btn btn-default pull-right activate-user-button"
-                translate="user.button.inactivate"
-                ng-click="inactivateUsers()"
-                ng-disabled="!checkedIds.length">
-            Inactivate
-        </button>
+            translate="user.button.inactivate" ng-click="inactivateUsers()"
+            ng-disabled="!checkedIds.length">Inactivate</button>
         <table ng-table="usersTableParams" class="table">
-            <th>
-                <input type="checkbox" ng-model="checkboxes.checked"
-                        id="select_all" name="filter-checkbox" value="" />
-            </th>
+            <th><input type="checkbox" ng-model="checkboxes.checked"
+                id="select_all" name="filter-checkbox" value="" /></th>
             <th class="data-table-title" translate="user.user-field.username"></th>
             <th class="data-table-title" translate="user.user-field.email"></th>
             <th class="data-table-title" translate="user.user-field.firstname"></th>
@@ -114,19 +109,154 @@
 
             <tr ng-repeat="user in $data">
                 <td width="30" style="text-align: left"
-                    header="'ng-table/headers/checkbox.html'">
-                    <input type="checkbox" ng-model="checkboxes.items[user.id]">
-                </td>
-                <td data-title="'Username'">{{user.userName}}
-                   <a href="a" data-toggle="modal" data-target="#myModal" ng-click="addUser(user)">{{}}</a>
+                    header="'ng-table/headers/checkbox.html'"><input
+                    type="checkbox" ng-model="checkboxes.items[user.id]"></td>
+                <td data-title="'Username'"><a href="" data-toggle="modal"
+                    data-target="#userModal" ng-click="setSelectedUser(user)">{{user.userName}}</a>
                 </td>
                 <td data-title="'First Name'">{{user.firstName}}</td>
                 <td data-title="'Last Name'">{{user.lastName}}</td>
                 <td data-title="'Email'">{{user.email}}</td>
                 <td data-title="'Role'">{{user.role}}</td>
-                <td data-title="'Status'" id="status" >{{user.active}}</td>
+                <td data-title="'Status'" id="status">{{user.active}}</td>
             </tr>
         </table>
     </div>
+    <!-- Show add user dialog -->
+    <form name="addUser_form" novalidate class="form-horizontal"
+        role="form" ng-submit="saveUser()">
+        <div class="modal fade" id="userModal" tabindex="-1" role="dialog"
+            aria-labelledby="myModalLabel" aria-hidden="false">
+            <div class="vertical-alignment-helper">
+                <div class="vertical-alignment-helper">
+                    <div class="modal-dialog vertical-align-center">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">
+                                    <span aria-hidden="true">&times; </span> <span class="sr-only">Close</span>
+                                </button>
+                                <h3 class="modal-title" id="myModalLabel" style="color: white"
+                                    translate="user.field.title">Add/Edit user</h3>
+                            </div>
+                            <div class="modal-body" id="size-dialog">
+                                <div class="row">
+                                    <div class="col-md-6 form-horizontal">
+                                        <div class="form-group">
+                                            <label for="username" class="col-sm-5 control-label"
+                                                translate="user.field.username">Username</label>
+                                            <div class="col-sm-7">
+                                                <input type="text" class="form-control" name="username"
+                                                    ng-model="user.userName">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="password" class="col-sm-5 control-label"
+                                                translate="user.field.pass">New Password</label>
+                                            <div class="col-sm-7">
+                                                <input type="password" class="form-control" name="password"
+                                                    ng-model="user.passWord">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="confirm-password" class="col-sm-5 control-label"
+                                                translate="user.field.pass-conf">Confirm New
+                                                Password</label>
+                                            <div class="col-sm-7">
+                                                <input type="password" class="form-control"
+                                                    name="confirm-password">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="language" class="col-sm-5 control-label"
+                                                translate="user.field.language">Language</label>
+                                            <div class="col-sm-7">
+                                                <select class="form-control" ng-model="user.language">
+                                                    <option value="EN">ENGLISH</option>
+                                                    <option value="VI">VIETNAMESE</option>
+                                                </select>
 
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="role" class="col-sm-5 control-label"
+                                                translate="user.field.role">Role</label>
+                                            <div class="col-sm-7">
+                                                <select class="form-control" ng-model="user.role">
+                                                    <option ng-repeat="role in roles" value="{{role}}">{{role}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 form-horizontal">
+                                        <div class="form-group">
+                                            <label for="first_name" class="col-sm-5 control-label"
+                                                translate="user.field.first-name">First Name</label>
+                                            <div class="col-sm-7">
+                                                <input type="text" class="form-control" name="first_name"
+                                                    ng-model="user.firstName">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="last_name" class="col-sm-5 control-label"
+                                                translate="user.field.last-name">Last Name</label>
+                                            <div class="col-sm-7">
+                                                <input type="text" class="form-control" name="last_name"
+                                                    ng-model="user.lastName">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="ass_company" class="col-sm-5 control-label"
+                                                translate="user.field.ass-com">Assigned Companies</label>
+                                            <div class="col-sm-7">
+                                                <select class="form-control"
+                                                    ng-model="user.assignedcompanies">
+                                                    <option value=""></option>
+                                                    <option ng-repeat="company in assignedcompanies"
+                                                        value="{{company.id}}">{{company.name}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="expired_date" class="col-sm-5 control-label"
+                                                translate="user.field.ex-date">Expired Date</label>
+                                            <div class="col-sm-7">
+                                                <input type="date" class="form-control" name="expired_date"
+                                                    ng-model="user.expiredDate">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="active" class="col-sm-5 control-label"
+                                                translate="user.field.active">Active</label>
+                                            <div class="col-sm-7">
+                                                <input type="radio" name="active" value="1"
+                                                    ng-model="user.active"> <label for="yes"
+                                                    class="control-label" ng-model="user.active"
+                                                    translate="user.field.yes-active">Yes </label> <input
+                                                    type="radio" name="active" value="0" ng-model="user.active">
+                                                <label for="no" class="control-label" ng-model="user.active"
+                                                    translate="user.field.no-active">No </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 col-xs-6">
+                                        <button type="submit" class="btn btn-primary save-user-button"
+                                            style="float: right; width: 80px" value="save"
+                                            translate="user.button.btn-save">Save</button>
+                                    </div>
+                                    <div class="col-md-6 col-xs-6">
+                                        <button type="button" class="btn btn-primary"
+                                            style="width: 80px" value="cancel"
+                                            translate="user.button.btn-cancel" data-dismiss="modal">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
 </div>
