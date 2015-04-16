@@ -1,4 +1,3 @@
-
 <div ng-cloak>
 	<a href="" data-toggle="modal" data-target="#myModal"
 		ng-click="setSelectedContact(contact)">add user</a>
@@ -19,17 +18,17 @@
 							<div class="row">
 								<div class="col-md-6 form-horizontal">
 									<div class="form-group">
-										<label for="username" class="col-sm-5 control-label"
+										<label for="username" class="col-sm-5 control-label" 
 											translate="user.field.username">Username</label>
 										<div class="col-sm-7">
-											<input type="text" class="form-control" name="username">
+											<input type="text" class="form-control" name="username"  ng-model="user.username">
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="password" class="col-sm-5 control-label"
 											translate="user.field.pass">New Password</label>
 										<div class="col-sm-7">
-											<input type="text" class="form-control" name="password">
+											<input type="text" class="form-control" name="password" ng-model="user.password">
 										</div>
 									</div>
 									<div class="form-group">
@@ -37,14 +36,14 @@
 											translate="user.field.pass-conf">Confirm New Password</label>
 										<div class="col-sm-7">
 											<input type="text" class="form-control"
-												name="confirm-password">
+												name="confirm-password" ng-model="user.confirm-password">
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="language" class="col-sm-5 control-label"
 											translate="user.field.language">Language</label>
 										<div class="col-sm-7">
-											<select class="form-control"></select>
+											<select class="form-control" ng-model="user.language"></select>
 										</div>
 
 									</div>
@@ -52,7 +51,7 @@
 										<label for="role" class="col-sm-5 control-label"
 											translate="user.field.role">Role</label>
 										<div class="col-sm-7">
-											<select class="form-control"></select>
+											<select class="form-control" ng-model="user.role"></select>
 										</div>
 									</div>
 								</div>
@@ -61,21 +60,21 @@
 										<label for="first_name" class="col-sm-5 control-label"
 											translate="user.field.first-name">First Name</label>
 										<div class="col-sm-7">
-											<input type="text" class="form-control" name="first_name">
+											<input type="text" class="form-control" name="first_name" ng-model="user.first-name">
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="last_name" class="col-sm-5 control-label"
 											translate="user.field.last-name">Last Name</label>
 										<div class="col-sm-7">
-											<input type="text" class="form-control" name="last_name">
+											<input type="text" class="form-control" name="last_name" ng-model="user.last-name">
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="ass_company" class="col-sm-5 control-label"
 											translate="user.field.ass-com">Assigned Companies</label>
 										<div class="col-sm-7">
-											<select class="form-control"></select>
+											<select class="form-control" ng-model="user.ass-companies"></select>
 										</div>
 									</div>
 									<div class="form-group">
@@ -83,7 +82,7 @@
 											translate="user.field.ex-date">Expired Date</label>
 										<div class="col-sm-7" ng-controller="DateController">
 											<input type="date" class="form-control" name="expired_date"
-												ng-model="value" min="2015-04-15">
+												ng-model="user.expired-date">
 										</div>
 									</div>
 									<div class="form-group">
@@ -91,7 +90,7 @@
 											translate="user.field.active">Active</label>
 										<div class="col-sm-7">
 											<input type="radio" name="active" value="yes"> <label
-												for="yes" class="control-label"
+												for="yes" class="control-label" ng-model="user.active"
 												translate="user.field.yes-active">Yes</label> <input
 												type="radio" name="active" value="no" checked="checked">
 											<label for="no" class="control-label"
