@@ -14,4 +14,15 @@ angular.module('contactmgrApp')
         this.getCompanies = function() {
             return $http.get("/api/companies/names");
         }
+        
+        this.createContact = function (data) {
+            return $http.post('/api/contacts', data);
+        };
+        
+        this.getCountries = function() {
+            return $http.get("/api/countries");
+        };
+        this.getViewContact = function(id) {
+            return $http.get("/api/contacts/"+id);
+        };
     });
