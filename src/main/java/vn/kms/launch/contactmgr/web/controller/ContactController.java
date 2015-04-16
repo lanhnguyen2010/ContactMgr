@@ -63,7 +63,7 @@ public class ContactController {
         Contact returnContact;
         HashMap<String, Object> bodyReturn = new HashMap<String, Object>();
 
-        contact.setId(id);
+       
 		returnContact = contactService.saveContact(contact);
 		if (returnContact == null) {
             bodyReturn.put("data", contact);

@@ -2,6 +2,10 @@ package vn.kms.launch.contactmgr.domain.image;
 import javax.persistence.Column;
 import javax.persistence.Table;
 
+import org.noggit.JSONUtil;
+
+import com.fasterxml.jackson.databind.JsonNode;
+
 import vn.kms.launch.contactmgr.domain.Entity;
 
 /**
@@ -9,11 +13,11 @@ import vn.kms.launch.contactmgr.domain.Entity;
  */
 @javax.persistence.Entity
 @Table(name = "IMAGE")
-public class Photo extends Entity {
+public class Photo {
 	private static final long serialVersionUID = 1L;
 
     @Column(name = "ID", insertable = false, updatable = false)
-    private Integer id;
+    private String id;
 
 	@Column(name = "PATH_FULL")
 	private String pathFull;
@@ -25,12 +29,12 @@ public class Photo extends Entity {
 	private String ContentType;
 	
 
-	public Integer getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setId(String photoId) {
+		this.id = photoId;
 	}
 
 	public String getPathFull( String pathFull) {
@@ -55,5 +59,31 @@ public class Photo extends Entity {
 
 	public void setContentType(String contentType) {
 		ContentType = contentType;
+	}
+	
+	public String toJson(){
+		return JSONUtil.toJSON(this);
+	}
+	
+	public Photo toDo(){
+		
+		Photo res = new Photo();
+		res.setId(id);
+		res.setFileName(fileName);
+		res.setPathFull(pathFull);
+		res.setContentType(ContentType);
+		
+		return res;	
+	}
+	public Photo(){
+		
+	}
+	//GET object;
+	public Photo(Photo res){
+		id = res.getId();
+		fileName = res.fileName;
+		ContentType = res.ContentType;
+		pathFull = res.pathFull;
+		
 	}
 }
