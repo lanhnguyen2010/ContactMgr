@@ -1,5 +1,33 @@
 <div ng-cloak>
-	<form name="contact_form" novalidate class="form-horizontal"
+    <div class="modal fade" id="imageUploadModal" >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" area-label="Close">
+                        <span aria-hidden="true">&times; </span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h3 class="modal-title" style="color: white">Upload Images</h3>
+                </div>
+
+                <div class="modal-body">
+                    <div ng-table = "imageParams">
+                        <li class="image-list-upload" >
+                            <img ng-src="../../../photos/download.jpg" style="width : 85px;" ng-click="uploadPhoto()"/>
+                        </li>
+                        <li ng-repeat="image in $data" class="image-list-upload">
+                            <img ng-src='../../../photos/{{image}}' style="width : 85px;" ng-click='selectPhoto(image)'/>
+                        </li>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="closeButton" type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+        <input type="file" id="imageUpload" onchange="angular.element(this).scope().selectUploadPhoto(this.id)" accept="image/*" style="display: none;">
+    </div>
+    <form name="contact_form" novalidate class="form-horizontal"
 		role="form" ng-submit="contact_form.$valid ">
 		<!-- && saveContact() -->
 		<div class="row">
@@ -58,8 +86,7 @@
 					<label class="control-label col-sm-3"
 						translate="contact-edit.general.photo"></label>
 					<div class="col-sm-9">
-
-						<img id="avatar1" ng-src="" style="width: 70px; height: 70px; cursor: pointer;">
+                        <img id="avatar{{contact.id}}" ng-src="../../../photos/unknown.jpg" data-toggle="modal" data-target="#imageUploadModal" style="width : 70px; height : 70px; cursor: pointer;">
 					</div>
 				</div>
 				<h3 translate="contact-edit.home.title-home"></h3>
@@ -273,5 +300,4 @@
 			</div>
 		</div>
 	</form>
-
 </div>

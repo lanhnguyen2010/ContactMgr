@@ -148,3 +148,15 @@ Hide ng-cloak on page load, https://docs.angularjs.org/api/ng/directive/ngCloak
 .ng-valid.ng-dirty {
     border-color: green;
 }
+
+.image-list-upload {
+  display: inline-block;
+  width: 90px;
+  height: 90px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.image-list-upload:hover {
+  background-color: grey;
+}
