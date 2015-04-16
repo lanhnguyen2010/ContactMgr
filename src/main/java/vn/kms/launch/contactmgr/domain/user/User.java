@@ -31,8 +31,8 @@ public class User extends vn.kms.launch.contactmgr.domain.Entity {
 	@Column(name="EMAIL")
 	private String email;
 	
-	@Enumerated(EnumType.STRING)
-	private Role role;
+	@Column(name="ROLE")
+	private String role;
 	
 	@Column(name="EXPIRED_DATE")
 	private Date expiredDate;
@@ -40,7 +40,7 @@ public class User extends vn.kms.launch.contactmgr.domain.Entity {
 	@Column(name="ACTIVE", columnDefinition="INT(1)")
 	private boolean active;
 	
-	@Column(name="LANGUAGES")
+	@Column(name="LANGUAGE")
 	private String language;
 	
 	@Column(name="ASSIGNED_COMPANIES")
@@ -86,11 +86,11 @@ public class User extends vn.kms.launch.contactmgr.domain.Entity {
 		this.email = email;
 	}
 
-	public Role getRole() {
+	public String getRole() {
 		return role;
 	}
 
-	public void setRole(Role role) {
+	public void setRole(String role) {
 		this.role = role;
 	}
 

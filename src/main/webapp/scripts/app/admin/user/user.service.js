@@ -8,7 +8,7 @@ angular.module('contactmgrApp')
     	this.activateUsers = function (ids) {
     		return $http.put("/api/users/active/?ids=" + ids, {});
     	};
-    	this.inactivateUsers = function (ids) {
+    	this.deactivateUsers = function (ids) {
     		return $http.put("/api/users/deactive/?ids=" + ids, {});
     	};
     	this.searchUsers = function (criteria) {

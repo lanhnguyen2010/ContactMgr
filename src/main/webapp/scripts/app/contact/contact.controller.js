@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('contactmgrApp')
-    .controller('ContactController', function($scope, ContactService, ngTableParams, PAGE_SIZE) {
+    .controller('ContactController', function($scope, ContactService, ngTableParams) {
         function init(){
             $scope.getCompanies();
         };

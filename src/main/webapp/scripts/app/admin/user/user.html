@@ -11,7 +11,7 @@
                 <label for="firstname"class="control-label col-md-3"
                     translate="user.search-form.username">Username</label>
                     <div class="col-md-9">
-                        <input type="text" name="firstName" class="form-control" ng-model="criteria.userName">
+                        <input type="text" name="firstName" class="form-control" ng-model="criteria.username">
                     </div>
                 </div>
                 <div class="form-group col-md-6">
@@ -50,7 +50,7 @@
                     <label for="assignedcompanies" class="control-label col-md-3"
                         translate="user.search-form.assignedcompanies">Assigned Companies</label>
                     <div class="col-md-9">
-                        <select class="form-control" ng-model="criteria.assigned_Companies">
+                        <select class="form-control" ng-model="criteria.assignedCompanies">
                             <option value=""></option>
                             <option ng-repeat="assignedcompany in assignedcompanies" value="{{assignedcompany.id}}">{{assignedcompany.name}}</option>
                         </select>
@@ -105,9 +105,10 @@
                        ng-checked="users.checked" ng-click="toggleCheckAll()" />
             </th>
             <th class="data-table-title" translate="user.search-result.username">Username</th>
-            <th class="data-table-title" translate="user.search-result.email">Email</th>
+
             <th class="data-table-title" translate="user.search-result.firstname">First Name</th>
             <th class="data-table-title" translate="user.search-result.lastname">Last Name</th>
+                        <th class="data-table-title" translate="user.search-result.email">Email</th>
             <th class="data-table-title" translate="user.search-result.role">Role</th>
             <th class="data-table-title" translate="user.search-result.status"></th>
             
@@ -116,11 +117,11 @@
                     header="'ng-table/headers/checkbox.html'">
                     <input type="checkbox" ng-model="user.checked" ng-checked="user.checked" />
                 </td>
-                <td data-title="'Username'">{{user.userName}}
+                <td data-title="'Username'">{{user.username}}
                    <a href="a" data-toggle="modal" data-target="#myModal" ng-click="addUser(user)">{{}}</a>
                 </td>
-                <td data-title="'First Name'">{{user.firstName}}</td>
-                <td data-title="'Last Name'">{{user.lastName}}</td>
+                <td data-title="'First Name'">{{user.firstname}}</td>
+                <td data-title="'Last Name'">{{user.lastname}}</td>
                 <td data-title="'Email'">{{user.email}}</td>
                 <td data-title="'Role'">{{user.role}}</td>
                 <td data-title="'Status'" >

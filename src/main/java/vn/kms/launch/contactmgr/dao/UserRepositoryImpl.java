@@ -81,14 +81,23 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
         }
         if (!StringUtils.isEmpty(criteria.getCreatedFrom()) && !StringUtils.isEmpty(criteria.getCreatedTo()) ){
         	jpqlQuery.append(" and");
-        	jpqlQuery.append(" u.created_at > :created_from and u.created_at < :created_to");
-        	params.put("created_from", new SimpleDateFormat("yyyy-mm-dd").format(criteria.getCreatedFrom()));
-        	params.put("created_to", new SimpleDateFormat("yyyy-mm-dd").format(criteria.getCreatedTo()));
+        	jpqlQuery.append(" u.createdAt > :created_from and u.createdAt < :created_to");
+        	params.put("created_from", criteria.getCreatedFrom());
+        	params.put("created_to", criteria.getCreatedTo());
+        } else if (!StringUtils.isEmpty(criteria.getCreatedFrom())){
+        	jpqlQuery.append(" and");
+        	jpqlQuery.append(" u.createdAt > :created_from");
+        	params.put("created_from", criteria.getCreatedFrom());
+        } else if (!StringUtils.isEmpty(criteria.getCreatedTo())){
+        	jpqlQuery.append(" and");
+        	jpqlQuery.append(" u.createdAt < :created_to");
+        	params.put("created_to", criteria.getCreatedTo());
         }
+        
         if (!StringUtils.isEmpty(criteria.getAssignedCompanies())){
         	jpqlQuery.append(" and");
-        	jpqlQuery.append(" u.assigned_companies like :assigned_companies");
-        	params.put("assigned_companies", criteria.getAssignedCompanies());
+        	jpqlQuery.append(" u.assignedCompanies like :assignedCompanies");
+        	params.put("assignedCompanies", criteria.getAssignedCompanies());
         }
         if (!StringUtils.isEmpty(criteria.getRole())){
         	jpqlQuery.append(" and");
