@@ -1,5 +1,9 @@
 package vn.kms.launch.contactmgr.web.controller;
 
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.NO_CONTENT;
+import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -7,8 +11,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
 import java.util.HashMap;
 import java.util.List;
-
-import javax.validation.Valid;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,112 +22,98 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import vn.kms.launch.contactmgr.domain.contact.User;
-import vn.kms.launch.contactmgr.domain.search.UserSearchCriteria;
+import vn.kms.launch.contactmgr.domain.user.User;
+import vn.kms.launch.contactmgr.domain.user.UserSearchCriteria;
 import vn.kms.launch.contactmgr.service.UserService;
+import vn.kms.launch.contactmgr.util.EntityNotFoundException;
+import vn.kms.launch.contactmgr.util.SearchResult;
+import vn.kms.launch.contactmgr.util.ValidationException;
 
 @RestController
-@RequestMapping(value="/api/users")
+@RequestMapping(value = "/api/users")
 public class UserController {
-	
+
 	@Autowired
 	private UserService userService;
-	
-	
+
 	@RequestMapping(method = POST)
-	public ResponseEntity<User> createUser(@RequestBody @Valid User user){
-		User userCreate=userService.saveUser(user);
-		if(null == userCreate){
-			return new ResponseEntity<User>(userCreate,HttpStatus.BAD_REQUEST);
-		}
-		return new ResponseEntity<User>(userCreate, HttpStatus.OK);
+	public ResponseEntity<?> createUser(@RequestBody User user) {
+		return saveUser(user, null);
 	}
 
 	@RequestMapping(value = "/{id}", method = PUT)
-	public ResponseEntity<User> updateUser(@PathVariable int id, @RequestBody @Valid User user){
-		user.setId(id);
-		User userUpdate = userService.saveUser(user);
-		if(null == userUpdate){
-			return new ResponseEntity<User>(userUpdate,HttpStatus.BAD_REQUEST);
-		}
-		return new ResponseEntity<User>(userUpdate, HttpStatus.OK);
+	public ResponseEntity<?> updateUser(@PathVariable int id, @RequestBody User user) {
+		return saveUser(user, id);
 	}
-	
-    @RequestMapping(value="/search", method = POST)
-    public HashMap<String, Object> searchUser(@RequestParam ("page") int page,
-                                              @RequestParam (value="pageSize", defaultValue="10") int pageSize,
-                                              @RequestBody UserSearchCriteria criteria){
-           return userService.searchUsers(criteria, page, pageSize);
-    }
-    
-	/**
-	 * Return 404(Not Found)  code if not contact associated to ID is not found
-	 * Return 204(No Content)  code if deleted successfully
-	 */
+
+
+	@RequestMapping(value = "/search", method = POST)
+	public SearchResult<User> searchUser(
+			@RequestBody UserSearchCriteria criteria) {
+		return userService.searchUsers(criteria);
+	}
+
 	@RequestMapping(value = "/{id}", method = DELETE)
 	public ResponseEntity<Void> deleteUser(@PathVariable int id) {
-		
+
 		int deleteId = userService.deleteUsers(id);
-		//receive  id with method deleteContact() from UI
-
-		if (deleteId == 0) {
-			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
-		}
-
-		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+		return new ResponseEntity<>((deleteId == 0)? NOT_FOUND : NO_CONTENT);
 	}
 
-	/**
-	 * Return 400(Bad Request)  code if ids param is null
-	 * Return 404(Not Found)  code if not contact associated to ID is not found
-	 * Return 200(OK) code and the actual number of Contact that deleted
-	 */
 	@RequestMapping(method = DELETE)
 	public ResponseEntity<Integer> deleteUsers(@RequestParam int... ids) {
+		if (ids.length == 0) {
+			return new ResponseEntity<>(BAD_REQUEST);
+		}
+		int deleteId = userService.deleteUsers(ids);
+		return new ResponseEntity<>((deleteId == 0) ? NOT_FOUND : NO_CONTENT);
+	}
 
-		if(ids.length == 0){
-			return new ResponseEntity<Integer>(HttpStatus.BAD_REQUEST);
+	@RequestMapping(value = "/active/", method = PUT)
+	public ResponseEntity<Integer> activeUser(@RequestParam int... ids) {
+		Integer result = userService.activeUser(ids);
+		if (result == ids.length) {
+			return new ResponseEntity<Integer>(result,
+					HttpStatus.OK);
+		} else {
+			return new ResponseEntity<Integer>(result, HttpStatus.BAD_REQUEST);
 		}
 		
-		int deleteId = userService.deleteUsers(ids);
-		if (deleteId == 0) {
-			return new ResponseEntity<Integer>(HttpStatus.NOT_FOUND);
-		}
+	}
 
-		return new ResponseEntity<Integer>(deleteId,HttpStatus.OK);
-	}
-	
-	@RequestMapping(value = "/setactive/", method = PUT)
-	public ResponseEntity<List<Integer>> activeUser(@RequestParam int... ids){
-		List<Integer> result = userService.activeUser(ids);
-		if(null == result){
-			return new ResponseEntity<List<Integer>>(result,HttpStatus.BAD_REQUEST);
+	@RequestMapping(value = "/deactive/", method = PUT)
+	public ResponseEntity<Integer> deactiveUser(@RequestParam int... ids) {
+		Integer result = userService.deactiveUser(ids);
+		if (result == ids.length) {
+			return new ResponseEntity<Integer>(result,
+					HttpStatus.OK);
+		} else {
+			return new ResponseEntity<Integer>(result, HttpStatus.BAD_REQUEST);
 		}
-		return new ResponseEntity<List<Integer>>(result, HttpStatus.OK);
 	}
-	
-	@RequestMapping(value = "/setdeactive/", method = PUT)
-	public ResponseEntity<List<Integer>> deactiveUser(@RequestParam int... ids){
-		List<Integer> result = userService.deactiveUser(ids);
-		if(null == result){
-			return new ResponseEntity<List<Integer>>(result,HttpStatus.BAD_REQUEST);
-		}
-		return new ResponseEntity<List<Integer>>(result, HttpStatus.OK);
-	}
-	
-	/**
-	 * Return 404(Not Found)  code if not contact associated to ID is not found
-	 * Return 204(No Content)  code if deleted successfully
-	 */
+
 	@RequestMapping(value = "/roles", method = GET)
 	public ResponseEntity<List<String>> getRoles() {
 		List<String> result = userService.getRoles();
-		
-		if (null == result){
-			return new ResponseEntity<List<String>>(result,HttpStatus.BAD_REQUEST);
+		if (result == null) {
+			return new ResponseEntity<List<String>>(result,
+					HttpStatus.BAD_REQUEST);
 		}
 		return new ResponseEntity<List<String>>(result, HttpStatus.OK);
 	}
-	
-	
+
+	private ResponseEntity<?> saveUser(User user, Integer id) {
+        try {
+            User savedContact = userService.saveUser(user, id);
+            return new ResponseEntity<>(savedContact, OK);
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity<>(NOT_FOUND);
+        } catch (ValidationException e) {
+            Map<String, Object> returnObj = new HashMap<>();
+            returnObj.put("data", user);
+            returnObj.put("errors", e.getErrors());
+            return new ResponseEntity<>(returnObj, BAD_REQUEST);
+        }
+	}
+
 }

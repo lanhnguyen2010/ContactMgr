@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import vn.kms.launch.contactmgr.domain.Country;
+import vn.kms.launch.contactmgr.domain.contact.Country;
 import vn.kms.launch.contactmgr.service.ContactService;
 
 @RestController

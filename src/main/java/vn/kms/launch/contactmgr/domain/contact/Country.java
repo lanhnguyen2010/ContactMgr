@@ -1,4 +1,4 @@
-package vn.kms.launch.contactmgr.domain;
+package vn.kms.launch.contactmgr.domain.contact;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
