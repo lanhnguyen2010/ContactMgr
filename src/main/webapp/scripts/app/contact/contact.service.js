@@ -18,7 +18,9 @@ angular.module('contactmgrApp')
         this.createContact = function (data) {
             return $http.post('/api/contacts', data);
         };
-        
+        this.updateContact = function (id,data) {
+            return $http.put('/api/contacts/' + id, data);
+        };
         this.getCountries = function() {
             return $http.get("/api/countries");
         };
