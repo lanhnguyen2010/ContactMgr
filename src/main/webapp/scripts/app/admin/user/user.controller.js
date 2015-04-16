@@ -1,237 +1,181 @@
 'use strict';
 
-angular.module('contactmgrApp').controller(
-        'UsersController',
-        function($scope, UsersService, ngTableParams) {
+angular.module('contactmgrApp').controller('UsersController',
+        function($scope,UsersService, ngTableParams) {
 
-            function init() {
+            function init(){
                 $scope.getCompanies();
                 $scope.getRoles();
-            }
-            ;
-
-            $scope.selectedUser = {
-                "lastName" : "",
-                "expiredDate" : "",
-                "passWord" : "",
-                "updatedBy" : "",
-                "updatedAt" : "",
-                "id" : 0,
-                "createdBy" : "",
-                "email" : "",
-                "createdAt" : "",
-                "assignedcompanies" : "",
-                "active" : 1,
-                "role" : "",
-                "userName" : "",
-                "language" : "",
-                "firstName" : ""
             };
-
-            $scope.filter = {
-                userName : '',
+            $scope.criteria = {
+                username : '',
                 firstlastName : '',
                 email : '',
                 role : '',
-                createdFrom : '',
-                createdTo : '',
-                assignedCompanies : ''
+                createdFrom:'',
+                createdTo:'',
+                assignedCompanies:'',
+                pageIndex:1,
+                pageSize:10
             };
-
+            $scope.selectedUser = {
+            		  "id": "",
+            		  "createdAt": "",
+            		  "createdBy": "",
+            		  "updatedAt": "",
+            		  "updatedBy": "",
+            		  "username": "",
+            		  "password": "",
+            		  "firstname": "",
+            		  "lastname": "",
+            		  "email": "",
+            		  "role": "",
+            		  "expiredDate": "",
+            		  "active": false,
+            		  "language": "",
+            		  "assignedCompanies": ""
+                };
             var PAGE_SIZE = 10;
-            var isFristSearchClicked = false;
+            $scope.users = [];
+            $scope.searchClicked = false;
             $scope.currentPage = 1;
 
-            $scope.searchUsers = function(page) {
-                isFristSearchClicked = true;
+            $scope.searchUsers = function () {
                 if ($scope.isLoading) {
                     return;
                 }
-                $scope.isLoading = true;
 
-                UsersService.searchUsers($scope.filter, page, PAGE_SIZE)
-                        .success(function(data, status) {
-                            $scope.users = data['data'];
-                            for (var i = 0; i < $scope.users.length; i++) {
-                                if ($scope.users[i]['active'] == 1) {
-                                    $scope.users[i]['active'] = "Active";
-                                } else {
-                                    $scope.users[i]['active'] = "Inactive";
-                                }
-                            }
-                            $scope.total = data['totalItem'];
-                            $scope.isLoading = false;
-                            $scope.usersTableParams.reload();
-                        }).error(function(data, status) {
-                            console.log(status);
-                        });
+                $scope.searchClicked = true;
+                $scope.isLoading = true;
+                $scope.usersTableParams.reload();
             }
+            
             $scope.usersTableParams = new ngTableParams({
-                page : 1, // Show the first page
-                count : 10, // Count per page
+                count: 10, // Count per page
             }, {
-                counts : [],
-                getData : function($defer, params) {
-                    if (!isFristSearchClicked)
+                counts: [],
+                getData: function ($defer, params) {
+                    if (!$scope.searchClicked)
                         return;
                     $scope.currentPage = params.page();
-                    UsersService.searchUsers($scope.filter, params.page(),
-                            PAGE_SIZE).success(function(data, status) {
-                        $scope.users = data['data'];
-                        for (var i = 0; i < $scope.users.length; i++) {
-                            if ($scope.users[i]['active'] == 1) {
-                                $scope.users[i]['active'] = "Active";
-                            } else {
-                                $scope.users[i]['active'] = "Inactive";
-                            }
-                        }
-                        console.log($scope.users)
+                    $scope.criteria.pageIndex = params.page();
+                    $scope.criteria.pageSize = 10;
+                    UsersService.searchUsers($scope.criteria)
+                    .success(function(data, status) {
+                        $scope.users = data['items'];
                         params.total(data['totalItem']);
                         $defer.resolve($scope.users);
-                    }).error(function(data, status) {
-                        console.log(status);
+                        $scope.isLoading = false;
+                    })
+                    .error(function (data, status) {
+                        console.log("Error", status);
                     });
-
+                    
                     $scope.checkboxes = {
-                        'checked' : false,
-                        items : {}
+                        'checked': false, 
+                        items: {}
+
                     };
                     $scope.checkedIds = '';
                 }
-            });
+            });   
+            $scope.selectedIds = [];
             // select controller
-            $scope.selectedUser = {};
+//            $scope.selectedUser = {};
             $scope.setSelectedUser = function(user) {
                 $scope.selectedUser = user;
             };
-
+            
             function findAndRemove(array, property, value) {
                 $.each(array, function(index, result) {
-                    if (result[property] == value) {
+                    if(result[property] == value) {
                         array.splice(index, 1);
-                    }
+                    }    
                 });
             }
-
+            
             // delete Users Controller
-            $scope.deleteUsers = function() {
+            $scope.deleteUsers = function () {
                 if (confirm("Do you want to delete?")) {
-                    UsersService.deleteUsers($scope.checkedIds).success(
-                            function(data, status) {
-                                console.log("Deleted " + data + " user(s)");
-                                $scope.usersTableParams.reload();
-                            }).error(function(data, status) {
+                    UsersService.deleteUsers($scope.selectedIds)
+                    .success(function (data, status) {
+                        $scope.usersTableParams.reload();
+                    })
+                    .error(function (data, status) {
                         console.log("Error", status);
                     });
                 }
             };
-
             // activate Users Controller
-            $scope.activateUsers = function() {
+            $scope.activateUsers = function () {
                 if (confirm("Do you want to Activate?")) {
-                    UsersService.activateUsers($scope.checkedIds).success(
-                            function(data, status) {
-                                $scope.searchUsers($scope.currentPage);
-                            }).error(function(data, status) {
+                    UsersService.activateUsers($scope.selectedIds)
+                    .success(function (data, status) {
+                        $scope.searchUsers($scope.currentPage);
+                    })
+                    .error(function (data, status) {
                         console.log("Error", status);
                     });
                 }
             };
+            
             // inactivate users Controller
-            $scope.inactivateUsers = function() {
+            $scope.deactivateUsers = function () {
                 if (confirm("Do you want to Inactivate?")) {
-                    UsersService.inactivateUsers($scope.checkedIds).success(
-                            function(data, status) {
-                                $scope.searchUsers($scope.currentPage);
-                            }).error(function(data, status) {
+                    UsersService.deactivateUsers($scope.selectedIds)
+                    .success(function (data, status) {
+                        $scope.searchUsers($scope.currentPage);
+                    })
+                    .error(function (data, status) {
                         console.log("Error", status);
                     });
                 }
             };
-            $scope.checkboxes = {
-                'checked' : false,
-                items : {}
-            };
+            
+			$scope.saveUser = function() {
+		    UsersService.saveUser($scope.selectedUser);
+		    console.log("User: " + $scope.selectedUser.id);
+		};
+            $scope.selectedIds = [];
 
-            $scope.checkedIds = '';
+            // watch selected users
+            $scope.$watch('users|filter:{checked:true}', function(results) {
+                    $scope.selectedIds = results.map(function(user) {
+                        return user.id;
+                    });
 
-            // watch for check all checkbox
-            $scope.$watch('checkboxes.checked', function(value) {
-                angular.forEach($scope.users, function(item) {
-                    if (angular.isDefined(item.id)) {
-                        $scope.checkboxes.items[item.id] = value;
-                    }
-                });
-            });
+                    var count = $scope.selectedIds.length;
+                    var total = $scope.users.length;
+                    $scope.users.checked = (count == total);
+                    // grayed checkbox
+                    angular.element(document.getElementById('check_all'))
+                           .prop('indeterminate', (count > 0 && count < total));
 
-            // watch for data checkboxes
-            $scope.$watch('checkboxes.items', function(values) {
-                if (!$scope.users) {
-                    return;
+                }, true);
+            $scope.toggleCheckAll = function(e) {
+                var checked = (document.getElementById('check_all').checked);
+                for (var i=0; i<$scope.users.length; i++) {
+                    $scope.users[i].checked = checked;
                 }
-
-                var checked = 0, unchecked = 0, total = $scope.users.length;
-
-                angular.forEach($scope.users, function(item) {
-                    checked += ($scope.checkboxes.items[item.id]) || 0;
-                    unchecked += (!$scope.checkboxes.items[item.id]) || 0;
-                });
-
-                if ((unchecked == 0) || (checked == 0)) {
-                    $scope.checkboxes.checked = (checked == total);
-                }
-
-                // grayed checkbox
-                angular.element(document.getElementById("select_all")).prop(
-                        "indeterminate", (checked != 0 && unchecked != 0));
-
-                // Create checked id list
-                $scope.checkedIds = '';
-                for ( var item in $scope.checkboxes.items) {
-                    if ($scope.checkboxes.items[item]) {
-                        $scope.checkedIds = $scope.checkedIds + item + ',';
-                    }
-                }
-
-                // Remove the final ','
-                if ($scope.checkedIds.length > 0) {
-                    $scope.checkedIds = $scope.checkedIds.substr(0,
-                            $scope.checkedIds.length - 1);
-                }
-            }, true);
-
-            $scope.getRoles = function() {
-                UsersService.getRoles().success(function(data, status) {
-                    $scope.roles = data;
-                }).error(function(data, status) {
+            }
+            
+            $scope.getRoles=function(){
+                UsersService.getRoles()
+                .success(function(data,status){
+                    $scope.roles=data;
+                })
+                .error(function (data, status) {
                     console.log("Error get roles", status);
                 });
             };
-            $scope.getCompanies = function() {
-                UsersService.getCompanies().success(function(data, status) {
-                    $scope.assignedcompanies = data;
-                }).error(function(data, status) {
+            $scope.getCompanies=function(){
+                UsersService.getCompanies()
+                .success(function(data,status){
+                    $scope.assignedcompanies=data;
+                })
+                .error(function (data, status) {
                     console.log("Error get companies", status);
                 });
             }
-            // save user get from .html
-            $scope.saveUser = function() {
-            	var idUser;
-                idUser = UsersService.saveUser($scope.user);
-                if(idUser){
-                	window.alert("Save successfull!");
-                	console.log("idUser: " + idUser);
-                }
-                console.log("User: " + $scope.user.id);
-            };
-
-            $scope.setSelectedUser = function(user) {
-                $scope.selectedUser = user;
-            };
-
-            $scope.initUser = function() {
-                $scope.selectedUser = [];
-            }
-
-            init();
-        });
+            init();                  
+        })

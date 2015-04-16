@@ -4,8 +4,8 @@ server:
 spring:
     datasource:
         url: "jdbc:mysql://localhost:3306/contactmgr"
-        username: root
-        password: 
+        username: contactmgr
+        password: contactmgr123
         driver-class-name: org.mariadb.jdbc.Driver
     jpa:
         show_sql: true

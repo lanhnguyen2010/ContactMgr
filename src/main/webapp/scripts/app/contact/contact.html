@@ -51,7 +51,7 @@
                     <label for="company" class="control-label col-sm-3"
                         translate="contact.search-form.company">Company</label>
                     <div class="col-sm-9">
-                        <select class="form-control" ng-model="filter.company">
+                        <select class="form-control" ng-model="criteria.company">
                             <option value=""></option>
                             <option ng-repeat="company in companies" value="{{company.name}}">
                                 {{company.name}}

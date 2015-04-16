@@ -143,3 +143,6 @@ Hide ng-cloak on page load, https://docs.angularjs.org/api/ng/directive/ngCloak
 	font-size: 13px;
 }
 
+#mid-width .multiselect-container {
+    width: 200px;
+}

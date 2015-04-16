@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-=======
+
 'use strict';
 
 angular.module('contactmgrApp')
@@ -17,4 +16,3 @@ angular.module('contactmgrApp')
             return $http.get("/api/companies/names");
         }
     });
->>>>>>> f16a9b4c65466765549031ca657954298986461f
