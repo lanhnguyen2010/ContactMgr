@@ -10,7 +10,7 @@ angular.module('contactmgrApp').controller(
             }
             ;
 
-            $scope.user = {
+            $scope.selectedUser = {
                 "lastName" : "",
                 "expiredDate" : "",
                 "passWord" : "",
@@ -21,7 +21,7 @@ angular.module('contactmgrApp').controller(
                 "email" : "",
                 "createdAt" : "",
                 "assignedcompanies" : "",
-                "active" : 0,
+                "active" : 1,
                 "role" : "",
                 "userName" : "",
                 "language" : "",
@@ -216,16 +216,21 @@ angular.module('contactmgrApp').controller(
             }
             // save user get from .html
             $scope.saveUser = function() {
-                UsersService.saveUser($scope.user);
+            	var idUser;
+                idUser = UsersService.saveUser($scope.user);
+                if(idUser){
+                	window.alert("Save successfull!");
+                	console.log("idUser: " + idUser);
+                }
                 console.log("User: " + $scope.user.id);
             };
 
             $scope.setSelectedUser = function(user) {
-                $scope.user = user;
+                $scope.selectedUser = user;
             };
 
             $scope.initUser = function() {
-                $scope.user = [];
+                $scope.selectedUser = [];
             }
 
             init();
