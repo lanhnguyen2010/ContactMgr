@@ -30,6 +30,7 @@ angular.module('contactmgrApp')
 
         this.getViewContact = function(id) {
             return $http.get("/api/contacts/"+id);
+        };
         
         this.updateCompany = function(company){
             var url = '/api/companies/' + company.id;
@@ -40,5 +41,4 @@ angular.module('contactmgrApp')
         this.createCompany = function(company){
             return $http.post('/api/companies', company);
         };
-    };
 });
