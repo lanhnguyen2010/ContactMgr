@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import vn.kms.launch.contactmgr.domain.image.Photo;
 import vn.kms.launch.contactmgr.repository.PhotoRepository;
-import vn.kms.launch.contactmgr.utils.PhotoUtils;
+import vn.kms.launch.contactmgr.util.PhotoUtil;
 
 
 @Service
@@ -32,7 +32,7 @@ public class PhotoService{
         String relativePath = String.format("%s/%s", photoId, UUID.randomUUID().toString());
         String pathFull = getPathFull(relativePath);
         
-        PhotoUtils.storeFile(in, pathFull);
+        PhotoUtil.storeFile(in, pathFull);
         Photo res = new Photo();
 
         res.setId(photoId);

@@ -14,7 +14,7 @@ public class Greeting extends vn.kms.launch.contactmgr.domain.Entity {
 	private static final long serialVersionUID = 1L;
 
 	@NotEmpty(message = "{validation.not-empty.message}")
-    @Pattern(regexp = "(\\[A-Za-z]{2})", message = "{validation.iso-3166-code.message}")
+    @Pattern(regexp = "^(\\[A-Za-z]{2})$", message = "{validation.iso-3166-code.message}")
     @Column(name = "CODE", unique = true)
     private String code;
 

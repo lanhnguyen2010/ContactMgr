@@ -1,4 +1,4 @@
-package vn.kms.launch.contactmgr.utils;
+package vn.kms.launch.contactmgr.util;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -10,10 +10,10 @@ import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class PhotoUtils {
-	private static final Logger LOG = LoggerFactory.getLogger(PhotoUtils.class);
+public class PhotoUtil {
+	private static final Logger LOG = LoggerFactory.getLogger(PhotoUtil.class);
 	
-	private PhotoUtils(){
+	private PhotoUtil(){
 		
 	}
 	public static void storeFile(InputStream in, String pathFull ) throws Exception{
