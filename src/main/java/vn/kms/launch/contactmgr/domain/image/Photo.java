@@ -1,20 +1,8 @@
 package vn.kms.launch.contactmgr.domain.image;
-import java.util.Date;
-
-import org.apache.http.entity.ContentType;
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.format.annotation.DateTimeFormat;
+import javax.persistence.Column;
+import javax.persistence.Table;
 
 import vn.kms.launch.contactmgr.domain.Entity;
-import vn.kms.launch.contactmgr.domain.contact.Home;
-import vn.kms.launch.contactmgr.domain.contact.Work;
-
-import javax.persistence.Column;
-import javax.persistence.Embedded;
-import javax.persistence.Table;
-import javax.persistence.Transient;
-import javax.validation.constraints.Pattern;
 
 /**
  * Created by diule on April, 14;
@@ -22,19 +10,20 @@ import javax.validation.constraints.Pattern;
 @javax.persistence.Entity
 @Table(name = "IMAGE")
 public class Photo extends Entity {
+	private static final long serialVersionUID = 1L;
 
-	//@NotEmpty(message = "{validation.not-empty.message}")
-    @Column(name = "ID")
+    @Column(name = "ID", insertable = false, updatable = false)
     private Integer id;
 
-	@Column(name = "PATHFULL")
+	@Column(name = "PATH_FULL")
 	private String pathFull;
 	
-	@Column(name = "FILENAME")
+	@Column(name = "FILE_NAME")
 	private String fileName;
 	
-	@Column(name = "CONTENTTYPE")
+	@Column(name = "CONTENT_TYPE")
 	private String ContentType;
+	
 
 	public Integer getId() {
 		return id;
@@ -44,7 +33,7 @@ public class Photo extends Entity {
 		this.id = id;
 	}
 
-	public String getPathFull() {
+	public String getPathFull( String pathFull) {
 		return pathFull;
 	}
 

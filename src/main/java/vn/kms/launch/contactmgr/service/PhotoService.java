@@ -1,75 +1,71 @@
 package vn.kms.launch.contactmgr.service;
 
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Set;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
-import javax.validation.Valid;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 
-import vn.kms.launch.contactmgr.domain.contact.Company;
-import vn.kms.launch.contactmgr.domain.contact.Contact;
-import vn.kms.launch.contactmgr.domain.contact.Work;
 import vn.kms.launch.contactmgr.domain.image.Photo;
-import vn.kms.launch.contactmgr.domain.search.ContactSearchCriteria;
-import vn.kms.launch.contactmgr.repository.CompanyRepository;
-import vn.kms.launch.contactmgr.repository.ContactRepository;
 import vn.kms.launch.contactmgr.repository.PhotoRepository;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
-import org.apache.zookeeper.server.quorum.ReadOnlyBean;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import vn.kms.launch.contactmgr.repository.PhotoRepository;
+import vn.kms.launch.contactmgr.utils.PhotoUtils;
 
 
 @Service
 @Transactional
-public class PhotoService {
+public class PhotoService{
 	
 	// Upload image;
-		@Autowired
+		//@Autowired(required = true)
 		private PhotoRepository uploadRepository;
 		
-
-		// ext_name image allow upload format png, jpeg
-		private static final String EXT_NAME[] = { "png", "jpeg" };
-
-		private static final String DEFAULT_PHOTO = "contact-photo.png";
-
-		@Value("${contacts.photo.storage}")
-		private String photoDir;
-	
-		@Transactional
+		//@Autowired(required = true)
+		//private Photo photo;
 		
-		public Photo uploadImage(InputStream in, String fileName, String contentType) {
-			
-			String photoDir;
-			Photo ci = new  Photo();			
-			return uploadRepository.save(ci);
-		}
-
 		@Transactional
 		public Photo getFile(int photoId){
 			return uploadRepository.findOne(photoId);	
 		}
 		
+//		@Transactional
+//		public List<Photo> getAllPhotoId(){
+//			return uploadRepository.findAll();
+//		}
 		@Transactional
-		public List<Photo> getAllPhotoId(){
-			return uploadRepository.findAll();
+		public Photo uploadImage( int photoId,
+								  InputStream in,
+								  String originalFilename, 
+								  String contentType) throws Exception {
+			
+			String relativePath = String.format("%s/%s", photoId, UUID.randomUUID().toString());
+			
+			String pathFull = getPathFull(relativePath);
+			
+			PhotoUtils.storeFile(in, pathFull);
+			
+			Photo res = new Photo();
+						
+			res.setId(photoId);
+			res.setFileName(originalFilename);
+			res.setContentType(contentType);
+			res.setPathFull(relativePath);
+					
+			return uploadRepository.saveAndFlush(res);
+		}
+		
+		@Transactional
+		public List<Photo> getAllPhoto(int photoId) {
+			
+			List<Photo> list = uploadRepository.findAll();		
+			//List<Photo> res = new LinkedList<Photo>();
+			// TODO Auto-generated method stub
+			return list;
+		}
+		
+		private String getPathFull(String relativePath){
+			return String.format("%s/%s", relativePath);
 		}
 
 }

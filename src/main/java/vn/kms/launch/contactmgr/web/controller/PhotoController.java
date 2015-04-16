@@ -3,25 +3,14 @@ package vn.kms.launch.contactmgr.web.controller;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
-import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.util.List;
 
-import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.swing.JFileChooser;
-import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -29,16 +18,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.MultipartResolver;
 
 import vn.kms.launch.contactmgr.domain.image.Photo;
-import vn.kms.launch.contactmgr.repository.PhotoRepository;
-import vn.kms.launch.contactmgr.service.ContactService;
 import vn.kms.launch.contactmgr.service.PhotoService;
 
 /**
@@ -50,72 +35,62 @@ import vn.kms.launch.contactmgr.service.PhotoService;
 public class PhotoController {
 
 	// ext_name image allow upload format png, jpeg
-	private static final String EXT_NAME[] = { "png", "jpeg" };
-
-	private static final String DEFAULT_PHOTO = "contact-photo.png";
-
-	@Value("${contacts.photo.storage}")
-	private String photoDir;
+	//private static final String EXT_NAME[] = { "png", "jpeg" };
+	
+//	@Value("${contacts.photo.storage}")
+//	private String photoDir;
 
 	@Autowired
 	private MultipartResolver multipartResolver;
 
 	@Autowired
 	PhotoService uploadService;
-	
-	@RequestMapping(value="/upload",method = POST)
-	public ResponseEntity uploadPhoto(HttpServletRequest request)
+
+	@RequestMapping(value="/upload/{photoId}",method = POST)
+	public ResponseEntity <Photo> uploadPhoto( @PathVariable("photoId") int photoId,
+											   @RequestParam ("file") MultipartFile file)
 			throws IOException {
 
-		MultipartHttpServletRequest multipartRequest = multipartResolver.resolveMultipart(request);
-
-		MultipartFile file = multipartRequest.getFile("file");
-		InputStream in = file.getInputStream();
-		String fileName = file.getName();
-	
-		String contentType = file.getContentType();
-		JFileChooser choose = new JFileChooser();
-		
-		//TODO: Filter contentType format image;
-		//EXT_NAME contain: JPEG, PNG;
-		FileFilter filter = new FileNameExtensionFilter("JPEG file", EXT_NAME);
-		choose.setFileFilter(filter);
-		
-		choose.addChoosableFileFilter(filter);
-		int returnValue = choose.showOpenDialog(null);
-		
-		if(returnValue == JFileChooser.APPROVE_OPTION){
-			File selectFile = new File(choose.getSelectedFile().getAbsolutePath());
+		Photo res = null;
+		FileNameExtensionFilter filterImage;	
+		filterImage = new FileNameExtensionFilter("file only","PNG","JPEG");
+		try {
+			res = uploadService.uploadImage( photoId,
+					file.getInputStream(),
+					file.getOriginalFilename(),
+					file.getContentType());
+		} catch (Exception e) {
+			e.printStackTrace();
+			// TODO: handle exception
 		}
 		
-		Photo ci = uploadService.uploadImage(in, fileName, contentType);
-		return new ResponseEntity<Photo>(ci, HttpStatus.CREATED);
+		return new ResponseEntity<Photo>(res, HttpStatus.CREATED);
 	}
 
 	/*
 	 * Show all images on Dialog;
 	 * */
 	@RequestMapping(method = GET)
-	public @ResponseBody ResponseEntity<?> getAllPhoto(@PathVariable("photoId") int photoId,
-			WebRequest request){
+	public @ResponseBody ResponseEntity<Photo> getAllPhoto(@PathVariable("photoId") int photoId, HttpServletRequest request,
+												HttpServletResponse response) {
 		
-		//ContactImages contactImage = (ContactImages) uploadService.getAllPhotoId();
-		//Get all image and show on Dialog to user;
-		return new ResponseEntity<Integer>(photoId, HttpStatus.OK);
-	}
-	
-	@RequestMapping(value = "/{photoId}", method = GET)
-	public void getPhoto(@PathVariable("photoId") int photoId,
-			WebRequest request, HttpServletResponse response) throws IOException {
-		Photo ci = uploadService.getFile(photoId);
-		
-		if (null == ci){
-			response.setStatus(HttpStatus.NOT_FOUND.value());
-		}	
-		else{
-			response.setStatus(HttpStatus.OK.value());
-			//copy input to output stream of response
-		}
+		Photo photo = (Photo) uploadService.getAllPhoto(photoId);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        //ArrayNode arrayNode = JSONUtil.
+        List<Photo> list = uploadService.getAllPhoto(photoId);
+        
+		return new ResponseEntity<Photo>(photo,HttpStatus.OK);
+           
 	}
 
+	@RequestMapping(value = "/{photoId}", method = GET)
+	public void getPhoto(HttpServletResponse response,
+						@PathVariable("photoId") int photoId) throws IOException {
+		
+		response.setStatus(HttpStatus.FOUND.value());
+
+		Photo res = uploadService.getFile(photoId);
+		response.setContentType(res.getContentType());
+	}
 }
