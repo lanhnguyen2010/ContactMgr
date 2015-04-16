@@ -19,7 +19,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import vn.kms.launch.contactmgr.ContactMgrApp;
 import vn.kms.launch.contactmgr.domain.contact.Contact;
-import vn.kms.launch.contactmgr.domain.search.ContactSearchCriteria;
+import vn.kms.launch.contactmgr.domain.contact.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = ContactMgrApp.class)

@@ -1,14 +1,20 @@
-package vn.kms.launch.contactmgr.domain.search;
+package vn.kms.launch.contactmgr.domain.user;
 
-public class UserSearchCriteria {
+import java.util.Date;
+import java.util.List;
 
-	private String userName;
+import vn.kms.launch.contactmgr.domain.Role;
+import vn.kms.launch.contactmgr.util.SearchCriteria;
+
+public class UserSearchCriteria extends SearchCriteria {
+
+	private String username;
 	private String firstlastName;
 	private String email;
-	private String role;
+	private Role role;
 	private String assignedCompanies;
-	private String createdFrom;
-	private String createdTo;
+	private Date createdFrom;
+	private Date createdTo;
 	
 	public String getFirstlastName() {
 		return firstlastName;
@@ -26,20 +32,20 @@ public class UserSearchCriteria {
 		this.email = email;
 	}
 
-	public String getRole() {
+	public Role getRole() {
 		return role;
 	}
 
-	public void setRole(String role) {
+	public void setRole(Role role) {
 		this.role = role;
 	}
 
-	public String getUserName() {
-		return userName;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getAssignedCompanies() {
@@ -50,20 +56,19 @@ public class UserSearchCriteria {
 		this.assignedCompanies = assignedCompanies;
 	}
 
-	public String getCreatedFrom() {
+	public Date getCreatedFrom() {
 		return createdFrom;
 	}
 
-	public void setCreatedFrom(String createdFrom) {
+	public void setCreatedFrom(Date createdFrom) {
 		this.createdFrom = createdFrom;
 	}
 
-	public String getCreatedTo() {
+	public Date getCreatedTo() {
 		return createdTo;
 	}
 
-	public void setCreatedTo(String createdTo) {
+	public void setCreatedTo(Date createdTo) {
 		this.createdTo = createdTo;
 	}
-	
 }

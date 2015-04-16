@@ -1,4 +1,4 @@
-package vn.kms.launch.contactmgr.domain.contact;
+package vn.kms.launch.contactmgr.domain;
 
 public enum Role {
 	
