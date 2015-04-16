@@ -1,8 +1,9 @@
 package vn.kms.launch.contactmgr.util;
 
-import javax.validation.ConstraintViolation;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.validation.ConstraintViolation;
 
 public class ValidationException extends RuntimeException {
     private Map<String, Object> errors;
