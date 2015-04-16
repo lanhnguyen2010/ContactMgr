@@ -7,7 +7,6 @@ import javax.persistence.ManyToOne;
 import javax.validation.Valid;
 
 import vn.kms.launch.contactmgr.domain.ValueObject;
-import vn.kms.launch.contactmgr.service.validator.ExistEntity;
 
 @Embeddable
 public class Work extends ValueObject<Work> {
@@ -20,7 +19,6 @@ public class Work extends ValueObject<Work> {
     private String department;
 
     @Column(name = "COMPANY_ID")
-    @ExistEntity
     private Integer companyId;
 
     @ManyToOne
