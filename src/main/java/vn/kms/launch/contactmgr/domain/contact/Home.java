@@ -16,10 +16,11 @@ public class Home extends ValueObject<Home> {
     @Valid
     private Address address;
 
-    @Pattern(regexp = "(\\+[0-9]{1,3}\\s)([0-9]{9,10})", message = "{validation.phone.message}")
+    @Pattern(regexp = "^(\\+[0-9]{1,3}\\s)([0-9]{9,10})$", message = "{validation.phone.message}")
     @Column(name = "PHONE")
     private String phone;
 
+    @Pattern(regexp = "^(\\+[0-9]{1,3}\\s)([0-9]{9,10})$", message = "{validation.fax.message}")
     @Column(name = "FAX")
     private String fax;
 

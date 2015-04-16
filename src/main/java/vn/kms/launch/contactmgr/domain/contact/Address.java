@@ -29,7 +29,7 @@ public class Address extends ValueObject<Address> {
     @Column(name = "POSTAL_CODE")
     private Integer postalCode;
 
-    @Pattern(regexp = "([A-Z]{2})", message = "{validation.country.message}")
+    @Pattern(regexp = "^([A-Z]{2})$", message = "{validation.country.message}")
     @Column(name = "COUNTRY")
     private String country;
 
