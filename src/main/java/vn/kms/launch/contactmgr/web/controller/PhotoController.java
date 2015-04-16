@@ -33,64 +33,57 @@ import vn.kms.launch.contactmgr.service.PhotoService;
 @Controller
 @RequestMapping(value = "/api/photos")
 public class PhotoController {
+    @Autowired
+    private MultipartResolver multipartResolver;
 
-	// ext_name image allow upload format png, jpeg
-	//private static final String EXT_NAME[] = { "png", "jpeg" };
-	
-//	@Value("${contacts.photo.storage}")
-//	private String photoDir;
+    @Autowired
+    PhotoService uploadService;
 
-	@Autowired
-	private MultipartResolver multipartResolver;
+    @RequestMapping(value="/upload/{photoId}",method = POST)
+    public ResponseEntity <Photo> uploadPhoto( @PathVariable("photoId") int photoId,
+                                               @RequestParam ("file") MultipartFile file)
+        throws IOException {
 
-	@Autowired
-	PhotoService uploadService;
+        Photo res = null;
+        FileNameExtensionFilter filterImage;
+        filterImage = new FileNameExtensionFilter("file only","PNG","JPEG");
+        try {
+            res = uploadService.uploadImage( photoId,
+                    file.getInputStream(),
+                    file.getOriginalFilename(),
+                    file.getContentType());
+        } catch (Exception e) {
+            e.printStackTrace();
+            // TODO: handle exception
+        }
 
-	@RequestMapping(value="/upload/{photoId}",method = POST)
-	public ResponseEntity <Photo> uploadPhoto( @PathVariable("photoId") int photoId,
-											   @RequestParam ("file") MultipartFile file)
-			throws IOException {
+        return new ResponseEntity<Photo>(res, HttpStatus.CREATED);
+    }
 
-		Photo res = null;
-		FileNameExtensionFilter filterImage;	
-		filterImage = new FileNameExtensionFilter("file only","PNG","JPEG");
-		try {
-			res = uploadService.uploadImage( photoId,
-					file.getInputStream(),
-					file.getOriginalFilename(),
-					file.getContentType());
-		} catch (Exception e) {
-			e.printStackTrace();
-			// TODO: handle exception
-		}
-		
-		return new ResponseEntity<Photo>(res, HttpStatus.CREATED);
-	}
+    /*
+     * Show all images on Dialog;
+     * 
+     * */
+    @RequestMapping(method = GET)
+    public @ResponseBody ResponseEntity<Photo> getAllPhoto(@PathVariable("photoId") int photoId, HttpServletRequest request,
+                                                           HttpServletResponse response) {
 
-	/*
-	 * Show all images on Dialog;
-	 * */
-	@RequestMapping(method = GET)
-	public @ResponseBody ResponseEntity<Photo> getAllPhoto(@PathVariable("photoId") int photoId, HttpServletRequest request,
-												HttpServletResponse response) {
-		
-		Photo photo = (Photo) uploadService.getAllPhoto(photoId);
+        Photo photo = (Photo) uploadService.getAllPhoto(photoId);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        //ArrayNode arrayNode = JSONUtil.
         List<Photo> list = uploadService.getAllPhoto(photoId);
-        
-		return new ResponseEntity<Photo>(photo,HttpStatus.OK);
-           
-	}
 
-	@RequestMapping(value = "/{photoId}", method = GET)
-	public void getPhoto(HttpServletResponse response,
-						@PathVariable("photoId") int photoId) throws IOException {
-		
-		response.setStatus(HttpStatus.FOUND.value());
+        return new ResponseEntity<Photo>(photo,HttpStatus.OK);
 
-		Photo res = uploadService.getFile(photoId);
-		response.setContentType(res.getContentType());
-	}
+    }
+
+    @RequestMapping(value = "/{photoId}", method = GET)
+    public void getPhoto(HttpServletResponse response,
+                         @PathVariable("photoId") int photoId) throws IOException {
+
+        response.setStatus(HttpStatus.FOUND.value());
+
+        Photo res = uploadService.getFile(photoId);
+        response.setContentType(res.getContentType());
+    }
 }

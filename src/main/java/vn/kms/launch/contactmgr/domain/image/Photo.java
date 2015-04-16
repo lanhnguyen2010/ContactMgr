@@ -10,50 +10,49 @@ import vn.kms.launch.contactmgr.domain.Entity;
 @javax.persistence.Entity
 @Table(name = "IMAGES")
 public class Photo extends Entity {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     @Column(name = "ID", insertable = false, updatable = false)
     private Integer id;
 
-	@Column(name = "PATH_FULL")
-	private String pathFull;
-	
-	@Column(name = "FILE_NAME")
-	private String fileName;
-	
-	@Column(name = "CONTENT_TYPE")
-	private String ContentType;
-	
+    @Column(name = "PATH_FULL")
+    private String pathFull;
 
-	public Integer getId() {
-		return id;
-	}
+    @Column(name = "FILE_NAME")
+    private String fileName;
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    @Column(name = "CONTENT_TYPE")
+    private String ContentType;
 
-	public String getPathFull( String pathFull) {
-		return pathFull;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public void setPathFull(String pathFull) {
-		this.pathFull = pathFull;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public String getFileName() {
-		return fileName;
-	}
+    public String getPathFull( String pathFull) {
+        return pathFull;
+    }
 
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-	}
+    public void setPathFull(String pathFull) {
+        this.pathFull = pathFull;
+    }
 
-	public String getContentType() {
-		return ContentType;
-	}
+    public String getFileName() {
+        return fileName;
+    }
 
-	public void setContentType(String contentType) {
-		ContentType = contentType;
-	}
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public String getContentType() {
+        return ContentType;
+    }
+
+    public void setContentType(String contentType) {
+        ContentType = contentType;
+    }
 }
