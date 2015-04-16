@@ -4,21 +4,21 @@
     <hr>
     
     <form name="user_form" novalidate class="form-horizontal"
-        role="form" ng-submit="searchUsers(1)">
+        role="form" ng-submit="searchUsers()">
         <div class="container">
             <div class="row">
                 <div class="form-group col-md-6">
                 <label for="firstname"class="control-label col-md-3"
-                    translate="user.user-field.username"></label>
+                    translate="user.search-form.username">Username</label>
                     <div class="col-md-9">
-                        <input type="text" name="firstName" class="form-control" ng-model="filter.userName">
+                        <input type="text" name="firstName" class="form-control" ng-model="criteria.userName">
                     </div>
                 </div>
                 <div class="form-group col-md-6">
                 <label for="lastname"class="control-label col-md-3"
-                    translate="user.user-field.email"></label>
+                    translate="user.search-form.email">Email</label>
                     <div class="col-md-9">
-                        <input type="text" name="email" class="form-control" ng-model="filter.email">
+                        <input type="text" name="email" class="form-control" ng-model="criteria.email">
                     </div>
                 </div>
             </div>
@@ -26,24 +26,21 @@
             <div class="row">
                 <div class="form-group col-md-6">
                     <label for="name"class="control-label col-md-3"
-                        translate="user.user-field.firstlastname">
-                    </label>
+                        translate="user.search-form.firstlastname">First Name</label>
                     <div class="col-md-9">
-                        <input type="text" name="firstlastname" class="form-control" ng-model="filter.firstlastName">
+                        <input type="text" name="firstlastname" class="form-control" ng-model="criteria.firstlastName">
                     </div>
                 </div>
                 <div class="form-group col-md-6">
                     <label class="control-label col-md-3"
-                        translate="user.user-field.createdfrom">
-                    </label>
+                        translate="user.search-form.createdfrom">Created From</label>
                     <div class="col-md-4">
-                        <input type="date" placeholder="MM/DD/YYYY h:m A"  name="createdFrom" class="form-control" ng-model="filter.createdFrom">
+                        <input type="date" placeholder="MM/DD/YYYY"  name="createdFrom" class="form-control" ng-model="criteria.createdFrom">
                     </div>
                     <label class="control-label col-md-1"
-                        translate="user.user-field.createdto">
-                    </label>
+                        translate="user.search-form.createdto">Created To</label>
                     <div class="col-md-4">
-                        <input type="date" value="yyyy-MM-dd" name="createdTo" class="form-control" ng-model="filter.createdTo">
+                        <input type="date" name="createdTo" class="form-control date" ng-model="criteria.createdTo">
                     </div>
                 </div>
             </div>
@@ -51,9 +48,9 @@
             <div class = "row">
                 <div class="form-group col-md-6">
                     <label for="assignedcompanies" class="control-label col-md-3"
-                        translate="user.user-field.assignedcompanies"></label>
+                        translate="user.search-form.assignedcompanies">Assigned Companies</label>
                     <div class="col-md-9">
-                        <select class="form-control" ng-model="filter.assignedCompanies">
+                        <select class="form-control" ng-model="criteria.assigned_Companies">
                             <option value=""></option>
                             <option ng-repeat="assignedcompany in assignedcompanies" value="{{assignedcompany.id}}">{{assignedcompany.name}}</option>
                         </select>
@@ -61,9 +58,9 @@
                 </div>
                 <div class="form-group col-md-6">
                     <label for="role" class="control-label col-md-3"
-                        translate="user.user-field.role"></label>
+                        translate="user.search-form.role">Role</label>
                     <div class="col-md-9">
-                        <select class="form-control" ng-model="filter.role">
+                        <select class="form-control" ng-model="criteria.role">
                             <option value=""></option>
                             <option ng-repeat="role in roles" value="{{role}}">{{role}}</option>
                         </select>
@@ -77,45 +74,47 @@
     </form>
     
     <hr>
-    <div ng-hide="users.length" translate="user.user-field.noresult">
-        
+    <div ng-show="searchClicked && !users.length" translate="user.search-result.noresult">
+        No result
     </div>
     <div ng-show="users.length" >
-        <div translate="user.user-field.result"></div>
+        <div translate="user.search-result.result">
+            Search Results
+        </div>
         <button class="btn btn-default pull-right delete-user-button"
                 translate="user.button.delete" 
                 ng-click="deleteUsers()" 
-                ng-disabled="!checkedIds.length">
+                ng-disabled="!selectedIds.length">
             Delete
         </button>
         <button class="btn btn-default pull-right activate-user-button"
                 translate="user.button.activate" 
                 ng-click="activateUsers()" 
-                ng-disabled="!checkedIds.length">
+                ng-disabled="!selectedIds.length">
             Activate
         </button>
         <button class="btn btn-default pull-right activate-user-button"
                 translate="user.button.inactivate" 
-                ng-click="inactivateUsers()" 
-                ng-disabled="!checkedIds.length">
+                ng-click="deactivateUsers()" 
+                ng-disabled="!selectedIds.length">
             Inactivate
         </button>
         <table ng-table="usersTableParams" class="table">
             <th>
-                <input type="checkbox" ng-model="checkboxes.checked" 
-                        id="select_all" name="filter-checkbox" value="" />
+                <input id="check_all" type="checkbox" ng-model="users.checked"
+                       ng-checked="users.checked" ng-click="toggleCheckAll()" />
             </th>
-            <th class="data-table-title" translate="user.user-field.username"></th>
-            <th class="data-table-title" translate="user.user-field.email"></th>
-            <th class="data-table-title" translate="user.user-field.firstname"></th>
-            <th class="data-table-title" translate="user.user-field.lastname"></th>
-            <th class="data-table-title" translate="user.user-field.role"></th>
-            <th class="data-table-title" translate="user.user-field.status"></th>
+            <th class="data-table-title" translate="user.search-result.username">Username</th>
+            <th class="data-table-title" translate="user.search-result.email">Email</th>
+            <th class="data-table-title" translate="user.search-result.firstname">First Name</th>
+            <th class="data-table-title" translate="user.search-result.lastname">Last Name</th>
+            <th class="data-table-title" translate="user.search-result.role">Role</th>
+            <th class="data-table-title" translate="user.search-result.status"></th>
             
             <tr ng-repeat="user in $data">
                 <td width="30" style="text-align: left"
                     header="'ng-table/headers/checkbox.html'">
-                    <input type="checkbox" ng-model="checkboxes.items[user.id]">
+                    <input type="checkbox" ng-model="user.checked" ng-checked="user.checked" />
                 </td>
                 <td data-title="'Username'">{{user.userName}}
                    <a href="a" data-toggle="modal" data-target="#myModal" ng-click="addUser(user)">{{}}</a>
@@ -124,7 +123,11 @@
                 <td data-title="'Last Name'">{{user.lastName}}</td>
                 <td data-title="'Email'">{{user.email}}</td>
                 <td data-title="'Role'">{{user.role}}</td>
-                <td data-title="'Status'" id="status" >{{user.active}}</td>
+                <td data-title="'Status'" >
+                    <p ng-show = "user.active" translate = "user.search-result.active">Active</p>
+                    <p ng-show = "!user.active" translate = "user.search-result.inactive">Inacitve</p>
+                </td>
+                
             </tr>
         </table>
     </div>

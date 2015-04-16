@@ -7,19 +7,26 @@
             "activate":"Kích hoạt",
             "inactivate":"Khóa"
         },
-        "user-field": {
+        "search-form": {
             "username": "Tên Tài Khoản",
             "firstlastname": "Tên/ Họ",
-            "firstname": "Tên",
-            "lastname": "Họ",
             "email": "E-mail",
             "role" : "Vai trò",
             "assignedcompanies": "Công ty chỉ định",
             "createdfrom": "Tạo Từ",
-            "createdto": "Đến",
+            "createdto": "Đến"
+         },
+        "search-result":{
+           "username": "Tên Tài Khoản",
             "result": "Kết quả tìm kiếm",
             "noresult": "Không tìm thấy tài khoản nào",
-            "status": "Trạng thái"
+            "firstname": "Tên",
+            "lastname": "Họ",
+            "email": "E-mail",
+            "role" : "Vai trò",
+            "status" : "Trạng thái",
+            "active": "Hoạt Động",
+            "inactive": "Đã Khóa"
          }
     }
 }
