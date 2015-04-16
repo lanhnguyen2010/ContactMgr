@@ -11,13 +11,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import vn.kms.launch.contactmgr.domain.Country;
+import vn.kms.launch.contactmgr.domain.CountryRepository;
 import vn.kms.launch.contactmgr.domain.Itemized;
 import vn.kms.launch.contactmgr.domain.contact.Company;
 import vn.kms.launch.contactmgr.domain.contact.CompanyRepository;
 import vn.kms.launch.contactmgr.domain.contact.Contact;
 import vn.kms.launch.contactmgr.domain.contact.ContactRepository;
 import vn.kms.launch.contactmgr.domain.contact.ContactSearchCriteria;
-import vn.kms.launch.contactmgr.domain.contact.CountryRepository;
 import vn.kms.launch.contactmgr.domain.contact.Work;
 import vn.kms.launch.contactmgr.util.EntityNotFoundException;
 import vn.kms.launch.contactmgr.util.SearchResult;
@@ -94,5 +94,20 @@ public class ContactService {
     
     public List<Country> getCountries(){
         return countryRepo.findAll();
+    }
+
+    public List<Company> getAllCompanies() {
+        return companyRepo.findAll();
+    }
+
+    public Company saveCompany(Company company, int id) {
+        //TODO: validate
+        //Set<ConstraintViolation<Contact>> violations = validator.validate(company);
+        final boolean isUpdate = company.getId() != null && company.getId() == id;
+        final boolean isCreate = id == 0;
+        if(company != null && ( isUpdate || isCreate)){
+            return companyRepo.save(company);
+        }
+        return null;
     }
 }
