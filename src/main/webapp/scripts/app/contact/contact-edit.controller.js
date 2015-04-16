@@ -3,6 +3,22 @@
 angular.module('contactmgrApp')
     .controller('EditContactController', function($scope, ContactService) {
         $scope.contact;
+        
+        $scope.companies;
+        
+        $scope.$watch('contact.work.companyId', function(result){
+            for(var c in $scope.companies){
+                if($scope.companies[c].id == $scope.contact.work.companyId){
+                    $scope.contact.work.company.message = $scope.companies[c].message;
+                    console.log( $scope.contact.work.company);
+                    break;
+                }
+            }
+        });
+        
+        $scope.countries;
+        
+        
         // save a contact
         $scope.saveContact = function(){
             console.log("Contact: " + $scope.contact.firstName);
@@ -15,4 +31,20 @@ angular.module('contactmgrApp')
 	                console.log("Error: " + status);
 	            });
          };
+         
+         $scope.getCompanies = function(){
+             ContactService.getCompanies()
+                 .success(function(data, status, headers, config) {
+                     $scope.companies = data;
+                 });
+         };
+         $scope.getCompanies();
+         
+         $scope.getCountries = function(){
+             ContactService.getCountries()
+                 .success(function(data, status, headers, config) {
+                 $scope.countries = data;
+             });
+         }
+         $scope.getCountries();
     });

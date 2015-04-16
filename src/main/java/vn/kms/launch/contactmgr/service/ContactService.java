@@ -3,12 +3,16 @@ package vn.kms.launch.contactmgr.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import scala.annotation.meta.getter;
+import vn.kms.launch.contactmgr.domain.Country;
 import vn.kms.launch.contactmgr.domain.Itemized;
 import vn.kms.launch.contactmgr.domain.contact.Company;
 import vn.kms.launch.contactmgr.domain.contact.CompanyRepository;
 import vn.kms.launch.contactmgr.domain.contact.Contact;
 import vn.kms.launch.contactmgr.domain.contact.ContactRepository;
 import vn.kms.launch.contactmgr.domain.contact.ContactSearchCriteria;
+import vn.kms.launch.contactmgr.domain.contact.CountryRepository;
 import vn.kms.launch.contactmgr.domain.contact.Work;
 import vn.kms.launch.contactmgr.domain.greeting.Greeting;
 import vn.kms.launch.contactmgr.util.EntityNotFoundException;
@@ -17,6 +21,7 @@ import vn.kms.launch.contactmgr.util.ValidationException;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
+
 import java.util.List;
 import java.util.Set;
 
@@ -28,6 +33,9 @@ public class ContactService {
 
     @Autowired
     private CompanyRepository companyRepo;
+    
+    @Autowired
+    private CountryRepository countryRepo;
 
     @Autowired
     private Validator validator;
@@ -84,5 +92,9 @@ public class ContactService {
         if (!violations.isEmpty()) {
             throw new ValidationException(violations.toArray(new ConstraintViolation[0]));
         }
+    }
+    
+    public List<Country> getCountries(){
+        return countryRepo.findAll();
     }
 }
