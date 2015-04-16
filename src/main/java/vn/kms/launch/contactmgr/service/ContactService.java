@@ -86,4 +86,5 @@ public class ContactService {
             throw new ValidationException(violations.toArray(new ConstraintViolation[0]));
         }
     }
+
 }
