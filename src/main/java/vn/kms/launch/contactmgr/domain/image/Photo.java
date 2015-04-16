@@ -8,7 +8,7 @@ import vn.kms.launch.contactmgr.domain.Entity;
  * Created by diule on April, 14;
  */
 @javax.persistence.Entity
-@Table(name = "IMAGE")
+@Table(name = "IMAGES")
 public class Photo extends Entity {
 	private static final long serialVersionUID = 1L;
 
