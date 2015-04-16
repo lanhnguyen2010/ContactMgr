@@ -1,6 +1,10 @@
 package vn.kms.launch.contactmgr.web.controller;
 
-import java.util.ArrayList;
+import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import static org.springframework.web.bind.annotation.RequestMethod.PUT;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -15,10 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
-import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 import vn.kms.launch.contactmgr.domain.contact.User;
 import vn.kms.launch.contactmgr.domain.search.UserSearchCriteria;
 import vn.kms.launch.contactmgr.service.UserService;

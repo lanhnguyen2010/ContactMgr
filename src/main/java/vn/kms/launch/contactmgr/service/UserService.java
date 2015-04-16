@@ -1,7 +1,6 @@
 package vn.kms.launch.contactmgr.service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -12,11 +11,10 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.validation.Valid;
 
-import org.hibernate.hql.internal.classic.WhereParser;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import vn.kms.launch.contactmgr.domain.contact.Role;
 import vn.kms.launch.contactmgr.domain.contact.User;
