@@ -22,4 +22,7 @@ angular.module('contactmgrApp')
         this.getCountries = function() {
             return $http.get("/api/countries");
         };
+        this.getViewContact = function(id) {
+            return $http.get("/api/contacts/"+id);
+        };
     });

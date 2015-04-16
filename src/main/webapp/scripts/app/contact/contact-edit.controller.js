@@ -1,9 +1,16 @@
 'use strict';
 
 angular.module('contactmgrApp')
-    .controller('EditContactController', function($scope, ContactService) {
+    .controller('EditContactController', function($scope,$stateParams,ContactService) {
+    	var contactId = $stateParams.id; 
         $scope.contact;
-        
+        function init(){
+        	ContactService.getViewContact(contactId).success(function(data) {
+        		  $scope.contact=data;
+			})
+			
+		};
+        init();
         $scope.companies;
         
         $scope.$watch('contact.work.companyId', function(result){
@@ -47,4 +54,14 @@ angular.module('contactmgrApp')
              });
          }
          $scope.getCountries();
+         $scope.viewContact=function(){
+        	 ContactService.getViewContact(1).success(function(data){
+        		 console.log("Error: " + data.firstName);
+        		 //$scope.contact=data;
+        	 });
+        	 
+         } 
+         $scope.getContactInfo = function(id){
+        	 
+         };
     });

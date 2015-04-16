@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="form-group col-sm-6">
                     <label for="name" class="control-label col-sm-3"
-                        translate="contact.search-form.name">Name</label>
+                        translate="contact.search-form.name" ">Name</label>
                     <div class="col-sm-9">
                         <input type="text" name="name" class="form-control" ng-model="criteria.name" />
                     </div>
@@ -85,7 +85,7 @@
                 <input id="check_all" type="checkbox" ng-model="contacts.checked"
                        ng-checked="contacts.checked" ng-click="toggleCheckAll()" />
             </th>
-            <th class="data-table-title" translate="contact.search-results.column.display-name">Display Name</th>
+            <th class="data-table-title" translate="contact.search-results.column.display-name"> Display Name</th>
             <th class="data-table-title" translate="contact.search-results.column.mobile">Mobile</th>
             <th class="data-table-title" translate="contact.search-results.column.email">E-mail</th>
             <th class="data-table-title" translate="contact.search-results.column.job-title">Job Title</th>
@@ -98,7 +98,7 @@
                     <input type="checkbox" ng-model="contact.checked" ng-checked="contact.checked" />
                 </td>
                 <td data-title="'Name'">
-                    <a href="">{{contact.displayName}}</a>
+                    <a  href="#/contact/edit/{{contact.id}}">{{contact.displayName}}</a>
                 </td>
                 <td data-title="'Mobile'">{{contact.mobile}}</td>
                 <td data-title="'Email'">{{contact.email}}</td>

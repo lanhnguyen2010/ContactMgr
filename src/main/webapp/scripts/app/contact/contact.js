@@ -24,7 +24,7 @@ angular.module('contactmgrApp')
             })
             .state('contact-edit', {
                 parent: 'site',
-                url: '/contact/edit',
+                url: '/contact/edit/:id',
                 data: {
                     roles: []
                 },
