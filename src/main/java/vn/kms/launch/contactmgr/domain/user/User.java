@@ -15,36 +15,44 @@ import vn.kms.launch.contactmgr.domain.Role;
 @Table(name = "USERS")
 public class User extends vn.kms.launch.contactmgr.domain.Entity {
 	private static final long serialVersionUID = 1L;
-	
-	@Column(name="USERNAME")
+
+	@Column(name = "USERNAME")
 	private String username;
-	
-	@Column(name="PASSWORD")
+
+	@Column(name = "PASSWORD")
 	private String password;
-	
-	@Column(name="FIRST_NAME")
-	private String firstname;
-	
-	@Column(name="LAST_NAME")
+
+	@Column(name = "FIRST_NAME")
+    private String firstname;
+
+	@Column(name = "LAST_NAME")
 	private String lastname;
-	
-	@Column(name="EMAIL")
+
+	@Column(name = "EMAIL")
 	private String email;
-	
-	@Enumerated(EnumType.STRING)
-	private Role role;
-	
-	@Column(name="EXPIRED_DATE")
+
+	@Column(name = "ROLE")
+	private String role;
+
+	@Column(name = "EXPIRED_DATE")
 	private Date expiredDate;
-	
-	@Column(name="ACTIVE", columnDefinition="INT(1)")
+
+	@Column(name = "ACTIVE", columnDefinition = "INT(1)")
 	private boolean active;
-	
-	@Column(name="LANGUAGES")
+
+	@Column(name = "LANGUAGE")
 	private String language;
-	
-	@Column(name="ASSIGNED_COMPANIES")
+
+	@Column(name = "ASSIGNED_COMPANIES")
 	private String assignedCompanies;
+	
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
 
 	public String getUsername() {
 		return username;
@@ -85,15 +93,7 @@ public class User extends vn.kms.launch.contactmgr.domain.Entity {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
-	public Role getRole() {
-		return role;
-	}
-
-	public void setRole(Role role) {
-		this.role = role;
-	}
-
+	
 	public Date getExpiredDate() {
 		return expiredDate;
 	}
@@ -129,5 +129,5 @@ public class User extends vn.kms.launch.contactmgr.domain.Entity {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
+
 }
