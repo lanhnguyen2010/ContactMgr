@@ -1,10 +1,13 @@
 package vn.kms.launch.contactmgr.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+
 import vn.kms.launch.contactmgr.domain.Item;
 import vn.kms.launch.contactmgr.domain.Itemized;
 import vn.kms.launch.contactmgr.domain.greeting.Greeting;
@@ -16,6 +19,7 @@ import vn.kms.launch.contactmgr.util.ValidationException;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -26,7 +30,7 @@ import java.util.Set;
 public class GreetingService {
     @Autowired
     private GreetingRepository greetingRepo;
-
+    
     @Autowired
     private Validator validator;
 

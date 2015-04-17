@@ -10,6 +10,7 @@ import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+
 public class PhotoUtils {
     private static final Logger LOG = LoggerFactory.getLogger(PhotoUtils.class);
 
@@ -23,6 +24,8 @@ public class PhotoUtils {
 
         File out = new File(pathFull);
         try {
+        
+        	
             FileUtils.copyInputStreamToFile(in, out);
             LOG.debug("End store file {}:", pathFull);
         } catch (Exception e) {

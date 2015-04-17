@@ -16,11 +16,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import vn.kms.launch.contactmgr.domain.contact.Company;
+import vn.kms.launch.contactmgr.domain.contact.CompanyRepository;
 import vn.kms.launch.contactmgr.domain.contact.Contact;
+import vn.kms.launch.contactmgr.domain.contact.ContactRepository;
 import vn.kms.launch.contactmgr.domain.contact.Work;
 import vn.kms.launch.contactmgr.domain.search.ContactSearchCriteria;
-import vn.kms.launch.contactmgr.repository.CompanyRepository;
-import vn.kms.launch.contactmgr.repository.ContactRepository;
 
 @Service
 @Transactional(readOnly = true)
@@ -126,7 +126,7 @@ public class ContactService {
      */
     @Transactional
     public int deleteContacts(int... ids) {
-        return contactRepo.deleteContacts(ids);
+        return contactRepo.deleteByIds(ids);
     }
 
     /**

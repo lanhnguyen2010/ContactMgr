@@ -65,9 +65,7 @@ public class Photo {
         this.contentType = contentType;
     }
 
-	public String toJson(){
-		return JSONUtil.toJSON(this);
-	}
+	
 	
     public Photo toDo() {
 
