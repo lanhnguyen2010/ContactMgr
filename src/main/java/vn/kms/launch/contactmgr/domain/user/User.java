@@ -17,14 +17,12 @@ public class User extends vn.kms.launch.contactmgr.domain.Entity {
     
     @NotEmpty(message = "{validation.not-empty.message}")
     @Size(max = 16, message = "{validation.maxUserName.message}")
-    @Pattern(regexp = "^([0-9]+[A-Z])$)", message = "{validation.UserName.message}")
+    @Pattern(regexp = "^([A-Za-z0-9]+)$", message = "{validation.UserName.message}")
     @Column(name="USERNAME")
     private String username;
     
     @NotEmpty(message = "{validation.not-empty.message}")
     @Size(min = 6, message = "{validation.minPassWord.message}")
-    @Pattern(regexp = "^((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%]))$", 
-             message = "{validation.PassWord.message}")
     @Column(name="PASSWORD")
     private String password;
     
