@@ -50,13 +50,13 @@ public class GreetingController {
     }
 
     @RequestMapping(method = GET)
-    public List<Greeting> getGreetings(@RequestParam(value="displayCode", required = false) String displayCode) {
+    public List<Greeting> getGreetings(@RequestParam(value = "displayCode", required = false) String displayCode) {
         return greetingService.getGreetings(displayCode);
     }
 
     @RequestMapping(value = "/{code}", method = GET)
     public ResponseEntity<Greeting> getGreeting(@PathVariable("code") String code,
-                                                @RequestParam(value="displayCode", required = false) String displayCode) {
+                                                @RequestParam(value = "displayCode", required = false) String displayCode) {
         Greeting greeting = greetingService.getGreeting(code, displayCode);
 
         if (greeting == null) {

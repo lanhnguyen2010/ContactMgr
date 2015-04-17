@@ -53,7 +53,7 @@ public class GreetingService {
     public boolean deleteGreeting(String code) {
         int effected = greetingRepo.deleteByCode(code);
 
-        return (effected > 0)? true : false;
+        return (effected > 0) ? true : false;
     }
 
     public void validateGreeting(Greeting greeting) throws ValidationException {

@@ -1,88 +1,94 @@
 package vn.kms.launch.contactmgr.domain.image;
+
 import javax.persistence.Column;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 
-import com.fasterxml.jackson.databind.JsonNode;
 
 import vn.kms.launch.contactmgr.domain.Entity;
 
 /**
  * Created by diule on April, 14;
  */
+@JsonInclude
 @javax.persistence.Entity
-@Table(name = "IMAGE")
+@Table(name = "IMAGES")
 public class Photo {
 	
 
+    @Id
     @Column(name = "ID", insertable = false, updatable = false)
-    private String id;
+    private int id;
     
-	@Column(name = "PATH_FULL")
-	private String pathFull;
+    @Column(name = "FILE_NAME")
+    private String fileName;
+
+    @Column(name = "RELATIVE_PATH")
+    private String relativePath;
+
+    @Column(name = "CONTENT_TYPE")
+    private String contentType;
+
+    
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int photoId) {
+        this.id = photoId;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public String getRelativePath() {
+        return relativePath;
+    }
+
+    public void setRelativePath(String relativePath) {
+        this.relativePath = relativePath;
+    }
+
+    public String getContentType() {
+        return contentType;
+    }
+
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
+    }
+
+	public String toJson(){
+		return JSONUtil.toJSON(this);
+	}
 	
-	@Column(name = "FILE_NAME")
-	private String fileName;
-	
-	@Column(name = "CONTENT_TYPE")
-	private String ContentType;
-	
+    public Photo toDo() {
 
-	public String getId() {
-		return id;
-	}
+        Photo res = new Photo();
+        res.setId(id);
+        res.setFileName(fileName);
+        res.setRelativePath(relativePath);
+        res.setContentType(contentType);
 
-	public void setId(String photoId) {
-		this.id = photoId;
-	}
+        return res;
+    }
 
-	public String getPathFull( String pathFull) {
-		return pathFull;
-	}
+    public Photo() {
 
-	public void setPathFull(String pathFull) {
-		this.pathFull = pathFull;
-	}
+    }
 
-	public String getFileName() {
-		return fileName;
-	}
-
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-	}
-
-	public String getContentType() {
-		return ContentType;
-	}
-
-	public void setContentType(String contentType) {
-		ContentType = contentType;
-	}
-	
-//	public String toJson(){
-//		return JSONUtil.toJSON(this);
-//	}
-//	
-	public Photo toDo(){
-		
-		Photo res = new Photo();
-		res.setId(id);
-		res.setFileName(fileName);
-		res.setPathFull(pathFull);
-		res.setContentType(ContentType);
-		
-		return res;	
-	}
-	public Photo(){
-		
-	}
-	//GET object;
-	public Photo(Photo res){
-		id = res.getId();
-		fileName = res.fileName;
-		ContentType = res.ContentType;
-		pathFull = res.pathFull;
-		
-	}
+    //GET object;
+    public Photo(Photo res) {
+        id = res.getId();
+        fileName = res.fileName;
+        contentType = res.contentType;
+        relativePath = res.relativePath;
+    }
 }

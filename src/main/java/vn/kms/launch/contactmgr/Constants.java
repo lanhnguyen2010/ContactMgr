@@ -6,5 +6,7 @@ public final class Constants {
     public static final String SYSTEM_USER = "system";
 
     private Constants() {
+
     }
+    public static String RESOURCE_PATH = "resource.path";
 }

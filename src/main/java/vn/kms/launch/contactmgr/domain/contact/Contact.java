@@ -48,7 +48,7 @@ public class Contact extends vn.kms.launch.contactmgr.domain.Entity {
     private String gender;
 
     @Column(name = "BIRTHDAY")
-    @DateTimeFormat(pattern="yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birthday;
 
     @Embedded

@@ -21,33 +21,33 @@ import org.springframework.stereotype.Repository;
  * */
 
 @Repository
-public interface PhotoRepository extends JpaRepository <Photo, Integer> {
-	
-	/**
-	 * Query function getById;
-	 * return 0,
-	 * @param ids
-	 * @return
-	 */
+public interface PhotoRepository extends JpaRepository<Photo, Integer> {
+
+    /**
+     * Query function getById;
+     * return 0,
+     * @param ids
+     * @return
+     */
 //	@Modifying
 //	@Transactional
 //	@Query("select id from Image where id in (:ids)")
 //	//int get;
-	
-	/**
-	 * Query function getAll()
-	 * return getAllIds 
-	 * @param ids
-	 * @return
-	 */
-	
-	/**
-	 * Query function Create file upload;
-	 * return 
-	 * @param 
-	 * @return
-	 */
-	/*@Modifying
+
+    /**
+     * Query function getAll()
+     * return getAllIds
+     * @param ids
+     * @return
+     */
+
+    /**
+     * Query function Create file upload;
+     * return
+     * @param
+     * @return
+     */
+    /*@Modifying
 	@Transactional
 	@Query("insert from Contact where id in (:ids)")
 	int deleteContacts(@Param("ids")int... ids);*/

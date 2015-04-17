@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import vn.kms.launch.contactmgr.domain.image.Photo;
 import vn.kms.launch.contactmgr.repository.PhotoRepository;
-
-import javax.persistence.EntityManager;
+import vn.kms.launch.contactmgr.util.PhotoUtils;
+import vn.kms.launch.contactmgr.Constants;
 import javax.persistence.PersistenceContext;
 
 import org.hibernate.jpa.criteria.path.SetAttributeJoin;
@@ -21,54 +21,63 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import vn.kms.launch.contactmgr.repository.PhotoRepository;
-import vn.kms.launch.contactmgr.utils.PhotoUtils;
-
 
 @Service
 @Transactional
-public class PhotoService{
-
-	// Upload image;
+public class PhotoService {
+	private static final String EXT_NAME = "png";
+    // Upload image;
+    //@Autowired(required = true)
+    private PhotoRepository uploadRepository;
+		
 		//@Autowired(required = true)
-		private PhotoRepository uploadRepository;
+		//private Photo photo;
 		
-		
-		@Transactional
-		public Photo getPhotoId(int photoId){
+    @Transactional
+    public Photo getPhotoId(int photoId) {
 			
-			return uploadRepository.findOne(photoId);
-		}
+        return uploadRepository.findOne(photoId);
+    }
 		
-		@Transactional
-		public List<Photo> getAllPhoto(int photoId) {
-			return uploadRepository.findAll();
-        }
+//		@Transactional
+//		public List<Photo> getAllPhotoId(){
+//			return uploadRepository.findAll();
+//		}
 
-		@Transactional
-		public Photo uploadImage(@PathVariable String photoId,
-								  InputStream in,
-								  String originalFilename,
-								  String contentType) throws Exception {
+    @Transactional
+    public Photo uploadImage(@PathVariable int photoId,
+                             InputStream in,
+                             String originalFilename,
+                             String contentType) throws Exception {
 
-			String relativePath = String.format("%s/%s", photoId, UUID.randomUUID().toString());
+        //, UUID.randomUUID().toString()
+        String relativePath = String.format("%s", originalFilename);
 
-			String pathFull = getPathFull(relativePath);
+        String pathFull = getPathFull(relativePath);
 
-			PhotoUtils.storeFile(in, pathFull);
+        PhotoUtils.storeFile(in, pathFull);
 
-			Photo res = new Photo();
+        Photo res = new Photo();
 
-			res.setId(photoId);
-			res.setFileName(originalFilename);
-			res.setContentType(contentType);
-			res.setPathFull(relativePath);
-			
-			return uploadRepository.saveAndFlush(res.toDo());
-		}
+        res.setId(photoId);
+        res.setFileName(originalFilename);
+        res.setContentType(contentType);
+        res.setRelativePath(relativePath);
+        return uploadRepository.saveAndFlush(res.toDo());
+    }
 
-		
+    @Transactional
+    public List<Photo> getAllPhoto(int photoId) {
+        return uploadRepository.findAll();
+    }
 
-		private String getPathFull(String relativePath){
-			return String.format("%s/%s", relativePath);
-		}
+    //Path an images to store, follow user, demo fullPath;
+    
+   // String path = Constants.RESOURCE_PATH
+    
+    StringBuilder path = new StringBuilder("D:/Project/Challengs/launch-contact-manager/etc/photos");
+
+    private String getPathFull(String relativePath) {
+        return String.format("%s/%s", path, relativePath);
+    }
 }
