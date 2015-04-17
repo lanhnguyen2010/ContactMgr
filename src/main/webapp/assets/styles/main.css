@@ -139,3 +139,19 @@ Hide ng-cloak on page load, https://docs.angularjs.org/api/ng/directive/ngCloak
   text-align: left;
   vertical-align: middle;
 }
+#size-dialog{
+	font-size: 13px;
+}
+
+#mid-width .multiselect-container {
+    width: 200px;
+}
+
+// form validate
+.ng-invalid.ng-dirty {
+    border-color: red;
+}
+
+.ng-valid.ng-dirty {
+    border-color: green;
+}

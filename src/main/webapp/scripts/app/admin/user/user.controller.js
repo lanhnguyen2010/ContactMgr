@@ -7,103 +7,85 @@ angular.module('contactmgrApp').controller(
             function init() {
                 $scope.getCompanies();
                 $scope.getRoles();
+                $scope.initUser();
             }
             ;
-
-            $scope.user = {
-                "lastName" : "",
-                "expiredDate" : "",
-                "passWord" : "",
-                "updatedBy" : "",
-                "updatedAt" : "",
-                "id" : 0,
-                "createdBy" : "",
-                "email" : "",
-                "createdAt" : "",
-                "assignedcompanies" : "",
-                "active" : 0,
-                "role" : "",
-                "userName" : "",
-                "language" : "",
-                "firstName" : ""
-            };
-
-            $scope.filter = {
-                userName : '',
+            $scope.criteria = {
+                username : '',
                 firstlastName : '',
                 email : '',
                 role : '',
                 createdFrom : '',
                 createdTo : '',
-                assignedCompanies : ''
+                assignedCompanies : '',
+                pageIndex : 1,
+                pageSize : 10
             };
-
+            $scope.initUser = function() {
+                $scope.user = {
+                    "id" : "",
+                    "createdAt" : "",
+                    "createdBy" : "",
+                    "updatedAt" : "",
+                    "updatedBy" : "",
+                    "username" : "",
+                    "password" : "",
+                    "firstname" : "",
+                    "lastname" : "",
+                    "email" : "",
+                    "role" : "",
+                    "expiredDate" : "",
+                    "active" : false,
+                    "language" : "",
+                    "assignedCompanies" : ""
+                };
+                $scope.confirmPassword = '';
+                $scope.checkboxSelection = '1';
+            }
             var PAGE_SIZE = 10;
-            var isFristSearchClicked = false;
+            $scope.users = [];
+            $scope.searchClicked = false;
             $scope.currentPage = 1;
 
-            $scope.searchUsers = function(page) {
-                isFristSearchClicked = true;
+            $scope.searchUsers = function() {
                 if ($scope.isLoading) {
                     return;
                 }
-                $scope.isLoading = true;
 
-                UsersService.searchUsers($scope.filter, page, PAGE_SIZE)
-                        .success(function(data, status) {
-                            $scope.users = data['data'];
-                            for (var i = 0; i < $scope.users.length; i++) {
-                                if ($scope.users[i]['active'] == 1) {
-                                    $scope.users[i]['active'] = "Active";
-                                } else {
-                                    $scope.users[i]['active'] = "Inactive";
-                                }
-                            }
-                            $scope.total = data['totalItem'];
-                            $scope.isLoading = false;
-                            $scope.usersTableParams.reload();
-                        }).error(function(data, status) {
-                            console.log(status);
-                        });
+                $scope.searchClicked = true;
+                $scope.isLoading = true;
+                $scope.usersTableParams.reload();
             }
+
             $scope.usersTableParams = new ngTableParams({
-                page : 1, // Show the first page
                 count : 10, // Count per page
             }, {
                 counts : [],
                 getData : function($defer, params) {
-                    if (!isFristSearchClicked)
+                    if (!$scope.searchClicked)
                         return;
                     $scope.currentPage = params.page();
-                    UsersService.searchUsers($scope.filter, params.page(),
-                            PAGE_SIZE).success(function(data, status) {
-                        $scope.users = data['data'];
-                        for (var i = 0; i < $scope.users.length; i++) {
-                            if ($scope.users[i]['active'] == 1) {
-                                $scope.users[i]['active'] = "Active";
-                            } else {
-                                $scope.users[i]['active'] = "Inactive";
-                            }
-                        }
-                        console.log($scope.users)
-                        params.total(data['totalItem']);
-                        $defer.resolve($scope.users);
-                    }).error(function(data, status) {
-                        console.log(status);
+                    $scope.criteria.pageIndex = params.page();
+                    $scope.criteria.pageSize = 10;
+                    UsersService.searchUsers($scope.criteria).success(
+                            function(data, status) {
+                                $scope.users = data['items'];
+                                params.total(data['totalItem']);
+                                $defer.resolve($scope.users);
+                                $scope.isLoading = false;
+                            }).error(function(data, status) {
+                        console.log("Error", status);
                     });
 
                     $scope.checkboxes = {
                         'checked' : false,
                         items : {}
+
                     };
                     $scope.checkedIds = '';
                 }
             });
-            // select controller
-            $scope.selectedUser = {};
-            $scope.setSelectedUser = function(user) {
-                $scope.selectedUser = user;
-            };
+            $scope.selectedIds = [];
 
             function findAndRemove(array, property, value) {
                 $.each(array, function(index, result) {
@@ -116,20 +98,18 @@ angular.module('contactmgrApp').controller(
             // delete Users Controller
             $scope.deleteUsers = function() {
                 if (confirm("Do you want to delete?")) {
-                    UsersService.deleteUsers($scope.checkedIds).success(
+                    UsersService.deleteUsers($scope.selectedIds).success(
                             function(data, status) {
-                                console.log("Deleted " + data + " user(s)");
                                 $scope.usersTableParams.reload();
                             }).error(function(data, status) {
                         console.log("Error", status);
                     });
                 }
             };
-
             // activate Users Controller
             $scope.activateUsers = function() {
                 if (confirm("Do you want to Activate?")) {
-                    UsersService.activateUsers($scope.checkedIds).success(
+                    UsersService.activateUsers($scope.selectedIds).success(
                             function(data, status) {
                                 $scope.searchUsers($scope.currentPage);
                             }).error(function(data, status) {
@@ -137,10 +117,11 @@ angular.module('contactmgrApp').controller(
                     });
                 }
             };
+
             // inactivate users Controller
-            $scope.inactivateUsers = function() {
+            $scope.deactivateUsers = function() {
                 if (confirm("Do you want to Inactivate?")) {
-                    UsersService.inactivateUsers($scope.checkedIds).success(
+                    UsersService.deactivateUsers($scope.selectedIds).success(
                             function(data, status) {
                                 $scope.searchUsers($scope.currentPage);
                             }).error(function(data, status) {
@@ -148,57 +129,29 @@ angular.module('contactmgrApp').controller(
                     });
                 }
             };
-            $scope.checkboxes = {
-                'checked' : false,
-                items : {}
-            };
 
-            $scope.checkedIds = '';
+            $scope.selectedIds = [];
 
-            // watch for check all checkbox
-            $scope.$watch('checkboxes.checked', function(value) {
-                angular.forEach($scope.users, function(item) {
-                    if (angular.isDefined(item.id)) {
-                        $scope.checkboxes.items[item.id] = value;
-                    }
-                });
-            });
-
-            // watch for data checkboxes
-            $scope.$watch('checkboxes.items', function(values) {
-                if (!$scope.users) {
-                    return;
-                }
-
-                var checked = 0, unchecked = 0, total = $scope.users.length;
-
-                angular.forEach($scope.users, function(item) {
-                    checked += ($scope.checkboxes.items[item.id]) || 0;
-                    unchecked += (!$scope.checkboxes.items[item.id]) || 0;
+            // watch selected users
+            $scope.$watch('users|filter:{checked:true}', function(results) {
+                $scope.selectedIds = results.map(function(user) {
+                    return user.id;
                 });
 
-                if ((unchecked == 0) || (checked == 0)) {
-                    $scope.checkboxes.checked = (checked == total);
-                }
-
+                var count = $scope.selectedIds.length;
+                var total = $scope.users.length;
+                $scope.users.checked = (count == total);
                 // grayed checkbox
-                angular.element(document.getElementById("select_all")).prop(
-                        "indeterminate", (checked != 0 && unchecked != 0));
+                angular.element(document.getElementById('check_all')).prop(
+                        'indeterminate', (count > 0 && count < total));
 
-                // Create checked id list
-                $scope.checkedIds = '';
-                for ( var item in $scope.checkboxes.items) {
-                    if ($scope.checkboxes.items[item]) {
-                        $scope.checkedIds = $scope.checkedIds + item + ',';
-                    }
-                }
-
-                // Remove the final ','
-                if ($scope.checkedIds.length > 0) {
-                    $scope.checkedIds = $scope.checkedIds.substr(0,
-                            $scope.checkedIds.length - 1);
-                }
             }, true);
+            $scope.toggleCheckAll = function(e) {
+                var checked = (document.getElementById('check_all').checked);
+                for (var i = 0; i < $scope.users.length; i++) {
+                    $scope.users[i].checked = checked;
+                }
+            }
 
             $scope.getRoles = function() {
                 UsersService.getRoles().success(function(data, status) {
@@ -214,19 +167,61 @@ angular.module('contactmgrApp').controller(
                     console.log("Error get companies", status);
                 });
             }
-            // save user get from .html
+
             $scope.saveUser = function() {
-                UsersService.saveUser($scope.user);
-                console.log("User: " + $scope.user.id);
-            };
+                if($scope.checkboxSelection == "1"){
+                    $scope.user.active = true;
+                    console.log("value active true");
+                }else{
+                    $scope.user.active = false;
+                    console.log("value active false");
+                }
+                UsersService.saveUser($scope.user).success(
+                        function(data, status, headers, config) {
+                            console.log("Save user successfull!");
+                            window.alert("Save user successfull!");
+                            $scope.initUser();
+                        }).error(function(data, status, header, config) {
+                    console.log("Error: " + status);
+                    $scope.validator = data.error;
+                    window.alert("Can not save!");
+                });
 
-            $scope.setSelectedUser = function(user) {
+            };
+            //get value of user from search function and set value of this user to update
+            $scope.setUser = function(user) {
                 $scope.user = user;
+                console.log("Date: " + $scope.user.expiredDate);
+                if($scope.user.active==true){
+                    $scope.checkboxSelection = '1';
+                }else{
+                    $scope.checkboxSelection = '0';
+                }
             };
+            $scope.toggleMin = function() {
+                $scope.minDate = $scope.minDate ? null : new Date();
+              };
+              $scope.toggleMin();
 
-            $scope.initUser = function() {
-                $scope.user = [];
-            }
+              $scope.openCalendaFrom = function($event) {
+                $event.preventDefault();
+                $event.stopPropagation();
+                $scope.openedCalendaFrom = true;
+              };
+              $scope.openCalendaTo = function($event) {
+                  $event.preventDefault();
+                  $event.stopPropagation();
+                  $scope.openedCalendaTo = true;
+                };
+                $scope.open = function($event) {
+                    $event.preventDefault();
+                    $event.stopPropagation();
+                    $scope.opened = true;
+                  };
 
+              $scope.dateOptions = {
+                formatYear: 'yy',
+                startingDay: 1
+              };
             init();
-        });
+        })

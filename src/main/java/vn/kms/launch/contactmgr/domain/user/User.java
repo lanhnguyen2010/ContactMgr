@@ -4,133 +4,135 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.Table;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
-import vn.kms.launch.contactmgr.domain.Language;
-import vn.kms.launch.contactmgr.domain.Role;
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "USERS")
 public class User extends vn.kms.launch.contactmgr.domain.Entity {
-	private static final long serialVersionUID = 1L;
-
-	@Column(name = "USERNAME", nullable = false)
-	private String username;
-
-	@Column(name = "PASSWORD")
-	private String password;
-
-	@Column(name = "FIRST_NAME")
+    private static final long serialVersionUID = 1L;
+    
+    @NotEmpty(message = "{validation.not-empty.message}")
+    @Size(max = 16, message = "{validation.maxUserName.message}")
+    @Pattern(regexp = "^([A-Za-z0-9]+)$", message = "{validation.UserName.message}")
+    @Column(name="USERNAME")
+    private String username;
+    
+    @NotEmpty(message = "{validation.not-empty.message}")
+    @Size(min = 6, message = "{validation.minPassWord.message}")
+    @Column(name="PASSWORD")
+    private String password;
+    
+    @Size(max = 20, message = "{validation.maxName.message}")
+    @Column(name="FIRST_NAME")
     private String firstname;
+    
+    @Size(max = 20, message = "{validation.maxName.message}")
+    @Column(name="LAST_NAME")
+    private String lastname;
+    
+    @Column(name="EMAIL")
+    private String email;
+    
+    @Column(name="ROLE")
+    private String role;
+    
+    @Column(name="EXPIRED_DATE")
+    private Date expiredDate;
+    
+    @Column(name="ACTIVE", columnDefinition="INT(1)")
+    private boolean active;
+    
+    @Column(name="LANGUAGE")
+    private String language;
+    
+    @Column(name="ASSIGNED_COMPANIES")
+    private String assignedCompanies;
 
-	@Column(name = "LAST_NAME")
-	private String lastname;
+    public String getUsername() {
+        return username;
+    }
 
-	@Column(name = "EMAIL")
-	private String email;
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-	@Column(name = "ROLE")
-	private String role;
+    public String getPassword() {
+        return password;
+    }
 
-	@Column(name = "EXPIRED_DATE")
-	@DateTimeFormat(pattern="yyyy-MM-dd")
-	private Date expiredDate;
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	@Column(name = "ACTIVE", columnDefinition = "INT(1)")
-	private boolean active;
+    public String getFirstname() {
+        return firstname;
+    }
 
-	@Column(name = "LANGUAGE")
-	private String language;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
 
-	@Column(name = "ASSIGNED_COMPANIES")
-	private String assignedCompanies;
-	
-	public String getRole() {
-		return role;
-	}
+    public String getLastname() {
+        return lastname;
+    }
 
-	public void setRole(String role) {
-		this.role = role;
-	}
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
 
-	public String getUsername() {
-		return username;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public String getRole() {
+        return role;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public void setRole(String role) {
+        this.role = role;
+    }
 
-	public String getFirstname() {
-		return firstname;
-	}
+    public Date getExpiredDate() {
+        return expiredDate;
+    }
 
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
-	}
+    public void setExpiredDate(Date expiredDate) {
+        this.expiredDate = expiredDate;
+    }
 
-	public String getLastname() {
-		return lastname;
-	}
+    public boolean isActive() {
+        return active;
+    }
 
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
-	}
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public String getLanguage() {
+        return language;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	
-	public Date getExpiredDate() {
-		return expiredDate;
-	}
+    public void setLanguage(String language) {
+        this.language = language;
+    }
 
-	public void setExpiredDate(Date expiredDate) {
-		this.expiredDate = expiredDate;
-	}
+    public String getAssignedCompanies() {
+        return assignedCompanies;
+    }
 
-	public boolean isActive() {
-		return active;
-	}
+    public void setAssignedCompanies(String assignedCompanies) {
+        this.assignedCompanies = assignedCompanies;
+    }
 
-	public void setActive(boolean active) {
-		this.active = active;
-	}
-
-	public String getLanguage() {
-		return language;
-	}
-
-	public void setLanguage(String language) {
-		this.language = language;
-	}
-
-	public String getAssignedCompanies() {
-		return assignedCompanies;
-	}
-
-	public void setAssignedCompanies(String assignedCompanies) {
-		this.assignedCompanies = assignedCompanies;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
+    public static long getSerialversionuid() {
+        return serialVersionUID;
+    }
 }

@@ -69,6 +69,27 @@ java -jar contactmgr-[version].war
 ```
 java -jar contactmgr-[version].war --spring.profiles.active=prod
 ```
+## Connect database
+1. Run file contactmgr.sql in src/main/resources to create database
+```
+2. Configure the database connection. The database connection is configured in the files: application-dev.yml or application-prod.yml
+		db.url=[your database url]
+		db.username=[your username database]
+		db.password=[your username database]
+		db.driver=org.mariadb.jdbc.Driver
+Ex:
+        db.url=jdbc:mysql://localhost:3306/contacts_manager
+        db.username=root
+        db.password=123456
+        db.driver=org.mariadb.jdbc.Driver
+
+## Use flyway
+1. Run cmd and cd to db folder in your project
+2. If database  existed you must run command:
+> flyway clean
+> flyway baseline -Dflyway.baselineVersion=1 -Dflyway.baselineDescription="Base version" 
+3. Run : files .sql
+> flyway migrate
 
 [JDK 1.7]: http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html
 [Maven 3.3.x]: http://maven.apache.org/download.cgi

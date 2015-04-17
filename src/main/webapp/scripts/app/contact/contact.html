@@ -51,7 +51,7 @@
                     <label for="company" class="control-label col-sm-3"
                         translate="contact.search-form.company">Company</label>
                     <div class="col-sm-9">
-                        <select class="form-control" ng-model="filter.company">
+                        <select class="form-control" ng-model="criteria.company">
                             <option value=""></option>
                             <option ng-repeat="company in companies" value="{{company.name}}">
                                 {{company.name}}
@@ -60,7 +60,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="form-group">
                 <button type="submit" class="btn btn-default search-contact-button" translate="contact.button.search">
                     Search
@@ -86,7 +85,7 @@
                 <input id="check_all" type="checkbox" ng-model="contacts.checked"
                        ng-checked="contacts.checked" ng-click="toggleCheckAll()" />
             </th>
-            <th class="data-table-title" translate="contact.search-results.column.display-name">Display Name</th>
+            <th class="data-table-title" translate="contact.search-results.column.display-name"> Display Name</th>
             <th class="data-table-title" translate="contact.search-results.column.mobile">Mobile</th>
             <th class="data-table-title" translate="contact.search-results.column.email">E-mail</th>
             <th class="data-table-title" translate="contact.search-results.column.job-title">Job Title</th>
@@ -99,7 +98,7 @@
                     <input type="checkbox" ng-model="contact.checked" ng-checked="contact.checked" />
                 </td>
                 <td data-title="'Name'">
-                    <a href="">{{contact.displayName}}</a>
+                    <a  href="#/contact/edit/{{contact.id}}">{{contact.displayName}}</a>
                 </td>
                 <td data-title="'Mobile'">{{contact.mobile}}</td>
                 <td data-title="'Email'">{{contact.email}}</td>
@@ -113,7 +112,6 @@
             </tr>
         </table>
     </div>
-
     <!-- Modal -->
     <div class="modal fade" id="companyInfoModal" tabindex="-1" role="dialog"
         aria-labelledby="companyInfoLabel" aria-hidden="true">

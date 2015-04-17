@@ -1,7 +1,6 @@
 package vn.kms.launch.contactmgr.domain.user;
 
 import java.util.Date;
-import java.util.List;
 
 import vn.kms.launch.contactmgr.util.SearchCriteria;
 
