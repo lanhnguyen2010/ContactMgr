@@ -1,17 +1,19 @@
 package vn.kms.launch.contactmgr.domain.image;
-import javax.persistence.Column;
-import javax.persistence.Table;
+import java.util.Date;
 
-import vn.kms.launch.contactmgr.domain.Entity;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * Created by diule on April, 14;
  */
-@javax.persistence.Entity
+@Entity
 @Table(name = "IMAGES")
-public class Photo extends Entity {
-    private static final long serialVersionUID = 1L;
+public class Photo {
 
+	@Id
     @Column(name = "ID", insertable = false, updatable = false)
     private Integer id;
 
@@ -24,6 +26,9 @@ public class Photo extends Entity {
     @Column(name = "CONTENT_TYPE")
     private String ContentType;
 
+    @Column(name = "CREATED_AT")
+    private Date createdAt;
+
     public Integer getId() {
         return id;
     }
@@ -32,7 +37,7 @@ public class Photo extends Entity {
         this.id = id;
     }
 
-    public String getPathFull( String pathFull) {
+	public String getPathFull( String pathFull) {
         return pathFull;
     }
 
@@ -55,4 +60,12 @@ public class Photo extends Entity {
     public void setContentType(String contentType) {
         ContentType = contentType;
     }
+
+    public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
 }

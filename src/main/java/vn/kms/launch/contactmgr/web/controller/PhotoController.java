@@ -1,5 +1,7 @@
 package vn.kms.launch.contactmgr.web.controller;
 
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartResolver;
 
+import vn.kms.launch.contactmgr.domain.contact.Contact;
 import vn.kms.launch.contactmgr.domain.image.Photo;
 import vn.kms.launch.contactmgr.service.PhotoService;
 
@@ -59,13 +62,9 @@ public class PhotoController {
 
         return new ResponseEntity<Photo>(res, HttpStatus.CREATED);
     }
-
-    /*
-     * Show all images on Dialog;
-     * 
-     * */
+    
     @RequestMapping(method = GET)
-    public @ResponseBody ResponseEntity<Photo> getAllPhoto(@PathVariable("photoId") int photoId, HttpServletRequest request,
+    public ResponseEntity<Photo> getAllPhoto(@PathVariable("photoId") int photoId, HttpServletRequest request,
                                                            HttpServletResponse response) {
 
         Photo photo = (Photo) uploadService.getAllPhoto(photoId);
@@ -74,9 +73,8 @@ public class PhotoController {
         List<Photo> list = uploadService.getAllPhoto(photoId);
 
         return new ResponseEntity<Photo>(photo,HttpStatus.OK);
-
     }
-
+    
     @RequestMapping(value = "/{photoId}", method = GET)
     public void getPhoto(HttpServletResponse response,
                          @PathVariable("photoId") int photoId) throws IOException {
