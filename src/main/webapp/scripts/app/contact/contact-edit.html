@@ -203,28 +203,28 @@
                     <label for="selectCompany" class="control-label col-sm-3" translate="contact-edit.work.company-name">Company Name</label>
                     <div class="col-sm-9" style="padding: 0px">
                         <div class="col-sm-6" style="margin-bottom: 10px;">
-	                         <select class="form-control" id = "selectCompany" ng-model="contact.work.companyId"
-	                             ng-options="company.id as company.name for company in companies">
-	                         </select>
-	                     </div>
-	                    <div class="col-sm-3" style="margin-bottom: 10px">
-	                        <button a href="" class="btn btn-default"
-	                            translate="contact-edit.button.edit-company" 
-	                            ng-disabled="hasSelectedCompany() === false"
-	                            ng-click="openDialogUpdateCompany()">Edit</button>
-	                    </div>
-	                    <div class="col-sm-3">
-	                        <button class="btn btn-default"
-	                            translate="contact-edit.button.new-company"
-	                            ng-click="openDialogCreateCompany()">New</button>
-	                    </div>
+                             <select class="form-control" id = "selectCompany" ng-model="contact.work.companyId"
+                                 ng-options="company.id as company.name for company in companies">
+                             </select>
+                         </div>
+                        <div class="col-sm-3" style="margin-bottom: 10px">
+                            <button a href="" class="btn btn-default"
+                                translate="contact-edit.button.edit-company" 
+                                ng-disabled="hasSelectedCompany() === false"
+                                ng-click="openDialogUpdateCompany()">Edit</button>
+                        </div>
+                        <div class="col-sm-3">
+                            <button class="btn btn-default"
+                                translate="contact-edit.button.new-company"
+                                ng-click="openDialogCreateCompany()">New</button>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-sm-3"></div>
                     <div class="col-sm-9">
                     <img id="logo{{contact.id}}" ng-src="../../../photos/unknown.jpg"
-                            style="width : 70px; height : 70px; cursor: pointer; background-color: gray;" class="img-thumbnail">
+                            style="width : 70px; height : 70px; background-color: gray;" class="img-thumbnail">
                     </div>
                 </div>
                 <div class="form-group row">
@@ -425,26 +425,26 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-		                    <label for="selectCountry" class="control-label col-sm-3"
-		                        translate="contact-edit.home.country">Country</label>
-		                    <div class="col-sm-9">
-		                        <select class="form-control" id="selectCountry"
-		                            ng-model="selectedCompany.address.country"
-		                            ng-options="c.countryCode as c.country for c in countries">
-		                         </select>
-		                    </div>
+                            <label for="selectCountry" class="control-label col-sm-3"
+                                translate="contact-edit.home.country">Country</label>
+                            <div class="col-sm-9">
+                                <select class="form-control" id="selectCountry"
+                                    ng-model="selectedCompany.address.country"
+                                    ng-options="c.countryCode as c.country for c in countries">
+                                 </select>
+                            </div>
                 </div>
                         </div>
                     </div>
                     <div class="modal-footer">
                          <div class="col-md-6 col-xs-6">
-			                <button class="btn btn-default" style="float: right; width: 100px"
-			                    translate="contact-edit.button.save-company" ng-click="saveCompany()">Save</button>
-			            </div>
-			            <div class="col-md-6 col-xs-6">
-			                <button class="btn btn-default" style="width: 100px; float: left"
-			                    translate="contact-edit.button.cancel-company" data-dismiss="modal">Cancel</button>
-			            </div>
+                            <button class="btn btn-default" style="float: right; width: 100px"
+                                translate="contact-edit.button.save-company" ng-click="saveCompany()">Save</button>
+                        </div>
+                        <div class="col-md-6 col-xs-6">
+                            <button class="btn btn-default" style="width: 100px; float: left"
+                                translate="contact-edit.button.cancel-company" data-dismiss="modal">Cancel</button>
+                        </div>
                     </div>
                 </div>
             </div>
