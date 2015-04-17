@@ -16,13 +16,13 @@ public class User extends vn.kms.launch.contactmgr.domain.Entity {
     private static final long serialVersionUID = 1L;
     
     @NotEmpty(message = "{validation.not-empty.message}")
-    @Size(max = 16, message = "{validation.maxUserName.message}")
-    @Pattern(regexp = "^([A-Za-z0-9]+)$", message = "{validation.UserName.message}")
+	@Size(max = 16, message = "{validation.maxUserName.message}")
+	@Pattern(regexp = "^([A-Za-z0-9]+)$", message = "{validation.UserName.message}")
     @Column(name="USERNAME")
     private String username;
     
-    @NotEmpty(message = "{validation.not-empty.message}")
     @Size(min = 6, message = "{validation.minPassWord.message}")
+	@Pattern(regexp = "^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[@#$!%&]).{1,50}$", message = "{validation.PassWord.message}")
     @Column(name="PASSWORD")
     private String password;
     

@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import vn.kms.launch.contactmgr.domain.contact.Company;
+import vn.kms.launch.contactmgr.domain.contact.Work;
 import vn.kms.launch.contactmgr.domain.user.Role;
 import vn.kms.launch.contactmgr.domain.user.User;
 import vn.kms.launch.contactmgr.domain.user.UserRepository;
@@ -60,6 +62,8 @@ public class UserService {
             throw new EntityNotFoundException();
         }
         user.setId(id);
+        validateUser(user);
+        
         return userRepository.save(user);
     }
 
