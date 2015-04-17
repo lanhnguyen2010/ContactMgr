@@ -3,6 +3,7 @@ package vn.kms.launch.contactmgr.service;
 import java.io.InputStream;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,12 +11,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import vn.kms.launch.contactmgr.domain.image.Photo;
 import vn.kms.launch.contactmgr.domain.image.PhotoRepository;
 import vn.kms.launch.contactmgr.util.PhotoUtil;
+import vn.kms.launch.contactmgr.util.SearchResult;
 
 
 @Service
 @Transactional
 public class PhotoService{
-
+        
+        @Autowired
         private PhotoRepository uploadRepository;
 
         @Transactional
@@ -46,8 +49,18 @@ public class PhotoService{
         }
 
         @Transactional
-        public List<Photo> getAllPhoto(int photoId) {
-            return uploadRepository.findAll();
+        public SearchResult<Photo> getListPhotos(int page, int pageSize) {
+            List<Photo> result = uploadRepository.findAll();
+            int totalPhotos = result.size();
+            int toIndex = (pageSize * page) -1;
+            
+            if( toIndex > totalPhotos){
+                toIndex = totalPhotos;
+            }
+            List<Photo> photos = result.subList((page - 1) * pageSize, toIndex);
+            SearchResult<Photo> returnPhotos = new SearchResult<Photo>(null, photos, totalPhotos);
+            
+            return returnPhotos;
         }
         
         //Path an images to store;
