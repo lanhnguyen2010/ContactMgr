@@ -35,7 +35,7 @@ public class PhotoService{
 //			return uploadRepository.findAll();
 //		}
 		@Transactional
-		public Photo uploadImage(@PathVariable String photoId,
+		public Photo uploadImage(@PathVariable int photoId,
 								  InputStream in,
 								  String originalFilename,
 								  String contentType) throws Exception {
@@ -60,9 +60,10 @@ public class PhotoService{
 		public List<Photo> getAllPhoto(int photoId) {
 			return uploadRepository.findAll();
         }
-
+		
+		String path = ("/etc/photos");
 		private String getPathFull(String relativePath){
-			return String.format("%s/%s", relativePath);
+			return String.format("%s/%s",path, relativePath);
 		}
 
 }

@@ -6,9 +6,11 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.imageio.ImageIO;
+import javax.print.attribute.standard.Media;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,6 +19,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.apache.catalina.connector.Request;
 import org.apache.lucene.util.IOUtils;
+import org.bouncycastle.crypto.tls.ContentType;
+import org.json.JSONException;
 import org.noggit.JSONUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,7 +40,10 @@ import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.multipart.MultipartResolver;
 
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
 import java.lang.annotation.Annotation;
+
 import vn.kms.launch.contactmgr.domain.image.Photo;
 import vn.kms.launch.contactmgr.service.PhotoService;
 import vn.kms.launch.contactmgr.utils.PhotoUtils;
@@ -50,42 +57,51 @@ import vn.kms.launch.contactmgr.utils.PhotoUtils;
 public class PhotoController{
 
 
-	private static final String EXT_NAME[] = {"PNG","JPEG"};
+//	private static final String EXT_NAME[] = {"PNG","JPEG"};
+	private static final List<MediaType> FILTER_IMAGE = new ArrayList<MediaType>();
+	
+	static {
+		FILTER_IMAGE.add(MediaType.IMAGE_JPEG);
+		FILTER_IMAGE.add(MediaType.IMAGE_PNG);		
+	}
+	public static Boolean filterUpload(String contentType) {
+		
+		MediaType type = MediaType.valueOf(contentType);
+		return FILTER_IMAGE.contains(type);
+	}
 
 
 	//@Value("${upload.photos.storage}")
-	private String photoDir;
+//	private String photoDir;
 
-	//@Autowired
+	@Autowired
 	private MultipartResolver multipartResolver;
 
-	private HttpServletRequest request;
+//	private HttpServletRequest request;
 	
 
-	//@Autowired
+	@Autowired
 	PhotoService uploadService;
 
 	@RequestMapping(value="/upload/{photoId}",method = POST)
-	public ResponseEntity <Photo> uploadPhoto( @PathVariable("photoId") String photoId,
+	public @ResponseBody ResponseEntity<Photo> uploadPhoto( @PathVariable("photoId") int photoId,
 											   @RequestParam ("fileUpload") MultipartFile file)
 											    throws IOException, ServletException {
 		
 		Photo res = new Photo();
-		MultipartHttpServletRequest multipartRequest = multipartResolver.resolveMultipart(request);
-		//File photoFile = new File(photoDir, contactId + "." + EXT_NAME);
-
-		//MultipartFile file1 = MultipartRequest.
-		file= multipartRequest.getFile("file");	
-        File uploadFile = File.createTempFile("contact.", photoId); //Format image;
-        file.transferTo(uploadFile);
-        
-        File photoFile = new File(photoDir + "." + EXT_NAME);
+		
+		String contentTpye = file.getContentType();
+		if(!filterUpload(contentTpye))
+		{
+			//String node = new String("File Upload only .JPEG or .PNG");
+			return new ResponseEntity<Photo>(HttpStatus.PRECONDITION_FAILED);
+		}
 
 		try {
 			res = uploadService.uploadImage( photoId,
 					file.getInputStream(),
 					file.getOriginalFilename(),
-					file.getContentType());
+					contentTpye);
 		} catch (Exception e) {
 			e.printStackTrace();
 			// TODO: handle exception

@@ -1,10 +1,10 @@
 package vn.kms.launch.contactmgr.domain.image;
+
 import javax.persistence.Column;
 import javax.persistence.Table;
 
 import org.noggit.JSONUtil;
 
-import com.fasterxml.jackson.databind.JsonNode;
 
 import vn.kms.launch.contactmgr.domain.Entity;
 
@@ -12,12 +12,11 @@ import vn.kms.launch.contactmgr.domain.Entity;
  * Created by diule on April, 14;
  */
 @javax.persistence.Entity
-@Table(name = "IMAGE")
+@Table(name = "IMAGES")
 public class Photo {
-	private static final long serialVersionUID = 1L;
-
+	
     @Column(name = "ID", insertable = false, updatable = false)
-    private String id;
+    private int id;
 
 	@Column(name = "PATH_FULL")
 	private String pathFull;
@@ -29,11 +28,11 @@ public class Photo {
 	private String ContentType;
 	
 
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(String photoId) {
+	public void setId(int photoId) {
 		this.id = photoId;
 	}
 
@@ -83,7 +82,6 @@ public class Photo {
 		id = res.getId();
 		fileName = res.fileName;
 		ContentType = res.ContentType;
-		pathFull = res.pathFull;
-		
+		pathFull = res.pathFull;	
 	}
 }
