@@ -3,6 +3,7 @@ package vn.kms.launch.contactmgr.domain.image;
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -11,12 +12,12 @@ import org.noggit.JSONUtil;
 /**
  * Created by diule on April, 14;
  */
-@javax.persistence.Entity
+@Entity
 @Table(name = "IMAGES")
 public class Photo {
     
     @Id
-    @Column(name = "ID", insertable = false, updatable = false)
+    @Column(name = "ID")
     private int id;
 
     @Column(name = "PATH_FULL")
@@ -26,7 +27,7 @@ public class Photo {
     private String fileName;
     
     @Column(name = "CONTENT_TYPE")
-    private String ContentType;
+    private String contentType;
 
     @Column(name = "CREATED_AT")
     private Date createdAt;
@@ -39,7 +40,7 @@ public class Photo {
         this.id = photoId;
     }
 
-    public String getPathFull( String pathFull) {
+    public String getPathFull() {
         return pathFull;
     }
 
@@ -56,11 +57,11 @@ public class Photo {
     }
 
     public String getContentType() {
-        return ContentType;
+        return contentType;
     }
 
     public void setContentType(String contentType) {
-        ContentType = contentType;
+        this.contentType = contentType;
     }
 
     public Date getCreatedAt() {
@@ -81,7 +82,7 @@ public class Photo {
         res.setId(id);
         res.setFileName(fileName);
         res.setPathFull(pathFull);
-        res.setContentType(ContentType);
+        res.setContentType(contentType);
         
         return res;    
     }
@@ -92,7 +93,7 @@ public class Photo {
     public Photo(Photo res){
         id = res.getId();
         fileName = res.fileName;
-        ContentType = res.ContentType;
+        contentType = res.contentType;
         pathFull = res.pathFull;    
     }
 }

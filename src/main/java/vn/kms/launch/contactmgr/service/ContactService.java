@@ -19,6 +19,7 @@ import vn.kms.launch.contactmgr.domain.contact.ContactSearchCriteria;
 import vn.kms.launch.contactmgr.domain.contact.Country;
 import vn.kms.launch.contactmgr.domain.contact.CountryRepository;
 import vn.kms.launch.contactmgr.domain.contact.Work;
+import vn.kms.launch.contactmgr.domain.image.PhotoRepository;
 import vn.kms.launch.contactmgr.util.EntityNotFoundException;
 import vn.kms.launch.contactmgr.util.SearchResult;
 import vn.kms.launch.contactmgr.util.ValidationException;
@@ -35,6 +36,9 @@ public class ContactService {
     @Autowired
     private CountryRepository countryRepo;
 
+    @Autowired
+    private PhotoRepository photoRepo;
+    
     @Autowired
     private Validator validator;
 
@@ -102,8 +106,6 @@ public class ContactService {
 
     @Transactional
     public Company saveCompany(Company company, int id) {
-        //TODO: validate
-        //Set<ConstraintViolation<Contact>> violations = validator.validate(company);
         if(company != null){
             if(id == 0){
                 // create a new company
