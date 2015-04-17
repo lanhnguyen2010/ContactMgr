@@ -145,6 +145,7 @@ Hide ng-cloak on page load, https://docs.angularjs.org/api/ng/directive/ngCloak
     border-color: red;
 }
 
-.ng-valid.ng-dirty {
-    border-color: green;
+.red {
+    border-color: red;
+    color: red;
 }

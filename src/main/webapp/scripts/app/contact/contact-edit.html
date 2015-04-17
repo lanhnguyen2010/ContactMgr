@@ -34,7 +34,8 @@
                              class="form-control"
                             style="margin-bottom: 10px"
                             placeholder="{{'contact-edit.placeholder.first-name'|translate}}"
-                            data-toggle="tooltip" data-placement="left" title="{{validator.firstName}}">
+                            data-toggle="tooltip" data-placement="left" title="{{validator.firstName}}"
+                            ng-class="{red: validator.firstName}">
                     </div>
                     <div class="col-sm-3" class="form-group">
                         <input ng-model="contact.middleName" type="text" 
@@ -46,7 +47,8 @@
                         <input ng-model="contact.lastName" type="text" 
                             class="form-control" style="margin-bottom: 10px"
                             placeholder="{{'contact-edit.placeholder.last-name'|translate}}"
-                            data-toggle="tooltip"  title="{{validator.lastName}}">
+                            data-toggle="tooltip"  title="{{validator.lastName}}"
+                            ng-class="{red: validator.lastName}">
                     </div>
                 </div>
                 <div class="form-group">
@@ -55,13 +57,15 @@
                     <div class="col-sm-9">
                         <div class="select-editable">
                             <select onchange="this.nextElementSibling.value=this.value"
-                                class="form-control" ng-model="contact.displayName">
+                                class="form-control" ng-model="contact.displayName"
+                                ng-class="{red: validator.displayName}">
                                 <option>{{contact.lastName +" "+contact.middleName +" "+contact.firstName}}</option>
                                 <option>{{contact.middleName +" "+contact.lastName +" "+contact.firstName}}</option>
                                 <option>{{contact.lastName +" "+contact.firstName +" "+contact.middleName}}</option>
                             </select>
                              <input class="form-control" type="text" name="format"
-                                ng-model="contact.displayName" data-toggle="tooltip" title="{{validator.displayName}}"/>
+                                ng-model="contact.displayName" data-toggle="tooltip" title="{{validator.displayName}}"
+                                 ng-class="{red: validator.displayName}"/>
                         </div>
                     </div>
                 </div>
@@ -72,7 +76,8 @@
                     <div class="col-sm-9">
                         <input ng-model="contact.email" type="text" 
                             class="form-control" data-toggle="tooltip" title="{{validator.email}}"
-                            placeholder="{{'contact-edit.placeholder.email'|translate}}">
+                            placeholder="{{'contact-edit.placeholder.email'|translate}}"
+                            ng-class="{red: validator.email}">
                     </div>
                 </div>
                 <div class="form-group">
@@ -81,7 +86,8 @@
                     <div class="col-sm-9">
                         <input ng-model="contact.mobile" type="text" 
                             class="form-control" data-toggle="tooltip" title="{{validator.mobile}}"
-                            placeholder="{{'contact-edit.placeholder.mobile'|translate}}">
+                            placeholder="{{'contact-edit.placeholder.mobile'|translate}}"
+                            ng-class="{red: validator.mobile}">
                     </div>
                 </div>
                 <div class="form-group">
@@ -131,8 +137,10 @@
                     <label class="control-label col-sm-3"
                         translate="contact-edit.home.zip-code">Zip Code</label>
                     <div class="col-sm-3" style="width: 100px;">
-                        <input ng-model="contact.home.address.postalCode" type="text" data-toggle="tooltip" title="{{validator.home.address.postalCode}}"
-                             class="form-control" maxlength="5">
+                        <input ng-model="contact.home.address.postalCode" data-toggle="tooltip" 
+                             title="{{validator.home.address.postalCode}}"
+                             ng-class="{red: validator.home.address.postalCode}"
+                             class="form-control" type="number">
                     </div>
                 </div>
                 <div class="form-group">
@@ -149,7 +157,8 @@
                     <label class="control-label col-sm-3"
                         translate="contact-edit.home.phone">Phone</label>
                     <div class="col-sm-9">
-                        <input ng-model="contact.home.phone" type="text"  data-toggle="tooltip" title="{{validator.home.phone}}"
+                        <input ng-model="contact.home.phone" type="text"  data-toggle="tooltip" 
+                            title="{{validator.home.phone}}" ng-class="{red: validator.home.phone}"
                             class="form-control">
                     </div>
                 </div>
@@ -157,7 +166,9 @@
                     <label class="control-label col-sm-3"
                         translate="contact-edit.home.fax">Fax</label>
                     <div class="col-sm-9">
-                        <input ng-model="contact.home.fax" type="text"  data-toggle="tooltip" title="{{validator.home.fax}}" data-toggle="tooltip" title="fax"
+                        <input ng-model="contact.home.fax" type="text"  data-toggle="tooltip" 
+                            title="{{validator.home.fax}}" data-toggle="tooltip" title="fax"
+                            ng-class="{red: validator.home.fax}"
                             class="form-control">
                     </div>
                 </div>
@@ -400,7 +411,7 @@
                                     translate="contact-edit.home.zip-code">Zip Code</label>
                                 <div class="col-sm-9">
                                    <input ng-model="selectedCompany.address.postalCode" type="number" class="form-control" 
-                                       id="inputZipCode" style="width: 100px" min="5" max="5">
+                                       id="inputZipCode" style="width: 100px">
                                 </div>
                             </div>
                             <div class="form-group row">

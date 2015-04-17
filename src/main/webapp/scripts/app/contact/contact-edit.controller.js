@@ -43,7 +43,7 @@ angular.module('contactmgrApp')
                                 }).error(function(data, status, headers,config) {
                                     // has error
                                      $scope.validator = data.errors;
-                                     console.log(data.errors.lastName)
+                                     console.log($scope.validator.home.address.postalCode);
                                 });
             } else {
                 ContactService.updateContact($scope.contact.id,
@@ -57,7 +57,7 @@ angular.module('contactmgrApp')
                             // has error
                             $scope.validator = data.errors;
                             console.log("Error Update: " + status);
-                            console.log(data.errors.email)
+                            console.log($scope.validator.home.address.postalCode);
                         });
             }
         };
