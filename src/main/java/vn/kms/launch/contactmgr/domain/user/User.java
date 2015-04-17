@@ -27,7 +27,7 @@ public class User extends vn.kms.launch.contactmgr.domain.Entity {
     @Column(name="PASSWORD")
     private String password;
     
-    @Size(max = 20, message = "{validation.maxName.message}")
+	@Size(max = 20, message = "{validation.maxName.message}")
     @Column(name="FIRST_NAME")
     private String firstname;
     
@@ -52,7 +52,7 @@ public class User extends vn.kms.launch.contactmgr.domain.Entity {
     
     @Column(name="ASSIGNED_COMPANIES")
     private String assignedCompanies;
-
+	
     public String getUsername() {
         return username;
     }

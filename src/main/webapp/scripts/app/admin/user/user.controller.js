@@ -30,6 +30,7 @@ angular.module('contactmgrApp').controller(
                     "updatedBy" : "",
                     "username" : "",
                     "password" : "",
+                    "passwordConfirm" : "",
                     "firstname" : "",
                     "lastname" : "",
                     "email" : "",
@@ -41,6 +42,10 @@ angular.module('contactmgrApp').controller(
                 };
                 $scope.confirmPassword = '';
                 $scope.checkboxSelection = '1';
+            }
+            
+            $scope.confirmPass=function(){
+            	return $scope.user.password === $scope.user.passwordConfirm;
             }
             var PAGE_SIZE = 10;
             $scope.users = [];
@@ -223,5 +228,6 @@ angular.module('contactmgrApp').controller(
                 formatYear: 'yy',
                 startingDay: 1
               };
+              
             init();
         })
