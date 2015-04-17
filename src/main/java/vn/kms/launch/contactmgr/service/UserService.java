@@ -22,6 +22,10 @@ import vn.kms.launch.contactmgr.domain.contact.Role;
 import vn.kms.launch.contactmgr.domain.contact.User;
 import vn.kms.launch.contactmgr.domain.search.UserSearchCriteria;
 import vn.kms.launch.contactmgr.repository.UserRepository;
+import vn.kms.launch.contactmgr.util.ValidationException;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
 
 @Service
 @Transactional(readOnly=true)
@@ -53,6 +57,8 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 	
+	@Autowired
+    private Validator validator;
 	
 	@Transactional
 	public User getUser(int id){
@@ -284,6 +290,13 @@ public class UserService {
 
 		return params;
 	}
+	
+	public void validateUser(User user) throws ValidationException {
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        if (!violations.isEmpty()) {
+            throw new ValidationException(violations.toArray(new ConstraintViolation[0]));
+        }
+    }
 
 
 }

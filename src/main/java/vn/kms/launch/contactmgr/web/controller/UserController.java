@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -22,6 +24,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 import vn.kms.launch.contactmgr.domain.contact.User;
 import vn.kms.launch.contactmgr.domain.search.UserSearchCriteria;
 import vn.kms.launch.contactmgr.service.UserService;
+import vn.kms.launch.contactmgr.util.ValidationException;
 
 @RestController
 @RequestMapping(value="/api/users")
@@ -125,6 +128,16 @@ public class UserController {
 		}
 		return new ResponseEntity<List<String>>(result, HttpStatus.OK);
 	}
+	
+	@RequestMapping(value = "/validate", method = POST)
+    public ResponseEntity<Object> validateUser(@RequestBody User user) {
+        try {
+            userService.validateUser(user);
+            return new ResponseEntity<>(OK);
+        } catch (ValidationException e) {
+            return new ResponseEntity<Object>(e.getErrors(), BAD_REQUEST);
+        }
+    }
 	
 	
 }

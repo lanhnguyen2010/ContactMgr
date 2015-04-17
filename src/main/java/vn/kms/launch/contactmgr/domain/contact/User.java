@@ -7,21 +7,33 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Table;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "USER")
 public class User extends vn.kms.launch.contactmgr.domain.Entity {
 	private static final long serialVersionUID = 1L;
 	
+	@NotEmpty(message = "{validation.not-empty.message}")
+	@Size(max = 16, message = "{validation.maxUserName.message}")
+	@Pattern(regexp = "^([0-9]+[A-Z])$)", message = "{validation.UserName.message}")
 	@Column(name="USERNAME")
 	private String userName;
 	
+	@NotEmpty(message = "{validation.not-empty.message}")
+	@Size(min = 6, message = "{validation.minPassWord.message}")
+	@Pattern(regexp = "^((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%]))$", message = "{validation.PassWord.message}")
 	@Column(name="PASSWORD")
 	private String passWord;
 	
+	@Size(max = 20, message = "{validation.maxName.message}")
 	@Column(name="FIRST_NAME")
 	private String firstName;
 	
+	@Size(max = 20, message = "{validation.maxName.message}")
 	@Column(name="LAST_NAME")
 	private String lastName;
 	
