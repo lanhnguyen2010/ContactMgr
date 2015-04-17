@@ -34,17 +34,19 @@
                              class="form-control"
                             style="margin-bottom: 10px"
                             placeholder="{{'contact-edit.placeholder.first-name'|translate}}"
-                            data-toggle="tooltip" title="{{validator.firstName}}">
+                            data-toggle="tooltip" data-placement="left" title="{{validator.firstName}}">
                     </div>
                     <div class="col-sm-3" class="form-group">
                         <input ng-model="contact.middleName" type="text" 
                             class="form-control" style="margin-bottom: 10px"
-                            placeholder="{{'contact-edit.placeholder.middle-name'|translate}} ">
+                            placeholder="{{'contact-edit.placeholder.middle-name'|translate}} "
+                            >
                     </div>
                     <div class="col-sm-3" class="form-group">
                         <input ng-model="contact.lastName" type="text" 
                             class="form-control" style="margin-bottom: 10px"
-                            placeholder="{{'contact-edit.placeholder.last-name'|translate}}">
+                            placeholder="{{'contact-edit.placeholder.last-name'|translate}}"
+                            data-toggle="tooltip"  title="{{validator.lastName}}">
                     </div>
                 </div>
                 <div class="form-group">
