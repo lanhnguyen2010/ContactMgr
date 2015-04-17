@@ -1,4 +1,4 @@
-package vn.kms.launch.contactmgr.utils;
+package vn.kms.launch.contactmgr.util;
 
 import java.io.File;
 import java.io.FileInputStream;

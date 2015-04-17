@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import vn.kms.launch.contactmgr.domain.image.Photo;
 import vn.kms.launch.contactmgr.repository.PhotoRepository;
-import vn.kms.launch.contactmgr.utils.PhotoUtils;
-
+import vn.kms.launch.contactmgr.util.PhotoUtils;
+import vn.kms.launch.contactmgr.Constants;
 
 @Service
 @Transactional
 public class PhotoService {
-
+	private static final String EXT_NAME = "png";
     // Upload image;
     //@Autowired(required = true)
     private PhotoRepository uploadRepository;
@@ -37,7 +37,7 @@ public class PhotoService {
                              String contentType) throws Exception {
 
         //, UUID.randomUUID().toString()
-        String relativePath = String.format("%s/%s", photoId, photoId + ".png");
+        String relativePath = String.format("%s", originalFilename);
 
         String pathFull = getPathFull(relativePath);
 
@@ -48,8 +48,7 @@ public class PhotoService {
         res.setId(photoId);
         res.setFileName(originalFilename);
         res.setContentType(contentType);
-        res.setPathFull(relativePath);
-
+        res.setRelativePath(relativePath);
         return uploadRepository.saveAndFlush(res.toDo());
     }
 
@@ -59,10 +58,12 @@ public class PhotoService {
     }
 
     //Path an images to store, follow user, demo fullPath;
-    String path = ("D:/Project/Challengs/launch-contact-manager/etc/photos");
+    
+   // String path = Constants.RESOURCE_PATH
+    
+    StringBuilder path = new StringBuilder("D:/Project/Challengs/launch-contact-manager/etc/photos");
 
     private String getPathFull(String relativePath) {
         return String.format("%s/%s", path, relativePath);
     }
-
 }

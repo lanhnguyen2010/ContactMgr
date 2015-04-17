@@ -4,3 +4,4 @@ spring:
         username: contactmgr
         password: contactmgr123
         driver-class-name: org.mariadb.jdbc.Driver
+        

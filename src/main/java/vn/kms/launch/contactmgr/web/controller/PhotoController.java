@@ -45,7 +45,7 @@ import java.lang.annotation.Annotation;
 
 import vn.kms.launch.contactmgr.domain.image.Photo;
 import vn.kms.launch.contactmgr.service.PhotoService;
-import vn.kms.launch.contactmgr.utils.PhotoUtils;
+import vn.kms.launch.contactmgr.util.PhotoUtils;
 
 /**
  * Created by diule on 4/14/2015.
