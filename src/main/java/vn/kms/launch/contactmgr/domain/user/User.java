@@ -8,6 +8,8 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Table;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import vn.kms.launch.contactmgr.domain.Language;
 import vn.kms.launch.contactmgr.domain.Role;
 
@@ -35,6 +37,7 @@ public class User extends vn.kms.launch.contactmgr.domain.Entity {
 	private String role;
 
 	@Column(name = "EXPIRED_DATE")
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date expiredDate;
 
 	@Column(name = "ACTIVE", columnDefinition = "INT(1)")
