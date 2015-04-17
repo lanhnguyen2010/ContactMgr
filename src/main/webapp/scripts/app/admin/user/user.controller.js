@@ -46,7 +46,16 @@ angular.module('contactmgrApp').controller(
             $scope.users = [];
             $scope.searchClicked = false;
             $scope.currentPage = 1;
-
+            $scope.selectedCompanies = "";
+            $scope.companysetting = {
+                enableSearch : true,
+                scrollable : true,
+                displayProp : 'name',
+                buttonClasses : 'form-control'
+            };
+            $scope.selectcompaniestext = {
+                buttonDefaultText : 'Select Assigned Companies'
+            };
             $scope.searchUsers = function() {
                 if ($scope.isLoading) {
                     return;
@@ -167,12 +176,12 @@ angular.module('contactmgrApp').controller(
                     console.log("Error get companies", status);
                 });
             }
-
+            // save user
             $scope.saveUser = function() {
-                if($scope.checkboxSelection == "1"){
+                if ($scope.checkboxSelection == "1") {
                     $scope.user.active = true;
                     console.log("value active true");
-                }else{
+                } else {
                     $scope.user.active = false;
                     console.log("value active false");
                 }
@@ -181,47 +190,54 @@ angular.module('contactmgrApp').controller(
                             console.log("Save user successfull!");
                             window.alert("Save user successfull!");
                             $scope.initUser();
-                        }).error(function(data, status, header, config) {
-                    console.log("Error: " + status);
-                    $scope.validator = data.error;
-                    window.alert("Can not save!");
-                });
+                        }).error(
+                        function(data, status, header, config) {
+                            console.log("Error: " + status);
+                            $scope.validator = data.errors;
+                            window.alert("Can not save!"
+                                    + $scope.validator.username + " "
+                                    + $scope.validator.password);
+                        });
 
             };
-            //get value of user from search function and set value of this user to update
+            // get value of user from search function and set value of this user
+            // to update
             $scope.setUser = function(user) {
                 $scope.user = user;
                 console.log("Date: " + $scope.user.expiredDate);
-                if($scope.user.active==true){
+                if ($scope.user.active == true) {
                     $scope.checkboxSelection = '1';
-                }else{
+                } else {
                     $scope.checkboxSelection = '0';
                 }
             };
             $scope.toggleMin = function() {
                 $scope.minDate = $scope.minDate ? null : new Date();
-              };
-              $scope.toggleMin();
+            };
+            $scope.toggleMin();
 
-              $scope.openCalendaFrom = function($event) {
+            $scope.openCalendaFrom = function($event) {
                 $event.preventDefault();
                 $event.stopPropagation();
                 $scope.openedCalendaFrom = true;
-              };
-              $scope.openCalendaTo = function($event) {
-                  $event.preventDefault();
-                  $event.stopPropagation();
-                  $scope.openedCalendaTo = true;
-                };
-                $scope.open = function($event) {
-                    $event.preventDefault();
-                    $event.stopPropagation();
-                    $scope.opened = true;
-                  };
+            };
+            $scope.openCalendaTo = function($event) {
+                $event.preventDefault();
+                $event.stopPropagation();
+                $scope.openedCalendaTo = true;
+            };
+            $scope.open = function($event) {
+                $event.preventDefault();
+                $event.stopPropagation();
+                $scope.opened = true;
+            };
 
-              $scope.dateOptions = {
-                formatYear: 'yy',
-                startingDay: 1
-              };
+            $scope.dateOptions = {
+                formatYear : 'yy',
+                startingDay : 1
+            };
+            $scope.selectedCompanies = function(id) {
+                $scope.user.assignedCompanies += id;
+            };
             init();
         })
