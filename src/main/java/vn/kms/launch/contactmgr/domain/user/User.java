@@ -18,7 +18,7 @@ import vn.kms.launch.contactmgr.domain.Role;
 public class User extends vn.kms.launch.contactmgr.domain.Entity {
 	private static final long serialVersionUID = 1L;
 
-	@Column(name = "USERNAME")
+	@Column(name = "USERNAME", nullable = false)
 	private String username;
 
 	@Column(name = "PASSWORD")
