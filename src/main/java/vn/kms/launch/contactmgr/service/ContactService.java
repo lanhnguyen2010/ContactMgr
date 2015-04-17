@@ -95,4 +95,19 @@ public class ContactService {
     public List<Country> getCountries(){
         return countryRepo.findAll();
     }
+
+    public List<Company> getAllCompanies() {
+        return companyRepo.findAll();
+    }
+
+    public Company saveCompany(Company company, int id) {
+        //TODO: validate
+        //Set<ConstraintViolation<Contact>> violations = validator.validate(company);
+        final boolean isUpdate = company.getId() != null && company.getId() == id;
+        final boolean isCreate = id == 0;
+        if(company != null && ( isUpdate || isCreate)){
+            return companyRepo.save(company);
+        }
+        return null;
+    }
 }
