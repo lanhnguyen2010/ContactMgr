@@ -2,9 +2,12 @@ package vn.kms.launch.contactmgr.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +31,8 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 	
+	@Autowired
+    private Validator validator;
 	
 	@Transactional
 	public User getUser(int id){
@@ -77,6 +82,13 @@ public class UserService {
 	public SearchResult<User> searchUsers( UserSearchCriteria criteria){
 		return userRepository.searchByCriteria(criteria);
 	}
+	
+	public void validateUser(User user) throws ValidationException {
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        if (!violations.isEmpty()) {
+            throw new ValidationException(violations.toArray(new ConstraintViolation[0]));
+        }
+    }
 
 
 }
