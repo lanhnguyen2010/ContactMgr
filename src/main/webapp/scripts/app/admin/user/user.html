@@ -1,6 +1,7 @@
 <div ng-loak>
     <a href="" class="btn btn-default " data-toggle="modal"
-        data-target="#userModal" translate="user.button.add-user" ng-click="initUser()">Add user</a>
+        data-target="#userModal" translate="user.button.add-user"
+        ng-click="initUser()">Add user</a>
 
     <hr>
 
@@ -115,7 +116,7 @@
                     header="'ng-table/headers/checkbox.html'"><input
                     type="checkbox" ng-model="user.checked" ng-checked="user.checked" />
                 </td>
-                <td data-title="'Username'"><a href="a" data-toggle="modal"
+                <td data-title="'Username'"><a href="" data-toggle="modal"
                     data-target="#userModal" ng-click="setUser(user)">{{user.username}}</a>
                 </td>
                 <td data-title="'First Name'">{{user.firstname}}</td>
@@ -225,35 +226,45 @@
                                             <label for="expired_date" class="col-sm-5 control-label"
                                                 translate="user.field.ex-date">Expired Date</label>
                                             <div class="col-sm-7">
-                                                <input type="date" class="form-control" name="expired_date"
-                                                    ng-model="user.expiredDate" min="{{minDate| date: 'yyyy-MM-dd'}}">
+                                                <p class="input-group">
+                                                    <input type="text" class="form-control"
+                                                        datepicker-popup="{{format}}" ng-model="user.expiredDate"
+                                                        is-open="opened" min-date="minDate"
+                                                        max-date="'2015-06-22'" datepicker-options="dateOptions"
+                                                        date-disabled="disabled(date, mode)" ng-required="true"
+                                                        close-text="Close" /> <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-default"
+                                                            ng-click="open($event)">
+                                                            <i class="glyphicon glyphicon-calendar"></i>
+                                                        </button>
+                                                    </span>
+                                                </p>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                                <label for="active" class="col-sm-5 control-label"
-                                                    translate="user.field.active">Active</label>
-                                                <div class="col-sm-7">
-                                                    <input type="radio" name="active" ng-model="checkboxSelection" ng-value="1">
-                                                    <label for="yes" translate="user.field.yes-active">Yes </label> <input
-                                                        type="radio" name="active" ng-model="checkboxSelection" ng-value="0">
-                                                    <label for="no" class="control-label"
-                                                        translate="user.field.no-active">No </label>
-                                                </div>
+                                            <label for="active" class="col-sm-5 control-label"
+                                                translate="user.field.active">Active</label>
+                                            <div class="col-sm-7">
+                                                <input type="radio" name="active"
+                                                    ng-model="checkboxSelection" ng-value="1"> <label
+                                                    for="yes" translate="user.field.yes-active">Yes </label> <input
+                                                    type="radio" name="active" ng-model="checkboxSelection"
+                                                    ng-value="0"> <label for="no" class="control-label"
+                                                    translate="user.field.no-active">No </label>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-md-6 col-xs-6">
-                                            <button type="submit"
-                                                class="btn btn-primary save-user-button"
-                                                style="float: right; width: 80px" value="save"
-                                                translate="user.button.btn-save">Save</button>
-                                        </div>
-                                        <div class="col-md-6 col-xs-6">
-                                            <button type="button" class="btn btn-primary" ng-click="initUser()" 
-                                                style="width: 80px" value="cancel"
-                                                translate="user.button.btn-cancel" data-dismiss="modal">Cancel</button>
-                                        </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 col-xs-6">
+                                        <button type="submit" class="btn btn-primary save-user-button"
+                                            style="float: right; width: 80px" value="save"
+                                            translate="user.button.btn-save">Save</button>
+                                    </div>
+                                    <div class="col-md-6 col-xs-6">
+                                        <button type="button" class="btn btn-primary"
+                                            ng-click="initUser()" style="width: 80px" value="cancel"
+                                            translate="user.button.btn-cancel" data-dismiss="modal">Cancel</button>
                                     </div>
                                 </div>
                             </div>
@@ -261,5 +272,6 @@
                     </div>
                 </div>
             </div>
+        </div>
     </form>
 </div>

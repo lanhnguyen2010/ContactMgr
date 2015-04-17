@@ -183,6 +183,7 @@ angular.module('contactmgrApp').controller(
                             $scope.initUser();
                         }).error(function(data, status, header, config) {
                     console.log("Error: " + status);
+                    $scope.validator = data.error;
                     window.alert("Can not save!");
                 });
 
@@ -197,6 +198,30 @@ angular.module('contactmgrApp').controller(
                     $scope.checkboxSelection = '0';
                 }
             };
-            $scope.minDate = new Date();
+            $scope.toggleMin = function() {
+                $scope.minDate = $scope.minDate ? null : new Date();
+              };
+              $scope.toggleMin();
+
+              $scope.openCalendaFrom = function($event) {
+                $event.preventDefault();
+                $event.stopPropagation();
+                $scope.openedCalendaFrom = true;
+              };
+              $scope.openCalendaTo = function($event) {
+                  $event.preventDefault();
+                  $event.stopPropagation();
+                  $scope.openedCalendaTo = true;
+                };
+                $scope.open = function($event) {
+                    $event.preventDefault();
+                    $event.stopPropagation();
+                    $scope.opened = true;
+                  };
+
+              $scope.dateOptions = {
+                formatYear: 'yy',
+                startingDay: 1
+              };
             init();
         })
