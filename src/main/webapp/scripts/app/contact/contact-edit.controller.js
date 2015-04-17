@@ -57,7 +57,7 @@ angular.module('contactmgrApp')
                             // has error
                             $scope.validator = data.errors;
                             console.log("Error Update: " + status);
-                            console.log(data.errors.lastName)
+                            console.log(data.errors.email)
                         });
             }
         };
