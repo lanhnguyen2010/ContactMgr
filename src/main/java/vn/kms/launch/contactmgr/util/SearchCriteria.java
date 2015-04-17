@@ -1,7 +1,6 @@
 package vn.kms.launch.contactmgr.util;
 
 import com.fasterxml.jackson.annotation.JsonSetter;
-import org.springframework.data.domain.Sort;
 
 /**
  * Created by trungnguyen on 4/14/15.

@@ -146,3 +146,12 @@ Hide ng-cloak on page load, https://docs.angularjs.org/api/ng/directive/ngCloak
 #mid-width .multiselect-container {
     width: 200px;
 }
+
+// form validate
+.ng-invalid.ng-dirty {
+    border-color: red;
+}
+
+.ng-valid.ng-dirty {
+    border-color: green;
+}

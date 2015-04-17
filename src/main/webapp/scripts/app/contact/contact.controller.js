@@ -13,10 +13,11 @@ angular.module('contactmgrApp')
             jobTitle: '',
             department: '',
             company: '',
-            pageIndex: 1
+            pageIndex: 1,
+            pageSize: 10
         };
 
-        $scope.contacts = [];
+        $scope.contacts = 
         $scope.searchClicked = false;
         $scope.searchContacts = function() {
             if ($scope.isLoading) {
@@ -29,7 +30,7 @@ angular.module('contactmgrApp')
         }
 
         $scope.tableParams = new ngTableParams({
-            count: PAGE_SIZE
+            count: 10
         }, {
             counts: [],
             getData: function ($defer, params) {
@@ -44,7 +45,6 @@ angular.module('contactmgrApp')
                         params.total(data.totalItems);
                         $scope.contacts = data.items;
                         $defer.resolve(data.items);
-
                         $scope.isLoading = false;
                     })
                     .error(function(data, status) {

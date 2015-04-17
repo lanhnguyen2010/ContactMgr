@@ -1,5 +1,14 @@
 package vn.kms.launch.contactmgr.web.controller;
 
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.NO_CONTENT;
+import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import static org.springframework.web.bind.annotation.RequestMethod.PUT;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,14 +22,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.http.HttpStatus.NOT_FOUND;
-import static org.springframework.http.HttpStatus.NO_CONTENT;
-import static org.springframework.http.HttpStatus.OK;
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
-import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 import vn.kms.launch.contactmgr.domain.user.User;
 import vn.kms.launch.contactmgr.domain.user.UserSearchCriteria;
 import vn.kms.launch.contactmgr.service.UserService;
@@ -101,6 +102,16 @@ public class UserController {
         return new ResponseEntity<List<String>>(result, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/validate", method = POST)
+    public ResponseEntity<Object> validateUser(@RequestBody User user) {
+        try {
+            userService.validateUser(user);
+            return new ResponseEntity<>(OK);
+        } catch (ValidationException e) {
+            return new ResponseEntity<Object>(e.getErrors(), BAD_REQUEST);
+        }
+    }
+    
     private ResponseEntity<?> saveUser(User user, Integer id) {
         try {
             User savedContact = userService.saveUser(user, id);
@@ -112,15 +123,6 @@ public class UserController {
             returnObj.put("data", user);
             returnObj.put("errors", e.getErrors());
             return new ResponseEntity<>(returnObj, BAD_REQUEST);
-        }
-    }
-    @RequestMapping(value = "/validate", method = POST)
-    public ResponseEntity<Object> validateUser(@RequestBody User user) {
-        try {
-            userService.validateUser(user);
-            return new ResponseEntity<>(OK);
-        } catch (ValidationException e) {
-            return new ResponseEntity<Object>(e.getErrors(), BAD_REQUEST);
         }
     }
 }
