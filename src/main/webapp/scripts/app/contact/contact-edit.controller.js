@@ -1,40 +1,66 @@
 'use strict';
 
 angular.module('contactmgrApp')
-    .controller('EditContactController', function($scope, $stateParams, ContactService, ngTableParams) {
+    .controller('EditContactController', function($scope, $stateParams, ContactService) {
     	var contactId = $stateParams.id;
 
-    	$scope.images = ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg'];
+    	$scope.imageList = ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg'];
 
         $scope.uploadPhoto = function() {
             document.getElementById('imageUpload').click();
         };
 
         $scope.selectPhoto = function(imageURL) {
-            var avatar = document.getElementById('avatar' + contactId);
+            var avatar = document.getElementById(typePhoto + contactId);
             avatar.src = "../../../photos/" + imageURL; // address of img
             document.getElementById('closeButton').click();
         };
 
-        $scope.selectUploadPhoto = function() {
+        $scope.selectUploadPhoto = function(imageUpload) {
             if (!confirm('Are you sure you want to upload this photo?')) {
                 return;
             }
-            $scope.images.push('16.jpg');
-            $scope.selectPhoto('16.jpg');
+
+            var file = document.getElementById(imageUpload).files[0];
+            var formData = new FormData();
+            var aImage;
+            formData.append('file', file);
+
+            ContactService.uploadPhoto(contactId, formData)
+                .success(function(data, status) {
+                    aImage = data;
+                })
+                .error(function(data, status) {
+                });
+
+            $scope.selectPhoto(aImage);
         };
 
-        $scope.imageParams = new ngTableParams({
-            page: 1,
-            count: 11
-        },{
-            counts: [],
-            total: $scope.images.length,
-            getData: function($defer,params){
-                $scope.imagesPage = $scope.images.slice( (params.page() - 1) * params.count() , params.page() * params.count())
-                $defer.resolve($scope.images);
-            }
-        });
+        var typePhoto = 'avatar';
+        $scope.getPhotos = function(type) {
+            typePhoto = type;
+            $scope.maxSize = 11;
+            $scope.totalItems = 15;
+            $scope.currentPage = 1;
+            $scope.pageChanged();
+        }
+
+    	$scope.images;
+        $scope.pageChanged = function() {
+            console.log('Page changed to: ' + $scope.currentPage);
+            // TODO: this is for hard-code test
+            $scope.images = $scope.imageList.slice( ($scope.currentPage - 1) * $scope.maxSize , $scope.currentPage * $scope.maxSize);
+            /*
+            var pageIndex = params.page();
+            var pageSize = params.count();
+            ContactService.getPhotos(contactId, pageIndex, pageSize)
+                .success(function(data, status) {
+                    params.total(data.totalItems);
+                    $scope.images = data.items;
+                    $defer.resolve(data.items);
+                });
+            */
+        };
 
         $scope.contact;
         function init(){

@@ -40,6 +40,9 @@
     		"email":"vidu@abc",
     		"mobile":"+84 9079xxx",
     		"city":"Ho Chi Minh"
-    	}
+    	},
+        "photo": {
+            "title": "Tải hình lên"
+        }
     }
 }
