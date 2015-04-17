@@ -2,7 +2,6 @@ package vn.kms.launch.contactmgr.domain.image;
 import javax.persistence.Column;
 import javax.persistence.Table;
 
-import org.noggit.JSONUtil;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
@@ -12,22 +11,13 @@ import vn.kms.launch.contactmgr.domain.Entity;
  * Created by diule on April, 14;
  */
 @javax.persistence.Entity
-<<<<<<< HEAD
-@Table(name = "IMAGES")
-public class Photo extends Entity {
-
-	
-    @Column(name = "ID")
-    private Integer id;
-=======
 @Table(name = "IMAGE")
 public class Photo {
-	private static final long serialVersionUID = 1L;
+	
 
     @Column(name = "ID", insertable = false, updatable = false)
     private String id;
->>>>>>> ca9f332ad93f74520598c6339412620b7fee9bd9
-
+    
 	@Column(name = "PATH_FULL")
 	private String pathFull;
 	
@@ -70,10 +60,10 @@ public class Photo {
 		ContentType = contentType;
 	}
 	
-	public String toJson(){
-		return JSONUtil.toJSON(this);
-	}
-	
+//	public String toJson(){
+//		return JSONUtil.toJSON(this);
+//	}
+//	
 	public Photo toDo(){
 		
 		Photo res = new Photo();
