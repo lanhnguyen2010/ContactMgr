@@ -30,7 +30,7 @@
                     <label class="control-label col-sm-3"
                         translate="contact-edit.general.contact-name">Name</label>
                     <div class="col-sm-3" class="form-group">
-                        <input ng-model="contact.firstName" type="text"
+                        <input ng-model="contact.firstName" type="text" required
                              class="form-control"
                             style="margin-bottom: 10px"
                             placeholder="{{'contact-edit.placeholder.first-name'|translate}}"
@@ -70,7 +70,7 @@
                     <label class="control-label col-sm-3"
                         translate="contact-edit.general.email">Email</label>
                     <div class="col-sm-9">
-                        <input ng-model="contact.email" type="text" 
+                        <input ng-model="contact.email" 
                             class="form-control" data-toggle="tooltip" title="{{validator.email}}"
                             placeholder="{{'contact-edit.placeholder.email'|translate}}">
                     </div>
