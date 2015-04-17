@@ -1,43 +1,45 @@
 package vn.kms.launch.contactmgr.domain.image;
+
 import java.util.Date;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.noggit.JSONUtil;
 
 /**
  * Created by diule on April, 14;
  */
-@Entity
+@javax.persistence.Entity
 @Table(name = "IMAGES")
 public class Photo {
-
-	@Id
+    
+    @Id
     @Column(name = "ID", insertable = false, updatable = false)
-    private Integer id;
+    private int id;
 
     @Column(name = "PATH_FULL")
     private String pathFull;
-
+    
     @Column(name = "FILE_NAME")
     private String fileName;
-
+    
     @Column(name = "CONTENT_TYPE")
     private String ContentType;
 
     @Column(name = "CREATED_AT")
     private Date createdAt;
 
-    public Integer getId() {
+	public int getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setId(int photoId) {
+        this.id = photoId;
     }
 
-	public String getPathFull( String pathFull) {
+    public String getPathFull( String pathFull) {
         return pathFull;
     }
 
@@ -68,4 +70,29 @@ public class Photo {
 	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
 	}
+	
+    public String toJson(){
+        return JSONUtil.toJSON(this);
+    }
+    
+    public Photo toDo(){
+        
+        Photo res = new Photo();
+        res.setId(id);
+        res.setFileName(fileName);
+        res.setPathFull(pathFull);
+        res.setContentType(ContentType);
+        
+        return res;    
+    }
+    public Photo(){
+        
+    }
+    //GET object;
+    public Photo(Photo res){
+        id = res.getId();
+        fileName = res.fileName;
+        ContentType = res.ContentType;
+        pathFull = res.pathFull;    
+    }
 }

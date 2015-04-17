@@ -21,7 +21,7 @@ public class Entity implements Serializable {
     @Id
     @GeneratedValue
     @Column(name = "ID")
-    private Integer id;
+    private int id ;
 
     @DateTimeFormat(pattern ="yyyy-mm-dd")
     @Column(name = "CREATED_AT")
@@ -37,12 +37,12 @@ public class Entity implements Serializable {
     @Column(name = "UPDATED_BY")
     private String updatedBy;
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setId(int id) {
+        this.id= id;
     }
 
     public Date getCreatedAt() {
