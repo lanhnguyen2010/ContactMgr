@@ -13,6 +13,8 @@ angular.module('contactmgrApp')
         $scope.selectPhoto = function(imageURL) {
             var avatar = document.getElementById(typePhoto + contactId);
             avatar.src = "../../../photos/" + imageURL; // address of img
+            var avatar2 = document.getElementById(typePhoto + contactId + '_2');
+            avatar2.src = "../../../photos/" + imageURL; // address of img
             document.getElementById('closeButton').click();
         };
 
