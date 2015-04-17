@@ -1,9 +1,11 @@
 package vn.kms.launch.contactmgr.domain.image;
 
 import javax.persistence.Column;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.noggit.JSONUtil;
+
 
 
 import vn.kms.launch.contactmgr.domain.Entity;
@@ -15,6 +17,7 @@ import vn.kms.launch.contactmgr.domain.Entity;
 @Table(name = "IMAGES")
 public class Photo {
 	
+	@Id
     @Column(name = "ID", insertable = false, updatable = false)
     private int id;
 

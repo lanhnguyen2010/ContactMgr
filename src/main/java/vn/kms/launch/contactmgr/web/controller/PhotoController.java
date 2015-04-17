@@ -19,7 +19,6 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.apache.catalina.connector.Request;
 import org.apache.lucene.util.IOUtils;
-import org.bouncycastle.crypto.tls.ContentType;
 import org.json.JSONException;
 import org.noggit.JSONUtil;
 import org.springframework.beans.factory.annotation.Autowired;
