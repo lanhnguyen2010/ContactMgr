@@ -127,4 +127,12 @@ angular.module('contactmgrApp')
              $scope.selectedCompany = $scope.contact.work.company;
              $('#companyInfoModal').modal('show');
          };
+         
+         $scope.getTitleOfCompanyDialog = function(){
+             if($scope.hasSelectedCompany()){
+                 return 'contact-edit.work.edit-company';
+             } else {
+                 return 'contact-edit.work.create-company'
+             }
+         };
     });

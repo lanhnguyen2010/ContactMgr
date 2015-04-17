@@ -26,7 +26,8 @@
     		"website": "Website",
     		"job-title":"Job Title",
     		"department":"Department",
-    		"edit-company":"Edit Company"
+    		"edit-company":"Edit Company",
+    		"create-company":"Create Company"
     	},
     	"button": {
     		"edit-company":"Edit",
