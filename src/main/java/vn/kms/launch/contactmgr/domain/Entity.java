@@ -12,6 +12,8 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @MappedSuperclass
 public class Entity implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -19,14 +21,16 @@ public class Entity implements Serializable {
     @Id
     @GeneratedValue
     @Column(name = "ID")
-    private Integer id;
+    private Integer id ;
 
+    @DateTimeFormat(pattern ="yyyy-mm-dd")
     @Column(name = "CREATED_AT")
     private Date createdAt;
 
     @Column(name = "CREATED_BY")
     private String createdBy;
-
+    
+    @DateTimeFormat(pattern ="yyyy-mm-dd")
     @Column(name = "UPDATED_AT")
     private Date updatedAt;
 
@@ -38,7 +42,7 @@ public class Entity implements Serializable {
     }
 
     public void setId(Integer id) {
-        this.id = id;
+        this.id= id;
     }
 
     public Date getCreatedAt() {

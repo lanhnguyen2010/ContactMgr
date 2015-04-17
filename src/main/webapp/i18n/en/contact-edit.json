@@ -25,13 +25,17 @@
     		"message":"Message",
     		"website": "Website",
     		"job-title":"Job Title",
-    		"department":"Department"
+    		"department":"Department",
+    		"edit-company":"Edit Company",
+    		"create-company":"Create Company"
     	},
     	"button": {
     		"edit-company":"Edit",
     		"new-company": "New",
     		"save-contact":"Save",
-    		"cancel-contact":"Cancel"
+    		"cancel-contact":"Cancel",
+    		"save-company":"Save",
+            "cancel-company":"Cancel"
     	},
     	"placeholder":{
     		"first-name": "First Name",
@@ -40,6 +44,9 @@
     		"email":"example@abc",
     		"mobile":"+84 9079xxx",
     		"city":"Ho Chi Minh"
-    	}
+    	},
+        "photo": {
+            "title": "Upload Photos"
+        }
     }
 }

@@ -8,9 +8,10 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -18,25 +19,31 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Contact extends vn.kms.launch.contactmgr.domain.Entity {
     private static final long serialVersionUID = 1L;
 
-    @NotEmpty(message = "{validation.not-empty.message}")
+    @Size(max = 150, message = "{validation.size-150.message}")
+    @NotBlank(message = "{validation.not-empty.message}")
     @Column(name = "DISPLAY_NAME")
     private String displayName;
 
-    @NotEmpty(message = "{validation.not-empty.message}")
+    @Size(max = 50, message = "{validation.size-50.message}")
+    @NotBlank(message = "{validation.not-empty.message}")
     @Column(name = "FIRST_NAME")
     private String firstName;
-
+    
+    @Size(max = 50, message = "{validation.size-50.message}")
     @Column(name = "MIDDLE_NAME")
     private String middleName;
 
-    @NotEmpty(message = "{validation.not-empty.message}")
+    @Size(max = 50, message = "{validation.size-50.message}")
+    @NotBlank(message = "{validation.not-empty.message}")
     @Column(name = "LAST_NAME")
     private String lastName;
 
+    @Size(max = 255, message = "{validation.size-255.message}")
     @Email(message = "{validation.email.message}")
     @Column(name = "EMAIL")
     private String email;
 
+    @Size(max = 255, message = "{validation.size-255.message}")
     @Column(name = "PHOTO")
     private String photo;
 

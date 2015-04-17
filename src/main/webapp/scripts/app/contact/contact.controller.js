@@ -17,7 +17,7 @@ angular.module('contactmgrApp')
             pageSize: 10
         };
 
-        $scope.contacts = 
+        $scope.contacts =
         $scope.searchClicked = false;
         $scope.searchContacts = function() {
             if ($scope.isLoading) {
@@ -88,14 +88,12 @@ angular.module('contactmgrApp')
                        .prop('indeterminate', (count > 0 && count < total));
 
             }, true);
-
         $scope.toggleCheckAll = function(e) {
             var checked = (document.getElementById('check_all').checked);
             for (var i=0; i<$scope.contacts.length; i++) {
                 $scope.contacts[i].checked = checked;
             }
         }
-
         $scope.getCompanies = function() {
             ContactService.getCompanies()
                 .success(function(data,status) {
@@ -105,6 +103,5 @@ angular.module('contactmgrApp')
                     console.log('Error get companies', status);
                 });
         }
-
         init();
     });

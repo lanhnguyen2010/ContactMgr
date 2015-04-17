@@ -1,3 +1,4 @@
+
 insert into greetings(code, message, created_at) values('en', 'hello', parsedatetime('15-04-01','yy-MM-dd'));
 insert into greetings(code, message, created_at) values('fr', 'bonjour', parsedatetime('15-04-02','yy-MM-dd'));
 insert into greetings(code, message, created_at) values('vi', 'xin chào', parsedatetime('15-04-03','yy-MM-dd'));
@@ -16,7 +17,6 @@ insert into contacts(id, display_name, first_name, last_name, email, mobile, add
 insert into contacts(id, display_name, first_name, last_name, email, mobile, addr_line1, job_title, company_id) values(7, 'display_name7', 'first_name1', 'last_name1', 'email1', 'mobile1', 'addr11', 'job_title1', 1);
 insert into contacts(id, display_name, first_name, last_name, email, mobile, addr_line1, job_title, company_id) values(8, 'display_name8', 'first_name2', 'last_name2', 'email2', 'mobile2', 'addr12', 'job_title2', 2);
 insert into contacts(id, display_name, first_name, last_name, email, mobile, addr_line1, job_title, company_id) values(9, 'display_name9', 'first_name3', 'last_name3', 'email3', 'mobile3', 'addr13', 'job_title3', 3);
-
 insert into company values(1,'KMS Technology','kms-technology.com','photo/logokms.img','trust','Trường Sơn',null,'Tp.Hồ Chí Minh',null,null,'US','+84 123456789','87-123456789',null,null,null,null);
 
 insert into contact values(1,'Trang','Trang','Thu','Biện','thutrang2293@gmail.com','+84 1668889999','F','1993-02-02','photo/1.img','Ngô Gia Tự',null,'Tp.Hồ Chí Minh',null,null,'VN',null,null,null,null,1,null,null,null,null);
@@ -43,4 +43,3 @@ insert into contact values(21,'Bảo Ngọc','Ngọc','Bảo','Lâm','baolam@gma
 insert into contact values(22,'Như Mai','Mai','Như','Nguyễn','mainguyen@gmail.com','+84 1668889905','F','1993-02-02','photo/22.img','Trường Chinh',null,'Tp.Hồ Chí Minh',null,null,'VN',null,null,null,null,1,null,null,null,null);
 insert into contact values(23,'Thu Thảo','Thảo','Thu','Nguyễn','thaonguyen@gmail.com','+84 1668889904','F','1993-02-02','photo/23.img','Trường Chinh',null,'Tp.Hồ Chí Minh',null,null,'VN',null,null,null,null,1,null,null,null,null);
 insert into contact values(24,'Thái Y Lâm','Lâm','Y','Thái','thaiylam@gmail.com','+84 1668889903','F','1993-02-02','photo/24.img','Trường Chinh',null,'Tp.Hồ Chí Minh',null,null,'VN',null,null,null,null,1,null,null,null,null);
-

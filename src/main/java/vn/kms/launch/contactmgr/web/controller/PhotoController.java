@@ -4,14 +4,13 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +24,7 @@ import org.springframework.web.multipart.MultipartResolver;
 
 import vn.kms.launch.contactmgr.domain.image.Photo;
 import vn.kms.launch.contactmgr.service.PhotoService;
+import vn.kms.launch.contactmgr.util.SearchResult;
 
 /**
  * Created by diule on 4/14/2015.
@@ -32,26 +32,45 @@ import vn.kms.launch.contactmgr.service.PhotoService;
 
 @Controller
 @RequestMapping(value = "/api/photos")
-public class PhotoController {
+public class PhotoController{
+    //private static final String EXT_NAME[] = {"PNG","JPEG"};
+    private static final List<MediaType> FILTER_IMAGE = new ArrayList<MediaType>();
+
     @Autowired
     private MultipartResolver multipartResolver;
 
     @Autowired
     PhotoService uploadService;
+    
+    static {
+        FILTER_IMAGE.add(MediaType.IMAGE_JPEG);
+        FILTER_IMAGE.add(MediaType.IMAGE_PNG);        
+    }
+    public static Boolean filterUpload(String contentType) {
+        
+        MediaType type = MediaType.valueOf(contentType);
+        return FILTER_IMAGE.contains(type);
+    }
 
     @RequestMapping(value="/upload/{photoId}",method = POST)
-    public ResponseEntity <Photo> uploadPhoto( @PathVariable("photoId") int photoId,
-                                               @RequestParam ("file") MultipartFile file)
-        throws IOException {
+    public @ResponseBody ResponseEntity<Photo> uploadPhoto( @PathVariable("photoId") int photoId,
+                                               @RequestParam ("fileUpload") MultipartFile file)
+                                                throws IOException, ServletException {
+        
+        Photo res = new Photo();
+        
+        String contentTpye = file.getContentType();
+        if(!filterUpload(contentTpye))
+        {
+            //System.out.println("You only upload file .PNG or JPEG");
+            return new ResponseEntity<Photo>(HttpStatus.PRECONDITION_FAILED);
+        }
 
-        Photo res = null;
-        FileNameExtensionFilter filterImage;
-        filterImage = new FileNameExtensionFilter("file only","PNG","JPEG");
         try {
             res = uploadService.uploadImage( photoId,
                     file.getInputStream(),
                     file.getOriginalFilename(),
-                    file.getContentType());
+                    contentTpye);
         } catch (Exception e) {
             e.printStackTrace();
             // TODO: handle exception
@@ -60,30 +79,28 @@ public class PhotoController {
         return new ResponseEntity<Photo>(res, HttpStatus.CREATED);
     }
 
-    /*
-     * Show all images on Dialog;
-     * 
-     * */
-    @RequestMapping(method = GET)
-    public @ResponseBody ResponseEntity<Photo> getAllPhoto(@PathVariable("photoId") int photoId, HttpServletRequest request,
-                                                           HttpServletResponse response) {
+    @RequestMapping( method = GET)
+    public ResponseEntity<SearchResult<Photo>> getListPhotos( @RequestParam(value= "page", defaultValue = "1") int page,
+                                              @RequestParam (value = "pageSize", defaultValue = "10") int pageSize) {
+    	System.out.println("test1");
+        SearchResult<Photo> list = uploadService.getListPhotos(page, pageSize);
+        
+        if(list.getTotalItems() == 0){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
 
-        Photo photo = (Photo) uploadService.getAllPhoto(photoId);
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        List<Photo> list = uploadService.getAllPhoto(photoId);
-
-        return new ResponseEntity<Photo>(photo,HttpStatus.OK);
+        return new ResponseEntity<>(list,HttpStatus.OK);
 
     }
 
     @RequestMapping(value = "/{photoId}", method = GET)
-    public void getPhoto(HttpServletResponse response,
-                         @PathVariable("photoId") int photoId) throws IOException {
+    public ResponseEntity<Photo> getPhoto( HttpServletResponse response,
+                                           @PathVariable("photoId") int photoId) throws IOException {
 
-        response.setStatus(HttpStatus.FOUND.value());
-
-        Photo res = uploadService.getFile(photoId);
-        response.setContentType(res.getContentType());
+        Photo res = uploadService.getPhotoId(photoId);
+        if (res ==null){
+            return new ResponseEntity<Photo>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<Photo>(res, HttpStatus.OK);
     }
 }

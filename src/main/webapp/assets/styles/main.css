@@ -139,12 +139,52 @@ Hide ng-cloak on page load, https://docs.angularjs.org/api/ng/directive/ngCloak
   text-align: left;
   vertical-align: middle;
 }
+#size-dialog{
+	font-size: 13px;
+}
+
+#mid-width .multiselect-container {
+    width: 200px;
+}
 
 // form validate
 .ng-invalid.ng-dirty {
     border-color: red;
 }
 
-.ng-valid.ng-dirty {
-    border-color: green;
+.red {
+    border-color: red;
+    color: red;
+}
+
+.image-list-upload {
+  display: inline-block;
+  width: 90px;
+  height: 90px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.image-list-upload:hover {
+  background-color: grey;
+}
+
+.select-editable {
+    position: relative;
+    width: 100%;
+}
+
+.select-editable select {
+    position: absolute;
+    width: 100%;
+}
+
+.select-editable input {
+    position: absolute;
+    width: 90%;
+    border-left: none;
+}
+
+.select-editable select:focus, .select-editable input:focus {
+    outline: none;
 }
