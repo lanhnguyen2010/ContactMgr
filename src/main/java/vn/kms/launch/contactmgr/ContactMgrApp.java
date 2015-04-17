@@ -17,7 +17,7 @@ public class ContactMgrApp {
     }
 
     private static void addDefaultProfile(SpringApplication app,
-            SimpleCommandLinePropertySource source) {
+                                          SimpleCommandLinePropertySource source) {
         if (!source.containsProperty("spring.profiles.active")) {
             app.setAdditionalProfiles(Constants.PROFILE_DEV);
         }

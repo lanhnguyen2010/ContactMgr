@@ -1,17 +1,17 @@
 {
     "contact": {
-    	"button": {
-    		"add-contact": "Thêm mới",
-    		"search": "Tìm Kiếm",
-    		"delete": "Xóa"
-    	},
-    	"contact-field": {
-    		"name": "Tên nhân viên",
-    		"mobile": "Điện thoại",
-    		"email": "E-mail",
-    		"job-title": "Chức vụ",
-    		"department": "Phòng ban",
-    		"company": "Tên công ty"
-    	}
+        "button": {
+            "add-contact": "Thêm mới",
+            "search": "Tìm Kiếm",
+            "delete": "Xóa"
+        },
+        "contact-field": {
+            "name": "Tên nhân viên",
+            "mobile": "Điện thoại",
+            "email": "E-mail",
+            "job-title": "Chức vụ",
+            "department": "Phòng ban",
+            "company": "Tên công ty"
+        }
     }
 }

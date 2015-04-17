@@ -22,7 +22,7 @@ public class Entity implements Serializable {
     @Id
     @GeneratedValue
     @Column(name = "ID")
-    private int id ;
+    private int id;
 
     @Column(name = "CREATED_AT")
     private Date createdAt;
@@ -41,7 +41,7 @@ public class Entity implements Serializable {
     }
 
     public void setId(int id) {
-        this.id= id;
+        this.id = id;
     }
 
     public Date getCreatedAt() {

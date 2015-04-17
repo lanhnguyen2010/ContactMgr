@@ -26,8 +26,6 @@ public class CompanyController {
     private ContactService contactService;
 
     /**
-     *
-     *
      * Return: [{"id": valueOfId, "name": valueOfName}, {"id": valueOfId, "name": valueOfName}]
      */
     @RequestMapping(value = "/names", method = GET)
