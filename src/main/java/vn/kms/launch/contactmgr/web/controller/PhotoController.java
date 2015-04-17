@@ -92,7 +92,7 @@ public class PhotoController{
 		String contentTpye = file.getContentType();
 		if(!filterUpload(contentTpye))
 		{
-			//String node = new String("File Upload only .JPEG or .PNG");
+			//System.out.println("You only upload file .PNG or JPEG");
 			return new ResponseEntity<Photo>(HttpStatus.PRECONDITION_FAILED);
 		}
 

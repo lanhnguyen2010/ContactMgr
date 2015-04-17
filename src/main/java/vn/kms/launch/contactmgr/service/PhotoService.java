@@ -39,8 +39,9 @@ public class PhotoService{
 								  InputStream in,
 								  String originalFilename,
 								  String contentType) throws Exception {
-
-			String relativePath = String.format("%s/%s", photoId, UUID.randomUUID().toString());
+			
+			//, UUID.randomUUID().toString()
+			String relativePath = String.format("%s/%s", photoId, photoId +".png");
 
 			String pathFull = getPathFull(relativePath);
 
@@ -60,8 +61,8 @@ public class PhotoService{
 		public List<Photo> getAllPhoto(int photoId) {
 			return uploadRepository.findAll();
         }
-		
-		String path = ("/etc/photos");
+		//Path an images to store;
+		String path = ("D:/Project/Challengs/launch-contact-manager/etc/photos");
 		private String getPathFull(String relativePath){
 			return String.format("%s/%s",path, relativePath);
 		}
