@@ -13,4 +13,3 @@ INSERT INTO greetings(code, message) VALUES('en', 'Hello');
 INSERT INTO greetings(code, message) VALUES('fr', 'Bonjour');
 INSERT INTO greetings(code, message) VALUES('vi', 'Xin chào');
 INSERT INTO greetings(code, message) VALUES('ja', 'おはよう');
-

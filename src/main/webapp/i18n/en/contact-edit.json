@@ -44,6 +44,9 @@
     		"email":"example@abc",
     		"mobile":"+84 9079xxx",
     		"city":"Ho Chi Minh"
-    	}
+    	},
+        "photo": {
+            "title": "Upload Photos"
+        }
     }
 }

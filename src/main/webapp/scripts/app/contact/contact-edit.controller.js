@@ -1,8 +1,65 @@
 'use strict';
+
 angular.module('contactmgrApp')
     .controller('EditContactController', function($scope, $stateParams, ContactService) {
-        $scope.contact;
-        var contactId = $stateParams.id;
+    	var contactId = $stateParams.id;
+
+    	$scope.imageList = ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg'];
+
+        $scope.uploadPhoto = function() {
+            document.getElementById('imageUpload').click();
+        };
+
+        $scope.selectPhoto = function(imageURL) {
+            var avatar = document.getElementById(typePhoto + contactId);
+            avatar.src = "../../../photos/" + imageURL; // address of img
+            document.getElementById('closeButton').click();
+        };
+
+        $scope.selectUploadPhoto = function(imageUpload) {
+            if (!confirm('Are you sure you want to upload this photo?')) {
+                return;
+            }
+
+            var file = document.getElementById(imageUpload).files[0];
+            var formData = new FormData();
+            var aImage;
+            formData.append('file', file);
+
+            ContactService.uploadPhoto(contactId, formData)
+                .success(function(data, status) {
+                    aImage = data;
+                })
+                .error(function(data, status) {
+                });
+
+            $scope.selectPhoto(aImage);
+        };
+
+        var typePhoto = 'avatar';
+        $scope.getPhotos = function(type) {
+            typePhoto = type;
+            $scope.maxSize = 11;
+            $scope.totalItems = 15;
+            $scope.currentPage = 1;
+            $scope.pageChanged();
+        }
+
+    	$scope.images;
+        $scope.pageChanged = function() {
+            // TODO: this is for hard-code test
+            $scope.images = $scope.imageList.slice( ($scope.currentPage - 1) * $scope.maxSize , $scope.currentPage * $scope.maxSize);
+            /*
+            var pageIndex = params.page();
+            var pageSize = params.count();
+            ContactService.getPhotos(contactId, pageIndex, pageSize)
+                .success(function(data, status) {
+                    params.total(data.totalItems);
+                    $scope.images = data.items;
+                    $defer.resolve(data.items);
+                });
+            */
+        };
           $scope.contact;
           $scope.init = function() {
               ContactService.getViewContact(contactId).success(
@@ -23,7 +80,6 @@ angular.module('contactmgrApp')
                 if($scope.companies[c].id === $scope.contact.work.companyId){
                     $scope.contact.work.company = $scope.companies[c];
                     $scope.selectedCompany = $scope.companies[c];
-                    console.log( $scope.contact.work.company);
                     break;
                 }
             }
@@ -33,7 +89,6 @@ angular.module('contactmgrApp')
         $scope.validator;
         // save a contact
         $scope.saveContact = function() {
-            console.log("Contact: " + $scope.contact);
             if (typeof $scope.contact ==='undefined' || $scope.contact.id==null) {
                 ContactService
                         .createContact($scope.contact)
@@ -41,26 +96,21 @@ angular.module('contactmgrApp')
                                 function(data, status, headers,
                                         config) {
                                     // the contact is saved
-                                    console.log("Saved contact!");
                                     window.location = '#contact';
                                 }).error(function(data, status, headers,config) {
                                     // has error
                                      $scope.validator = data.errors;
-                                     console.log($scope.validator.home.address.postalCode);
                                 });
             } else {
                 ContactService.updateContact($scope.contact.id,
                         $scope.contact).success(
                         function(data, status, headers, config) {
                             // the contact is saved
-                            console.log("Update contact!");
                             window.location = '#contact';
                         }).error(
                         function(data, status, headers, config) {
                             // has error
                             $scope.validator = data.errors;
-                            console.log("Error Update: " + status);
-                            console.log($scope.validator.home.address.postalCode);
                         });
             }
         };
@@ -90,9 +140,6 @@ angular.module('contactmgrApp')
                     // Update a existing company
                      ContactService.updateCompany($scope.selectedCompany)
                      .success(function(data, status, headers, config) {
-                         console.log("Saved company!");
-                         console.log(data);
-                         
                          // close dialog
                          $('#companyInfoModal').modal('toggle');
                      })
@@ -103,18 +150,11 @@ angular.module('contactmgrApp')
                  } else{
                      ContactService.createCompany($scope.selectedCompany)
                          .success(function(data, status, headers, config) {
-                             console.log("Crated company!");
-                             console.log(data);
-                             
-                             // reload list of companies
                              $scope.getCompanies();
-                             
                              // close dialog
                              $('#companyInfoModal').modal('toggle');
-                             console.log('New company: ' + $scope.contact.work.companyId);
                          })
                          .error(function(data, status, headers, config) {
-                             // has error
                              console.log("Error: " + status);
                              
                          });
@@ -139,5 +179,16 @@ angular.module('contactmgrApp')
              } else {
                  return 'contact-edit.work.create-company'
              }
+         };
+         $scope.postCode;
+         $scope.isNumeric=function(evt){
+        	 var theEvent = evt||window.event;
+        	 var key = theEvent.keyCode || theEvent.which;
+        	 key = String.fromCharCode(key);
+        	 var regex = /[0-9]/;
+        	 if (!regex.test(key)) {
+        		 theEvent.returnValue = false;
+        		 if (theEvent.preventDefault) theEvent.preventDefault();
+        	 }       	 
          };
     });
