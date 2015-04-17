@@ -60,6 +60,7 @@ public class UserService {
             throw new EntityNotFoundException();
         }
         user.setId(id);
+        validateUser(user);
         return userRepository.save(user);
     }
 
