@@ -26,7 +26,8 @@
     		"website": "Website",
     		"job-title":"Tiêu đề",
     		"department":"Phòng ban",
-    		"edit-company":"Chỉnh sửa công ty"
+    		"edit-company":"Cập Nhật Công Ty",
+    		"create-company":"Tạo Công Ty Mới"
     	},
     	"button": {
     		"edit-company":"Sửa",
@@ -43,6 +44,9 @@
     		"email":"vidu@abc",
     		"mobile":"+84 9079xxx",
     		"city":"Ho Chi Minh"
-    	}
+    	},
+        "photo": {
+            "title": "Tải hình lên"
+        }
     }
 }

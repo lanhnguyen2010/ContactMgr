@@ -67,13 +67,14 @@ angular.module('contactmgrApp').controller(
                     $scope.currentPage = params.page();
                     $scope.criteria.pageIndex = params.page();
                     $scope.criteria.pageSize = 10;
-                    UsersService.searchUsers($scope.criteria).success(
-                            function(data, status) {
-                                $scope.users = data['items'];
-                                params.total(data['totalItem']);
-                                $defer.resolve($scope.users);
-                                $scope.isLoading = false;
-                            }).error(function(data, status) {
+                    UsersService.searchUsers($scope.criteria)
+                    .success(function(data, status) {
+                        $scope.users = data['items'];
+                        params.total(data['totalItems']);
+                        $defer.resolve($scope.users);
+                        $scope.isLoading = false;
+                    })
+                    .error(function (data, status) {
                         console.log("Error", status);
                     });
 
