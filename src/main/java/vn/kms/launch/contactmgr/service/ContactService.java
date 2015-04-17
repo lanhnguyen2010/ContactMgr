@@ -100,13 +100,20 @@ public class ContactService {
         return companyRepo.findAll();
     }
 
+    @Transactional
     public Company saveCompany(Company company, int id) {
         //TODO: validate
         //Set<ConstraintViolation<Contact>> violations = validator.validate(company);
-        final boolean isUpdate = company.getId() != null && company.getId() == id;
-        final boolean isCreate = id == 0;
-        if(company != null && ( isUpdate || isCreate)){
-            return companyRepo.save(company);
+        if(company != null){
+            if(id == 0){
+                // create a new company
+                return companyRepo.save(company);
+            } else{
+                // update a existing company
+                
+                company.setId(id);
+                return companyRepo.save(company);
+            }
         }
         return null;
     }
