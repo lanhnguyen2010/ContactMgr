@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('contactmgrApp', ['LocalStorageModule', 'tmh.dynamicLocale',
-    'ngResource', 'ui.router', 'ngCookies', 'pascalprecht.translate', 'ngCacheBuster', 'ngTable'])
+    'ngResource', 'ui.router', 'ngCookies', 'pascalprecht.translate', 'ngCacheBuster', 'ngTable','angularjs-dropdown-multiselect','ui.bootstrap'])
 
     .run(function($rootScope, $location, $window, $http, $state, $translate, Language, ENV, VERSION) {
         $rootScope.ENV = ENV;

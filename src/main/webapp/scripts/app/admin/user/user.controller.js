@@ -14,7 +14,7 @@ angular.module('contactmgrApp').controller('UsersController',
                 role : '',
                 createdFrom:'',
                 createdTo:'',
-                assignedCompanies:'',
+                assignedCompanies:[],
                 pageIndex:1,
                 pageSize:10
             };
@@ -23,7 +23,9 @@ angular.module('contactmgrApp').controller('UsersController',
             $scope.users = [];
             $scope.searchClicked = false;
             $scope.currentPage = 1;
-
+            $scope.selectedCompanies=[];
+            $scope.companysetting={enableSearch: true,scrollable:true,displayProp:'name',buttonClasses:'form-control'};
+            $scope.selectcompaniestext={buttonDefaultText: 'Select Assigned Companies'};
             $scope.searchUsers = function () {
                 if ($scope.isLoading) {
                     return;
@@ -31,12 +33,17 @@ angular.module('contactmgrApp').controller('UsersController',
 
                 $scope.searchClicked = true;
                 $scope.isLoading = true;
+                for (var i = 0; i < $scope.selectedCompanies.length; i++){
+                    $scope.criteria.assignedCompanies.push($scope.selectedCompanies[i]["id"]);
+                }
                 $scope.usersTableParams.reload();
             }
             
             $scope.usersTableParams = new ngTableParams({
                 count: 10, // Count per page
+                
             }, {
+            	
                 counts: [],
                 getData: function ($defer, params) {
                     if (!$scope.searchClicked)
@@ -47,7 +54,7 @@ angular.module('contactmgrApp').controller('UsersController',
                     UsersService.searchUsers($scope.criteria)
                     .success(function(data, status) {
                         $scope.users = data['items'];
-                        params.total(data['totalItem']);
+                        params.total(data['totalItems']);
                         $defer.resolve($scope.users);
                         $scope.isLoading = false;
                     })
@@ -159,5 +166,26 @@ angular.module('contactmgrApp').controller('UsersController',
                     console.log("Error get companies", status);
                 });
             }
+            $scope.toggleMin = function() {
+                $scope.minDate = $scope.minDate ? null : new Date();
+              };
+              $scope.toggleMin();
+
+              $scope.openCalendaFrom = function($event) {
+                $event.preventDefault();
+                $event.stopPropagation();
+                $scope.openedCalendaFrom = true;
+              };
+              $scope.openCalendaTo = function($event) {
+                  $event.preventDefault();
+                  $event.stopPropagation();
+                  $scope.openedCalendaTo = true;
+                };
+
+              $scope.dateOptions = {
+                formatYear: 'yy',
+                startingDay: 1
+              };
+
             init();                  
         })
