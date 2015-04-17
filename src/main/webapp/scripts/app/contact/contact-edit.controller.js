@@ -2,9 +2,9 @@
 
 angular.module('contactmgrApp')
     .controller('EditContactController', function($scope, $stateParams, ContactService) {
-    	var contactId = $stateParams.id;
+        var contactId = $stateParams.id;
 
-    	$scope.imageList = ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg'];
+        $scope.imageList = ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg'];
 
         $scope.uploadPhoto = function() {
             document.getElementById('imageUpload').click();
@@ -47,7 +47,7 @@ angular.module('contactmgrApp')
             $scope.pageChanged();
         }
 
-    	$scope.images;
+        $scope.images;
         $scope.pageChanged = function() {
             // TODO: this is for hard-code test
             $scope.images = $scope.imageList.slice( ($scope.currentPage - 1) * $scope.maxSize , $scope.currentPage * $scope.maxSize);
@@ -68,7 +68,7 @@ angular.module('contactmgrApp')
                       function(data) {
                           $scope.contact = data;
                           if($scope.contact.work != null && $scope.contact.work.company != null){
-                        	  $scope.selectedCompany = $scope.contact.work.company;
+                              $scope.selectedCompany = $scope.contact.work.company;
                           }
                       })
           };
@@ -184,13 +184,13 @@ angular.module('contactmgrApp')
          };
          $scope.postCode;
          $scope.isNumeric=function(evt){
-        	 var theEvent = evt||window.event;
-        	 var key = theEvent.keyCode || theEvent.which;
-        	 key = String.fromCharCode(key);
-        	 var regex = /[0-9]/;
-        	 if (!regex.test(key)) {
-        		 theEvent.returnValue = false;
-        		 if (theEvent.preventDefault) theEvent.preventDefault();
-        	 }       	 
+             var theEvent = evt||window.event;
+             var key = theEvent.keyCode || theEvent.which;
+             key = String.fromCharCode(key);
+             var regex = /[0-9]/;
+             if (!regex.test(key)) {
+                 theEvent.returnValue = false;
+                 if (theEvent.preventDefault) theEvent.preventDefault();
+             }            
          };
     });
