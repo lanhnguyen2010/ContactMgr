@@ -47,7 +47,6 @@ angular.module('contactmgrApp')
 
     	$scope.images;
         $scope.pageChanged = function() {
-            console.log('Page changed to: ' + $scope.currentPage);
             // TODO: this is for hard-code test
             $scope.images = $scope.imageList.slice( ($scope.currentPage - 1) * $scope.maxSize , $scope.currentPage * $scope.maxSize);
             /*
@@ -61,67 +60,121 @@ angular.module('contactmgrApp')
                 });
             */
         };
-
-        $scope.contact;
-        function init(){
-        	ContactService.getViewContact(contactId).success(function(data) {
-        		  $scope.contact=data;
-			})
-
-		};
-        init();
+          $scope.contact;
+          $scope.init = function() {
+              ContactService.getViewContact(contactId).success(
+                      function(data) {
+                          $scope.contact = data;
+                      })
+          };
+        $scope.init();
         $scope.companies;
-
+        
+        $scope.selectedCompany = null;
+        
         $scope.$watch('contact.work.companyId', function(result){
             for(var c in $scope.companies){
-                if($scope.companies[c].id == $scope.contact.work.companyId){
-                    $scope.contact.work.company.message = $scope.companies[c].message;
-                    console.log( $scope.contact.work.company);
+                if($scope.companies[c].id === $scope.contact.work.companyId){
+                    $scope.contact.work.company = $scope.companies[c];
+                    $scope.selectedCompany = $scope.companies[c];
                     break;
                 }
             }
         });
-
+        
         $scope.countries;
-
-
+        $scope.validator;
         // save a contact
-        $scope.saveContact = function(){
-            console.log("Contact: " + $scope.contact.firstName);
-            ContactService.createContact($scope.contact)
-                .success(function(data, status, headers, config) {
-                    // the contact is saved
-                    console.log("Saved contact!");
-                }).error(function(data, status, headers, config) {
-	            // has error
-	                console.log("Error: " + status);
-	            });
-         };
-
-        $scope.getCompanies = function(){
-             ContactService.getCompanies()
+        $scope.saveContact = function() {
+            if (typeof $scope.contact ==='undefined' || $scope.contact.id==null) {
+                ContactService
+                        .createContact($scope.contact)
+                        .success(
+                                function(data, status, headers,
+                                        config) {
+                                    // the contact is saved
+                                    window.location = '#contact';
+                                }).error(function(data, status, headers,config) {
+                                    // has error
+                                     $scope.validator = data.errors;
+                                });
+            } else {
+                ContactService.updateContact($scope.contact.id,
+                        $scope.contact).success(
+                        function(data, status, headers, config) {
+                            // the contact is saved
+                            window.location = '#contact';
+                        }).error(
+                        function(data, status, headers, config) {
+                            // has error
+                            $scope.validator = data.errors;
+                        });
+            }
+        };
+         $scope.getCompanies = function(){
+             ContactService.getAllCompanies()
                  .success(function(data, status, headers, config) {
                      $scope.companies = data;
                  });
-        };
-
-        $scope.getCompanies();
-
-        $scope.getCountries = function(){
+         };
+         $scope.getCompanies();
+         
+         $scope.getCountries = function(){
              ContactService.getCountries()
                  .success(function(data, status, headers, config) {
                  $scope.countries = data;
              });
-        }
-        $scope.getCountries();
-        $scope.viewContact=function(){
-        	 ContactService.getViewContact(1).success(function(data){
-        		 console.log("Error: " + data.firstName);
-        		 //$scope.contact=data;
-        	 });
-        	 
-        }
-        $scope.getContactInfo = function(id){
-
-        };
+         }
+         $scope.getCountries();
+         
+         $scope.hasSelectedCompany = function(){
+             return ($scope.selectedCompany != null);
+         };
+         
+         $scope.saveCompany = function(){
+             if($scope.hasSelectedCompany()){
+                 if($scope.selectedCompany.id >0){
+                    // Update a existing company
+                     ContactService.updateCompany($scope.selectedCompany)
+                     .success(function(data, status, headers, config) {
+                         // close dialog
+                         $('#companyInfoModal').modal('toggle');
+                     })
+                     .error(function(data, status, headers, config) {
+                         // has error
+                         console.log("Error: " + status);
+                     });
+                 } else{
+                     ContactService.createCompany($scope.selectedCompany)
+                         .success(function(data, status, headers, config) {
+                             $scope.getCompanies();
+                             // close dialog
+                             $('#companyInfoModal').modal('toggle');
+                         })
+                         .error(function(data, status, headers, config) {
+                             console.log("Error: " + status);
+                             
+                         });
+                 }
+                
+             }
+         };
+         
+         $scope.openDialogCreateCompany = function(){
+             $scope.selectedCompany = null;
+             $('#companyInfoModal').modal('show');
+         };
+         
+         $scope.openDialogUpdateCompany = function(){
+             $scope.selectedCompany = $scope.contact.work.company;
+             $('#companyInfoModal').modal('show');
+         };
+         
+         $scope.getTitleOfCompanyDialog = function(){
+             if($scope.hasSelectedCompany()){
+                 return 'contact-edit.work.edit-company';
+             } else {
+                 return 'contact-edit.work.create-company'
+             }
+         };
     });

@@ -25,13 +25,17 @@
     		"message":"Mô Tả",
     		"website": "Website",
     		"job-title":"Tiêu đề",
-    		"department":"Phòng ban"
+    		"department":"Phòng ban",
+    		"edit-company":"Cập Nhật Công Ty",
+    		"create-company":"Tạo Công Ty Mới"
     	},
     	"button": {
     		"edit-company":"Sửa",
     		"new-company": "Tạo mới",
     		"save-contact":"Lưu",
-    		"cancel-contact":"Hủy"
+    		"cancel-contact":"Hủy",
+    		"save-company":"Lưu",
+            "cancel-company":"Hủy"
     	},
     	"placeholder":{
     		"first-name": "Tên",

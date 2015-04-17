@@ -47,7 +47,7 @@ angular.module('contactmgrApp').controller('UsersController',
                     UsersService.searchUsers($scope.criteria)
                     .success(function(data, status) {
                         $scope.users = data['items'];
-                        params.total(data['totalItem']);
+                        params.total(data['totalItems']);
                         $defer.resolve($scope.users);
                         $scope.isLoading = false;
                     })

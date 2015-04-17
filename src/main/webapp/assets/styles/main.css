@@ -145,8 +145,9 @@ Hide ng-cloak on page load, https://docs.angularjs.org/api/ng/directive/ngCloak
     border-color: red;
 }
 
-.ng-valid.ng-dirty {
-    border-color: green;
+.red {
+    border-color: red;
+    color: red;
 }
 
 .image-list-upload {
@@ -159,4 +160,23 @@ Hide ng-cloak on page load, https://docs.angularjs.org/api/ng/directive/ngCloak
 
 .image-list-upload:hover {
   background-color: grey;
+}
+
+.select-editable {
+    position: relative;
+    width: 100%;
+}
+
+.select-editable select {
+    position: absolute;
+    width: 100%;
+}
+
+.select-editable input {
+    position: absolute;
+    width: 90%;
+}
+
+.select-editable select:focus, .select-editable input:focus {
+    outline: none;
 }
