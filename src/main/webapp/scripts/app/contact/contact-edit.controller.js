@@ -1,8 +1,8 @@
 'use strict';
 angular.module('contactmgrApp')
     .controller('EditContactController', function($scope, $stateParams, ContactService) {
-    	$scope.contact;
-    	var contactId = $stateParams.id;
+        $scope.contact;
+        var contactId = $stateParams.id;
           $scope.contact;
           $scope.init = function() {
               ContactService.getViewContact(contactId).success(
@@ -42,7 +42,7 @@ angular.module('contactmgrApp')
                                     window.location = '#contact';
                                 }).error(function(data, status, headers,config) {
                                     // has error
-                                	 $scope.validator = data.errors;
+                                     $scope.validator = data.errors;
                                 });
             } else {
                 ContactService.updateContact($scope.contact.id,
@@ -54,7 +54,7 @@ angular.module('contactmgrApp')
                         }).error(
                         function(data, status, headers, config) {
                             // has error
-                        	$scope.validator = data.errors;
+                            $scope.validator = data.errors;
                             console.log("Error Update: " + status);
                         });
             }
@@ -81,8 +81,8 @@ angular.module('contactmgrApp')
          
          $scope.saveCompany = function(){
              if($scope.hasSelectedCompany()){
-            	 if($scope.selectedCompany.id >0){
-            		// Update a existing company
+                 if($scope.selectedCompany.id >0){
+                    // Update a existing company
                      ContactService.updateCompany($scope.selectedCompany)
                      .success(function(data, status, headers, config) {
                          console.log("Saved company!");
@@ -95,27 +95,27 @@ angular.module('contactmgrApp')
                          // has error
                          console.log("Error: " + status);
                      });
-            	 } else{
-		             ContactService.createCompany($scope.selectedCompany)
-		                 .success(function(data, status, headers, config) {
-		                     console.log("Crated company!");
-		                     console.log(data);
-		                     
-		                     // reload list of companies
-		                     $scope.getCompanies();
-		                     
-		                     // close dialog
-		                     $('#companyInfoModal').modal('toggle');
-		                     console.log('New company: ' + $scope.contact.work.companyId);
-		                 })
-		                 .error(function(data, status, headers, config) {
-		                     // has error
-		                     console.log("Error: " + status);
-		                     
-		                 });
-		         }
-            	
-	         }
+                 } else{
+                     ContactService.createCompany($scope.selectedCompany)
+                         .success(function(data, status, headers, config) {
+                             console.log("Crated company!");
+                             console.log(data);
+                             
+                             // reload list of companies
+                             $scope.getCompanies();
+                             
+                             // close dialog
+                             $('#companyInfoModal').modal('toggle');
+                             console.log('New company: ' + $scope.contact.work.companyId);
+                         })
+                         .error(function(data, status, headers, config) {
+                             // has error
+                             console.log("Error: " + status);
+                             
+                         });
+                 }
+                
+             }
          };
          
          $scope.openDialogCreateCompany = function(){
