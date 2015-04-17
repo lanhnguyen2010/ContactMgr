@@ -2,10 +2,10 @@ package vn.kms.launch.contactmgr.service;
 
 import java.io.InputStream;
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import vn.kms.launch.contactmgr.domain.image.Photo;
 import vn.kms.launch.contactmgr.repository.PhotoRepository;
@@ -16,42 +16,43 @@ import vn.kms.launch.contactmgr.util.PhotoUtil;
 @Transactional
 public class PhotoService{
 
-    private PhotoRepository uploadRepository;
+        private PhotoRepository uploadRepository;
 
-    @Transactional
-    public Photo getFile(int photoId){
-        return uploadRepository.findOne(photoId);
-    }
+        @Transactional
+        public Photo getPhotoId(int photoId){
+            return uploadRepository.findOne(photoId);
+        }
 
-    @Transactional
-    public Photo uploadImage( int photoId,
-                              InputStream in,
-                              String originalFilename, 
-                              String contentType) throws Exception {
+        @Transactional
+        public Photo uploadImage(@PathVariable int photoId,
+                                  InputStream in,
+                                  String originalFilename,
+                                  String contentType) throws Exception {
+            
+            String relativePath = String.format("%s/%s", photoId, photoId +".png");
 
-        String relativePath = String.format("%s/%s", photoId, UUID.randomUUID().toString());
-        String pathFull = getPathFull(relativePath);
+            String pathFull = getPathFull(relativePath);
+
+            PhotoUtil.storeFile(in, pathFull);
+
+            Photo res = new Photo();
+
+            res.setId(photoId);
+            res.setFileName(originalFilename);
+            res.setContentType(contentType);
+            res.setPathFull(relativePath);
+            
+            return uploadRepository.saveAndFlush(res.toDo());
+        }
+
+        @Transactional
+        public List<Photo> getAllPhoto(int photoId) {
+            return uploadRepository.findAll();
+        }
         
-        PhotoUtil.storeFile(in, pathFull);
-        Photo res = new Photo();
-
-        res.setId(photoId);
-        res.setFileName(originalFilename);
-        res.setContentType(contentType);
-        res.setPathFull(relativePath);
-
-        return uploadRepository.saveAndFlush(res);
-    }
-
-    @Transactional
-    public List<Photo> getAllPhoto(int photoId) {
-
-        List<Photo> list = uploadRepository.findAll();
-        return list;
-    }
-
-    private String getPathFull(String relativePath){
-        return String.format("%s/%s", relativePath);
-    }
-
+        //Path an images to store;
+        String path = ("D:/Trainning/Java Project/ContactManageProject/etc/photos");
+        private String getPathFull(String relativePath){
+            return String.format("%s/%s",path, relativePath);
+        }
 }

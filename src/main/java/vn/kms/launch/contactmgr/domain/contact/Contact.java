@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -18,10 +19,12 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Contact extends vn.kms.launch.contactmgr.domain.Entity {
     private static final long serialVersionUID = 1L;
 
+    @Size(max = 50, message = "{validation.size.message}")
     @NotEmpty(message = "{validation.not-empty.message}")
     @Column(name = "DISPLAY_NAME")
     private String displayName;
 
+    @Size(max = 50, message = "{validation.size.message}")
     @NotEmpty(message = "{validation.not-empty.message}")
     @Column(name = "FIRST_NAME")
     private String firstName;
@@ -29,6 +32,7 @@ public class Contact extends vn.kms.launch.contactmgr.domain.Entity {
     @Column(name = "MIDDLE_NAME")
     private String middleName;
 
+    @Size(max = 50, message = "{validation.size.message}")
     @NotEmpty(message = "{validation.not-empty.message}")
     @Column(name = "LAST_NAME")
     private String lastName;
