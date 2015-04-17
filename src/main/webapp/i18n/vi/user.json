@@ -1,6 +1,23 @@
 {
-    "user": {
-        "button": {
+    "user":{
+        "field":{
+            "title": "Thêm/Cập nhật thông tin người dùng",
+            "username": "Tên tài khoản",
+            "pass": "Mật khẩu mới",
+            "pass-conf": "Xác nhận mật khẩu",
+            "ass-com": "Công ty quản lý",
+            "role": "Vai trò",
+            "first-name": "Tên",
+            "last-name": "Họ",
+            "ex-date": "Ngày hết hạn",
+            "language": "Ngôn ngữ",
+            "active": "Trạng thái",
+            "yes-active": "Có",
+            "no-active": "Không"        
+        },
+        "button":{
+            "btn-save": "Lưu",
+            "btn-cancel": "Thoát",
             "add-user": "Tạo người dùng",
             "search": "Tìm Kiếm",
             "delete": "Xóa",

@@ -135,5 +135,4 @@ public class User extends vn.kms.launch.contactmgr.domain.Entity {
     public static long getSerialversionuid() {
         return serialVersionUID;
     }
-    
 }

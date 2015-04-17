@@ -69,7 +69,6 @@ java -jar contactmgr-[version].war
 ```
 java -jar contactmgr-[version].war --spring.profiles.active=prod
 ```
-
 ## Connect database
 1. Run file contactmgr.sql in src/main/resources to create database
 ```
