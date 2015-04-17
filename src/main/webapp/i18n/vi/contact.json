@@ -1,21 +1,35 @@
 {
     "contact": {
         "button": {
-            "add-contact": "Thêm mới",
+            "add-contact": "Thêm Mới",
             "search": "Tìm Kiếm",
             "delete": "Xóa"
         },
-        "contact-field": {
-            "name": "Tên nhân viên",
-            "mobile": "Điện thoại",
+        "search-form": {
+            "name": "Tên",
+            "mobile": "Điện Thoại",
             "email": "E-mail",
             "job-title": "Chức vụ",
             "department": "Phòng ban",
-            "company": "Tên công ty"
+            "company": "Công ty"
         },
-        "results": {
+        "search-results": {
             "message": "Kết quả tìm kiếm",
-            "no-result": "Không tìm thấy dữ liệu thoả điều kiện"
+            "no-result": "Không tìm thấy",
+            "column": {
+                "display-name": "Tên truy cập",
+                "mobile": "Di động",
+                "email": "E-mail",
+                "job-title": "Chức vụ",
+                "department": "Phòng ban",
+                "company": "Công ty"
+            }
+        },
+        "company-info": {
+            "title": "",
+            "field": {
+                "": ""
+            }
         }
     }
 }
