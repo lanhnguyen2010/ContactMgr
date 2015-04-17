@@ -3,6 +3,7 @@ package vn.kms.launch.contactmgr.domain.image;
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -11,12 +12,12 @@ import org.noggit.JSONUtil;
 /**
  * Created by diule on April, 14;
  */
-@javax.persistence.Entity
+@Entity
 @Table(name = "IMAGES")
 public class Photo {
     
     @Id
-    @Column(name = "ID", insertable = false, updatable = false)
+    @Column(name = "ID")
     private int id;
 
     @Column(name = "PATH_FULL")

@@ -102,8 +102,6 @@ public class ContactService {
 
     @Transactional
     public Company saveCompany(Company company, int id) {
-        //TODO: validate
-        //Set<ConstraintViolation<Contact>> violations = validator.validate(company);
         if(company != null){
             if(id == 0){
                 // create a new company

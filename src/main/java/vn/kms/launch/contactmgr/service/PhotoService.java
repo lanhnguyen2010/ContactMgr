@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import vn.kms.launch.contactmgr.domain.image.Photo;
-import vn.kms.launch.contactmgr.repository.PhotoRepository;
+import vn.kms.launch.contactmgr.domain.image.PhotoRepository;
 import vn.kms.launch.contactmgr.util.PhotoUtil;
 
 
@@ -19,12 +19,12 @@ public class PhotoService{
         private PhotoRepository uploadRepository;
 
         @Transactional
-        public Photo getPhotoId(int photoId){
-            return uploadRepository.findOne(photoId);
+        public Photo getPhotoId(int Id){
+            return uploadRepository.findOne(Id);
         }
 
         @Transactional
-        public Photo uploadImage(@PathVariable int photoId,
+        public Photo uploadImage(@PathVariable("photoId") int photoId,
                                   InputStream in,
                                   String originalFilename,
                                   String contentType) throws Exception {
@@ -51,7 +51,7 @@ public class PhotoService{
         }
         
         //Path an images to store;
-        String path = ("D:/Trainning/Java Project/ContactManageProject/etc/photos");
+        String path = ("../../../photos");
         private String getPathFull(String relativePath){
             return String.format("%s/%s",path, relativePath);
         }
