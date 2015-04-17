@@ -4,50 +4,64 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.Table;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
-
-import vn.kms.launch.contactmgr.domain.Language;
-import vn.kms.launch.contactmgr.domain.Role;
 
 @Entity
 @Table(name = "USERS")
 public class User extends vn.kms.launch.contactmgr.domain.Entity {
     private static final long serialVersionUID = 1L;
-    
-    @Column(name="USERNAME")
+
+    @NotEmpty(message = "{validation.not-empty.message}")
+    @Size(max = 16, message = "{validation.maxUserName.message}")
+    @Pattern(regexp = "^([0-9]+[A-Z])$)", message = "{validation.UserName.message}")
+    @Column(name = "USERNAME")
     private String username;
-    
-    @Column(name="PASSWORD")
+
+    @NotEmpty(message = "{validation.not-empty.message}")
+    @Size(min = 6, message = "{validation.minPassWord.message}")
+    @Pattern(regexp = "^((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%]))$", message = "{validation.PassWord.message}")
+    @Column(name = "PASSWORD")
     private String password;
-    
-    @Column(name="FIRST_NAME")
+
+    @Size(max = 20, message = "{validation.maxName.message}")
+    @Column(name = "FIRST_NAME")
     private String firstname;
-    
-    @Column(name="LAST_NAME")
+
+    @Size(max = 20, message = "{validation.maxName.message}")
+    @Column(name = "LAST_NAME")
     private String lastname;
-    
-    @Column(name="EMAIL")
+
+    @Column(name = "EMAIL")
     private String email;
-    
-    @Column(name="ROLE")
+
+    @Column(name = "ROLE")
     private String role;
-    
-    @DateTimeFormat(pattern="yyyy-MM-dd")
-    @Column(name="EXPIRED_DATE")
+
+    @DateTimeFormat(pattern ="yyyy-mm-dd")
+    @Column(name = "EXPIRED_DATE")
     private Date expiredDate;
-    
-    @Column(name="ACTIVE", columnDefinition="INT(1)")
+
+    @Column(name = "ACTIVE", columnDefinition = "INT(1)")
     private boolean active;
-    
-    @Column(name="LANGUAGE")
+
+    @Column(name = "LANGUAGE")
     private String language;
-    
-    @Column(name="ASSIGNED_COMPANIES")
+
+    @Column(name = "ASSIGNED_COMPANIES")
     private String assignedCompanies;
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 
     public String getUsername() {
         return username;
@@ -89,14 +103,6 @@ public class User extends vn.kms.launch.contactmgr.domain.Entity {
         this.email = email;
     }
 
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
     public Date getExpiredDate() {
         return expiredDate;
     }
@@ -132,5 +138,5 @@ public class User extends vn.kms.launch.contactmgr.domain.Entity {
     public static long getSerialversionuid() {
         return serialVersionUID;
     }
-    
+
 }

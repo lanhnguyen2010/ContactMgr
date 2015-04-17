@@ -2,15 +2,18 @@ package vn.kms.launch.contactmgr.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
 
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import vn.kms.launch.contactmgr.domain.Role;
+import vn.kms.launch.contactmgr.domain.user.Role;
 import vn.kms.launch.contactmgr.domain.user.User;
 import vn.kms.launch.contactmgr.domain.user.UserRepository;
 import vn.kms.launch.contactmgr.domain.user.UserSearchCriteria;
@@ -19,23 +22,25 @@ import vn.kms.launch.contactmgr.util.SearchResult;
 import vn.kms.launch.contactmgr.util.ValidationException;
 
 @Service
-@Transactional(readOnly=true)
+@Transactional(readOnly = true)
 public class UserService {
-    
+
     @PersistenceContext
     private EntityManager em;
-    
+
     @Autowired
     private UserRepository userRepository;
-    
-    
+
+    @Autowired
+    private Validator validator;
+
     @Transactional
-    public User getUser(int id){
+    public User getUser(int id) {
         return userRepository.findOne(id);
     }
-    
+
     @Transactional
-    public List<String> getRoles(){
+    public List<String> getRoles() {
         Role[] roles = Role.values();
         List<String> result = new ArrayList<String>();
         for (int i = 0; i < roles.length; i++) {
@@ -43,10 +48,10 @@ public class UserService {
         }
         return result;
     }
-    
+
     @Transactional
     public User saveUser(User user, Integer id) throws ValidationException {
-        
+
         if (user == null) {
             return null;
         }
@@ -57,12 +62,12 @@ public class UserService {
         user.setId(id);
         return userRepository.save(user);
     }
-    
+
     @Transactional
     public int deleteUsers(int... ids) {
         return userRepository.deleteUsers(ids);
     }
-    
+
     @Transactional
     public Integer activeUser(int... ids) {
         return userRepository.activeUser(ids);
@@ -72,11 +77,18 @@ public class UserService {
     public Integer deactiveUser(int... ids) {
         return userRepository.deactiveUser(ids);
     }
-    
+
     @Transactional
-    public SearchResult<User> searchUsers( UserSearchCriteria criteria){
+    public SearchResult<User> searchUsers(UserSearchCriteria criteria) {
         return userRepository.searchByCriteria(criteria);
     }
 
+    public void validateUser(User user) throws ValidationException {
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        if (!violations.isEmpty()) {
+            throw new ValidationException(
+                    violations.toArray(new ConstraintViolation[0]));
+        }
+    }
 
 }

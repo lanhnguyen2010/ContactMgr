@@ -1,6 +1,6 @@
-package vn.kms.launch.contactmgr.domain;
+package vn.kms.launch.contactmgr.domain.contact;
 
-import vn.kms.launch.contactmgr.domain.contact.Address;
+import vn.kms.launch.contactmgr.domain.ValueObject;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;

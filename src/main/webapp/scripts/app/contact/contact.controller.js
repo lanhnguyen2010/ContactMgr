@@ -29,7 +29,7 @@ angular.module('contactmgrApp')
         }
 
         $scope.tableParams = new ngTableParams({
-            count: 15
+            count: PAGE_SIZE
         }, {
             counts: [],
             getData: function ($defer, params) {
@@ -50,12 +50,6 @@ angular.module('contactmgrApp')
                     .error(function(data, status) {
                         console.log(status);
                     });
-
-                $scope.checkboxes = {
-                    'checked': false,
-                    items: {}
-                };
-                $scope.checkedIds = '';
             }
         });
 

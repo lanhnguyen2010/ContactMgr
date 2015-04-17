@@ -4,7 +4,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
-import vn.kms.launch.contactmgr.domain.Home;
+import vn.kms.launch.contactmgr.domain.contact.Home;
 
 public class HomeValidator implements Validator{
 	

@@ -13,8 +13,6 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import vn.kms.launch.contactmgr.domain.Home;
-
 @Entity
 @Table(name = "CONTACTS")
 public class Contact extends vn.kms.launch.contactmgr.domain.Entity {

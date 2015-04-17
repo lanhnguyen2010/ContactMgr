@@ -114,5 +114,13 @@ public class UserController {
             return new ResponseEntity<>(returnObj, BAD_REQUEST);
         }
     }
-
+    @RequestMapping(value = "/validate", method = POST)
+    public ResponseEntity<Object> validateUser(@RequestBody User user) {
+        try {
+            userService.validateUser(user);
+            return new ResponseEntity<>(OK);
+        } catch (ValidationException e) {
+            return new ResponseEntity<Object>(e.getErrors(), BAD_REQUEST);
+        }
+    }
 }
