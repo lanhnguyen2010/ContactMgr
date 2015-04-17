@@ -8,6 +8,9 @@ angular.module('contactmgrApp')
               ContactService.getViewContact(contactId).success(
                       function(data) {
                           $scope.contact = data;
+                          if($scope.contact.work != null && $scope.contact.work.company != null){
+                        	  $scope.selectedCompany = $scope.contact.work.company;
+                          }
                       })
           };
         $scope.init();
