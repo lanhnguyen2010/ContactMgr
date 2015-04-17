@@ -24,7 +24,7 @@ angular.module('contactmgrApp').controller('UsersController',
             $scope.searchClicked = false;
             $scope.currentPage = 1;
             $scope.selectedCompanies=[];
-            $scope.companysetting={enableSearch: true,scrollable:true,displayProp:'name',buttonClasses:'form-control'};
+            $scope.companysetting={enableSearch: true,scrollable:true,displayProp:'name',buttonClasses:'form-control col-md-9'};
             $scope.selectcompaniestext={buttonDefaultText: 'Select Assigned Companies'};
             $scope.searchUsers = function () {
                 if ($scope.isLoading) {
@@ -34,7 +34,7 @@ angular.module('contactmgrApp').controller('UsersController',
                 $scope.searchClicked = true;
                 $scope.isLoading = true;
                 for (var i = 0; i < $scope.selectedCompanies.length; i++){
-                    $scope.criteria.assignedCompanies.push($scope.selectedCompanies[i]["id"]);
+                    $scope.criteria.assignedCompanies.push(parseInt($scope.selectedCompanies[i]["id"]));
                 }
                 $scope.usersTableParams.reload();
             }
@@ -166,21 +166,24 @@ angular.module('contactmgrApp').controller('UsersController',
                     console.log("Error get companies", status);
                 });
             }
+            
             $scope.toggleMin = function() {
                 $scope.minDate = $scope.minDate ? null : new Date();
               };
               $scope.toggleMin();
 
-              $scope.openCalendaFrom = function($event) {
+              $scope.openCalendar = function($event, isTo) {
                 $event.preventDefault();
                 $event.stopPropagation();
-                $scope.openedCalendaFrom = true;
+                if (isTo == 2) {
+                    $scope.openedCalendarTo = true;
+                    $scope.openedCalendarFrom = false;
+                }
+                else {
+                    $scope.openedCalendarFrom = true;
+                    $scope.openedCalendarTo = false;
+                }
               };
-              $scope.openCalendaTo = function($event) {
-                  $event.preventDefault();
-                  $event.stopPropagation();
-                  $scope.openedCalendaTo = true;
-                };
 
               $scope.dateOptions = {
                 formatYear: 'yy',

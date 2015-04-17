@@ -37,11 +37,11 @@
                     <div class="col-md-4">
                         <p class="input-group">
                             <input type="text" class="form-control" datepicker-popup="{{format}}" 
-                                   ng-model="criteria.createdFrom" is-open="openedCalendaFrom" 
+                                   ng-model="criteria.createdFrom" is-open="openedCalendarFrom" placeholder="YYYY-MM-DD"
                                    datepicker-options="dateOptions" date-disabled="disabled(date, mode)" 
                                    ng-required="true" close-text="Close" />
                                 <span class="input-group-btn">
-                                    <button type="button" class="btn btn-default" ng-click="openCalendaFrom($event)"><i 
+                                    <button type="button" class="btn btn-default" ng-click="openCalendar($event, 1)"><i 
                                             class="glyphicon glyphicon-calendar"></i></button>
                                </span>
                         </p>
@@ -51,11 +51,11 @@
                     <div class="col-md-4">
                         <p class="input-group">
                             <input type="text" class="form-control" datepicker-popup="{{format}}" 
-                                   ng-model="criteria.createdTo" is-open="openedCalendaTo" 
+                                   ng-model="criteria.createdTo" is-open="openedCalendarTo" placeholder="YYYY-MM-DD
                                    datepicker-options="dateOptions" date-disabled="disabled(date, mode)" 
                                    ng-required="true" close-text="Close" />
                                 <span class="input-group-btn">
-                                    <button type="button" class="btn btn-default" ng-click="openCalendaTo($event)"><i 
+                                    <button type="button" class="btn btn-default" ng-click="openCalendar($event, 2)"><i 
                                             class="glyphicon glyphicon-calendar"></i></button>
                                </span>
                         </p>
@@ -121,28 +121,27 @@
                        ng-checked="users.checked" ng-click="toggleCheckAll()" />
             </th>
             <th class="data-table-title" translate="user.search-result.username">Username</th>
-
             <th class="data-table-title" translate="user.search-result.firstname">First Name</th>
             <th class="data-table-title" translate="user.search-result.lastname">Last Name</th>
-                        <th class="data-table-title" translate="user.search-result.email">Email</th>
+            <th class="data-table-title" translate="user.search-result.email">Email</th>
             <th class="data-table-title" translate="user.search-result.role">Role</th>
             <th class="data-table-title" translate="user.search-result.status"></th>
             
-            <tr ng-repeat="user in $data">
+            <tr ng-repeat="result_user in $data">
                 <td width="30" style="text-align: left"
                     header="'ng-table/headers/checkbox.html'">
-                    <input type="checkbox" ng-model="user.checked" ng-checked="user.checked" />
+                    <input type="checkbox" ng-model="result_user.checked" ng-checked="result_user.checked" />
                 </td>
-                <td data-title="'Username'">{{user.username}}
-                   <a href="a" data-toggle="modal" data-target="#myModal" ng-click="addUser(user)">{{}}</a>
+                <td data-title="'Username'">{{result_user.username}}
+                   <a href="a" data-toggle="modal" data-target="#myModal" ng-click="addUser(result_user)">{{}}</a>
                 </td>
-                <td data-title="'First Name'">{{user.firstname}}</td>
-                <td data-title="'Last Name'">{{user.lastname}}</td>
-                <td data-title="'Email'">{{user.email}}</td>
-                <td data-title="'Role'">{{user.role}}</td>
-                <td data-title="'Status'" >
-                    <p ng-show = "user.active" translate = "user.search-result.active">Active</p>
-                    <p ng-show = "!user.active" translate = "user.search-result.inactive">Inacitve</p>
+                <td data-title="'user.search-result.firstname'">{{result_user.firstname}}</td>
+                <td data-title="'user.search-result.lastname'">{{result_user.lastname}}</td>
+                <td data-title="'user.search-result.email'">{{result_user.email}}</td>
+                <td data-title="'user.search-result.role'">{{result_user.role}}</td>
+                <td data-title="'user.search-result.status'" >
+                    <p ng-show = "result_user.active" translate = "user.search-result.active">Active</p>
+                    <p ng-show = "!result_user.active" translate = "user.search-result.inactive">Inacitve</p>
                 </td>
                 
             </tr>
