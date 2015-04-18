@@ -1,25 +1,49 @@
 {
-    "user": {
-        "button": {
-            "add-user": "Add User",
+    "user":{
+        "field":{
+            "title": "Add/Edit user",
+            "username": "Username",
+            "pass": "New Password",
+            "pass-conf": "Confirm New Password",
+            "ass-com": "Assigned Companies",
+            "role": "Role",
+            "first-name": "First Name",
+            "last-name": "Last Name",
+            "ex-date": "Expired Date",
+            "language": "Language",
+            "active": "Active",
+            "yes-active": "Yes",
+            "no-active": "No"  
+        },
+        "button":{
+            "btn-save": "Save",
+            "btn-cancel": "Cancel",
+             "add-user": "Add User",
             "search": "Search",
             "delete": "Delete",
             "activate":"Activate",
             "inactivate":"Inactivate"
-        },
-        "user-field": {
+         },
+        "search-form": {
             "username": "Username",
             "firstlastname": "First Name/ LastName",
+            "email": "E-mail",
+            "role" : "Role",
+            "assignedcompanies": "Assigned Companies",
+            "createdfrom": "Created From",
+            "createdto": "To"
+         },
+         "search-result":{
+            "username": "Username",
+            "result": "Search Results",
+            "noresult": "No Result",
             "firstname": "First Name",
             "lastname": "Last Name",
             "email": "E-mail",
             "role" : "Role",
-            "assignedcompanies": "Assigned By Companies",
-            "createdfrom": "Created From",
-            "createdto": "To",
-            "result": "Search Results",
-            "noresult": "No Result",
-            "status" : "Status"
+            "status" : "Status",
+            "active": "Active",
+            "inactive": "Inactive"
          }
     }
 }

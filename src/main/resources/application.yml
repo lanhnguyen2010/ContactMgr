@@ -7,4 +7,3 @@ spring:
                 persistence:
                     validation:
                         mode: none
-

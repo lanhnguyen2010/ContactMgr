@@ -1,5 +1,13 @@
 package vn.kms.launch.contactmgr.service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Set;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
@@ -8,8 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import vn.kms.launch.contactmgr.domain.Item;
-import vn.kms.launch.contactmgr.domain.Itemized;
 import vn.kms.launch.contactmgr.domain.greeting.Greeting;
 import vn.kms.launch.contactmgr.domain.greeting.GreetingRepository;
 import vn.kms.launch.contactmgr.domain.greeting.GreetingSearchCriteria;
@@ -17,13 +23,6 @@ import vn.kms.launch.contactmgr.util.EntityNotFoundException;
 import vn.kms.launch.contactmgr.util.SearchResult;
 import vn.kms.launch.contactmgr.util.ValidationException;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.Validator;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
 
 @Service
 @Transactional(readOnly = true)

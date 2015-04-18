@@ -9,66 +9,73 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import vn.kms.launch.contactmgr.domain.image.Photo;
-import vn.kms.launch.contactmgr.repository.PhotoRepository;
-import vn.kms.launch.contactmgr.util.PhotoUtils;
+import vn.kms.launch.contactmgr.domain.image.PhotoRepository;
+import vn.kms.launch.contactmgr.util.PhotoUtil;
+import vn.kms.launch.contactmgr.util.SearchResult;
 
 @Service
 @Transactional
 public class PhotoService {
-	private static final String EXT_NAME = "png";
-	// Upload image;
+        
+        @Autowired
 	// @Autowired(required = true)
-	private PhotoRepository uploadRepository;
+        private PhotoRepository uploadRepository;
 
 	// @Autowired(required = true)
 	// private Photo photo;
 	@Value("resources.path")
 	private String path;
+        @Transactional
+        public Photo getPhotoId(int Id){
+            return uploadRepository.findOne(Id);
+        }
 
-	@Transactional
-	public Photo getPhotoId(int photoId) {
 
-		return uploadRepository.findOne(photoId);
+        @Transactional
+        public Photo uploadImage(@PathVariable("photoId") int photoId,
+                                  InputStream in,
+                                  String originalFilename,
+                                  String contentType) throws Exception {
+            
+            String relativePath = String.format("%s/%s", photoId, photoId +".png");
+
+            String pathFull = getPathFull(relativePath);
+
+            PhotoUtil.storeFile(in, pathFull);
+
+            Photo res = new Photo();
+
+            res.setId(photoId);
+            res.setFileName(originalFilename);
+            res.setContentType(contentType);
+            res.setPathFull(relativePath);
+            
+            return uploadRepository.saveAndFlush(res.toDo());
+        }
+
+        @Transactional
+        public SearchResult<Photo> getListPhotos(int page, int pageSize) {
+            List<Photo> result = uploadRepository.findAll();
+            int totalPhotos = result.size();
+            int toIndex = (pageSize * page) -1;
+            
+            if( toIndex > totalPhotos){
+                toIndex = totalPhotos;
+            }
+            List<Photo> photos = result.subList((page - 1) * pageSize, toIndex);
+            SearchResult<Photo> returnPhotos = new SearchResult<Photo>(null, photos, totalPhotos);
+            
+            return returnPhotos;
 	}
-
-	// @Transactional
-	// public List<Photo> getAllPhotoId(){
-	// return uploadRepository.findAll();
-	// }
-
-	@Transactional
-	public Photo uploadImage(@PathVariable int photoId, InputStream in,
-			String originalFilename, String contentType) throws Exception {
-
-		// , UUID.randomUUID().toString()
-		String relativePath = String.format("%s", originalFilename);
-
-		String pathFull = getPathFull(relativePath);
-
-		PhotoUtils.storeFile(in, pathFull);
-
-		Photo res = new Photo();
-
-		res.setId(photoId);
-		res.setFileName(originalFilename);
-		res.setContentType(contentType);
-		res.setRelativePath(relativePath);
-		return uploadRepository.saveAndFlush(res.toDo());
-	}
-
-	@Transactional
-	public List<Photo> getAllPhoto(int photoId) {
-		return uploadRepository.findAll();
-	}
-
-	// Path an images to store, follow user, demo fullPath;
-
+        
+        //Path an images to store;
+        String path = ("../../../photos");
 	// String path = Constants.RESOURCE_PATH
 
 //	//StringBuilder path = new StringBuilder(
 //			"D:/Project/Challengs/launch-contact-manager/etc/photos");
 
-	private String getPathFull(String relativePath) {
-		return String.format("%s/%s", path, relativePath);
-	}
+        private String getPathFull(String relativePath){
+            return String.format("%s/%s",path, relativePath);
+        }
 }

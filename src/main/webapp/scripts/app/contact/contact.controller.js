@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('contactmgrApp')
-    .controller('ContactController', function($scope, ContactService, ngTableParams, PAGE_SIZE) {
+    .controller('ContactController', function($scope, ContactService, ngTableParams) {
         function init(){
             $scope.getCompanies();
         };
@@ -13,10 +13,11 @@ angular.module('contactmgrApp')
             jobTitle: '',
             department: '',
             company: '',
-            pageIndex: 1
+            pageIndex: 1,
+            pageSize: 10
         };
 
-        $scope.contacts = [];
+        $scope.contacts =
         $scope.searchClicked = false;
         $scope.searchContacts = function() {
             if ($scope.isLoading) {
@@ -29,7 +30,7 @@ angular.module('contactmgrApp')
         }
 
         $scope.tableParams = new ngTableParams({
-            count: PAGE_SIZE
+            count: 10
         }, {
             counts: [],
             getData: function ($defer, params) {
@@ -44,7 +45,6 @@ angular.module('contactmgrApp')
                         params.total(data.totalItems);
                         $scope.contacts = data.items;
                         $defer.resolve(data.items);
-
                         $scope.isLoading = false;
                     })
                     .error(function(data, status) {
@@ -88,14 +88,12 @@ angular.module('contactmgrApp')
                        .prop('indeterminate', (count > 0 && count < total));
 
             }, true);
-
         $scope.toggleCheckAll = function(e) {
             var checked = (document.getElementById('check_all').checked);
             for (var i=0; i<$scope.contacts.length; i++) {
                 $scope.contacts[i].checked = checked;
             }
         }
-
         $scope.getCompanies = function() {
             ContactService.getCompanies()
                 .success(function(data,status) {
@@ -105,6 +103,5 @@ angular.module('contactmgrApp')
                     console.log('Error get companies', status);
                 });
         }
-
         init();
     });

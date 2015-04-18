@@ -1,13 +1,16 @@
 package vn.kms.launch.contactmgr.web.controller;
 
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.NO_CONTENT;
+import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
 import java.util.HashMap;
-
-import javax.validation.Valid;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,7 +24,6 @@ import org.springframework.web.bind.annotation.RestController;
 import vn.kms.launch.contactmgr.domain.contact.Contact;
 import vn.kms.launch.contactmgr.domain.search.ContactSearchCriteria;
 import vn.kms.launch.contactmgr.service.ContactService;
-
 @RestController
 @RequestMapping(value = "/api/contacts")
 public class ContactController {
@@ -104,9 +106,6 @@ public class ContactController {
 
         if (ids.length == 0) {
             return new ResponseEntity<Integer>(HttpStatus.BAD_REQUEST);
-        }
-
-        int deleteId = contactService.deleteContacts(ids);
         if (deleteId == 0) {
             return new ResponseEntity<Integer>(HttpStatus.NOT_FOUND);
         }
@@ -122,19 +121,6 @@ public class ContactController {
      */
     @RequestMapping(method = POST)
     public ResponseEntity<HashMap<String, Object>> createContact(@RequestBody @Valid Contact contact) {
-        Contact returnContact;
-        HashMap<String, Object> bodyReturn = new HashMap<String, Object>();
-
-        returnContact = contactService.saveContact(contact);
-        if (returnContact == null) {
-            bodyReturn.put("data", contact);
-            HashMap<String, String> errors = new HashMap<String, String>();
-            errors.put("companyId", "No companyId found");
-            bodyReturn.put("errors", errors);
-            return new ResponseEntity<HashMap<String, Object>>(bodyReturn, HttpStatus.BAD_REQUEST);
-        } else {
-            bodyReturn.put("data", returnContact);
-            return new ResponseEntity<HashMap<String, Object>>(bodyReturn, HttpStatus.OK);
         }
     }
 

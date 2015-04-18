@@ -1,37 +1,41 @@
 package vn.kms.launch.contactmgr.domain.image;
 
+import java.util.Date;
+
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-
-import vn.kms.launch.contactmgr.domain.Entity;
-
 /**
  * Created by diule on April, 14;
  */
-@JsonInclude
-@javax.persistence.Entity
+@Entity
 @Table(name = "IMAGES")
 public class Photo {
-	
+    
 
     @Id
-    @Column(name = "ID", insertable = false, updatable = false)
+    @Column(name = "ID")
     private int id;
+    
+    @Column(name = "PATH_FULL")
+    private String pathFull;
     
     @Column(name = "FILE_NAME")
     private String fileName;
-
+    
     @Column(name = "RELATIVE_PATH")
     private String relativePath;
 
     @Column(name = "CONTENT_TYPE")
     private String contentType;
 
-    
+
+    @Column(name = "CREATED_AT")
+    private Date createdAt;
 
     public int getId() {
         return id;
@@ -41,6 +45,13 @@ public class Photo {
         this.id = photoId;
     }
 
+    public String getPathFull() {
+        return pathFull;
+    }
+
+    public void setPathFull(String pathFull) {
+        this.pathFull = pathFull;
+    }
     public String getFileName() {
         return fileName;
     }
@@ -65,28 +76,38 @@ public class Photo {
         this.contentType = contentType;
     }
 
-	
-	
-    public Photo toDo() {
+    public Date getCreatedAt() {
+		return createdAt;
+	}
 
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+    }
+
+    public String toJson(){
+        return JSONUtil.toJSON(this);
+    }
+    
+    public Photo toDo(){
+        
         Photo res = new Photo();
         res.setId(id);
         res.setFileName(fileName);
-        res.setRelativePath(relativePath);
+        res.setPathFull(pathFull);
         res.setContentType(contentType);
-
-        return res;
+        
+        return res;    
     }
 
-    public Photo() {
-
+    public Photo(){
+        
     }
 
     //GET object;
-    public Photo(Photo res) {
+    public Photo(Photo res){
         id = res.getId();
         fileName = res.fileName;
         contentType = res.contentType;
-        relativePath = res.relativePath;
+        pathFull = res.pathFull;    
     }
 }
