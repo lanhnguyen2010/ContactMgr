@@ -8,5 +8,6 @@ public final class Constants {
     private Constants() {
 
     }
+
     public static String RESOURCE_PATH = "resource.path";
 }

@@ -11,12 +11,12 @@ public interface UserRepository extends JpaRepository<User, Integer>, UserReposi
 
     /**
      * Query function deleteUsers
-     * return 0,no row are deleted  
+     * return 0,no row are deleted
      *
      * @param ids
      * @return
      */
     @Modifying
     @Query("delete from User where id in (:ids)")
-    int deleteUsers(@Param("ids")int... ids);
+    int deleteUsers(@Param("ids") int... ids);
 }

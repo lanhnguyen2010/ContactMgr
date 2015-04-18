@@ -31,11 +31,11 @@ public class ContactServiceTest {
         Contact contact = contactService.getContact(1);
         assertNotNull(contact);
         assertEquals("first_name1", contact.getFirstName());
-        
+
         // Id invalid
         contact = contactService.getContact(-1);
         assertNull(contact);
-        
+
         // The contact doesn't exist
         contact = contactService.getContact(9999);
         assertNull(contact);

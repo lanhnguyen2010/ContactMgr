@@ -28,7 +28,7 @@ public class Contact extends vn.kms.launch.contactmgr.domain.Entity {
     @NotBlank(message = "{validation.not-empty.message}")
     @Column(name = "FIRST_NAME")
     private String firstName;
-    
+
     @Size(max = 50, message = "{validation.size-50.message}")
     @Column(name = "MIDDLE_NAME")
     private String middleName;

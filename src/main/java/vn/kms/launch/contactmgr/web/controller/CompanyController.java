@@ -19,15 +19,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import vn.kms.launch.contactmgr.domain.Itemized;
 import vn.kms.launch.contactmgr.domain.contact.Company;
 import vn.kms.launch.contactmgr.service.ContactService;
 import vn.kms.launch.contactmgr.util.EntityNotFoundException;
 import vn.kms.launch.contactmgr.util.ValidationException;
-import java.util.HashMap;
-
-/**
- * Created by thoong on 4/10/2015.
- */
 
 @RestController
 @RequestMapping(value = "/api/companies")
@@ -36,31 +32,28 @@ public class CompanyController {
     @Autowired
     private ContactService contactService;
 
-    /**
-     * Return: [{"id": valueOfId, "name": valueOfName}, {"id": valueOfId, "name": valueOfName}]
-     */
     @RequestMapping(value = "/names", method = GET)
-    public ResponseEntity<ArrayList<HashMap<String, Object>>> getCompany() {
-
+    public ResponseEntity<List<Itemized>> getCompanyNames() {
+        return new ResponseEntity<>(contactService.getCompanyNames(), HttpStatus.OK);
     }
-    
+
     @RequestMapping(method = GET)
-    public ResponseEntity<List<Company>> getAllCompanies(){
+    public ResponseEntity<List<Company>> getAllCompanies() {
         List<Company> companies = contactService.getAllCompanies();
         return new ResponseEntity<>(companies, HttpStatus.OK);
     }
-    
+
     @RequestMapping(value = "/{id}", method = PUT)
     public ResponseEntity<?> saveCompany(@PathVariable int id, @RequestBody Company company) {
         return save(id, company);
     }
-    
+
     @RequestMapping(method = POST)
     public ResponseEntity<?> createCompany(@RequestBody Company company) {
         return save(0, company);
     }
-    
-    private ResponseEntity<?> save(int id, Company company){
+
+    private ResponseEntity<?> save(int id, Company company) {
         try {
             Company savedCompany = contactService.saveCompany(company, id);
             return new ResponseEntity<>(savedCompany, OK);

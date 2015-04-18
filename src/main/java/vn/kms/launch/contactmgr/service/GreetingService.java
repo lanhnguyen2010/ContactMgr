@@ -29,7 +29,7 @@ import vn.kms.launch.contactmgr.util.ValidationException;
 public class GreetingService {
     @Autowired
     private GreetingRepository greetingRepo;
-    
+
     @Autowired
     private Validator validator;
 

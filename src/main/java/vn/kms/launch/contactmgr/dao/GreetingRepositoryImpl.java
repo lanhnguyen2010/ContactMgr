@@ -41,7 +41,7 @@ public class GreetingRepositoryImpl implements GreetingRepositoryCustom {
         }
         query.setFirstResult((criteria.getPageIndex() - 1) * criteria.getPageSize());
         query.setMaxResults(criteria.getPageSize());
-        List<Greeting> greetings =  query.getResultList();
+        List<Greeting> greetings = query.getResultList();
 
         return new SearchResult<>(criteria, greetings, totalGreetings);
     }

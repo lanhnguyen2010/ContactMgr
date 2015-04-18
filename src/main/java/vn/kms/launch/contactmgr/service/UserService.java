@@ -87,7 +87,7 @@ public class UserService {
         Set<ConstraintViolation<User>> violations = validator.validate(user);
         if (!violations.isEmpty()) {
             throw new ValidationException(
-                    violations.toArray(new ConstraintViolation[0]));
+                violations.toArray(new ConstraintViolation[0]));
         }
     }
 

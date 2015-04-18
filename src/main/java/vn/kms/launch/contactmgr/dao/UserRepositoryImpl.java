@@ -40,7 +40,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
             query.setParameter(name, params.get(name));
         }
         query.setFirstResult((criteria.getPageIndex() - 1)
-                * criteria.getPageSize());
+            * criteria.getPageSize());
         query.setMaxResults(criteria.getPageSize());
         List<User> users = query.getResultList();
 
@@ -49,7 +49,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
     }
 
     private String buildBaseQuery(UserSearchCriteria criteria,
-            Map<String, Object> params) {
+                                  Map<String, Object> params) {
 
         StringBuilder jpqlQuery = new StringBuilder("from User u where 1=1");
 
@@ -66,10 +66,10 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
             jpqlQuery.append(" and");
             if (criteria.getFirstlastName().contains("*")) {
                 jpqlQuery
-                        .append(" (u.firstname like :name or u.lastname like :name)");
+                    .append(" (u.firstname like :name or u.lastname like :name)");
             } else {
                 jpqlQuery
-                        .append(" (u.firstname = :name or u.lastname = :name)");
+                    .append(" (u.firstname = :name or u.lastname = :name)");
             }
             params.put("name", replaceWildcards(criteria.getFirstlastName()));
         }
@@ -83,10 +83,10 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
             params.put("email", replaceWildcards(criteria.getEmail()));
         }
         if (!StringUtils.isEmpty(criteria.getCreatedFrom())
-                && !StringUtils.isEmpty(criteria.getCreatedTo())) {
+            && !StringUtils.isEmpty(criteria.getCreatedTo())) {
             jpqlQuery.append(" and");
             jpqlQuery
-                    .append(" u.createdAt > :created_from and u.createdAt < :created_to");
+                .append(" u.createdAt > :created_from and u.createdAt < :created_to");
             params.put("created_from", criteria.getCreatedFrom());
             params.put("created_to", criteria.getCreatedTo());
         } else if (!StringUtils.isEmpty(criteria.getCreatedFrom())) {
@@ -124,7 +124,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
             lst.add(i);
         }
         Query query = em
-                .createQuery("update User u set u.active=1 where u.id in :ids");
+            .createQuery("update User u set u.active=1 where u.id in :ids");
         query.setParameter("ids", lst);
         int result = query.executeUpdate();
         return result;
@@ -137,7 +137,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
             lst.add(i);
         }
         Query query = em
-                .createQuery("update User u set u.active=0 where u.id in :ids");
+            .createQuery("update User u set u.active=0 where u.id in :ids");
         query.setParameter("ids", lst);
         int result = query.executeUpdate();
         return result;

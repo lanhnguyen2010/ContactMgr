@@ -73,7 +73,7 @@ public class GreetingController {
 
     @RequestMapping(value = "/{code}", method = PUT)
     public ResponseEntity<?> updateGreeting(@PathVariable("code") String code,
-                               @RequestBody Greeting greeting) {
+                                            @RequestBody Greeting greeting) {
         return saveGreeting(greeting, code);
     }
 

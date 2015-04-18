@@ -3,7 +3,6 @@ package vn.kms.launch.contactmgr.web.controller;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
-import java.io.FileFilter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +24,6 @@ import org.springframework.web.multipart.MultipartResolver;
 
 import vn.kms.launch.contactmgr.domain.image.Photo;
 import vn.kms.launch.contactmgr.service.PhotoService;
-import vn.kms.launch.contactmgr.util.PhotoUtils;
 import vn.kms.launch.contactmgr.util.SearchResult;
 
 /**
@@ -35,7 +33,7 @@ import vn.kms.launch.contactmgr.util.SearchResult;
 @Controller
 @RequestMapping(value = "/api/photos")
 public class PhotoController {
-    private static final String EXT_NAME = "png";
+    //private static final String EXT_NAME[] = {"PNG","JPEG"};
     private static final List<MediaType> FILTER_IMAGE = new ArrayList<MediaType>();
 
     @Autowired
@@ -43,7 +41,7 @@ public class PhotoController {
 
     @Autowired
     PhotoService uploadService;
-    
+
     static {
         FILTER_IMAGE.add(MediaType.IMAGE_JPEG);
         FILTER_IMAGE.add(MediaType.IMAGE_PNG);
@@ -55,16 +53,9 @@ public class PhotoController {
         return FILTER_IMAGE.contains(type);
     }
 
-    //@Value("${upload.photos.storage}")
-    @Autowired
-    private MultipartResolver multipartResolver;
-    @Autowired
-    PhotoService uploadService;
     @RequestMapping(value = "/upload/{photoId}", method = POST)
-    public
-    @ResponseBody
-    ResponseEntity<Photo> uploadPhoto(@PathVariable("photoId") int photoId,
-                                      @RequestParam("fileUpload") MultipartFile file)
+    public @ResponseBody  ResponseEntity<Photo> uploadPhoto( @PathVariable("photoId") int photoId,
+    														 @RequestParam("fileUpload") MultipartFile file)
         throws IOException, ServletException {
 
         Photo res = new Photo();
@@ -82,31 +73,26 @@ public class PhotoController {
                 contentTpye);
         } catch (Exception e) {
             e.printStackTrace();
-
+            // TODO: handle exception
         }
 
         return new ResponseEntity<Photo>(res, HttpStatus.CREATED);
     }
 
-    /*
-     * Show all images on Dialog;
-     * */
     @RequestMapping(method = GET)
-    public ResponseEntity<Photo> getAllPhoto(@PathVariable("photoId") int photoId,
-                                             HttpServletRequest request,
-                                             HttpServletResponse response) {
+    public ResponseEntity<SearchResult<Photo>> getListPhotos(@RequestParam(value = "page", defaultValue = "1") int page,
+                                                             @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
+        System.out.println("test1");
         SearchResult<Photo> list = uploadService.getListPhotos(page, pageSize);
-		
-        Photo photo = (Photo) uploadService.getAllPhoto(photoId);
 
-        
-        if (list.isEmpty()) {
+        if (list.getTotalItems() == 0) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        return new ResponseEntity<Photo>(photo, HttpStatus.OK);
+        return new ResponseEntity<>(list, HttpStatus.OK);
 
     }
+
     @RequestMapping(value = "/{photoId}", method = GET)
     public ResponseEntity<Photo> getPhoto(HttpServletResponse response,
                                           @PathVariable("photoId") int photoId) throws IOException {
@@ -115,7 +101,6 @@ public class PhotoController {
         if (res == null) {
             return new ResponseEntity<Photo>(HttpStatus.NOT_FOUND);
         }
-        //response.setStatus(HttpStatus.FOUND.value());
         return new ResponseEntity<Photo>(res, HttpStatus.OK);
     }
 }
