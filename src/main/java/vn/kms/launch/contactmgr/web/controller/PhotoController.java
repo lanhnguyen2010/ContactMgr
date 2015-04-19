@@ -33,7 +33,7 @@ import vn.kms.launch.contactmgr.util.SearchResult;
 @Controller
 @RequestMapping(value = "/api/photos")
 public class PhotoController {
-    //private static final String EXT_NAME[] = {"PNG","JPEG"};
+    
     private static final List<MediaType> FILTER_IMAGE = new ArrayList<MediaType>();
 
     @Autowired
@@ -54,9 +54,8 @@ public class PhotoController {
     }
 
     @RequestMapping(value = "/upload/{photoId}", method = POST)
-    public @ResponseBody  ResponseEntity<Photo> uploadPhoto( @PathVariable("photoId") int photoId,
-    														 @RequestParam("fileUpload") MultipartFile file)
-        throws IOException, ServletException {
+    public @ResponseBody  ResponseEntity<Photo> uploadPhoto(  @RequestParam("fileUpload") MultipartFile file)
+    														throws IOException, ServletException {
 
         Photo res = new Photo();
 
@@ -67,10 +66,11 @@ public class PhotoController {
         }
 
         try {
-            res = uploadService.uploadImage(photoId,
+            res = uploadService.uploadImage(
                 file.getInputStream(),
                 file.getOriginalFilename(),
                 contentTpye);
+               
         } catch (Exception e) {
             e.printStackTrace();
             // TODO: handle exception

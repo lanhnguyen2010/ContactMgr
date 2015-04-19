@@ -8,4 +8,4 @@ spring:
                     validation:
                         mode: none
 resources:
-    path:/etc/photos                        
+    path:/etc/photos                      

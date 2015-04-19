@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public class PhotoService {
 	private static final Logger LOG = LoggerFactory
 			.getLogger(PhotoService.class);
 
-	@Autowired(required = true)
+	@Autowired
 	private PhotoRepository uploadRepository;
 
 	@Autowired
@@ -41,10 +42,11 @@ public class PhotoService {
 	}
 
 	@Transactional
-	public Photo uploadImage(int photoId, InputStream in,
-			String originalFilename, String contentType) throws Exception {
+	public Photo uploadImage( InputStream in,
+							  String originalFilename,
+							  String contentType) throws Exception {
 
-		String relativePath = String.format("%s", originalFilename);
+		String relativePath = String.format("/etc/photos/%s", originalFilename);
 
 		String pathFull = getPathFull(relativePath);
 
@@ -52,11 +54,13 @@ public class PhotoService {
 
 		Photo res = new Photo();
 
-		res.setId(photoId);
+		//res.setId(photoId);
 		res.setFileName(originalFilename);
 		res.setContentType(contentType);
 		res.setPathFull(relativePath);
-		return uploadRepository.saveAndFlush(res);
+		res.setCreatedAt(DateTime.now().toDate());
+		
+		return uploadRepository.saveAndFlush(res.toDo());
 	}
 
 	@Transactional
@@ -80,10 +84,7 @@ public class PhotoService {
 		String rootPath = "";
 
 		try {
-			rootPath = cp.getURL().getFile()
-					+ (StringUtils.isEmpty(resourceProperties.getPath()) ? "/etc/photos"
-							: resourceProperties.getPath());
-
+			rootPath = cp.getURL().getFile();
 		} catch (Exception e) {
 
 		}
