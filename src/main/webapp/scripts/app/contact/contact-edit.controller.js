@@ -11,10 +11,15 @@ angular.module('contactmgrApp')
         };
 
         $scope.selectPhoto = function(imageURL) {
-            var avatar = document.getElementById(typePhoto + contactId);
-            avatar.src = "../../../photos/" + imageURL; // address of img
-            var avatar2 = document.getElementById(typePhoto + contactId + '_2');
-            avatar2.src = "../../../photos/" + imageURL; // address of img
+            //var avatar = document.getElementById(typePhoto + contactId);
+            //avatar.src = "../../../photos/" + imageURL; // address of img
+            //var avatar2 = document.getElementById(typePhoto + contactId + '_2');
+            //avatar2.src = "../../../photos/" + imageURL; // address of img
+        	if(typePhoto == 'avatar'){
+        		$scope.contact.photo = imageURL;
+        	} else {
+        		$scope.contact.work.company.logo = imageURL;
+        	}
             document.getElementById('closeButton').click();
         };
 
@@ -62,15 +67,15 @@ angular.module('contactmgrApp')
                 });
             */
         };
-          $scope.contact;
-          $scope.init = function() {
-              ContactService.getViewContact(contactId).success(
-                      function(data) {
-                          $scope.contact = data;
-                          if($scope.contact.work != null && $scope.contact.work.company != null){
-                              $scope.selectedCompany = $scope.contact.work.company;
-                          }
-                      })
+        $scope.contact;
+        $scope.init = function() {
+            ContactService.getViewContact(contactId).success(
+                    function(data) {
+                        $scope.contact = data;
+                        if($scope.contact.work != null && $scope.contact.work.company != null){
+                            $scope.selectedCompany = $scope.contact.work.company;
+                        }
+                    })
           };
         $scope.init();
         $scope.companies;
@@ -192,5 +197,27 @@ angular.module('contactmgrApp')
                  theEvent.returnValue = false;
                  if (theEvent.preventDefault) theEvent.preventDefault();
              }            
+         };
+         
+         $scope.getAvatar = function(){
+        	 if($scope.contact == null){
+        		 $scope.contact = {photo: '../../../photos/unknown.jpg'};
+        		 return "../../../photos/unknown.jpg";
+        	 }
+        	 return "../../../photos/" + $scope.contact.photo;
+         };
+         
+         $scope.getLogo = function(){
+        	 if($scope.contact == null){
+        		 $scope.contact = {work: { company: {logo: '../../../photos/unknown.jpg'}}};
+        		 return "../../../photos/unknown.jpg";
+        	 } else if($scope.contact.work == null){
+        		 $scope.contact.work = { company: {logo: '../../../photos/unknown.jpg'}};
+        		 return "../../../photos/unknown.jpg";
+        	 } else if($scope.contact.work.company == null){
+        		 $scope.contact.work.company = {logo: '../../../photos/unknown.jpg'};
+        		 return "../../../photos/unknown.jpg";
+        	 }
+        	 return "../../../photos/" + $scope.contact.work.company.logo;
          };
     });

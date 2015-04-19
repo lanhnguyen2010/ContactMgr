@@ -100,9 +100,7 @@
                     <label class="control-label col-sm-3"
                         translate="contact-edit.general.photo">Photo</label>
                     <div class="col-sm-9">
-
-
-                        <img class="img-thumbnail" id="avatar{{contact.id}}" ng-src="../../../photos/unknown.jpg" 
+                        <img class="img-thumbnail" id="avatar{{contact.id}}" ng-src="{{getAvatar()}}" 
                         ng-click = "getPhotos(&#34;avatar&#34;)" data-toggle="modal" 
                         data-target="#imageUploadModal" style="width : 100px; height : 100px; cursor: pointer;">
                     </div>
@@ -223,7 +221,7 @@
                 <div class="form-group row">
                     <div class="col-sm-3"></div>
                     <div class="col-sm-9">
-                    <img id="logo{{contact.id}}" ng-src="../../../photos/unknown.jpg"
+                    <img id="logo{{contact.id}}"  ng-src="{{getLogo()}}"
                             style="width : 70px; height : 70px; background-color: gray;" class="img-thumbnail">
                     </div>
                 </div>
@@ -345,7 +343,7 @@
                         <div class="form-group row">
                             <div class="col-sm-3"></div>
                             <div class="col-sm-9" class="thumbnail">
-                                  <img id="logo{{contact.id}}_2" ng-src="../../../photos/unknown.jpg" 
+                                  <img id="logo{{contact.id}}_2" ng-src="{{getLogo()}}" 
                                       ng-click = "getPhotos(&#34;logo&#34;)" 
                                       data-toggle="modal" data-target="#imageUploadModal" 
                                       style="width : 70px; height : 70px; cursor: pointer;">
