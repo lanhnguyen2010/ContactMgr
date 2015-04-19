@@ -186,11 +186,12 @@ angular.module('contactmgrApp')
                      $scope.selectedCompany = data;
                      $scope.contact.work.company = $scope.selectedCompany;
                  });
-             $('#companyInfoModal').modal('hide');
              } else {
                  // Don't create a new company
                 $scope.selectedCompany = $scope.contact.work.company;
              }
+             
+             $('#companyInfoModal').modal('hide');
          };
          
          $scope.openDialogCreateCompany = function(){
