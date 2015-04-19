@@ -117,4 +117,8 @@ public class ContactService {
         }
         return null;
     }
+
+    public Company getCompany(int id) {
+        return companyRepo.findOne(id);
+    }
 }

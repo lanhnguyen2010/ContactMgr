@@ -47,4 +47,8 @@ angular.module('contactmgrApp')
         this.getPhotos = function(contactId, pageIndex, pageSize) {
             return $http.get("/api/photos/"+contactId, pageIndex, pageSize);
         };
+        
+        this.getCompanieById = function(id) {
+            return $http.get("/api/companies/" + id);
+        };
     });
