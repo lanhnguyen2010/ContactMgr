@@ -22,7 +22,7 @@
             "search": "Search",
             "delete": "Delete",
             "activate":"Activate",
-            "inactivate":"Deactivate"
+            "inactivate":"Inactivate"
          },
         "search-form": {
             "username": "Username",

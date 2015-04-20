@@ -47,7 +47,7 @@
                         <p class="input-group">
                             <input type="text" class="form-control" datepicker-popup="yyyy-MM-dd" 
                                    ng-model="criteria.createdFrom" is-open="openedCalendarFrom" placeholder="YYYY-MM-DD"
-                                   close-text="Close" />
+                                   close-text="Close" disabled />
                                 <span class="input-group-btn">
                                     <button type="button" class="btn btn-default" ng-click="openCalendar($event, 1)"><i 
                                             class="glyphicon glyphicon-calendar"></i></button>
@@ -61,7 +61,7 @@
                         <p class="input-group">
                             <input type="text" class="form-control" datepicker-popup="yyyy-MM-dd" 
                                    ng-model="criteria.createdTo" date-disabled="disabled(date, mode)" is-open="openedCalendarTo" placeholder="YYYY-MM-DD"
-                                   close-text="Close" />
+                                   close-text="Close" disabled />
                                 <span class="input-group-btn">
                                     <button type="button" class="btn btn-default" ng-click="openCalendar($event, 2)"><i 
                                             class="glyphicon glyphicon-calendar"></i></button>
