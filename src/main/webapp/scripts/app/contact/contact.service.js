@@ -20,11 +20,53 @@ angular.module('contactmgrApp')
         }
         
         this.createContact = function (data) {
-            return $http.post('/api/contacts', data);
+        	// only send companyId to service
+        	if(data.work != null && data.work.company != null){
+        		data.work.company = null;
+        	}
+        	
+        	var data1 = this.checkNullData(data);
+            return $http.post('/api/contacts', data1);
         };
+        
         this.updateContact = function (id,data) {
+        	// only send companyId to service
+        	if(data.work != null && data.work.company != null){
+        		data.work.company = null;
+        	}
+        	var data1 = this.checkNullData(data);
             return $http.put('/api/contacts/' + id, data);
         };
+        
+        this.checkNullData = function(contact){
+        	if(contact.email == ''){
+        		contact.email = null;
+        	}
+        	if(contact.mobile == ''){
+        		contact.mobile = null;
+        	}
+        	if(contact.home != null){
+        		if(contact.home.address != null){
+        			if(contact.home.address.postalCode == ''){
+                		contact.home.address.postalCode = null;
+                	}
+                	if(contact.home.address.country == ''){
+                		contact.home.address.country = null;
+                	}
+        			
+        		}
+            	if(contact.home.phone == ''){
+            		contact.home.phone = null;
+            	}
+            	
+            	if(contact.home.fax == ''){
+            		contact.home.fax = null;
+            	}
+        	}
+        	
+        	return contact;
+        };
+        
         this.getCountries = function() {
             return $http.get("/api/countries");
         };
