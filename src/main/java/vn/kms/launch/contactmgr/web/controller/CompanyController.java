@@ -60,7 +60,17 @@ public class CompanyController {
         return save(0, company);
     }
     
-    private ResponseEntity<?> save(int id, Company company) throws ValidationException{
+    @RequestMapping(value = "/validate", method = POST)
+    public ResponseEntity<Object> validateCompany(@RequestBody Company company) {
+        try {
+            contactService.validateCompany(company);
+            return new ResponseEntity<>(OK);
+        } catch (ValidationException e) {
+            return new ResponseEntity<Object>(e.getErrors(), BAD_REQUEST);
+        }
+    }
+    
+    private ResponseEntity<?> save(int id, Company company) {
         try {
             Company savedCompany = contactService.saveCompany(company, id);
             return new ResponseEntity<>(savedCompany, OK);

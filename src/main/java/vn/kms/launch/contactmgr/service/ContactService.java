@@ -96,6 +96,13 @@ public class ContactService {
         }
     }
 
+    public void validateCompany(Company company) throws ValidationException {
+        Set<ConstraintViolation<Company>> violations = validator.validate(company);
+        if (!violations.isEmpty()) {
+            throw new ValidationException(violations.toArray(new ConstraintViolation[0]));
+        }
+    }
+    
     public List<Country> getCountries() {
         return countryRepo.findAll();
     }
