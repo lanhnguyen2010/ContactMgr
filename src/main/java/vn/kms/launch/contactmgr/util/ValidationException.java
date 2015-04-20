@@ -6,15 +6,15 @@ import java.util.Map;
 import javax.validation.ConstraintViolation;
 
 public class ValidationException extends RuntimeException {
-	private static final long serialVersionUID = 1L;
-	private Map<String, Object> errors;
+    private static final long serialVersionUID = 1L;
+    private Map<String, Object> errors;
 
     public ValidationException(ConstraintViolation<?>... violations) {
         errors = new HashMap<>();
         for (ConstraintViolation<?> violation : violations) {
             String path = violation.getPropertyPath().toString();
             String message = violation.getMessage();
-            System.out.println("path: " + path + " message: " + message);
+//            System.out.println("path: " + path + " message: " + message);
             addError(errors, path, message);
         }
 

@@ -1,7 +1,11 @@
 package vn.kms.launch.contactmgr.service;
 
 import java.io.InputStream;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -57,8 +61,13 @@ public class PhotoService{
             if( toIndex > totalPhotos){
                 toIndex = totalPhotos;
             }
-            List<Photo> photos = result.subList((page - 1) * pageSize, toIndex);
-            SearchResult<Photo> returnPhotos = new SearchResult<Photo>(null, photos, totalPhotos);
+            List<Photo> unsortPhotos = result.subList((page - 1) * pageSize, toIndex);
+
+            for (int i = 0; i < unsortPhotos.size(); i++){
+				System.out.println(unsortPhotos.get(i).getCreatedAt());
+            }
+            List<Photo> sortPhotos = null;
+            SearchResult<Photo> returnPhotos = new SearchResult<Photo>(null, sortPhotos, totalPhotos);
             
             return returnPhotos;
         }
