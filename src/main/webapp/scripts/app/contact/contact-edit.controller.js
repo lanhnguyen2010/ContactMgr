@@ -16,9 +16,6 @@ angular.module('contactmgrApp')
             } else {
                 $scope.selectedCompany.logo = imageURL;
             }
-            if (contactId == null) contactId = "";
-            var avatar = document.getElementById(typePhoto + contactId);
-            avatar.src = "../../../photos/" + imageURL; // address of img
             document.getElementById('closeButton').click();
         };
 
@@ -79,6 +76,7 @@ angular.module('contactmgrApp')
         $scope.companies;
         
         $scope.selectedCompany = null;
+        $scope.companyValidator = null;
         
         $scope.$watch('contact.work.companyId', function(result){
             for(var c in $scope.companies){
@@ -153,8 +151,7 @@ angular.module('contactmgrApp')
                          $('#companyInfoModal').modal('toggle');
                      })
                      .error(function(data, status, headers, config) {
-                         // has error
-                         console.log("Error: " + status);
+                    	 $scope.companyValidator = data.errors;
                      });
                  } else{
                      ContactService.createCompany($scope.selectedCompany)
@@ -167,7 +164,7 @@ angular.module('contactmgrApp')
                              $('#companyInfoModal').modal('toggle');
                          })
                          .error(function(data, status, headers, config) {
-                             console.log("Error: " + status);
+                        	 $scope.companyValidator = data.errors;
                              
                          });
                  }
