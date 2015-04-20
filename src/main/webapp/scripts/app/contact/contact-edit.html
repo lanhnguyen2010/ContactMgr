@@ -9,15 +9,17 @@
                     </button>
                     <h3 class="modal-title" style="color: white" translate="contact-edit.photo.title">Upload Photos</h3>
                 </div>
-                <div class="modal-body">
-                        <li class="image-list-upload" >
-                            <img ng-src="../../../photos/download.jpg" style="width : 85px;" ng-click="uploadPhoto()"/>
+                <div class="modal-body" style="float: left; width: 100%">
+                    <div class="centerElement">
+                        <li class="image-list-upload" style="border: 1px dashed black" ng-click="uploadPhoto()">
+                            Add more...
                         </li>
                         <li ng-repeat="image in images" class="image-list-upload">
-                            <img ng-src='../../../photos/{{image}}' style="width : 85px;" ng-click='selectPhoto(image)'/>
+                            <img ng-src='../../../photos/{{image}}' ng-click='selectPhoto(image)'/>
                         </li>
+                    </div>
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer" style="float: left; width: 100%">
                     <pagination total-items="totalItems" ng-change="pageChanged()" ng-model="currentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" rotate="false" num-pages="numPages"></pagination>
                     <button id="closeButton" type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
                 </div>

@@ -120,7 +120,7 @@ Hide ng-cloak on page load, https://docs.angularjs.org/api/ng/directive/ngCloak
 
 .modal-header {
   background-color: #0480be;
-  font-coler: #0000CD;
+  font-color: #0000CD;
 }
 
 .modal {
@@ -130,7 +130,6 @@ Hide ng-cloak on page load, https://docs.angularjs.org/api/ng/directive/ngCloak
 .modal:before {
   display: inline-block;
   vertical-align: middle;
-  content: " ";
   height: 20%;
 }
 
@@ -138,6 +137,7 @@ Hide ng-cloak on page load, https://docs.angularjs.org/api/ng/directive/ngCloak
   display: inline-block;
   text-align: left;
   vertical-align: middle;
+  background: white;
 }
 #size-dialog{
 	font-size: 13px;
@@ -158,11 +158,12 @@ Hide ng-cloak on page load, https://docs.angularjs.org/api/ng/directive/ngCloak
 }
 
 .image-list-upload {
-  display: inline-block;
-  width: 90px;
-  height: 90px;
-  text-align: center;
+  float: left;
+  width: 100px;
+  height: 100px;
+  padding: 2px;
   cursor: pointer;
+  list-style-type: none;
 }
 
 .image-list-upload:hover {
@@ -187,4 +188,20 @@ Hide ng-cloak on page load, https://docs.angularjs.org/api/ng/directive/ngCloak
 
 .select-editable select:focus, .select-editable input:focus {
     outline: none;
+}
+
+.image-list-upload img {
+    width: 100%;
+    height: 100%;
+}
+
+.modal-footer pagination {
+    float: left;
+}
+
+.centerElement {
+    margin-left: auto;
+    margin-right: auto;
+    vertical-align: center;
+    width: 95%;
 }

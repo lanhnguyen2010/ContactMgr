@@ -11,10 +11,6 @@ angular.module('contactmgrApp')
         };
 
         $scope.selectPhoto = function(imageURL) {
-            //var avatar = document.getElementById(typePhoto + contactId);
-            //avatar.src = "../../../photos/" + imageURL; // address of img
-            //var avatar2 = document.getElementById(typePhoto + contactId + '_2');
-            //avatar2.src = "../../../photos/" + imageURL; // address of img
             if(typePhoto == 'avatar'){
                 $scope.contact.photo = imageURL;
             } else {
@@ -39,7 +35,6 @@ angular.module('contactmgrApp')
                 })
                 .error(function(data, status) {
                 });
-
             $scope.selectPhoto(aImage);
         };
 

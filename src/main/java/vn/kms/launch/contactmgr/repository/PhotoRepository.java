@@ -5,10 +5,6 @@ import org.springframework.stereotype.Repository;
 
 import vn.kms.launch.contactmgr.domain.image.Photo;
 
-/*
- * Created by diule on April, 14
- * */
-
 @Repository
-public interface PhotoRepository extends JpaRepository <Photo, Integer> {
+public interface PhotoRepository extends JpaRepository<Photo, Integer>{
 }

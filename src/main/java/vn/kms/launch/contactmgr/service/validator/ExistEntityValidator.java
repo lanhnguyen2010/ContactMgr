@@ -11,7 +11,7 @@ public class ExistEntityValidator implements ConstraintValidator<ExistEntity, St
     /**
      * Check special characters in First Name and Last Name of user
      *
-     * @param value is first name and last name of user
+     * @param value   is first name and last name of user
      * @param context
      * @return false if value has contained special characters
      */

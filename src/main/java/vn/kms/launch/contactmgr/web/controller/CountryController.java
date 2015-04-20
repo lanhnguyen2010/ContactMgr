@@ -18,11 +18,11 @@ import vn.kms.launch.contactmgr.service.ContactService;
 public class CountryController {
     @Autowired
     private ContactService contactService;
-    
+
     @RequestMapping(method = GET)
     public ResponseEntity<List<Country>> getCompanyNames() {
         List<Country> countries = contactService.getCountries();
-        if(countries != null && !countries.isEmpty()){
+        if (countries != null && !countries.isEmpty()) {
             return new ResponseEntity<>(countries, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

@@ -19,6 +19,7 @@ import vn.kms.launch.contactmgr.domain.contact.ContactSearchCriteria;
 import vn.kms.launch.contactmgr.domain.contact.Country;
 import vn.kms.launch.contactmgr.domain.contact.CountryRepository;
 import vn.kms.launch.contactmgr.domain.contact.Work;
+import vn.kms.launch.contactmgr.repository.PhotoRepository;
 import vn.kms.launch.contactmgr.util.EntityNotFoundException;
 import vn.kms.launch.contactmgr.util.SearchResult;
 import vn.kms.launch.contactmgr.util.ValidationException;
@@ -31,9 +32,12 @@ public class ContactService {
 
     @Autowired
     private CompanyRepository companyRepo;
-    
+
     @Autowired
     private CountryRepository countryRepo;
+
+    @Autowired
+    private PhotoRepository photoRepo;
 
     @Autowired
     private Validator validator;
@@ -91,8 +95,15 @@ public class ContactService {
             throw new ValidationException(violations.toArray(new ConstraintViolation[0]));
         }
     }
+
+    public void validateCompany(Company company) throws ValidationException {
+        Set<ConstraintViolation<Company>> violations = validator.validate(company);
+        if (!violations.isEmpty()) {
+            throw new ValidationException(violations.toArray(new ConstraintViolation[0]));
+        }
+    }
     
-    public List<Country> getCountries(){
+    public List<Country> getCountries() {
         return countryRepo.findAll();
     }
 
@@ -102,15 +113,13 @@ public class ContactService {
 
     @Transactional
     public Company saveCompany(Company company, int id) {
-        //TODO: validate
-        //Set<ConstraintViolation<Contact>> violations = validator.validate(company);
-        if(company != null){
-            if(id == 0){
+        if (company != null) {
+            if (id == 0) {
                 // create a new company
                 return companyRepo.save(company);
-            } else{
+            } else {
                 // update a existing company
-                
+
                 company.setId(id);
                 return companyRepo.save(company);
             }

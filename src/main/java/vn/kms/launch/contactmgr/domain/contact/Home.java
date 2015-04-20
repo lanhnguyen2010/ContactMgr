@@ -10,9 +10,9 @@ import vn.kms.launch.contactmgr.domain.ValueObject;
 
 @Embeddable
 public class Home extends ValueObject<Home> {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Embedded
+    @Embedded
     @Valid
     private Address address;
 

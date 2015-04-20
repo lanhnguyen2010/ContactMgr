@@ -55,7 +55,7 @@ public class ContactRepositoryImpl implements ContactRepositoryCustom {
         }
         query.setFirstResult((criteria.getPageIndex() - 1) * criteria.getPageSize());
         query.setMaxResults(criteria.getPageSize());
-        List<Contact> contacts =  query.getResultList();
+        List<Contact> contacts = query.getResultList();
 
         return new SearchResult<>(criteria, contacts, totalContacts);
     }

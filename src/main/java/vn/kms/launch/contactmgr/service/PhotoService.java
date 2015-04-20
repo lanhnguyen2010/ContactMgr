@@ -1,58 +1,86 @@
 package vn.kms.launch.contactmgr.service;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
+import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import vn.kms.launch.contactmgr.domain.image.Photo;
 import vn.kms.launch.contactmgr.repository.PhotoRepository;
 import vn.kms.launch.contactmgr.util.PhotoUtil;
-
+import vn.kms.launch.contactmgr.util.SearchResult;
 
 @Service
 @Transactional
-public class PhotoService{
+public class PhotoService {
+    private static final Logger LOG = LoggerFactory
+            .getLogger(PhotoService.class);
 
-        private PhotoRepository uploadRepository;
+    @Autowired
+    private PhotoRepository uploadRepository;
 
-        @Transactional
-        public Photo getPhotoId(int photoId){
-            return uploadRepository.findOne(photoId);
-        }
+    @Autowired
+    ResourcesProperties resourceProperties;
 
-        @Transactional
-        public Photo uploadImage(@PathVariable int photoId,
-                                  InputStream in,
-                                  String originalFilename,
-                                  String contentType) throws Exception {
-            
-            String relativePath = String.format("%s/%s", photoId, photoId +".png");
+    @Transactional
+    public Photo getPhotoId(int Id) {
+        return uploadRepository.findOne(Id);
+    }
 
-            String pathFull = getPathFull(relativePath);
+    @Transactional
+    public Photo uploadImage( InputStream in,
+                              String originalFilename,
+                              String contentType) throws Exception {
 
-            PhotoUtil.storeFile(in, pathFull);
+        String relativePath = String.format("/etc/photos/%s", originalFilename);
 
-            Photo res = new Photo();
+        String pathFull = getPathFull(relativePath);
 
-            res.setId(photoId);
-            res.setFileName(originalFilename);
-            res.setContentType(contentType);
-            res.setPathFull(relativePath);
-            
-            return uploadRepository.saveAndFlush(res.toDo());
-        }
+        PhotoUtil.storeFile(in, pathFull);
 
-        @Transactional
-        public List<Photo> getAllPhoto(int photoId) {
-            return uploadRepository.findAll();
-        }
+        Photo res = new Photo();
+
+        //res.setId(photoId);
+        res.setFileName(originalFilename);
+        res.setContentType(contentType);
+        res.setPathFull(relativePath);
+        res.setCreatedAt(DateTime.now().toDate());
         
-        //Path an images to store;
-        String path = ("D:/Trainning/Java Project/ContactManageProject/etc/photos");
-        private String getPathFull(String relativePath){
-            return String.format("%s/%s",path, relativePath);
+        return uploadRepository.saveAndFlush(res.toDo());
+    }
+
+    @Transactional
+    public SearchResult<Photo> getListPhotos(int page, int pageSize) {
+        List<Photo> result = uploadRepository.findAll();
+        int totalPhotos = result.size();
+        int toIndex = (pageSize * page) - 1;
+
+        if (toIndex > totalPhotos) {
+            toIndex = totalPhotos;
         }
+        List<Photo> photos = result.subList((page - 1) * pageSize, toIndex);
+        SearchResult<Photo> returnPhotos = new SearchResult<Photo>(null,
+                photos, totalPhotos);
+
+        return returnPhotos;
+    }
+
+    private String getPathFull(String relativePath) throws IOException {
+        ClassPathResource cp = new ClassPathResource("");
+        String rootPath = "";
+
+        try {
+            rootPath = cp.getURL().getFile();
+        } catch (Exception e) {
+
+        }
+        return String.format("%s/%s", rootPath, relativePath);
+    }
 }

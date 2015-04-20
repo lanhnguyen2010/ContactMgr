@@ -60,6 +60,7 @@ public class UserService {
             throw new EntityNotFoundException();
         }
         user.setId(id);
+        validateUser(user);
         return userRepository.save(user);
     }
 
@@ -86,8 +87,7 @@ public class UserService {
     public void validateUser(User user) throws ValidationException {
         Set<ConstraintViolation<User>> violations = validator.validate(user);
         if (!violations.isEmpty()) {
-            throw new ValidationException(
-                    violations.toArray(new ConstraintViolation[0]));
+            throw new ValidationException(violations.toArray(new ConstraintViolation[0]));
         }
     }
 
