@@ -134,11 +134,11 @@ angular.module('contactmgrApp')
          $scope.getCountries();
          
          $scope.hasSelectedCompany = function(){
-             return ($scope.selectedCompany != null && $scope.contact.work.companyId > 0);
+             return ($scope.selectedCompany != null && $scope.selectedCompany.id > 0);
          };
          
          $scope.saveCompany = function(){
-             if($scope.hasSelectedCompany()){
+             if($scope.selectedCompany != null){
                  if($scope.selectedCompany.id >0){
                     // Update a existing company
                      ContactService.updateCompany($scope.selectedCompany)
