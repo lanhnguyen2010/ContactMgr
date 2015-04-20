@@ -151,8 +151,8 @@ Hide ng-cloak on page load, https://docs.angularjs.org/api/ng/directive/ngCloak
 
 .image-list-upload {
   float: left;
-  width: 100px;
-  height: 100px;
+  width: 125px;
+  height: 125px;
   padding: 2px;
   cursor: pointer;
   list-style-type: none;
