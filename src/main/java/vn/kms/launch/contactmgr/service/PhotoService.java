@@ -3,12 +3,16 @@ package vn.kms.launch.contactmgr.service;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.UUID;
 
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import vn.kms.launch.contactmgr.domain.image.Photo;
@@ -16,8 +20,14 @@ import vn.kms.launch.contactmgr.domain.image.PhotoRepository;
 import vn.kms.launch.contactmgr.util.PhotoUtil;
 import vn.kms.launch.contactmgr.util.SearchResult;
 
+
+@Service
+@Transactional
 public class PhotoService {
     private static final Logger LOG = LoggerFactory.getLogger(PhotoService.class);
+    
+    @Value("${app.image-dir}")
+    private  String imageDir;
 
     @Autowired(required=true)
     private PhotoRepository uploadRepository;
@@ -26,30 +36,21 @@ public class PhotoService {
     ResourcesProperties resourceProperties;
 
     @Transactional
-    public Photo getPhotoId(int Id) {
-        return uploadRepository.findOne(Id);
-    }
-
-    @Transactional
     public Photo uploadImage(InputStream in,
                              String originalFilename,
                              String contentType) throws Exception {
-
-        String relativePath = String.format("/etc/photos/%s", originalFilename);
-
-        String pathFull = getPathFull(relativePath);
-
-        PhotoUtil.storeFile(in, pathFull);
+    	
+    	String uuid = UUID.randomUUID().toString();
 
         Photo res = new Photo();
-
-        //res.setId(photoId);
         res.setFileName(originalFilename);
         res.setContentType(contentType);
-        res.setPathFull(relativePath);
+        res.setPathFull(uuid);
         res.setCreatedAt(DateTime.now().toDate());
-
-        return uploadRepository.saveAndFlush(res.toDo());
+        res = uploadRepository.saveAndFlush(res);
+        
+        PhotoUtil.storeFile(in, getPathFull(uuid));
+        return res;
     }
 
     @Transactional
@@ -67,19 +68,20 @@ public class PhotoService {
 
         return returnPhotos;
     }
-    //Path an images to store, follow user, demo fullPath;
+  
+    @Transactional
+    public Photo getPhotoById(int Id) {
+        return uploadRepository.findOne(Id);
+    }
 
-    // String path = Constants.RESOURCE_PATH
-
-    private String getPathFull(String relativePath) throws IOException {
-        ClassPathResource cp = new ClassPathResource("");
-        String rootPath = "";
-
-        try {
-            rootPath = cp.getURL().getFile();
-        } catch (Exception e) {
-
-        }
-        return String.format("%s/%s", rootPath, relativePath);
+    public String getPathFull(String uuid) {
+//        ClassPathResource cp = new ClassPathResource("");
+//        String rootPath = "";
+//        try {
+//            rootPath = cp.getURL().getFile();
+//        } catch (Exception e) {
+//
+//        }
+        return String.format("%s/%s.png", imageDir, uuid);
     }
 }
