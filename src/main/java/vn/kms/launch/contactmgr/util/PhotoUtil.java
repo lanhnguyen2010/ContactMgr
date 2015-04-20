@@ -12,14 +12,12 @@ public class PhotoUtil {
     private static final Logger LOG = LoggerFactory.getLogger(PhotoUtil.class);
 
     private PhotoUtil() {
-
     }
 
     public static void storeFile(InputStream in, String pathFull)
-        throws Exception {
+            throws Exception {
 
         LOG.debug("Begin store file {}:", pathFull);
-
         File out = new File(pathFull);
         try {
             FileUtils.copyInputStreamToFile(in, out);
@@ -32,9 +30,9 @@ public class PhotoUtil {
 
     /*
      * @param path
-     *
-     * @return
-     *
+	 * 
+	 * @return
+	 * 
      * @throw FileNotFoundException
      */
     public static FileInputStream getFile(String path) throws Exception {
@@ -42,12 +40,10 @@ public class PhotoUtil {
         LOG.debug("Get file {}:", path);
 
         try {
-
             return new FileInputStream(new File(path));
         } catch (Exception e) {
             LOG.debug("Cannot get file{}:", path);
             throw new Exception("File not found" + e.getMessage());
-            // TODO: handle exception
         }
     }
 

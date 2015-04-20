@@ -5,7 +5,7 @@
     <groupId>vn.kms.launch</groupId>
     <artifactId>contactmgr</artifactId>
     <name>Contact Manager</name>
-    <version>0.2.1-SNAPSHOT</version>
+    <version>0.2.3-SNAPSHOT</version>
     <packaging>war</packaging>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -79,6 +79,10 @@
             <groupId>org.neo4j</groupId>
             <artifactId>neo4j-cypher-compiler-2.1</artifactId>
             <version>2.1.5</version>
+        </dependency>
+        <dependency>
+        	<groupId>org.apache.activemq</groupId>
+        	<artifactId>activemq-client</artifactId>
         </dependency>
     </dependencies>
 

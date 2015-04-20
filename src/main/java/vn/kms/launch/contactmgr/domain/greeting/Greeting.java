@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -21,6 +22,7 @@ public class Greeting extends vn.kms.launch.contactmgr.domain.Entity {
     @Transient
     private String language;
 
+    @Size(max = 64, message = "{validation.size-64.message}")
     @NotEmpty(message = "{validation.not-empty.message}")
     @Column(name = "MESSAGE")
     private String message;

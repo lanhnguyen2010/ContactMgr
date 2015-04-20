@@ -1,6 +1,7 @@
 package vn.kms.launch.contactmgr.dao;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -85,24 +86,27 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
         if (!StringUtils.isEmpty(criteria.getCreatedFrom())
             && !StringUtils.isEmpty(criteria.getCreatedTo())) {
             jpqlQuery.append(" and");
-            jpqlQuery
-                .append(" u.createdAt > :created_from and u.createdAt < :created_to");
-            params.put("created_from", criteria.getCreatedFrom());
-            params.put("created_to", criteria.getCreatedTo());
+            jpqlQuery.append(" (u.createdAt >= :created_from and u.createdAt < :created_to)");
+            params.put("created_from", new Date(criteria.getCreatedFrom().getTime()));
+            params.put("created_to", new Date(criteria.getCreatedTo().getTime() + (1000L * 60 * 60 * 24)));
         } else if (!StringUtils.isEmpty(criteria.getCreatedFrom())) {
             jpqlQuery.append(" and");
-            jpqlQuery.append(" u.createdAt > :created_from");
-            params.put("created_from", criteria.getCreatedFrom());
+            jpqlQuery.append(" u.createdAt >= :created_from");
+            params.put("created_from", new Date(criteria.getCreatedFrom().getTime()));
         } else if (!StringUtils.isEmpty(criteria.getCreatedTo())) {
             jpqlQuery.append(" and");
-            jpqlQuery.append(" u.createdAt < :created_to");
-            params.put("created_to", criteria.getCreatedTo());
+            jpqlQuery.append(" u.createdAt <= :created_to");
+            params.put("created_to", new Date(criteria.getCreatedTo().getTime() + (1000L * 60 * 60 * 24)));
         }
 
         if (!StringUtils.isEmpty(criteria.getAssignedCompanies())) {
-            jpqlQuery.append(" and");
-            jpqlQuery.append(" u.assignedCompanies like :assignedCompanies");
-            params.put("assignedCompanies", criteria.getAssignedCompanies());
+            for (String companyCriteria: criteria.getAssignedCompanies().split(",")) {
+            	companyCriteria.trim();
+            	companyCriteria = "%" + companyCriteria + "%";
+                jpqlQuery.append(" and");
+                jpqlQuery.append(" u.assignedCompanies like :assignedCompanies");
+                params.put("assignedCompanies", companyCriteria);
+            }
         }
         if (!StringUtils.isEmpty(criteria.getRole())) {
             jpqlQuery.append(" and");

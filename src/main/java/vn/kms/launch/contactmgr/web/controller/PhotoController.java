@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletResponse;
 import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +43,6 @@ import vn.kms.launch.contactmgr.util.SearchResult;
 @Controller
 @RequestMapping(value = "/api/photos")
 public class PhotoController {
-	
 //	@Autowired
 //	//@Value("${contacts.photo.storage}")
 //	private String photoDir;
@@ -73,7 +71,6 @@ public class PhotoController {
                                                             throws IOException, ServletException {
 
         Photo res = new Photo();
-
         String contentTpye = file.getContentType();
         if (!filterUpload(contentTpye)) {
             //System.out.println("You only upload file .PNG or JPEG");
@@ -88,9 +85,7 @@ public class PhotoController {
 
         } catch (Exception e) {
             e.printStackTrace();
-            // TODO: handle exception
         }
-
         return new ResponseEntity<Photo>(res, HttpStatus.CREATED);
     }
 

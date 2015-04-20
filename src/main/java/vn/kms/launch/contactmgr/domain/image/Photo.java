@@ -6,9 +6,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
-
 
 /**
  * Created by diule on April, 14;
@@ -17,20 +17,21 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "IMAGES")
 public class Photo {
 
-
     @Id
     @Column(name = "ID")
     private int id;
 
-    @Column(name = "FILE_NAME")
-    private String fileName;
-
-    @Column(name = "CONTENT_TYPE")
-    private String contentType;
-
+    @Size(max = 255, message = "{validation.size-255.message}")
     @Column(name = "PATH_FULL")
     private String pathFull;
-
+    
+    @Size(max = 100, message = "{validation.size-100.message}")
+    @Column(name = "FILE_NAME")
+    private String fileName;
+    
+    @Size(max = 10, message = "{validation.size-10.message}")
+    @Column(name = "CONTENT_TYPE")
+    private String contentType;
 
     @Column(name = "CREATED_AT")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -60,7 +61,6 @@ public class Photo {
         this.fileName = fileName;
     }
 
-
     public String getContentType() {
         return contentType;
     }
@@ -77,7 +77,6 @@ public class Photo {
         this.createdAt = createdAt;
     }
 
-
     public Photo toDo() {
 
         Photo res = new Photo();
@@ -88,11 +87,7 @@ public class Photo {
 
         return res;
     }
-
-    public Photo() {
-
-    }
-
+    
     //GET object;
     public Photo(Photo res) {
         id = res.getId();
@@ -100,4 +95,8 @@ public class Photo {
         contentType = res.contentType;
         pathFull = res.pathFull;
     }
+
+    public Photo() {
+    }
+
 }

@@ -14,7 +14,6 @@ public class ValidationException extends RuntimeException {
         for (ConstraintViolation<?> violation : violations) {
             String path = violation.getPropertyPath().toString();
             String message = violation.getMessage();
-            System.out.println("path: " + path + " message: " + message);
             addError(errors, path, message);
         }
 

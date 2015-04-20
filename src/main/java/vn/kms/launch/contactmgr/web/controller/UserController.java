@@ -44,6 +44,7 @@ public class UserController {
 
     @RequestMapping(value = "/{id}", method = PUT)
     public ResponseEntity<?> updateUser(@PathVariable int id, @RequestBody User user) {
+        System.out.println("UPDATE HERE");
         return saveUser(user, id);
     }
 

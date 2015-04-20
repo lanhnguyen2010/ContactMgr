@@ -1,6 +1,5 @@
 package vn.kms.launch.contactmgr.service;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.UUID;
@@ -10,8 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,13 +33,19 @@ public class PhotoService {
     ResourcesProperties resourceProperties;
 
     @Transactional
-    public Photo uploadImage(InputStream in,
-                             String originalFilename,
-                             String contentType) throws Exception {
+    public Photo getPhotoId(int Id) {
+        return uploadRepository.findOne(Id);
+    }
+    @Transactional
+    public Photo uploadImage( InputStream in,
+                              String originalFilename,
+                              String contentType) throws Exception {
     	
     	String uuid = UUID.randomUUID().toString();
 
+		
         Photo res = new Photo();
+        
         res.setFileName(originalFilename);
         res.setContentType(contentType);
         res.setPathFull(uuid);

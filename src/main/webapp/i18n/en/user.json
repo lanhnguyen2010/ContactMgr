@@ -21,9 +21,9 @@
             "add-user": "Add User",
             "search": "Search",
             "delete": "Delete",
-            "activate": "Activate",
-            "inactivate": "Inactivate"
-        },
+            "activate":"Activate",
+            "inactivate":"Deactivate"
+         },
         "search-form": {
             "username": "Username",
             "firstlastname": "First Name/ LastName",
