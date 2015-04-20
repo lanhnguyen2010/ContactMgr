@@ -19,14 +19,11 @@ public class PasswordsNotEqualValidator implements ConstraintValidator<Passwords
     public boolean isValid(Object value, ConstraintValidatorContext context) {
         context.disableDefaultConstraintViolation();
         try {
-            String password = (String) ValidatorUtil.getFieldValue(value, passwordFieldName);
+            String password = (String) ValidatorUtil.getFieldValue(value, passwordFieldName);           
             String passwordVerification = (String) ValidatorUtil.getFieldValue(value, passwordVerificationFieldName);
-
+    
             if (passwordsAreNotEqual(password, passwordVerification)) {
-                ValidatorUtil.addValidationError(passwordFieldName, context);
-                ValidatorUtil.addValidationError(passwordVerificationFieldName, context);
-
-                return false;
+               return false;
             }
         }
         catch (Exception ex) {

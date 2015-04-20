@@ -5,10 +5,18 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
+
+import vn.kms.launch.contactmgr.service.validator.PasswordsNotEqual;
+
+@PasswordsNotEqual(
+        passwordFieldName = "password",
+        passwordVerificationFieldName = "confirmPassword"
+)
 
 @Entity
 @Table(name = "USERS")
@@ -26,7 +34,10 @@ public class User extends vn.kms.launch.contactmgr.domain.Entity {
     @Column(name="PASSWORD")
     private String password;
     
-    @Size(max = 20, message = "{validation.maxName.message}")
+    @Transient
+    private String confirmPassword;
+    
+	@Size(max = 20, message = "{validation.maxName.message}")
     @Column(name="FIRST_NAME")
     private String firstname;
     
@@ -67,6 +78,14 @@ public class User extends vn.kms.launch.contactmgr.domain.Entity {
     public void setPassword(String password) {
         this.password = password;
     }
+    
+    public String getConfirmPassword() {
+		return confirmPassword;
+	}
+
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
+	}
 
     public String getFirstname() {
         return firstname;
