@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import vn.kms.launch.contactmgr.domain.image.Photo;
-import vn.kms.launch.contactmgr.repository.PhotoRepository;
+import vn.kms.launch.contactmgr.domain.image.PhotoRepository;
 import vn.kms.launch.contactmgr.util.PhotoUtil;
 import vn.kms.launch.contactmgr.util.SearchResult;
 
