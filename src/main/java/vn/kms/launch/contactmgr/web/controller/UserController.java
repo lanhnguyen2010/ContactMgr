@@ -13,6 +13,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +27,6 @@ import org.springframework.web.bind.annotation.RestController;
 import vn.kms.launch.contactmgr.domain.user.User;
 import vn.kms.launch.contactmgr.domain.user.UserSearchCriteria;
 import vn.kms.launch.contactmgr.service.UserService;
-import vn.kms.launch.contactmgr.util.EntityNotFoundException;
 import vn.kms.launch.contactmgr.util.SearchResult;
 import vn.kms.launch.contactmgr.util.ValidationException;
 
@@ -50,7 +51,7 @@ public class UserController {
 
     @RequestMapping(value = "/search", method = POST)
     public SearchResult<User> searchUser(
-            @RequestBody UserSearchCriteria criteria) {
+        @RequestBody UserSearchCriteria criteria) {
         return userService.searchUsers(criteria);
     }
 
@@ -58,7 +59,7 @@ public class UserController {
     public ResponseEntity<Void> deleteUser(@PathVariable int id) {
 
         int deleteId = userService.deleteUsers(id);
-        return new ResponseEntity<>((deleteId == 0)? NOT_FOUND : NO_CONTENT);
+        return new ResponseEntity<>((deleteId == 0) ? NOT_FOUND : NO_CONTENT);
     }
 
     @RequestMapping(method = DELETE)
@@ -75,11 +76,11 @@ public class UserController {
         Integer result = userService.activeUser(ids);
         if (result == ids.length) {
             return new ResponseEntity<Integer>(result,
-                    HttpStatus.OK);
+                HttpStatus.OK);
         } else {
             return new ResponseEntity<Integer>(result, HttpStatus.BAD_REQUEST);
         }
-        
+
     }
 
     @RequestMapping(value = "/deactive/", method = PUT)
@@ -87,7 +88,7 @@ public class UserController {
         Integer result = userService.deactiveUser(ids);
         if (result == ids.length) {
             return new ResponseEntity<Integer>(result,
-                    HttpStatus.OK);
+                HttpStatus.OK);
         } else {
             return new ResponseEntity<Integer>(result, HttpStatus.BAD_REQUEST);
         }
@@ -98,7 +99,7 @@ public class UserController {
         List<String> result = userService.getRoles();
         if (result == null) {
             return new ResponseEntity<List<String>>(result,
-                    HttpStatus.BAD_REQUEST);
+                HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<List<String>>(result, HttpStatus.OK);
     }
@@ -112,7 +113,7 @@ public class UserController {
             return new ResponseEntity<Object>(e.getErrors(), BAD_REQUEST);
         }
     }
-    
+
     private ResponseEntity<?> saveUser(User user, Integer id) {
         try {
             User savedContact = userService.saveUser(user, id);

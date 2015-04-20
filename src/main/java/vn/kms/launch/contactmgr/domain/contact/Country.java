@@ -11,22 +11,22 @@ public class Country {
     @Id
     @Column(name = "COUNTRY_CODE")
     private String countryCode;
-    
+
     @Column(name = "COUNTRY")
     private String country;
-    
+
     public String getCountryCode() {
         return countryCode;
     }
-    
+
     public void setCountryCode(String countryCode) {
         this.countryCode = countryCode;
     }
-    
+
     public String getCountry() {
         return country;
     }
-    
+
     public void setCountry(String country) {
         this.country = country;
     }

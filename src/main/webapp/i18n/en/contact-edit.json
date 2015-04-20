@@ -1,48 +1,52 @@
 {
     "contact-edit": {
-    	"general": {
-    		"title-general": "General",
-    		"contact-name": "Name",
-    		"display-name": "Display Name",
-    		"email": "E-mail",
-    		"mobile": "Mobile",
-    		"photo": "Photo"
-    	},
-    	"home": {
-    		"title-home": "Home",
-    		"add-line1": "Addr. line 1",
-    		"add-line2": "Addr. line 2",
-    		"city": "City",
-    		"state":"State",
-    		"zip-code": "Zip Code",
-    		"country":"Country",
-    		"phone":"Phone",
-    		"fax":"Fax"
-    	},
-    	"work":{
-    		"title-work":"Work",
-    		"company-name":"Company",
-    		"message":"Message",
-    		"website": "Website",
-    		"job-title":"Job Title",
-    		"department":"Department",
-    		"edit-company":"Edit Company"
-    	},
-    	"button": {
-    		"edit-company":"Edit",
-    		"new-company": "New",
-    		"save-contact":"Save",
-    		"cancel-contact":"Cancel",
-    		"save-company":"Save",
-            "cancel-company":"Cancel"
-    	},
-    	"placeholder":{
-    		"first-name": "First Name",
-    		"middle-name": "Middle Name",
-    		"last-name": "Last Name",
-    		"email":"example@abc",
-    		"mobile":"+84 9079xxx",
-    		"city":"Ho Chi Minh"
-    	}
+        "general": {
+            "title-general": "General",
+            "contact-name": "Name",
+            "display-name": "Display Name",
+            "email": "E-mail",
+            "mobile": "Mobile",
+            "photo": "Photo"
+        },
+        "home": {
+            "title-home": "Home",
+            "add-line1": "Addr. line 1",
+            "add-line2": "Addr. line 2",
+            "city": "City",
+            "state": "State",
+            "zip-code": "Zip Code",
+            "country": "Country",
+            "phone": "Phone",
+            "fax": "Fax"
+        },
+        "work": {
+            "title-work": "Work",
+            "company-name": "Company",
+            "message": "Message",
+            "website": "Website",
+            "job-title": "Job Title",
+            "department": "Department",
+            "edit-company": "Edit Company",
+            "create-company": "Create Company"
+        },
+        "button": {
+            "edit-company": "Edit",
+            "new-company": "New",
+            "save-contact": "Save",
+            "cancel-contact": "Cancel",
+            "save-company": "Save",
+            "cancel-company": "Cancel"
+        },
+        "placeholder": {
+            "first-name": "First Name",
+            "middle-name": "Middle Name",
+            "last-name": "Last Name",
+            "email": "example@abc",
+            "mobile": "+84 9079xxx",
+            "city": "Ho Chi Minh"
+        },
+        "photo": {
+            "title": "Upload Photos"
+        }
     }
 }

@@ -1,26 +1,34 @@
-<style>
-.select-editable {
-    position: relative;
-    width: 100%;
-}
-
-.select-editable select {
-    position: absolute;
-    width: 100%;
-}
-
-.select-editable input {
-    position: absolute;
-    width: 90%;
-}
-
-.select-editable select:focus, .select-editable input:focus {
-    outline: none;
-}
-</style>
 <div ng-cloak>
+    <div class="modal fade" id="imageUploadModal" style="z-index: 4000">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" area-label="Close">
+                        <span aria-hidden="true">&times; </span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h3 class="modal-title" style="color: white" translate="contact-edit.photo.title">Upload Photos</h3>
+                </div>
+                <div class="modal-body" style="float: left; width: 100%">
+                    <div class="centerElement">
+                        <li class="image-list-upload" style="border: 1px dashed black" ng-click="uploadPhoto()">
+                            Add more...
+                        </li>
+                        <li ng-repeat="image in images" class="image-list-upload">
+                            <img ng-src='../../../photos/{{image}}' ng-click='selectPhoto(image)'/>
+                        </li>
+                    </div>
+                </div>
+                <div class="modal-footer" style="float: left; width: 100%">
+                    <pagination total-items="totalItems" ng-change="pageChanged()" ng-model="currentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" rotate="false" num-pages="numPages"></pagination>
+                    <button id="closeButton" type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+        <input type="file" id="imageUpload" onchange="angular.element(this).scope().selectUploadPhoto(this.id)" accept="image/*" style="display: none;">
+    </div>
     <form name="contact_form" novalidate class="form-horizontal"
-        role="form" ng-submit="contact_form.$valid && saveContact()">
+        role="form" ng-submit="contact_form.$valid">
         <!-- && saveContact() -->
         <div class="row">
             <div class="col-md-6">
@@ -28,114 +36,124 @@
                 <hr style="border-color: black;">
                 <div class="form-group">
                     <label class="control-label col-sm-3"
-                        translate="contact-edit.general.contact-name" >Name</label>
+                        translate="contact-edit.general.contact-name">Name</label>
                     <div class="col-sm-3" class="form-group">
-                        <input ng-model="contact.firstName" type="text" name="name"
+                        <input ng-model="contact.firstName" type="text" required
                              class="form-control"
                             style="margin-bottom: 10px"
                             placeholder="{{'contact-edit.placeholder.first-name'|translate}}"
-                            data-toggle="tooltip" title="{{validator.firstName}}">
+                            data-toggle="tooltip" data-placement="left" title="{{validator.firstName}}"
+                            ng-class="{red: validator.firstName}">
                     </div>
                     <div class="col-sm-3" class="form-group">
-                        <input ng-model="contact.middleName" type="text" name="name"
+                        <input ng-model="contact.middleName" type="text" 
                             class="form-control" style="margin-bottom: 10px"
-                            placeholder="{{'contact-edit.placeholder.middle-name'|translate}} ">
+                            placeholder="{{'contact-edit.placeholder.middle-name'|translate}} "
+                            >
                     </div>
                     <div class="col-sm-3" class="form-group">
-                        <input ng-model="contact.lastName" type="text" name="name"
+                        <input ng-model="contact.lastName" type="text" 
                             class="form-control" style="margin-bottom: 10px"
-                            placeholder="{{'contact-edit.placeholder.last-name'|translate}}">
+                            placeholder="{{'contact-edit.placeholder.last-name'|translate}}"
+                            data-toggle="tooltip"  title="{{validator.lastName}}"
+                            ng-class="{red: validator.lastName}">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-3"
-                        translate="contact-edit.general.display-name"></label>
+                        translate="contact-edit.general.display-name">Display Name</label>
                     <div class="col-sm-9">
                         <div class="select-editable">
                             <select onchange="this.nextElementSibling.value=this.value"
-                                class="form-control" ng-model="contact.displayName">
+                                class="form-control" ng-model="contact.displayName"
+                                ng-class="{red: validator.displayName}">
                                 <option>{{contact.lastName +" "+contact.middleName +" "+contact.firstName}}</option>
                                 <option>{{contact.middleName +" "+contact.lastName +" "+contact.firstName}}</option>
                                 <option>{{contact.lastName +" "+contact.firstName +" "+contact.middleName}}</option>
                             </select>
                              <input class="form-control" type="text" name="format"
-                                ng-model="contact.displayName" data-toggle="tooltip" title="{{validator.displayName}}"/>
+                                ng-model="contact.displayName" data-toggle="tooltip" title="{{validator.displayName}}"
+                                 ng-class="{red: validator.displayName}"/>
                         </div>
                     </div>
                 </div>
                 <br>
                 <div class="form-group">
                     <label class="control-label col-sm-3"
-                        translate="contact-edit.general.email"></label>
+                        translate="contact-edit.general.email">Email</label>
                     <div class="col-sm-9">
-                        <input ng-model="contact.email" type="email" name="name"
+                        <input ng-model="contact.email" 
                             class="form-control" data-toggle="tooltip" title="{{validator.email}}"
-                            placeholder="{{'contact-edit.placeholder.email'|translate}}">
+                            placeholder="{{'contact-edit.placeholder.email'|translate}}"
+                            ng-class="{red: validator.email}">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-3"
-                        translate="contact-edit.general.mobile"></label>
+                        translate="contact-edit.general.mobile">Mobile</label>
                     <div class="col-sm-9">
-                        <input ng-model="contact.mobile" type="text" name="name"
+                        <input ng-model="contact.mobile" type="text" 
                             class="form-control" data-toggle="tooltip" title="{{validator.mobile}}"
-                            placeholder="{{'contact-edit.placeholder.mobile'|translate}}">
+                            placeholder="{{'contact-edit.placeholder.mobile'|translate}}"
+                            ng-class="{red: validator.mobile}">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-3"
-                        translate="contact-edit.general.photo"></label>
+                        translate="contact-edit.general.photo">Photo</label>
                     <div class="col-sm-9">
-
-                        <img id="avatar{{contact.id}}" ng-src=""
-                            style="width: 70px; height: 70px; cursor: pointer;">
+                        <img class="img-thumbnail" id="avatar{{contact.id}}" ng-src="{{getAvatar()}}" 
+                        ng-click = "getPhotos(&#34;avatar&#34;)" data-toggle="modal" 
+                        data-target="#imageUploadModal" style="width : 100px; height : 100px; cursor: pointer;">
                     </div>
                 </div>
-                <h3 translate="contact-edit.home.title-home"></h3>
+                <h3 translate="contact-edit.home.title-home">Home</h3>
                 <hr style="border-color: black;">
                 <div class="form-group">
                     <label class="control-label col-sm-3"
-                        translate="contact-edit.home.add-line1"></label>
+                        translate="contact-edit.home.add-line1">Add. Line 1</label>
                     <div class="col-sm-9">
                         <input ng-model="contact.home.address.addrLine1" type="text"
-                            name="name" class="form-control">
+                             class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-3"
-                        translate="contact-edit.home.add-line2"></label>
+                        translate="contact-edit.home.add-line2">Add. Line 2</label>
                     <div class="col-sm-9">
                         <input ng-model="contact.home.address.addrLine2" type="text"
-                            name="name" class="form-control">
+                             class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-3"
-                        translate="contact-edit.home.city"></label>
+                        translate="contact-edit.home.city">City</label>
                     <div class="col-sm-9">
-                        <input type="text" name="name" class="form-control"
+                        <input type="text"  class="form-control"
                             placeholder="{{'contact-edit.placeholder.city'|translate}}">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-3"
-                        translate="contact-edit.home.state"></label>
+                        translate="contact-edit.home.state">State</label>
                     <div class="col-sm-9">
                         <input ng-model="contact.home.address.city" type="text"
-                            name="name" class="form-control">
+                             class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-3"
-                        translate="contact-edit.home.zip-code"></label>
+                        translate="contact-edit.home.zip-code">Zip Code</label>
                     <div class="col-sm-3" style="width: 100px;">
-                        <input ng-model="contact.home.address.postalCode" type="text" data-toggle="tooltip" title="{{validator.home.address.postalCode}}"
-                            name="name" class="form-control" maxlength="5">
+                        <input ng-model="contact.home.address.postalCode" data-toggle="tooltip" 
+                             title="{{validator.home.address.postalCode}}"
+                             ng-class="{red: validator.home.address.postalCode}"
+                             class="form-control" ng-keypress="isNumeric(event)" maxlength="5">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-3"
-                        translate="contact-edit.home.country"></label>
+                        translate="contact-edit.home.country">Country</label>
                     <div class="col-sm-9">
                         <select class="form-control"
                             ng-model="contact.home.address.country"
@@ -145,9 +163,10 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-3"
-                        translate="contact-edit.home.phone"></label>
+                        translate="contact-edit.home.phone">Phone</label>
                     <div class="col-sm-9">
-                        <input ng-model="contact.home.phone" type="text" name="name" data-toggle="tooltip" title="{{validator.home.phone}}"
+                        <input ng-model="contact.home.phone" type="text"  data-toggle="tooltip" 
+                            title="{{validator.home.phone}}" ng-class="{red: validator.home.phone}"
                             class="form-control">
                     </div>
                 </div>
@@ -155,7 +174,9 @@
                     <label class="control-label col-sm-3"
                         translate="contact-edit.home.fax">Fax</label>
                     <div class="col-sm-9">
-                        <input ng-model="contact.home.fax" type="text" name="name" data-toggle="tooltip" title="{{validator.home.fax}}" data-toggle="tooltip" title="fax"
+                        <input ng-model="contact.home.fax" type="text"  data-toggle="tooltip" 
+                            title="{{validator.home.fax}}" data-toggle="tooltip" title="fax"
+                            ng-class="{red: validator.home.fax}"
                             class="form-control">
                     </div>
                 </div>
@@ -180,30 +201,30 @@
                 </div>
                 <div class="form-group row">
                     <label for="selectCompany" class="control-label col-sm-3" translate="contact-edit.work.company-name">Company Name</label>
-                    <div class="col-sm-9">
-                        <div class="col-sm-6">
-	                         <select class="form-control" id = "selectCompany" ng-model="contact.work.companyId"
-	                             ng-options="company.id as company.name for company in companies">
-	                         </select>
-	                     </div>
-	                    <div class="col-sm-3">
-	                        <button a href="" class="btn btn-default"
-	                            translate="contact-edit.button.edit-company" 
-	                            ng-disabled="hasSelectedCompany() === false"
-	                            ng-click="openDialogUpdateCompany()" ></button>
-	                    </div>
-	                    <div class="col-sm-3">
-	                        <button class="btn btn-default"
-	                            translate="contact-edit.button.new-company"
-	                            ng-click="openDialogCreateCompany()"></button>
-	                    </div>
+                    <div class="col-sm-9" style="padding: 0px">
+                        <div class="col-sm-6" style="margin-bottom: 10px;">
+                             <select class="form-control" id = "selectCompany" ng-model="contact.work.companyId"
+                                 ng-options="company.id as company.name for company in companies">
+                             </select>
+                         </div>
+                        <div class="col-sm-3" style="margin-bottom: 10px">
+                            <button a href="" class="btn btn-default"
+                                translate="contact-edit.button.edit-company" 
+                                ng-disabled="hasSelectedCompany() === false"
+                                ng-click="openDialogUpdateCompany()">Edit</button>
+                        </div>
+                        <div class="col-sm-3">
+                            <button class="btn btn-default"
+                                translate="contact-edit.button.new-company"
+                                ng-click="openDialogCreateCompany()">New</button>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-sm-3"></div>
-                    <div class="col-sm-9" class="thumbnail">
-                        <a href="#" class="thumbnail" style="width: 128px; height: 100px">
-                            Logo </a>
+                    <div class="col-sm-9">
+                    <img id="logo{{contact.id}}"  ng-src="{{getLogo()}}"
+                            style="width : 70px; height : 70px; background-color: gray;" class="img-thumbnail">
                     </div>
                 </div>
                 <div class="form-group row">
@@ -256,11 +277,11 @@
                 </div>
                 <div class="form-group row">
                     <label for="inputZipCode" class="control-label col-sm-3"
-                        translate="contact-edit.home.zip-code"></label>
+                        translate="contact-edit.home.zip-code">Zip Code</label>
                     <div class="col-sm-9">
                         <input ng-model="contact.work.company.address.postalCode"
-                            type="number" class="form-control" id="inputZipCode"
-                            style="width: 100px" min="5" max="5" readonly>
+                            type="number" class="form-control" id="inputZipCode" ng-keypress="isNumeric(event)"
+                            style="width: 100px" maxlength="5" readonly>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -298,7 +319,7 @@
         <div class="form-group row" class="row">
             <div class="col-md-6 col-xs-6">
                 <button class="btn btn-default" style="float: right; width: 100px"
-                    translate="contact-edit.button.save-contact"></button>
+                    translate="contact-edit.button.save-contact" ng-click="saveContact()"></button>
             </div>
             <div class="col-md-6 col-xs-6">
                 <a href="#contact" class="btn btn-default" style="width: 100px"
@@ -311,24 +332,26 @@
     <div class="modal fade" id="companyInfoModal" role="dialog"
         aria-labelledby="companyInfoLabel" aria-hidden="true">
         <div class="vertical-alignment-helper">
-            <div class="modal-dialog vertical-align-center modal-lg">
+            <div class="modal-dialog vertical-align-center modal-lg" style="z-index: 1">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">
+                        <button type="button" class="close" ng-click="cancelEditCompany()">
                             <span aria-hidden="true">&times; </span> <span class="sr-only">Close</span>
                         </button>
-                        <h3 class="modal-title" id="companyInfoLabel" style="color: white" translate="contact-edit.work.edit-company">Edit Company</h3>
+                        <h3 class="modal-title" id="companyInfoLabel" style="color: white" ng-attr-translate="{{getTitleOfCompanyDialog()}}">Edit Company</h3>
                     </div>
 
                     <div class="modal-body row">
-                        <div class="form-group row">
-                            <div class="col-sm-3"></div>
-                            <div class="col-sm-9" class="thumbnail">
-                                <a href="#" class="thumbnail" style="width: 128px; height: 100px">
-                                    Logo </a>
-                            </div>
-                        </div>
                         <div class="col-md-6">
+                            <div class="form-group row">
+                                <div class="col-sm-3"></div>
+                                <div class="col-sm-9" class="thumbnail">
+                                  <img id="logo{{contact.id}}_2" ng-src="{{getLogoOfSelectedCompany()}}" 
+                                      ng-click = "getPhotos(&#34;logo&#34;)" 
+                                      data-toggle="modal" data-target="#imageUploadModal" 
+                                      style="width : 70px; height : 70px; cursor: pointer;">
+                                </div>
+                            </div>
                             <div class="form-group row">
                                 <label for="selectCompany" class="control-label col-sm-3" translate="contact-edit.work.company-name">Company Name</label>
                                 <div class="col-sm-9">
@@ -344,44 +367,48 @@
                             </div>
                             <div class="form-group row">
                                 <label for="inputWebsite" class="control-label col-sm-3"
-                                    translate="contact-edit.work.website"></label>
+                                    translate="contact-edit.work.website">Website</label>
                                 <div class="col-sm-9">
                                    <input ng-model="selectedCompany.website" class="form-control" id="inputWebsite">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="inputPhone" class="control-label col-sm-3"
-                                    translate="contact-edit.home.phone"></label>
+                                    translate="contact-edit.home.phone">Phone</label>
                                 <div class="col-sm-9">
-                                   <input ng-model="selectedCompany.phone" type="text" class="form-control" id="inputPhone">
+                                   <input ng-model="selectedCompany.phone" type="text" class="form-control" id="inputPhone"
+                                       data-toggle="tooltip" title="{{companyValidator.phone}}"
+                                       ng-class="{red: companyValidator.phone}">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="input" class="control-label col-sm-3"
-                                    translate="contact-edit.home.fax"></label>
+                                    translate="contact-edit.home.fax">Fax</label>
                                 <div class="col-sm-9">
-                                   <input ng-model="selectedCompany.fax" type="text" class="form-control" id="inputFax">
+                                   <input ng-model="selectedCompany.fax" type="text" class="form-control" id="inputFax"
+                                       data-toggle="tooltip" title="{{companyValidator.fax}}"
+                                       ng-class="{red: companyValidator.fax}">
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group row">
                                 <label for="inputAddrLine1" class="control-label col-sm-3"
-                                    translate="contact-edit.home.add-line1"> </label>
+                                    translate="contact-edit.home.add-line1">Add. Line 1</label>
                                 <div class="col-sm-9">
                                    <input ng-model="selectedCompany.address.addrLine1" class="form-control" id="inputAddrLine1">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="inputAddrLine2" class="control-label col-sm-3"
-                                    translate="contact-edit.home.add-line2"></label>
+                                    translate="contact-edit.home.add-line2">Add. Line 2</label>
                                 <div class="col-sm-9">
                                    <input ng-model="selectedCompany.address.addrLine2" class="form-control" id="inputAddrLine2">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="inputCity" class="control-label col-sm-3"
-                                    translate="contact-edit.home.city"></label>
+                                    translate="contact-edit.home.city">City</label>
                                 <div class="col-sm-9">
                                    <input ng-model="selectedCompany.address.city" class="form-control" id="inputCity">
                                 </div>
@@ -395,33 +422,35 @@
                             </div>
                             <div class="form-group row">
                                 <label for="inputZipCode" class="control-label col-sm-3"
-                                    translate="contact-edit.home.zip-code"></label>
+                                    translate="contact-edit.home.zip-code">Zip Code</label>
                                 <div class="col-sm-9">
-                                   <input ng-model="selectedCompany.address.postalCode" type="number" class="form-control" 
-                                       id="inputZipCode" style="width: 100px" min="5" max="5">
+                                   <input ng-model="selectedCompany.address.postalCode" class="form-control" 
+                                       id="inputZipCode" style="width: 100px" ng-keypress="isNumeric(event)" maxlength="5"
+                                       data-toggle="tooltip" title="{{companyValidator.address.postalCode}}"
+                                       ng-class="{red: companyValidator.address.postalCode}">
                                 </div>
                             </div>
                             <div class="form-group row">
-		                    <label for="selectCountry" class="control-label col-sm-3"
-		                        translate="contact-edit.home.country">Country</label>
-		                    <div class="col-sm-9">
-		                        <select class="form-control" id="selectCountry"
-		                            ng-model="selectedCompany.address.country"
-		                            ng-options="c.countryCode as c.country for c in countries">
-		                         </select>
-		                    </div>
+                            <label for="selectCountry" class="control-label col-sm-3"
+                                translate="contact-edit.home.country">Country</label>
+                            <div class="col-sm-9">
+                                <select class="form-control" id="selectCountry"
+                                    ng-model="selectedCompany.address.country"
+                                    ng-options="c.countryCode as c.country for c in countries">
+                                 </select>
+                            </div>
                 </div>
                         </div>
                     </div>
                     <div class="modal-footer">
                          <div class="col-md-6 col-xs-6">
-			                <button class="btn btn-default" style="float: right; width: 100px"
-			                    translate="contact-edit.button.save-company" ng-click="saveCompany()"></button>
-			            </div>
-			            <div class="col-md-6 col-xs-6">
-			                <button class="btn btn-default" style="width: 100px"
-			                    translate="contact-edit.button.cancel-company" data-dismiss="modal"></button>
-			            </div>
+                            <button class="btn btn-default" style="float: right; width: 100px"
+                                translate="contact-edit.button.save-company" ng-click="saveCompany()">Save</button>
+                        </div>
+                        <div class="col-md-6 col-xs-6">
+                            <button class="btn btn-default" style="width: 100px; float: left"
+                                translate="contact-edit.button.cancel-company" ng-click="cancelEditCompany()">Cancel</button>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -36,12 +36,12 @@ public class ContactController {
     @RequestMapping(value = "/{id}", method = GET)
     public ResponseEntity<Contact> getContact(@PathVariable int id) {
         Contact contact = contactService.getContact(id);
-        return new ResponseEntity<>(contact, (contact == null)? NOT_FOUND : OK);
+        return new ResponseEntity<>(contact, (contact == null) ? NOT_FOUND : OK);
     }
 
-    @RequestMapping(value="/search", method = POST)
+    @RequestMapping(value = "/search", method = POST)
     public SearchResult<Contact> searchContact(@RequestBody ContactSearchCriteria criteria) {
-           return contactService.searchContacts(criteria);
+        return contactService.searchContacts(criteria);
     }
 
     @RequestMapping(value = "/validate", method = POST)
@@ -69,18 +69,18 @@ public class ContactController {
     public ResponseEntity<Void> deleteContact(@PathVariable int id) {
         int deleteId = contactService.deleteContacts(id);
 
-        return new ResponseEntity<>((deleteId == 0)? NOT_FOUND : NO_CONTENT);
+        return new ResponseEntity<>((deleteId == 0) ? NOT_FOUND : NO_CONTENT);
     }
 
     @RequestMapping(method = DELETE)
     public ResponseEntity<?> deleteContacts(@RequestParam int... ids) {
 
-        if(ids.length == 0) {
+        if (ids.length == 0) {
             return new ResponseEntity<>(BAD_REQUEST);
         }
 
         int deleteId = contactService.deleteContacts(ids);
-        return new ResponseEntity<>((deleteId == 0)? NOT_FOUND : OK);
+        return new ResponseEntity<>((deleteId == 0) ? NOT_FOUND : OK);
     }
 
     private ResponseEntity<?> saveContact(Contact contact, Integer contactId) {

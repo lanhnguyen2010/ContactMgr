@@ -5,22 +5,27 @@ import javax.persistence.Embeddable;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import vn.kms.launch.contactmgr.domain.ValueObject;
 
 @Embeddable
 public class Address extends ValueObject<Address> {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Column(name = "ADDR_LINE1")
+    @Size(max = 255, message = "{validation.size-255.message}")
+    @Column(name = "ADDR_LINE1")
     private String addrLine1;
 
+    @Size(max = 255, message = "{validation.size-255.message}")
     @Column(name = "ADDR_LINE2")
     private String addrLine2;
 
+    @Size(max = 150, message = "{validation.size-150.message}")
     @Column(name = "CITY")
     private String city;
 
+    @Size(max = 150, message = "{validation.size-150.message}")
     @Column(name = "STATE")
     private String state;
 
