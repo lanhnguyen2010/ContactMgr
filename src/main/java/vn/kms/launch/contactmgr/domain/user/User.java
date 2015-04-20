@@ -14,42 +14,42 @@ import org.hibernate.validator.constraints.NotBlank;
 @Table(name = "USERS")
 public class User extends vn.kms.launch.contactmgr.domain.Entity {
     private static final long serialVersionUID = 1L;
-    
+
     @NotBlank(message = "{validation.not-empty.message}")
     @Size(max = 16, message = "{validation.maxUserName.message}")
     @Pattern(regexp = "^([A-Za-z0-9]+)$", message = "{validation.UserName.message}")
-    @Column(name="USERNAME")
+    @Column(name = "USERNAME")
     private String username;
-    
+
     @NotBlank(message = "{validation.not-empty.message}")
     @Size(min = 6, message = "{validation.minPassWord.message}")
-    @Column(name="PASSWORD")
+    @Column(name = "PASSWORD")
     private String password;
-    
+
     @Size(max = 20, message = "{validation.maxName.message}")
-    @Column(name="FIRST_NAME")
+    @Column(name = "FIRST_NAME")
     private String firstname;
-    
+
     @Size(max = 20, message = "{validation.maxName.message}")
-    @Column(name="LAST_NAME")
+    @Column(name = "LAST_NAME")
     private String lastname;
-    
-    @Column(name="EMAIL")
+
+    @Column(name = "EMAIL")
     private String email;
-    
-    @Column(name="ROLE")
+
+    @Column(name = "ROLE")
     private String role;
-    
-    @Column(name="EXPIRED_DATE")
+
+    @Column(name = "EXPIRED_DATE")
     private Date expiredDate;
-    
-    @Column(name="ACTIVE", columnDefinition="INT(1)")
+
+    @Column(name = "ACTIVE", columnDefinition = "INT(1)")
     private boolean active;
-    
-    @Column(name="LANGUAGE")
+
+    @Column(name = "LANGUAGE")
     private String language;
-    
-    @Column(name="ASSIGNED_COMPANIES")
+
+    @Column(name = "ASSIGNED_COMPANIES")
     private String assignedCompanies;
 
     public String getUsername() {

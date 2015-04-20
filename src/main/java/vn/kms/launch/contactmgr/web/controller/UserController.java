@@ -50,7 +50,7 @@ public class UserController {
 
     @RequestMapping(value = "/search", method = POST)
     public SearchResult<User> searchUser(
-            @RequestBody UserSearchCriteria criteria) {
+        @RequestBody UserSearchCriteria criteria) {
         return userService.searchUsers(criteria);
     }
 
@@ -58,7 +58,7 @@ public class UserController {
     public ResponseEntity<Void> deleteUser(@PathVariable int id) {
 
         int deleteId = userService.deleteUsers(id);
-        return new ResponseEntity<>((deleteId == 0)? NOT_FOUND : NO_CONTENT);
+        return new ResponseEntity<>((deleteId == 0) ? NOT_FOUND : NO_CONTENT);
     }
 
     @RequestMapping(method = DELETE)
@@ -75,11 +75,11 @@ public class UserController {
         Integer result = userService.activeUser(ids);
         if (result == ids.length) {
             return new ResponseEntity<Integer>(result,
-                    HttpStatus.OK);
+                HttpStatus.OK);
         } else {
             return new ResponseEntity<Integer>(result, HttpStatus.BAD_REQUEST);
         }
-        
+
     }
 
     @RequestMapping(value = "/deactive/", method = PUT)
@@ -87,7 +87,7 @@ public class UserController {
         Integer result = userService.deactiveUser(ids);
         if (result == ids.length) {
             return new ResponseEntity<Integer>(result,
-                    HttpStatus.OK);
+                HttpStatus.OK);
         } else {
             return new ResponseEntity<Integer>(result, HttpStatus.BAD_REQUEST);
         }
@@ -98,11 +98,11 @@ public class UserController {
         List<String> result = userService.getRoles();
         if (result == null) {
             return new ResponseEntity<List<String>>(result,
-                    HttpStatus.BAD_REQUEST);
+                HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<List<String>>(result, HttpStatus.OK);
     }
-    
+
     @RequestMapping(value = "/validate", method = POST)
     public ResponseEntity<Object> validateUser(@RequestBody User user) {
         try {
@@ -112,18 +112,18 @@ public class UserController {
             return new ResponseEntity<Object>(e.getErrors(), BAD_REQUEST);
         }
     }
-    
-     private ResponseEntity<?> saveUser(User user, Integer id) {
-            try {
-                User savedContact = userService.saveUser(user, id);
-                return new ResponseEntity<>(savedContact, OK);
-            } catch (EntityNotFoundException e) {
-                return new ResponseEntity<>(NOT_FOUND);
-            } catch (ValidationException e) {
-                Map<String, Object> returnObj = new HashMap<>();
-                returnObj.put("data", user);
-                returnObj.put("errors", e.getErrors());
-                return new ResponseEntity<>(returnObj, BAD_REQUEST);
-            }
-     }
+
+    private ResponseEntity<?> saveUser(User user, Integer id) {
+        try {
+            User savedContact = userService.saveUser(user, id);
+            return new ResponseEntity<>(savedContact, OK);
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity<>(NOT_FOUND);
+        } catch (ValidationException e) {
+            Map<String, Object> returnObj = new HashMap<>();
+            returnObj.put("data", user);
+            returnObj.put("errors", e.getErrors());
+            return new ResponseEntity<>(returnObj, BAD_REQUEST);
+        }
+    }
 }

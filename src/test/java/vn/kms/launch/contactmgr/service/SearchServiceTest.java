@@ -25,36 +25,34 @@ import vn.kms.launch.contactmgr.domain.contact.*;
 @SpringApplicationConfiguration(classes = ContactMgrApp.class)
 @WebAppConfiguration
 public class SearchServiceTest {
-	@Autowired
-	private ContactService contactService;
-	
-	
+    @Autowired
+    private ContactService contactService;
 
-	
-	@SuppressWarnings("deprecation")
-	public Contact readContactFile() throws JsonParseException, IOException{
-		Contact contact = new Contact();
-		JsonFactory jFactory = new JsonFactory();
-		System.out.println("read");
-		
+
+    @SuppressWarnings("deprecation")
+    public Contact readContactFile() throws JsonParseException, IOException {
+        Contact contact = new Contact();
+        JsonFactory jFactory = new JsonFactory();
+        System.out.println("read");
+
 //		InputStream inputStream = getClass().getClassLoader().getResourceAsStream("/etc/contact.json");
 //		JsonParser jParser = jFactory.createJsonParser(inputStream);
 //		jParser.nextToken();
 //		System.out.println(jParser.getText());
-		ObjectMapper mapper = new ObjectMapper();
-		ContactSearchCriteria criteria = mapper.readValue(getClass().getClassLoader().getResourceAsStream("/etc/searchcriteria/searchcriteria1.json"), ContactSearchCriteria.class);
-		System.out.println("result"+criteria.getName());
-		
-		
-		
-		return contact;
-		
-	}
-	@Test
-	public void testContactService() throws JsonParseException, IOException{
-		Contact contact = readContactFile(); 
-		
-	}
-	
+        ObjectMapper mapper = new ObjectMapper();
+        ContactSearchCriteria criteria = mapper.readValue(getClass().getClassLoader().getResourceAsStream("/etc/searchcriteria/searchcriteria1.json"), ContactSearchCriteria.class);
+        System.out.println("result" + criteria.getName());
+
+
+        return contact;
+
+    }
+
+    @Test
+    public void testContactService() throws JsonParseException, IOException {
+        Contact contact = readContactFile();
+
+    }
+
 
 }

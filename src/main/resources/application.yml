@@ -7,3 +7,5 @@ spring:
                 persistence:
                     validation:
                         mode: none
+resources:
+    path:/etc/photos                      

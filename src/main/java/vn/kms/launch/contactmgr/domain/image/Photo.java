@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
-import org.noggit.JSONUtil;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * Created by diule on April, 14;
@@ -16,7 +16,7 @@ import org.noggit.JSONUtil;
 @Entity
 @Table(name = "IMAGES")
 public class Photo {
-    
+
     @Id
     @Column(name = "ID")
     private int id;
@@ -34,9 +34,10 @@ public class Photo {
     private String contentType;
 
     @Column(name = "CREATED_AT")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date createdAt;
 
-	public int getId() {
+    public int getId() {
         return id;
     }
 
@@ -69,36 +70,33 @@ public class Photo {
     }
 
     public Date getCreatedAt() {
-		return createdAt;
-	}
-
-	public void setCreatedAt(Date createdAt) {
-		this.createdAt = createdAt;
-	}
-	
-    public String toJson(){
-        return JSONUtil.toJSON(this);
+        return createdAt;
     }
-    
-    public Photo toDo(){
-        
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Photo toDo() {
+
         Photo res = new Photo();
         res.setId(id);
         res.setFileName(fileName);
-        res.setPathFull(pathFull);
         res.setContentType(contentType);
-        
-        return res;    
+        res.setPathFull(pathFull);
+
+        return res;
     }
-    public Photo(){
-        
-    }
+    
     //GET object;
-    public Photo(Photo res){
+    public Photo(Photo res) {
         id = res.getId();
         fileName = res.fileName;
         contentType = res.contentType;
-        pathFull = res.pathFull;    
+        pathFull = res.pathFull;
     }
-    
+
+    public Photo() {
+    }
+
 }
