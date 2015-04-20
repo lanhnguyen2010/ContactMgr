@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.core.env.SimpleCommandLinePropertySource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-@EnableJpaRepositories(basePackages="vn.kms.launch.contactmgr")
+@EnableJpaRepositories(basePackages = "vn.kms.launch.contactmgr")
 @EnableAutoConfiguration
 @SpringBootApplication
 public class ContactMgrApp {
