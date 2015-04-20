@@ -37,7 +37,7 @@ angular.module('contactmgrApp').controller(
                     "expiredDate" : "",
                     "active" : false,
                     "language" : "",
-                    "assignedCompanies" : ""
+                    "assignedCompanies" : ''
                 };
                 $scope.confirmPassword = '';
                 $scope.checkboxSelection = '1';
@@ -46,7 +46,7 @@ angular.module('contactmgrApp').controller(
             $scope.users = [];
             $scope.searchClicked = false;
             $scope.currentPage = 1;
-            $scope.selectedCompanies = "";
+            $scope.selectedCompanies = [];
             $scope.companysetting = {
                 enableSearch : true,
                 scrollable : true,
@@ -185,6 +185,7 @@ angular.module('contactmgrApp').controller(
                     $scope.user.active = false;
                     console.log("value active false");
                 }
+                $scope.setAssignedCompanies();
                 UsersService.saveUser($scope.user).success(
                         function(data, status, headers, config) {
                             console.log("Save user successfull!");
@@ -202,7 +203,7 @@ angular.module('contactmgrApp').controller(
             };
             // get value of user from search function and set value of this user
             // to update
-            $scope.setUser = function(user) {
+            $scope.addUser = function(user) {
                 $scope.user = user;
                 console.log("Date: " + $scope.user.expiredDate);
                 if ($scope.user.active == true) {
@@ -236,8 +237,16 @@ angular.module('contactmgrApp').controller(
                 formatYear : 'yy',
                 startingDay : 1
             };
-            $scope.selectedCompanies = function(id) {
-                $scope.user.assignedCompanies += id;
-            };
+            $scope.setAssignedCompanies = function(){
+                $scope.user.assignedCompanies = "[";
+                for (var i = 0; i < $scope.selectedCompanies.length; i++){
+                    $scope.user.assignedCompanies = $scope.user.assignedCompanies + parseInt($scope.selectedCompanies[i]["id"]);
+                    if (i < $scope.selectedCompanies.length - 1) {
+                        $scope.user.assignedCompanies = $scope.user.assignedCompanies + ", ";
+                    }
+                }
+                $scope.user.assignedCompanies = $scope.user.assignedCompanies + "]";
+                console.log($scope.user.assignedCompanies);
+            }
             init();
         })
