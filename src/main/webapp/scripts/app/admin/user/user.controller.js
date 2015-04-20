@@ -30,6 +30,7 @@ angular.module('contactmgrApp').controller(
                     "updatedBy" : "",
                     "username" : "",
                     "password" : "",
+                    "confirmPassword" : "",
                     "firstname" : "",
                     "lastname" : "",
                     "email" : "",
