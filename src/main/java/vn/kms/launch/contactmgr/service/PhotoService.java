@@ -40,11 +40,9 @@ public class PhotoService {
                               String contentType) throws Exception {
 
         String relativePath = String.format("/etc/photos/%s", originalFilename);
-
         String pathFull = getPathFull(relativePath);
 
         PhotoUtil.storeFile(in, pathFull);
-
         Photo res = new Photo();
 
         //res.setId(photoId);
@@ -52,7 +50,7 @@ public class PhotoService {
         res.setContentType(contentType);
         res.setPathFull(relativePath);
         res.setCreatedAt(DateTime.now().toDate());
-        
+
         return uploadRepository.saveAndFlush(res.toDo());
     }
 
@@ -60,12 +58,16 @@ public class PhotoService {
     public SearchResult<Photo> getListPhotos(int page, int pageSize) {
         List<Photo> result = uploadRepository.findAll();
         int totalPhotos = result.size();
-        int toIndex = (pageSize * page) - 1;
+        int fromIndex = (page - 1) * pageSize + 1;
+        int toIndex = page * pageSize;
 
         if (toIndex > totalPhotos) {
             toIndex = totalPhotos;
+        }else if (fromIndex > toIndex) {
+            throw new IndexOutOfBoundsException();
         }
-        List<Photo> unsortedPhotos = result.subList((page - 1) * pageSize, toIndex);
+
+        List<Photo> unsortedPhotos = result.subList(fromIndex - 1, toIndex);
         SearchResult<Photo> returnPhotos = new SearchResult<Photo>(null,unsortedPhotos, totalPhotos);
         return returnPhotos;
     }
@@ -77,7 +79,6 @@ public class PhotoService {
         try {
             rootPath = cp.getURL().getFile();
         } catch (Exception e) {
-
         }
         return String.format("%s/%s", rootPath, relativePath);
     }
