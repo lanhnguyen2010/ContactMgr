@@ -60,11 +60,15 @@ public class PhotoService {
         int totalPhotos = result.size();
         int fromIndex = (page - 1) * pageSize + 1;
         int toIndex = page * pageSize;
-
+        
         if (toIndex > totalPhotos) {
-            toIndex = totalPhotos;
-        }else if (fromIndex > toIndex) {
-            throw new IndexOutOfBoundsException();
+            //OutOfIndex will be returned all photos.
+            if (fromIndex >= totalPhotos){
+                fromIndex = 1;
+                toIndex = totalPhotos;
+            }else{
+                toIndex = totalPhotos;
+            }
         }
 
         List<Photo> unsortedPhotos = result.subList(fromIndex - 1, toIndex);
