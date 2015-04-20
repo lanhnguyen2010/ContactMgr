@@ -31,7 +31,7 @@ public class CompanyController {
     
     @Autowired
     private ContactService contactService;
-
+    
     @RequestMapping(value = "/names", method = GET)
     public ResponseEntity<List<Itemized>> getCompanyNames() {
         return new ResponseEntity<>(contactService.getCompanyNames(), HttpStatus.OK);
@@ -59,8 +59,8 @@ public class CompanyController {
     public ResponseEntity<?> createCompany(@RequestBody Company company) {
         return save(0, company);
     }
-
-    private ResponseEntity<?> save(int id, Company company) {
+    
+    private ResponseEntity<?> save(int id, Company company) throws ValidationException{
         try {
             Company savedCompany = contactService.saveCompany(company, id);
             return new ResponseEntity<>(savedCompany, OK);
