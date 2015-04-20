@@ -11,10 +11,15 @@ angular.module('contactmgrApp')
         };
 
         $scope.selectPhoto = function(imageURL) {
-            var avatar = document.getElementById(typePhoto + contactId);
-            avatar.src = "../../../photos/" + imageURL; // address of img
-            var avatar2 = document.getElementById(typePhoto + contactId + '_2');
-            avatar2.src = "../../../photos/" + imageURL; // address of img
+            //var avatar = document.getElementById(typePhoto + contactId);
+            //avatar.src = "../../../photos/" + imageURL; // address of img
+            //var avatar2 = document.getElementById(typePhoto + contactId + '_2');
+            //avatar2.src = "../../../photos/" + imageURL; // address of img
+            if(typePhoto == 'avatar'){
+                $scope.contact.photo = imageURL;
+            } else {
+                $scope.selectedCompany.logo = imageURL;
+            }
             document.getElementById('closeButton').click();
         };
 
@@ -62,15 +67,15 @@ angular.module('contactmgrApp')
                 });
             */
         };
-          $scope.contact;
-          $scope.init = function() {
-              ContactService.getViewContact(contactId).success(
-                      function(data) {
-                          $scope.contact = data;
-                          if($scope.contact.work != null && $scope.contact.work.company != null){
-                              $scope.selectedCompany = $scope.contact.work.company;
-                          }
-                      })
+        $scope.contact;
+        $scope.init = function() {
+            ContactService.getViewContact(contactId).success(
+                    function(data) {
+                        $scope.contact = data;
+                        if($scope.contact.work != null && $scope.contact.work.company != null){
+                            $scope.selectedCompany = $scope.contact.work.company;
+                        }
+                    })
           };
         $scope.init();
         $scope.companies;
@@ -133,7 +138,7 @@ angular.module('contactmgrApp')
          $scope.getCountries();
          
          $scope.hasSelectedCompany = function(){
-             return ($scope.selectedCompany != null);
+             return ($scope.selectedCompany != null && $scope.contact.work.companyId > 0);
          };
          
          $scope.saveCompany = function(){
@@ -142,6 +147,10 @@ angular.module('contactmgrApp')
                     // Update a existing company
                      ContactService.updateCompany($scope.selectedCompany)
                      .success(function(data, status, headers, config) {
+                         $scope.selectedCompany = data;
+                         $scope.contact.work.company = $scope.selectedCompany;
+                         $scope.contact.work.companyId = data.id;
+                         $scope.getCompanies();
                          // close dialog
                          $('#companyInfoModal').modal('toggle');
                      })
@@ -152,6 +161,9 @@ angular.module('contactmgrApp')
                  } else{
                      ContactService.createCompany($scope.selectedCompany)
                          .success(function(data, status, headers, config) {
+                             $scope.selectedCompany = data;
+                             $scope.contact.work.company = $scope.selectedCompany;
+                             $scope.contact.work.companyId = data.id;
                              $scope.getCompanies();
                              // close dialog
                              $('#companyInfoModal').modal('toggle');
@@ -163,6 +175,23 @@ angular.module('contactmgrApp')
                  }
                 
              }
+         };
+         
+         $scope.cancelEditCompany = function(){
+             if($scope.selectedCompany.id > 0){
+                 // Don't update a existing company
+                 // Update info of company on service
+                 ContactService.getCompanieById($scope.selectedCompany.id)
+                 .success(function(data, status, headers, config) {
+                     $scope.selectedCompany = data;
+                     $scope.contact.work.company = $scope.selectedCompany;
+                 });
+             } else {
+                 // Don't create a new company
+                $scope.selectedCompany = $scope.contact.work.company;
+             }
+             
+             $('#companyInfoModal').modal('hide');
          };
          
          $scope.openDialogCreateCompany = function(){
@@ -192,5 +221,35 @@ angular.module('contactmgrApp')
                  theEvent.returnValue = false;
                  if (theEvent.preventDefault) theEvent.preventDefault();
              }            
+         };
+         
+         $scope.getAvatar = function(){
+             if($scope.contact == null){
+                 $scope.contact = {photo: '../../../photos/unknown.jpg'};
+                 return "../../../photos/unknown.jpg";
+             }
+             return "../../../photos/" + $scope.contact.photo;
+         };
+         
+         $scope.getLogo = function(){
+             if($scope.contact == null){
+                 $scope.contact = {work: { company: {logo: '../../../photos/unknown.jpg'}}};
+                 return "../../../photos/unknown.jpg";
+             } else if($scope.contact.work == null){
+                 $scope.contact.work = { company: {logo: '../../../photos/unknown.jpg'}};
+                 return "../../../photos/unknown.jpg";
+             } else if($scope.contact.work.company == null){
+                 $scope.contact.work.company = {logo: '../../../photos/unknown.jpg'};
+                 return "../../../photos/unknown.jpg";
+             }
+             return "../../../photos/" + $scope.contact.work.company.logo;
+         };
+         
+         $scope.getLogoOfSelectedCompany = function(){
+             if($scope.selectedCompany == null){
+                 $scope.selectedCompany = {logo: '../../../photos/unknown.jpg'};
+                 return "../../../photos/unknown.jpg";
+             }
+             return "../../../photos/" + $scope.selectedCompany.logo;
          };
     });
