@@ -1,15 +1,17 @@
 package vn.kms.launch.contactmgr.util;
 
-import javax.validation.ConstraintViolation;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.validation.ConstraintViolation;
+
 public class ValidationException extends RuntimeException {
+    private static final long serialVersionUID = 1L;
     private Map<String, Object> errors;
 
     public ValidationException(ConstraintViolation<?>... violations) {
         errors = new HashMap<>();
-        for (ConstraintViolation violation : violations) {
+        for (ConstraintViolation<?> violation : violations) {
             String path = violation.getPropertyPath().toString();
             String message = violation.getMessage();
             addError(errors, path, message);

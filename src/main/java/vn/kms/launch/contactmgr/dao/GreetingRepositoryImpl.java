@@ -1,18 +1,20 @@
 package vn.kms.launch.contactmgr.dao;
 
-import org.springframework.stereotype.Repository;
-import org.springframework.util.StringUtils;
-import vn.kms.launch.contactmgr.domain.greeting.Greeting;
-import vn.kms.launch.contactmgr.domain.greeting.GreetingRepositoryCustom;
-import vn.kms.launch.contactmgr.domain.greeting.GreetingSearchCriteria;
-import vn.kms.launch.contactmgr.util.SearchResult;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
+import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
+
+import vn.kms.launch.contactmgr.domain.greeting.Greeting;
+import vn.kms.launch.contactmgr.domain.greeting.GreetingRepositoryCustom;
+import vn.kms.launch.contactmgr.domain.greeting.GreetingSearchCriteria;
+import vn.kms.launch.contactmgr.util.SearchResult;
 
 @Repository
 public class GreetingRepositoryImpl implements GreetingRepositoryCustom {
@@ -39,7 +41,7 @@ public class GreetingRepositoryImpl implements GreetingRepositoryCustom {
         }
         query.setFirstResult((criteria.getPageIndex() - 1) * criteria.getPageSize());
         query.setMaxResults(criteria.getPageSize());
-        List<Greeting> greetings =  query.getResultList();
+        List<Greeting> greetings = query.getResultList();
 
         return new SearchResult<>(criteria, greetings, totalGreetings);
     }

@@ -1,24 +1,28 @@
 package vn.kms.launch.contactmgr.domain.greeting;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "GREETINGS")
 public class Greeting extends vn.kms.launch.contactmgr.domain.Entity {
+    private static final long serialVersionUID = 1L;
+
     @NotEmpty(message = "{validation.not-empty.message}")
-    @Pattern(regexp = "(\\[A-Za-z]{2})", message = "{validation.iso-3166-code.message}")
+    @Pattern(regexp = "^(\\[A-Za-z]{2})$", message = "{validation.iso-3166-code.message}")
     @Column(name = "CODE", unique = true)
     private String code;
 
     @Transient
     private String language;
 
+    @Size(max = 64, message = "{validation.size-64.message}")
     @NotEmpty(message = "{validation.not-empty.message}")
     @Column(name = "MESSAGE")
     private String message;

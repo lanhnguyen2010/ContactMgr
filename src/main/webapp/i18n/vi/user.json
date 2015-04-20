@@ -1,25 +1,49 @@
 {
     "user": {
+        "field": {
+            "title": "Thêm/Cập nhật thông tin người dùng",
+            "username": "Tên tài khoản",
+            "pass": "Mật khẩu mới",
+            "pass-conf": "Xác nhận mật khẩu",
+            "ass-com": "Công ty quản lý",
+            "role": "Vai trò",
+            "first-name": "Tên",
+            "last-name": "Họ",
+            "ex-date": "Ngày hết hạn",
+            "language": "Ngôn ngữ",
+            "active": "Trạng thái",
+            "yes-active": "Có",
+            "no-active": "Không"
+        },
         "button": {
+            "btn-save": "Lưu",
+            "btn-cancel": "Thoát",
             "add-user": "Tạo người dùng",
             "search": "Tìm Kiếm",
             "delete": "Xóa",
-            "activate":"Kích hoạt",
-            "inactivate":"Khóa"
+            "activate": "Kích hoạt",
+            "inactivate": "Khóa"
         },
-        "user-field": {
+        "search-form": {
             "username": "Tên Tài Khoản",
             "firstlastname": "Tên/ Họ",
+            "email": "E-mail",
+            "role": "Vai trò",
+            "assignedcompanies": "Công ty chỉ định",
+            "createdfrom": "Tạo Từ",
+            "createdto": "Đến"
+        },
+        "search-result": {
+            "username": "Tên Tài Khoản",
+            "result": "Kết quả tìm kiếm",
+            "noresult": "Không tìm thấy tài khoản nào",
             "firstname": "Tên",
             "lastname": "Họ",
             "email": "E-mail",
-            "role" : "Vai trò",
-            "assignedcompanies": "Công ty chỉ định",
-            "createdfrom": "Tạo Từ",
-            "createdto": "Đến",
-            "result": "Kết quả tìm kiếm",
-            "noresult": "Không tìm thấy tài khoản nào",
-            "status": "Trạng thái"
-         }
+            "role": "Vai trò",
+            "status": "Trạng thái",
+            "active": "Hoạt Động",
+            "inactive": "Đã Khóa"
+        }
     }
 }

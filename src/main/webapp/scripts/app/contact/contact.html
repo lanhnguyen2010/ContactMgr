@@ -2,21 +2,23 @@
     <a href="#contact/new" class="btn btn-default" translate="contact.button.add-contact">Add Contact</a>
     <hr>
     <form name="contact_form" novalidate class="form-horizontal"
-        role="form" ng-submit="searchContacts()">
+          role="form" ng-submit="searchContacts()">
         <div class="container">
             <div class="row">
                 <div class="form-group col-sm-6">
                     <label for="name" class="control-label col-sm-3"
-                        translate="contact.search-form.name">Name</label>
+                           translate="contact.search-form.name">Name</label>
+
                     <div class="col-sm-9">
-                        <input type="text" name="name" class="form-control" ng-model="criteria.name" />
+                        <input type="text" name="name" class="form-control" ng-model="criteria.name"/>
                     </div>
                 </div>
                 <div class="form-group col-sm-6">
                     <label for="jobTitle" class="control-label col-sm-3"
-                        translate="contact.search-form.job-title">Job Title</label>
+                           translate="contact.search-form.job-title">Job Title</label>
+
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" name="jobTitle" ng-model="criteria.jobTitle" />
+                        <input type="text" class="form-control" name="jobTitle" ng-model="criteria.jobTitle"/>
                     </div>
                 </div>
             </div>
@@ -24,16 +26,18 @@
             <div class="row">
                 <div class="form-group col-sm-6">
                     <label for="mobile" class="control-label col-sm-3"
-                        translate="contact.search-form.mobile">Mobile</label>
+                           translate="contact.search-form.mobile">Mobile</label>
+
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" name="mobile" ng-model="criteria.mobile" />
+                        <input type="text" class="form-control" name="mobile" ng-model="criteria.mobile"/>
                     </div>
                 </div>
                 <div class="form-group col-sm-6">
                     <label for="department" class="control-label col-sm-3"
-                        translate="contact.search-form.department">Department</label>
+                           translate="contact.search-form.department">Department</label>
+
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" name="department" ng-model="criteria.department" />
+                        <input type="text" class="form-control" name="department" ng-model="criteria.department"/>
                     </div>
 
                 </div>
@@ -42,16 +46,18 @@
             <div class="row">
                 <div class="form-group col-sm-6">
                     <label for="email" class="control-label col-sm-3"
-                        translate="contact.search-form.email">Email</label>
+                           translate="contact.search-form.email">Email</label>
+
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" ng-model="criteria.email" />
+                        <input type="text" class="form-control" ng-model="criteria.email"/>
                     </div>
                 </div>
                 <div class="form-group col-sm-6">
                     <label for="company" class="control-label col-sm-3"
-                        translate="contact.search-form.company">Company</label>
+                           translate="contact.search-form.company">Company</label>
+
                     <div class="col-sm-9">
-                        <select class="form-control" ng-model="filter.company">
+                        <select class="form-control" ng-model="criteria.company">
                             <option value=""></option>
                             <option ng-repeat="company in companies" value="{{company.name}}">
                                 {{company.name}}
@@ -83,7 +89,7 @@
         <table ng-table="tableParams" class="table">
             <th>
                 <input id="check_all" type="checkbox" ng-model="contacts.checked"
-                       ng-checked="contacts.checked" ng-click="toggleCheckAll()" />
+                       ng-checked="contacts.checked" ng-click="toggleCheckAll()"/>
             </th>
             <th class="data-table-title" translate="contact.search-results.column.display-name"> Display Name</th>
             <th class="data-table-title" translate="contact.search-results.column.mobile">Mobile</th>
@@ -95,17 +101,18 @@
             <tr ng-repeat="contact in $data">
                 <td width="30" style="text-align: left"
                     header="'ng-table/headers/checkbox.html'">
-                    <input type="checkbox" ng-model="contact.checked" ng-checked="contact.checked" />
+                    <input type="checkbox" ng-model="contact.checked" ng-checked="contact.checked"/>
                 </td>
                 <td data-title="'Name'">
-                    <a  href="#/contact/edit/{{contact.id}}">{{contact.displayName}}</a>
+                    <a href="#/contact/edit/{{contact.id}}">{{contact.displayName}}</a>
                 </td>
                 <td data-title="'Mobile'">{{contact.mobile}}</td>
                 <td data-title="'Email'">{{contact.email}}</td>
                 <td data-title="'Job Title'">{{contact.work.title}}</td>
                 <td data-title="'Department'">{{contact.work.department}}</td>
                 <td data-title="'Company'">
-                    <a href="" data-toggle="modal" data-target="#companyInfoModal" ng-click="setSelectedCompany(contact)">
+                    <a href="" data-toggle="modal" data-target="#companyInfoModal"
+                       ng-click="setSelectedCompany(contact)">
                         {{contact.work.company.name}}
                     </a>
                 </td>
@@ -114,7 +121,7 @@
     </div>
     <!-- Modal -->
     <div class="modal fade" id="companyInfoModal" tabindex="-1" role="dialog"
-        aria-labelledby="companyInfoLabel" aria-hidden="true">
+         aria-labelledby="companyInfoLabel" aria-hidden="true">
         <div class="vertical-alignment-helper">
             <div class="modal-dialog vertical-align-center">
                 <div class="modal-content">
@@ -130,7 +137,7 @@
                         <table style="width:100%">
                             <tr>
                                 <td></td>
-                                <td><img src="{{selectedCompany.logo}}" /></td>
+                                <td><img src="{{selectedCompany.logo}}"/></td>
                                 <td></td>
                                 <td></td>
                             </tr>

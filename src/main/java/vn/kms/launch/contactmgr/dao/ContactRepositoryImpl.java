@@ -15,7 +15,6 @@ import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 @Repository
@@ -56,7 +55,7 @@ public class ContactRepositoryImpl implements ContactRepositoryCustom {
         }
         query.setFirstResult((criteria.getPageIndex() - 1) * criteria.getPageSize());
         query.setMaxResults(criteria.getPageSize());
-        List<Contact> contacts =  query.getResultList();
+        List<Contact> contacts = query.getResultList();
 
         return new SearchResult<>(criteria, contacts, totalContacts);
     }

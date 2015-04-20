@@ -1,46 +1,50 @@
 {
     "contact-edit": {
-    	"general": {
-    		"title-general": "Thông tin chung",
-    		"contact-name": "Họ Tên",
-    		"display-name": "Tên truy cập",
-    		"email": "Email",
-    		"mobile": "Điện thoại",
-    		"photo": "Hình Ảnh"
-    	},
-    	"home": {
-    		"title-home": "Nơi Cư Trú",
-    		"add-line1": "Địa chỉ 1",
-    		"add-line2": "Địa chỉ 2",
-    		"city": "Thành phố",
-    		"state":"Quận",
-    		"zip-code": "Zip code",
-    		"country":"Quốc gia",
-    		"phone":"Điện thoại",
-    		"fax":"Fax"
-    	},
-    	"work":{
-    		"title-work":"Nơi Làm Việc",
-    		"company-name":"Tên công ty",
-    		"message":"Mô Tả",
-    		"website": "Website",
-    		"job-title":"Tiêu đề",
-    		"department":"Phòng ban"
-    	},
-    	"button": {
-    		"edit-company":"Sửa",
-    		"new-company": "Tạo mới",
-    		"save-contact":"Lưu",
-    		"cancel-contact":"Hủy"
-    	},
-    	"placeholder":{
-    		"first-name": "Tên",
-    		"middle-name": "Tên đệm",
-    		"last-name": "Họ",
-    		"email":"vidu@abc",
-    		"mobile":"+84 9079xxx",
-    		"city":"Ho Chi Minh"
-    	},
+        "general": {
+            "title-general": "Thông tin chung",
+            "contact-name": "Họ Tên",
+            "display-name": "Tên truy cập",
+            "email": "Email",
+            "mobile": "Điện thoại",
+            "photo": "Hình Ảnh"
+        },
+        "home": {
+            "title-home": "Nơi Cư Trú",
+            "add-line1": "Địa chỉ 1",
+            "add-line2": "Địa chỉ 2",
+            "city": "Thành phố",
+            "state": "Quận",
+            "zip-code": "Zip code",
+            "country": "Quốc gia",
+            "phone": "Điện thoại",
+            "fax": "Fax"
+        },
+        "work": {
+            "title-work": "Nơi Làm Việc",
+            "company-name": "Tên công ty",
+            "message": "Mô Tả",
+            "website": "Website",
+            "job-title": "Tiêu đề",
+            "department": "Phòng ban",
+            "edit-company": "Cập Nhật Công Ty",
+            "create-company": "Tạo Công Ty Mới"
+        },
+        "button": {
+            "edit-company": "Sửa",
+            "new-company": "Tạo mới",
+            "save-contact": "Lưu",
+            "cancel-contact": "Hủy",
+            "save-company": "Lưu",
+            "cancel-company": "Hủy"
+        },
+        "placeholder": {
+            "first-name": "Tên",
+            "middle-name": "Tên đệm",
+            "last-name": "Họ",
+            "email": "vidu@abc",
+            "mobile": "+84 9079xxx",
+            "city": "Ho Chi Minh"
+        },
         "photo": {
             "title": "Tải hình lên"
         }
