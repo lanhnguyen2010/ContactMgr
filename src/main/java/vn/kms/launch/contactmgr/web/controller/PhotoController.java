@@ -36,7 +36,7 @@ public class PhotoController {
 
     private static final List<MediaType> FILTER_IMAGE = new ArrayList<MediaType>();
 
-    @Autowired
+    @Autowired(required=true)
     private MultipartResolver multipartResolver;
 
     @Autowired

@@ -17,13 +17,12 @@ import vn.kms.launch.contactmgr.util.PhotoUtil;
 import vn.kms.launch.contactmgr.util.SearchResult;
 
 public class PhotoService {
-    private static final Logger LOG = LoggerFactory
-        .getLogger(PhotoService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(PhotoService.class);
 
-    @Autowired
+    @Autowired(required=true)
     private PhotoRepository uploadRepository;
     
-    @Autowired
+    @Autowired(required=true)
     ResourcesProperties resourceProperties;
 
     @Transactional
