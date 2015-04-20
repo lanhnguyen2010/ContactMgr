@@ -45,7 +45,7 @@ angular.module('contactmgrApp').controller(
             }
             
             $scope.confirmPass=function(){
-            	return $scope.user.password === $scope.user.passwordConfirm;
+                return $scope.user.password === $scope.user.passwordConfirm;
             }
             var PAGE_SIZE = 10;
             $scope.users = [];
@@ -79,7 +79,7 @@ angular.module('contactmgrApp').controller(
                                 $defer.resolve($scope.users);
                                 $scope.isLoading = false;
                             }).error(function(data, status) {
-                        console.log("Error", status);
+                                console.log("Error", status);
                     });
 
                     $scope.checkboxes = {
@@ -187,9 +187,9 @@ angular.module('contactmgrApp').controller(
                             window.alert("Save user successfull!");
                             $scope.initUser();
                         }).error(function(data, status, header, config) {
-                    console.log("Error: " + status);
-                    $scope.validator = data.error;
-                    window.alert("Can not save!");
+                            console.log("Error: " + status);
+                            $scope.validator = data.errors;
+                            window.alert("Can not save!");
                 });
 
             };

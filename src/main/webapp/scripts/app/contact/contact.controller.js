@@ -16,9 +16,12 @@ angular.module('contactmgrApp')
             pageIndex: 1,
             pageSize: 10
         };
+        
+        $scope.actualCriteria={};
 
         $scope.contacts = 
         $scope.searchClicked = false;
+        
         $scope.searchContacts = function() {
             if ($scope.isLoading) {
                 return;
@@ -26,6 +29,8 @@ angular.module('contactmgrApp')
 
             $scope.searchClicked = true;
             $scope.isLoading = true;
+            $scope.firstPageLoad = true;
+            angular.copy($scope.criteria , $scope.actualCriteria);
             $scope.tableParams.reload();
         }
 
@@ -37,10 +42,16 @@ angular.module('contactmgrApp')
                 if (!$scope.searchClicked) {
                     return;
                 }
-
-                $scope.criteria.pageIndex = params.page();
-                $scope.criteria.pageSize = params.count();
-                ContactService.searchContacts($scope.criteria)
+                
+                if($scope.firstPageLoad){
+                    $scope.actualCriteria.pageIndex = 1;
+                     $scope.firstPageLoad = false;
+                     
+                }else{
+                     $scope.actualCriteria.pageIndex = params.page();
+                }               
+                $scope.actualCriteria.pageSize = params.count();
+                ContactService.searchContacts($scope.actualCriteria)
                     .success(function(data, status) {
                         params.total(data.totalItems);
                         $scope.contacts = data.items;
