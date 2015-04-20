@@ -40,10 +40,9 @@
                         translate="user.search-form.createdfrom">Created From</label>
                     <div class="col-md-4">
                         <p class="input-group">
-                            <input type="text" class="form-control" datepicker-popup="{{format}}" 
+                            <input type="text" class="form-control" datepicker-popup="yyyy-MM-dd" 
                                    ng-model="criteria.createdFrom" is-open="openedCalendarFrom" placeholder="YYYY-MM-DD"
-                                   datepicker-options="dateOptions" date-disabled="disabled(date, mode)" 
-                                   ng-required="true" close-text="Close" />
+                                   close-text="Close" />
                                 <span class="input-group-btn">
                                     <button type="button" class="btn btn-default" ng-click="openCalendar($event, 1)"><i 
                                             class="glyphicon glyphicon-calendar"></i></button>
@@ -54,10 +53,9 @@
                         translate="user.search-form.createdto">Created To</label>
                     <div class="col-md-4">
                         <p class="input-group">
-                            <input type="text" class="form-control" datepicker-popup="{{format}}" 
-                                   ng-model="criteria.createdTo" is-open="openedCalendarTo" placeholder="YYYY-MM-DD
-                                   datepicker-options="dateOptions" date-disabled="disabled(date, mode)" 
-                                   ng-required="true" close-text="Close" />
+                            <input type="text" class="form-control" datepicker-popup="yyyy-MM-dd" 
+                                   ng-model="criteria.createdTo" date-disabled="disabled(date, mode)" is-open="openedCalendarTo" placeholder="YYYY-MM-DD"
+                                   close-text="Close" />
                                 <span class="input-group-btn">
                                     <button type="button" class="btn btn-default" ng-click="openCalendar($event, 2)"><i 
                                             class="glyphicon glyphicon-calendar"></i></button>
@@ -70,8 +68,7 @@
             <div class="row">
                 <div class="form-group col-md-6">
                     <label for="assignedcompanies" class="control-label col-md-3"
-                        translate="user.search-form.assignedcompanies">Assigned
-                        Companies</label>
+                        translate="user.search-form.assignedcompanies">Assigned Companies</label>
                     <div class="col-md-9">
                         <div ng-dropdown-multiselect="" options="assignedcompanies" selected-model="selectedCompanies"
                         checkboxes="true" extra-settings="companysetting" translation-texts="selectcompaniestext" ></div>

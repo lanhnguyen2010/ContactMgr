@@ -1,29 +1,8 @@
-'use strict';          $scope.toggleMin = function() {
-                $scope.minDate = $scope.minDate ? null : new Date();
-              };
-              $scope.toggleMin();
-
-              $scope.openCalendar = function($event, isTo) {
-                $event.preventDefault();
-                $event.stopPropagation();
-                if (isTo == 2) {
-                    $scope.openedCalendarTo = true;
-                    $scope.openedCalendarFrom = false;
-                }
-                else {
-                    $scope.openedCalendarFrom = true;
-                    $scope.openedCalendarTo = false;
-                }
-              };
-
-              $scope.dateOptions = {
-                formatYear: 'yy',
-                startingDay: 1
-              };
+'use strict';
 
 angular.module('contactmgrApp').controller(
         'UsersController',
-        function($scope, UsersService, ngTableParams) {
+        function($scope,$filter, UsersService, ngTableParams) {
 
             function init() {
                 $scope.getCompanies();
@@ -38,10 +17,11 @@ angular.module('contactmgrApp').controller(
                 role : '',
                 createdFrom:'',
                 createdTo:'',
-                assignedCompanies:[],
+                assignedCompanies:"",
                 pageIndex:1,
                 pageSize:10
             };
+            var actualCriteria = {};
             $scope.initUser = function() {
                 $scope.user = {
                     "id" : "",
@@ -65,6 +45,7 @@ angular.module('contactmgrApp').controller(
             }
             var PAGE_SIZE = 10;
             $scope.users = [];
+            $scope.actualCriteria={};
             $scope.searchClicked = false;
             $scope.currentPage = 1;
             $scope.selectedCompanies=[];
@@ -77,25 +58,34 @@ angular.module('contactmgrApp').controller(
 
                 $scope.searchClicked = true;
                 $scope.isLoading = true;
+                $scope.criteria.assignedCompanies="";
                 for (var i = 0; i < $scope.selectedCompanies.length; i++){
-                    $scope.criteria.assignedCompanies.push(parseInt($scope.selectedCompanies[i]["id"]));
+                    if (i != 0) $scope.criteria.assignedCompanies += ",";
+                    $scope.criteria.assignedCompanies += $scope.selectedCompanies[i]["id"];
                 }
+                $scope.criteria.createdFrom = $filter('date')($scope.criteria.createdFrom,'yyyy-MM-dd');
+                $scope.criteria.createdTo = $filter('date')($scope.criteria.createdTo,'yyyy-MM-dd');
+                angular.copy($scope.criteria,$scope.actualCriteria);
                 $scope.usersTableParams.reload();
+                
             }
 
             $scope.usersTableParams = new ngTableParams({
-                count : 10, // Count per page
-                
+                count : 10 // Count per page
             }, {
-            	
                 counts: [],
                 getData: function ($defer, params) {
-                    if (!$scope.searchClicked)
+                    $scope.actualCriteria.pageIndex = params.page();
+                    $scope.actualCriteria.pageSize = params.count();
+                    if (!$scope.searchClicked) {
                         return;
+                    } else if ($scope.currentPage == params.page()) {
+                        $scope.criteria.pageIndex = 1;
+                        params.page(1);
+                    }
+                    
                     $scope.currentPage = params.page();
-                    $scope.criteria.pageIndex = params.page();
-                    $scope.criteria.pageSize = 10;
-                    UsersService.searchUsers($scope.criteria)
+                    UsersService.searchUsers($scope.actualCriteria)
                     .success(function(data, status) {
                         $scope.users = data['items'];
                         params.total(data['totalItems']);
@@ -227,6 +217,28 @@ angular.module('contactmgrApp').controller(
                 }
             };
             $scope.minDate = new Date();
+            $scope.toggleMin = function() {
+                $scope.minDate = $scope.minDate ? null : new Date();
+              };
+              $scope.toggleMin();
+
+              $scope.openCalendar = function($event, isTo) {
+                $event.preventDefault();
+                $event.stopPropagation();
+                if (isTo == 2) {
+                    $scope.openedCalendarTo = true;
+                    $scope.openedCalendarFrom = false;
+                }
+                else {
+                    $scope.openedCalendarFrom = true;
+                    $scope.openedCalendarTo = false;
+                }
+              };
+
+              $scope.dateOptions = {
+                formatYear: 'yy',
+                startingDay: 1
+              };
             init();                  
 
         })
