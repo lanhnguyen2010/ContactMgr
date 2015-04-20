@@ -39,7 +39,6 @@ angular.module('contactmgrApp').controller(
                     "language" : "",
                     "assignedCompanies" : ""
                 };
-//              s $scope.confirmPassword = '';
                 $scope.checkboxSelection = '1';
             }
             var PAGE_SIZE = 10;
