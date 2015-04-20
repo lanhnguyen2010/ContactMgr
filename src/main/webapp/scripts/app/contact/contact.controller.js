@@ -17,7 +17,7 @@ angular.module('contactmgrApp')
             pageSize: 10
         };
 
-        $scope.contacts =
+        $scope.contacts = [];
         $scope.searchClicked = false;
         $scope.searchContacts = function() {
             if ($scope.isLoading) {

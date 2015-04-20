@@ -44,32 +44,40 @@
                            translate="user.search-form.createdfrom">Created From</label>
 
                     <div class="col-md-4">
-                        <input type="date" placeholder="MM/DD/YYYY" name="createdFrom"
-                               class="form-control" ng-model="criteria.createdFrom">
-                    </div>
+                        <p class="input-group">
+                            <input type="text" class="form-control" datepicker-popup="yyyy-MM-dd" 
+                                   ng-model="criteria.createdFrom" is-open="openedCalendarFrom" placeholder="YYYY-MM-DD"
+                                   close-text="Close" />
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="openCalendar($event, 1)"><i 
+                                            class="glyphicon glyphicon-calendar"></i></button>
+                               </span>
+                        </p>
+                     </div>
                     <label class="control-label col-md-1"
                            translate="user.search-form.createdto">Created To</label>
 
                     <div class="col-md-4">
-                        <input type="date" name="createdTo" class="form-control date"
-                               ng-model="criteria.createdTo">
-                    </div>
+                        <p class="input-group">
+                            <input type="text" class="form-control" datepicker-popup="yyyy-MM-dd" 
+                                   ng-model="criteria.createdTo" date-disabled="disabled(date, mode)" is-open="openedCalendarTo" placeholder="YYYY-MM-DD"
+                                   close-text="Close" />
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="openCalendar($event, 2)"><i 
+                                            class="glyphicon glyphicon-calendar"></i></button>
+                               </span>
+                        </p>
+                     </div>
                 </div>
             </div>
 
             <div class="row">
                 <div class="form-group col-md-6">
                     <label for="assignedcompanies" class="control-label col-md-3"
-                           translate="user.search-form.assignedcompanies">Assigned
-                        Companies</label>
-
+                        translate="user.search-form.assignedcompanies">Assigned Companies</label>
                     <div class="col-md-9">
-                        <select class="form-control" ng-model="criteria.assignedCompanies">
-                            <option value=""></option>
-                            <option ng-repeat="assignedcompany in assignedcompanies"
-                                    value="{{assignedcompany.name}}">{{assignedcompany.name}}
-                            </option>
-                        </select>
+                        <div ng-dropdown-multiselect="" options="assignedcompanies" selected-model="selectedCompanies"
+                        checkboxes="true" extra-settings="companysetting" translation-texts="selectcompaniestext" ></div>
                     </div>
                 </div>
                 <div class="form-group col-md-6">
@@ -114,33 +122,27 @@
                        ng-model="users.checked" ng-checked="users.checked"
                        ng-click="toggleCheckAll()"/></th>
             <th class="data-table-title" translate="user.search-result.username">Username</th>
-
-            <th class="data-table-title" translate="user.search-result.firstname">First
-                Name
-            </th>
-            <th class="data-table-title" translate="user.search-result.lastname">Last
-                Name
-            </th>
+            <th class="data-table-title" translate="user.search-result.firstname">First Name</th>
+            <th class="data-table-title" translate="user.search-result.lastname">Last Name</th>
             <th class="data-table-title" translate="user.search-result.email">Email</th>
             <th class="data-table-title" translate="user.search-result.role">Role</th>
             <th class="data-table-title" translate="user.search-result.status"></th>
 
-            <tr ng-repeat="user in $data">
+            <tr ng-repeat="result_user in $data">
                 <td width="30" style="text-align: left"
-                    header="'ng-table/headers/checkbox.html'"><input
-                    type="checkbox" ng-model="user.checked" ng-checked="user.checked"/>
+                    header="'ng-table/headers/checkbox.html'">
+                    <input type="checkbox" ng-model="result_user.checked" ng-checked="result_user.checked" />
                 </td>
                 <td data-title="'Username'"><a href="" data-toggle="modal"
-                    data-target="#userModal" ng-click="addUser(user)">{{user.username}}</a>
+                    data-target="#userModal" ng-click="addUser(result_user)">{{result_user.username}}</a>
                 </td>
-                <td data-title="'First Name'">{{user.firstname}}</td>
-                <td data-title="'Last Name'">{{user.lastname}}</td>
-                <td data-title="'Email'">{{user.email}}</td>
-                <td data-title="'Role'">{{user.role}}</td>
-                <td data-title="'Status'">
-                    <p ng-show="user.active" translate="user.search-result.active">Active</p>
-
-                    <p ng-show="!user.active" translate="user.search-result.inactive">Inacitve</p>
+                <td data-title="'user.search-result.firstname'">{{result_user.firstname}}</td>
+                <td data-title="'user.search-result.lastname'">{{result_user.lastname}}</td>
+                <td data-title="'user.search-result.email'">{{result_user.email}}</td>
+                <td data-title="'user.search-result.role'">{{result_user.role}}</td>
+                <td data-title="'user.search-result.status'" >
+                    <p ng-show = "result_user.active" translate = "user.search-result.active">Active</p>
+                    <p ng-show = "!result_user.active" translate = "user.search-result.inactive">Inacitve</p>
                 </td>
             </tr>
         </table>

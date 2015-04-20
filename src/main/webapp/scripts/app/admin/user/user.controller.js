@@ -2,25 +2,26 @@
 
 angular.module('contactmgrApp').controller(
         'UsersController',
-        function($scope, UsersService, ngTableParams) {
+        function($scope,$filter, UsersService, ngTableParams) {
 
             function init() {
                 $scope.getCompanies();
                 $scope.getRoles();
                 $scope.initUser();
-            }
-            ;
+            };
+            
             $scope.criteria = {
                 username : '',
                 firstlastName : '',
                 email : '',
                 role : '',
-                createdFrom : '',
-                createdTo : '',
-                assignedCompanies : '',
-                pageIndex : 1,
-                pageSize : 10
+                createdFrom:'',
+                createdTo:'',
+                assignedCompanies:"",
+                pageIndex:1,
+                pageSize:10
             };
+            var actualCriteria = {};
             $scope.initUser = function() {
                 $scope.user = {
                     "id" : "",
@@ -44,18 +45,17 @@ angular.module('contactmgrApp').controller(
             }
             var PAGE_SIZE = 10;
             $scope.users = [];
+            $scope.actualCriteria={};
             $scope.searchClicked = false;
             $scope.currentPage = 1;
-            $scope.selectedCompanies = [];
-            $scope.companysetting = {
-                enableSearch : true,
-                scrollable : true,
-                displayProp : 'name',
-                buttonClasses : 'form-control'
-            };
-            $scope.selectcompaniestext = {
-                buttonDefaultText : 'Select Assigned Companies'
-            };
+            $scope.selectedCompanies=[];
+            $scope.companysetting={
+                    enableSearch: true,
+                    scrollable:true,
+                    displayProp:'name',
+                    buttonClasses:'form-control col-md-9'};
+            $scope.selectcompaniestext={
+                    buttonDefaultText: 'Select Assigned Companies'};
             $scope.searchUsers = function() {
                 if ($scope.isLoading) {
                     return;
@@ -63,20 +63,34 @@ angular.module('contactmgrApp').controller(
 
                 $scope.searchClicked = true;
                 $scope.isLoading = true;
+                $scope.criteria.assignedCompanies="";
+                for (var i = 0; i < $scope.selectedCompanies.length; i++){
+                    if (i != 0) $scope.criteria.assignedCompanies += ",";
+                    $scope.criteria.assignedCompanies += $scope.selectedCompanies[i]["id"];
+                }
+                $scope.criteria.createdFrom = $filter('date')($scope.criteria.createdFrom,'yyyy-MM-dd');
+                $scope.criteria.createdTo = $filter('date')($scope.criteria.createdTo,'yyyy-MM-dd');
+                angular.copy($scope.criteria,$scope.actualCriteria);
                 $scope.usersTableParams.reload();
+                
             }
 
             $scope.usersTableParams = new ngTableParams({
-                count : 10, // Count per page
+                count : 10 // Count per page
             }, {
-                counts : [],
-                getData : function($defer, params) {
-                    if (!$scope.searchClicked)
+                counts: [],
+                getData: function ($defer, params) {
+                    $scope.actualCriteria.pageIndex = params.page();
+                    $scope.actualCriteria.pageSize = params.count();
+                    if (!$scope.searchClicked) {
                         return;
+                    } else if ($scope.currentPage == params.page()) {
+                        $scope.criteria.pageIndex = 1;
+                        params.page(1);
+                    }
+                    
                     $scope.currentPage = params.page();
-                    $scope.criteria.pageIndex = params.page();
-                    $scope.criteria.pageSize = 10;
-                    UsersService.searchUsers($scope.criteria)
+                    UsersService.searchUsers($scope.actualCriteria)
                     .success(function(data, status) {
                         $scope.users = data['items'];
                         params.total(data['totalItems']);
@@ -144,6 +158,9 @@ angular.module('contactmgrApp').controller(
 
             // watch selected users
             $scope.$watch('users|filter:{checked:true}', function(results) {
+            	if (results == null){
+            		return;
+            	}
                 $scope.selectedIds = results.map(function(user) {
                     return user.id;
                 });
@@ -205,7 +222,7 @@ angular.module('contactmgrApp').controller(
             // get value of user from search function and set value of this user
             // to update
             $scope.addUser = function(user) {
-            	angular.copy(user,$scope.user);
+                angular.copy(user,$scope.user);
                 console.log("Date: " + $scope.user.expiredDate);
                 if ($scope.user.active == true) {
                     $scope.checkboxSelection = '1';
@@ -213,21 +230,25 @@ angular.module('contactmgrApp').controller(
                     $scope.checkboxSelection = '0';
                 }
             };
+            $scope.minDate = new Date();
             $scope.toggleMin = function() {
                 $scope.minDate = $scope.minDate ? null : new Date();
             };
             $scope.toggleMin();
 
-            $scope.openCalendaFrom = function($event) {
+            $scope.openCalendar = function($event, isTo) {
                 $event.preventDefault();
                 $event.stopPropagation();
-                $scope.openedCalendaFrom = true;
+                if (isTo == 2) {
+                    $scope.openedCalendarTo = true;
+                    $scope.openedCalendarFrom = false;
+                }
+                else {
+                    $scope.openedCalendarFrom = true;
+                    $scope.openedCalendarTo = false;
+                }
             };
-            $scope.openCalendaTo = function($event) {
-                $event.preventDefault();
-                $event.stopPropagation();
-                $scope.openedCalendaTo = true;
-            };
+
             $scope.open = function($event) {
                 $event.preventDefault();
                 $event.stopPropagation();
@@ -250,4 +271,4 @@ angular.module('contactmgrApp').controller(
                 console.log($scope.user.assignedCompanies);
             }
             init();
-        })
+})
