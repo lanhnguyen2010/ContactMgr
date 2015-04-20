@@ -28,7 +28,7 @@ import vn.kms.launch.contactmgr.util.ValidationException;
 @RestController
 @RequestMapping(value = "/api/companies")
 public class CompanyController {
-
+    
     @Autowired
     private ContactService contactService;
 
@@ -44,7 +44,7 @@ public class CompanyController {
     }
     
     @RequestMapping(value = "/{id}", method = GET)
-    public ResponseEntity<Company> getCompanie(@PathVariable int id){
+    public ResponseEntity<Company> getCompany(@PathVariable int id){
         Company company = contactService.getCompany(id);
         
         return new ResponseEntity<>(company, (company == null)? NOT_FOUND : OK);
