@@ -1,5 +1,5 @@
 <div ng-cloak>
-    <div class="modal fade" id="imageUploadModal">
+    <div class="modal fade" id="imageUploadModal" style="z-index: 4000">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -40,7 +40,7 @@
                            translate="contact-edit.general.contact-name">Name</label>
 
                     <div class="col-sm-3" class="form-group">
-                        <input ng-model="contact.firstName" type="text"
+                        <input ng-model="contact.firstName" type="text" required
                                class="form-control"
                                style="margin-bottom: 10px"
                                placeholder="{{'contact-edit.placeholder.first-name'|translate}}"
@@ -88,7 +88,7 @@
                            translate="contact-edit.general.email">Email</label>
 
                     <div class="col-sm-9">
-                        <input ng-model="contact.email" type="text"
+                        <input ng-model="contact.email"
                                class="form-control" data-toggle="tooltip" title="{{validator.email}}"
                                placeholder="{{'contact-edit.placeholder.email'|translate}}"
                                ng-class="{red: validator.email}">
@@ -112,9 +112,9 @@
                     <div class="col-sm-9">
 
 
-                        <img id="avatar{{contact.id}}" ng-src="../../../photos/unknown.jpg"
+                        <img class="img-thumbnail" id="avatar{{contact.id}}" ng-src="../../../photos/unknown.jpg"
                              ng-click="getPhotos(&#34;avatar&#34;)" data-toggle="modal"
-                             data-target="#imageUploadModal" style="width : 70px; height : 70px; cursor: pointer;">
+                             data-target="#imageUploadModal" style="width : 100px; height : 100px; cursor: pointer;">
                     </div>
                 </div>
                 <h3 translate="contact-edit.home.title-home">Home</h3>
@@ -163,7 +163,7 @@
                         <input ng-model="contact.home.address.postalCode" data-toggle="tooltip"
                                title="{{validator.home.address.postalCode}}"
                                ng-class="{red: validator.home.address.postalCode}"
-                               class="form-control" type="number">
+                               class="form-control" ng-keypress="isNumeric(event)" maxlength="5">
                     </div>
                 </div>
                 <div class="form-group">
@@ -224,31 +224,32 @@
                     <label for="selectCompany" class="control-label col-sm-3"
                            translate="contact-edit.work.company-name">Company Name</label>
 
-                    <div class="col-sm-9">
-                        <div class="col-sm-6">
+                    <div class="col-sm-9" style="padding: 0px">
+                        <div class="col-sm-6" style="margin-bottom: 10px;">
                             <select class="form-control" id="selectCompany" ng-model="contact.work.companyId"
                                     ng-options="company.id as company.name for company in companies">
                             </select>
                         </div>
-                        <div class="col-sm-3">
+                        <div class="col-sm-3" style="margin-bottom: 10px">
                             <button a href="" class="btn btn-default"
                                     translate="contact-edit.button.edit-company"
                                     ng-disabled="hasSelectedCompany() === false"
-                                    ng-click="openDialogUpdateCompany()"></button>
+                                    ng-click="openDialogUpdateCompany()">Edit
+                            </button>
                         </div>
                         <div class="col-sm-3">
                             <button class="btn btn-default"
                                     translate="contact-edit.button.new-company"
-                                    ng-click="openDialogCreateCompany()"></button>
+                                    ng-click="openDialogCreateCompany()">New
+                            </button>
                         </div>
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-sm-3"></div>
-                    <div class="col-sm-9" class="thumbnail">
-
-
+                    <div class="col-sm-9">
                         <img id="logo{{contact.id}}" ng-src="../../../photos/unknown.jpg"
+                             style="width : 70px; height : 70px; background-color: gray;" class="img-thumbnail">
                              ng-click="getPhotos(&#34;logo&#34;)" data-toggle="modal" data-target="#imageUploadModal"
                              style="width : 70px; height : 70px; cursor: pointer;">
                     </div>
@@ -311,12 +312,12 @@
                 </div>
                 <div class="form-group row">
                     <label for="inputZipCode" class="control-label col-sm-3"
-                           translate="contact-edit.home.zip-code"></label>
+                           translate="contact-edit.home.zip-code">Zip Code</label>
 
                     <div class="col-sm-9">
                         <input ng-model="contact.work.company.address.postalCode"
-                               type="number" class="form-control" id="inputZipCode"
-                               style="width: 100px" min="5" max="5" readonly>
+                               type="number" class="form-control" id="inputZipCode" ng-keypress="isNumeric(event)"
+                               style="width: 100px" maxlength="5" readonly>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -370,7 +371,7 @@
     <div class="modal fade" id="companyInfoModal" role="dialog"
          aria-labelledby="companyInfoLabel" aria-hidden="true">
         <div class="vertical-alignment-helper">
-            <div class="modal-dialog vertical-align-center modal-lg">
+            <div class="modal-dialog vertical-align-center modal-lg" style="z-index: 1">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">
@@ -384,8 +385,10 @@
                         <div class="form-group row">
                             <div class="col-sm-3"></div>
                             <div class="col-sm-9" class="thumbnail">
-                                <a href="#" class="thumbnail" style="width: 128px; height: 100px">
-                                    Logo </a>
+                                <img id="logo{{contact.id}}_2" ng-src="../../../photos/unknown.jpg"
+                                     ng-click="getPhotos(&#34;logo&#34;)"
+                                     data-toggle="modal" data-target="#imageUploadModal"
+                                     style="width : 70px; height : 70px; cursor: pointer;">
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -473,9 +476,9 @@
                                        translate="contact-edit.home.zip-code">Zip Code</label>
 
                                 <div class="col-sm-9">
-                                    <input ng-model="selectedCompany.address.postalCode" type="number"
-                                           class="form-control"
-                                           id="inputZipCode" style="width: 100px">
+                                    <input ng-model="selectedCompany.address.postalCode" class="form-control"
+                                           id="inputZipCode" style="width: 100px" ng-keypress="isNumeric(event)"
+                                           maxlength="5">
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -498,7 +501,7 @@
                             </button>
                         </div>
                         <div class="col-md-6 col-xs-6">
-                            <button class="btn btn-default" style="width: 100px"
+                            <button class="btn btn-default" style="width: 100px; float: left"
                                     translate="contact-edit.button.cancel-company" data-dismiss="modal">Cancel
                             </button>
                         </div>

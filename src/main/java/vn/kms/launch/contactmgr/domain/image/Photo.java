@@ -7,7 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.noggit.JSONUtil;
+import org.springframework.format.annotation.DateTimeFormat;
+
 
 /**
  * Created by diule on April, 14;
@@ -16,12 +17,10 @@ import org.noggit.JSONUtil;
 @Table(name = "IMAGES")
 public class Photo {
 
+
     @Id
     @Column(name = "ID")
     private int id;
-
-    @Column(name = "PATH_FULL")
-    private String pathFull;
 
     @Column(name = "FILE_NAME")
     private String fileName;
@@ -29,7 +28,12 @@ public class Photo {
     @Column(name = "CONTENT_TYPE")
     private String contentType;
 
+    @Column(name = "PATH_FULL")
+    private String pathFull;
+
+
     @Column(name = "CREATED_AT")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date createdAt;
 
     public int getId() {
@@ -56,6 +60,7 @@ public class Photo {
         this.fileName = fileName;
     }
 
+
     public String getContentType() {
         return contentType;
     }
@@ -72,24 +77,24 @@ public class Photo {
         this.createdAt = createdAt;
     }
 
-    public String toJson(){
-        return JSONUtil.toJSON(this);
-    }
 
-    public Photo toDo(){
+    public Photo toDo() {
 
         Photo res = new Photo();
         res.setId(id);
         res.setFileName(fileName);
-        res.setPathFull(pathFull);
         res.setContentType(contentType);
+        res.setPathFull(pathFull);
 
         return res;
     }
-    public Photo(){
+
+    public Photo() {
+
     }
+
     //GET object;
-    public Photo(Photo res){
+    public Photo(Photo res) {
         id = res.getId();
         fileName = res.fileName;
         contentType = res.contentType;

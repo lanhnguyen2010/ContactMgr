@@ -21,7 +21,7 @@ public class Work extends ValueObject<Work> {
     @Column(name = "DEPARTMENT")
     private String department;
 
-    @Column(name = "COMPANY_ID")
+    @Column(name = "COMPANY_ID", insertable = false, updatable = false)
     private Integer companyId;
 
     @ManyToOne

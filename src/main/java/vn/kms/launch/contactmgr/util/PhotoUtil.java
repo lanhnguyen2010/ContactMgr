@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,25 +15,28 @@ public class PhotoUtil {
 
     }
 
-    public static void storeFile(InputStream in, String pathFull) throws Exception {
+    public static void storeFile(InputStream in, String pathFull)
+        throws Exception {
 
         LOG.debug("Begin store file {}:", pathFull);
 
         File out = new File(pathFull);
         try {
-//			FileUtils.copyInputStreamToFile(in, out);
+            FileUtils.copyInputStreamToFile(in, out);
             LOG.debug("End store file {}:", pathFull);
         } catch (Exception e) {
-            LOG.debug("Can not store file {}:", pathFull);
+            LOG.error("Can not store file {}:", pathFull);
             throw new Exception("Error when store file" + e.getMessage());
-            // TODO: handle exception
         }
     }
 
     /*
      * @param path
+     *
      * @return
-     * @throw FileNotFoundException*/
+     *
+     * @throw FileNotFoundException
+     */
     public static FileInputStream getFile(String path) throws Exception {
 
         LOG.debug("Get file {}:", path);

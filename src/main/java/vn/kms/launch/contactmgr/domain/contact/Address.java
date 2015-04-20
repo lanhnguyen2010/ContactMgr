@@ -29,7 +29,7 @@ public class Address extends ValueObject<Address> {
     @Column(name = "STATE")
     private String state;
 
-    @Min(value = 10000, message = "{validation.postalCode.message}")
+    @Pattern(regexp = "([0-9]{7})", message = "{validation.postalCode.message}")
     @Max(value = 99999, message = "{validation.postalCode.message}")
     @Column(name = "POSTAL_CODE")
     private Integer postalCode;

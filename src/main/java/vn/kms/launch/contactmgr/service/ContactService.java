@@ -27,14 +27,13 @@ import vn.kms.launch.contactmgr.util.ValidationException;
 @Service
 @Transactional(readOnly = true)
 public class ContactService {
-	
-    //@Autowired
+    @Autowired
     private ContactRepository contactRepo;
 
     //@Autowired
     private CompanyRepository companyRepo;
 
-   // @Autowired
+    @Autowired
     private CountryRepository countryRepo;
 
    // @Autowired
@@ -97,7 +96,7 @@ public class ContactService {
         }
     }
 
-    public List<Country> getCountries(){
+    public List<Country> getCountries() {
         return countryRepo.findAll();
     }
 
@@ -107,11 +106,11 @@ public class ContactService {
 
     @Transactional
     public Company saveCompany(Company company, int id) {
-        if(company != null){
-            if(id == 0){
+        if (company != null) {
+            if (id == 0) {
                 // create a new company
                 return companyRepo.save(company);
-            } else{
+            } else {
                 // update a existing company
 
                 company.setId(id);
