@@ -114,6 +114,7 @@ public class ContactService {
     @Transactional
     public Company saveCompany(Company company, int id) {
         if (company != null) {
+            validateCompany(company);
             if (id == 0) {
                 // create a new company
                 return companyRepo.save(company);
