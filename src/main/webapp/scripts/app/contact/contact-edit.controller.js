@@ -31,7 +31,7 @@ angular.module('contactmgrApp')
 
             ContactService.uploadPhoto(contactId, formData)
                 .success(function(data, status) {
-                    aImage = data;
+                    aImage = data.pathFull;
                 })
                 .error(function(data, status) {
                 });

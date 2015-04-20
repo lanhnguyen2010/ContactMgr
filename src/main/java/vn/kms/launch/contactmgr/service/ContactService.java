@@ -19,7 +19,7 @@ import vn.kms.launch.contactmgr.domain.contact.ContactSearchCriteria;
 import vn.kms.launch.contactmgr.domain.contact.Country;
 import vn.kms.launch.contactmgr.domain.contact.CountryRepository;
 import vn.kms.launch.contactmgr.domain.contact.Work;
-import vn.kms.launch.contactmgr.repository.PhotoRepository;
+import vn.kms.launch.contactmgr.domain.image.PhotoRepository;
 import vn.kms.launch.contactmgr.util.EntityNotFoundException;
 import vn.kms.launch.contactmgr.util.SearchResult;
 import vn.kms.launch.contactmgr.util.ValidationException;
@@ -30,16 +30,16 @@ public class ContactService {
     @Autowired
     private ContactRepository contactRepo;
 
-    @Autowired
+    //@Autowired
     private CompanyRepository companyRepo;
 
     @Autowired
     private CountryRepository countryRepo;
 
-    @Autowired
+   // @Autowired
     private PhotoRepository photoRepo;
 
-    @Autowired
+   // @Autowired
     private Validator validator;
 
     public Contact getContact(int id) {
@@ -81,7 +81,7 @@ public class ContactService {
     }
 
     @Transactional
-    public int deleteContacts(int... ids) {
+   public int deleteContacts(int... ids) {
         return contactRepo.deleteByIds(ids);
     }
 

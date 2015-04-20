@@ -30,7 +30,9 @@ public class PhotoUtil {
 
     /*
      * @param path
-     * @return
+	 * 
+	 * @return
+	 * 
      * @throw FileNotFoundException
      */
     public static FileInputStream getFile(String path) throws Exception {
@@ -44,4 +46,5 @@ public class PhotoUtil {
             throw new Exception("File not found" + e.getMessage());
         }
     }
+
 }
