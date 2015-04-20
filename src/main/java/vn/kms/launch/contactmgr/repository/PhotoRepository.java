@@ -48,7 +48,7 @@ public interface PhotoRepository extends JpaRepository<Photo, Integer> {
      * @return
      */
     /*@Modifying
-	@Transactional
+    @Transactional
 	@Query("insert from Contact where id in (:ids)")
 	int deleteContacts(@Param("ids")int... ids);*/
 

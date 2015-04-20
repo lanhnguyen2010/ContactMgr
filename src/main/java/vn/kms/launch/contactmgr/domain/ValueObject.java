@@ -1,7 +1,11 @@
 package vn.kms.launch.contactmgr.domain;
 
-/**
- * Created by trungnguyen on 4/5/15.
- */
-public class ValueObject {
+import java.io.Serializable;
+
+public class ValueObject<T> implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+    public boolean sameValueAs(T other) {
+        return this.equals(other);
+    }
 }

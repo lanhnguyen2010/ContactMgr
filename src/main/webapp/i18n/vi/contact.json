@@ -12,6 +12,10 @@
             "job-title": "Chức vụ",
             "department": "Phòng ban",
             "company": "Tên công ty"
+        },
+        "results": {
+            "message": "Kết quả tìm kiếm",
+            "no-result": "Không tìm thấy dữ liệu thoả điều kiện"
         }
     }
 }

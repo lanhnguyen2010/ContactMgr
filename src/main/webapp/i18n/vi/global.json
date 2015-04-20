@@ -9,11 +9,11 @@
             },
             "contacts": {
                 "main": "Thông tin Cá nhân",
-                "add": "Thêm mới"
+                "new": "Thêm mới"
             },
             "cards": {
                 "main": "Thẻ tên",
-                "add": "Thiết kế Mẫu thẻ tên mới",
+                "new": "Thiết kế Mẫu mới",
                 "generate": "In ấn các Thẻ tên"
             },
             "admin": {

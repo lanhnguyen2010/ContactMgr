@@ -1,7 +1,14 @@
+server:
+    port: 8080
+
 spring:
     datasource:
         url: "jdbc:mysql://localhost:3306/contactmgr"
         username: contactmgr
         password: contactmgr123
         driver-class-name: org.mariadb.jdbc.Driver
-        
+    jpa:
+        show_sql: true
+        properties:
+            hibernate:
+                format_sql: true

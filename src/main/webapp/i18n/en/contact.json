@@ -5,13 +5,31 @@
             "search": "Search",
             "delete": "Delete"
         },
-        "contact-field": {
+        "search-form": {
             "name": "Name",
             "mobile": "Mobile",
             "email": "E-mail",
             "job-title": "Job Title",
             "department": "Department",
             "company": "Company"
+        },
+        "search-results": {
+            "message": "Search Results",
+            "no-result": "No contact found",
+            "column": {
+                "display-name": "Display Name",
+                "mobile": "Mobile",
+                "email": "E-mail",
+                "job-title": "Job Title",
+                "department": "Department",
+                "company": "Company"
+            }
+        },
+        "company-info": {
+            "title": "",
+            "field": {
+                "": ""
+            }
         }
     }
 }
