@@ -53,7 +53,7 @@ public class PhotoController {
 
     @RequestMapping(value = "/upload/{photoId}", method = POST)
     public @ResponseBody  ResponseEntity<Photo> uploadPhoto(  @RequestParam("fileUpload") MultipartFile file)
-    														throws IOException, ServletException {
+                                                            throws IOException, ServletException {
 
         Photo res = new Photo();
         String contentTpye = file.getContentType();
@@ -75,17 +75,15 @@ public class PhotoController {
     }
 
     @RequestMapping(method = GET)
-    public ResponseEntity<SearchResult<Photo>> getListPhotos(@RequestParam(value = "page", defaultValue = "1") int page,
-                                                             @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
-        System.out.println("test1");
-        SearchResult<Photo> list = uploadService.getListPhotos(page, pageSize);
+    public ResponseEntity<SearchResult<Photo>> getListPhotos(
+                                               @RequestParam(value = "page", defaultValue = "1") int page,
+                                               @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
 
+        SearchResult<Photo> list = uploadService.getListPhotos(page, pageSize);
         if (list.getTotalItems() == 0) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-
         return new ResponseEntity<>(list, HttpStatus.OK);
-
     }
 
     @RequestMapping(value = "/{photoId}", method = GET)

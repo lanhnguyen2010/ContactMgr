@@ -1,6 +1,4 @@
 ﻿insert into companies values(1,'KMS Technology','kms-technology.com','assets/images/logo.png','Bright Minds, Brilliant Solutions','123 Cong Hoa st., Ward 12','Tan Binh district','Ho Chi Minh',null,70000,'VN','+84 123456789','+84 123456789',null,null,null,null);
-﻿insert into companies values(2,'FPT','fpt.com','assets/images/logo.png','Bright Minds, Brilliant Solutions','123 Cong Hoa st., Ward 12','Tan Binh district','Ho Chi Minh',null,70000,'VN','+84 123456789','+84 123456789',null,null,null,null);
-﻿insert into companies values(3,'VNG','vng.com','assets/images/logo.png','Bright Minds, Brilliant Solutions','123 Cong Hoa st., Ward 12','Tan Binh district','Ho Chi Minh',null,70000,'VN','+84 123456789','+84 123456789',null,null,null,null);
 
 insert into contacts values(1,'Trang','Trang','Thu','Biện','thutrang2293@gmail.com','+84 1668889999','F','1993-02-02','photo/1.img','Ngô Gia Tự',null,'Tp.Hồ Chí Minh',null,null,'VN',null,null,null,'Trường Sơn',1,null,null,null,null);
 insert into contacts values(2,'Trang','Trang','Thuỳ','Nguyễn','trangnguyen@gmail.com','+84 1668889998','F','1993-05-02','photo/2.img','Ngô Gia Tự',null,'Tp.Hồ Chí Minh',null,null,'VN',null,null,null,'Trường Sơn',1,null,null,null,null);

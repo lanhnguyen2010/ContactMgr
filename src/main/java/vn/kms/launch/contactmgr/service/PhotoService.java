@@ -65,10 +65,8 @@ public class PhotoService {
         if (toIndex > totalPhotos) {
             toIndex = totalPhotos;
         }
-        List<Photo> photos = result.subList((page - 1) * pageSize, toIndex);
-        SearchResult<Photo> returnPhotos = new SearchResult<Photo>(null,
-                photos, totalPhotos);
-
+        List<Photo> unsortedPhotos = result.subList((page - 1) * pageSize, toIndex);
+        SearchResult<Photo> returnPhotos = new SearchResult<Photo>(null,unsortedPhotos, totalPhotos);
         return returnPhotos;
     }
 
