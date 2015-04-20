@@ -23,6 +23,6 @@ angular.module('contactmgrApp')
         };
         this.saveUser = function(user){
             console.log("userid:"+ user.id);
-             return (user.id <= 0) ?  $http.post("/api/users", user) : $http.put("/api/users/?id=" + user.id , user); 
+            return (user.id <= 0) ?  $http.post("/api/users", user) : $http.put("/api/users/" + user.id , user); 
      };
     })
