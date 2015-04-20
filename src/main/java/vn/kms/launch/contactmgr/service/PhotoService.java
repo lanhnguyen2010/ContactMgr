@@ -75,13 +75,7 @@ public class PhotoService {
     }
 
     public String getPathFull(String uuid) {
-//        ClassPathResource cp = new ClassPathResource("");
-//        String rootPath = "";
-//        try {
-//            rootPath = cp.getURL().getFile();
-//        } catch (Exception e) {
-//
-//        }
+
         return String.format("%s/%s.png", imageDir, uuid);
     }
 }
