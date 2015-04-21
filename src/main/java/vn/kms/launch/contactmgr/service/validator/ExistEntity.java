@@ -24,7 +24,7 @@ import javax.validation.Payload;
 @Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER})
 @Retention(RUNTIME)
 public @interface ExistEntity {
-    String message() default "{org.hibernate.validator.constraints.ExistEntity.message}";
+    String message() default "{validation.ExistEntity.message}";
 
     Class<?>[] groups() default {};
 

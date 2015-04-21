@@ -42,8 +42,6 @@ public class PhotoService {
                               String contentType) throws Exception {
     	
     	String uuid = UUID.randomUUID().toString();
-
-		
         Photo res = new Photo();
         
         res.setFileName(originalFilename);
@@ -60,15 +58,21 @@ public class PhotoService {
     public SearchResult<Photo> getListPhotos(int page, int pageSize) {
         List<Photo> result = uploadRepository.findAll();
         int totalPhotos = result.size();
-        int toIndex = (pageSize * page) - 1;
+        int fromIndex = (page - 1) * pageSize + 1;
+        int toIndex = page * pageSize;
 
         if (toIndex > totalPhotos) {
+            //if OutOfIndex will be returned null
+            if (fromIndex > totalPhotos){
+            	SearchResult<Photo> returnPhotos = new SearchResult<Photo>(null,null, totalPhotos);
+                return returnPhotos;
+            }else {
             toIndex = totalPhotos;
         }
-        List<Photo> photos = result.subList((page - 1) * pageSize, toIndex);
-        SearchResult<Photo> returnPhotos = new SearchResult<Photo>(null,
-            photos, totalPhotos);
+        }
 
+        List<Photo> unsortedPhotos = result.subList(fromIndex - 1, toIndex);
+        SearchResult<Photo> returnPhotos = new SearchResult<Photo>(null,unsortedPhotos, totalPhotos);
         return returnPhotos;
     }
   
@@ -78,7 +82,6 @@ public class PhotoService {
     }
 
     public String getPathFull(String uuid) {
-
         return String.format("%s/%s.png", imageDir, uuid);
     }
 }
