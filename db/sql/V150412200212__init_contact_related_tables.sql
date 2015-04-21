@@ -21,7 +21,7 @@ CREATE TABLE companies (
 
 CREATE TABLE contacts (
     id INT NOT NULL AUTO_INCREMENT,
-    display_name VARCHAR(150) NOT NULL,
+    display_name VARCHAR(152) NOT NULL,
     first_name VARCHAR(50),
     middle_name VARCHAR(50),
     last_name VARCHAR(50),

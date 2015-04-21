@@ -87,7 +87,7 @@ angular.module('contactmgrApp')
         };        
         
         this.uploadPhoto = function(fileUpload) {
-        	var config = {headers: {'Content-Type': undefined}, transformRequest: angular.identity};
+        	var config = {headers: {'Content-Type': undefined}};
             return $http.post("/api/photos/upload/", fileUpload, config);
         };
         
@@ -107,8 +107,8 @@ angular.module('contactmgrApp')
             }
         }
 
-        this.getPhotos = function(pageIndex, pageSize) {
-            return $http.get("/api/photos/?pageIndex=" + pageIndex + "&pageSize=" + pageSize);
+        this.getPhotos = function(pageIndex,pageSize) {
+            return $http.get("/api/photos/search/?pageIndex=" + pageIndex + "&pageSize=" + pageSize);
         };
         
         this.getCompanieById = function(id) {
