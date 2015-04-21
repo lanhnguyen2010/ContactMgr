@@ -30,6 +30,7 @@ import vn.kms.launch.contactmgr.util.ValidationException;
 @RestController
 @RequestMapping(value = "/api/contacts")
 public class ContactController {
+
     @Autowired
     private ContactService contactService;
 

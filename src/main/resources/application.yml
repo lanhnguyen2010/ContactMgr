@@ -7,5 +7,5 @@ spring:
                 persistence:
                     validation:
                         mode: none
-resources:
-    path:/etc/photos                      
+app:
+    image-dir: D:/Project/Challengs/launch-contact-manager/etc/photos                   
