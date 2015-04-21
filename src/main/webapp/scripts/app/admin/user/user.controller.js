@@ -230,11 +230,6 @@ angular.module('contactmgrApp').controller(
                     $scope.checkboxSelection = '0';
                 }
             };
-            $scope.minDate = new Date();
-            $scope.toggleMin = function() {
-                $scope.minDate = $scope.minDate ? null : new Date();
-            };
-            $scope.toggleMin();
 
             $scope.openCalendar = function($event, isTo) {
                 $event.preventDefault();

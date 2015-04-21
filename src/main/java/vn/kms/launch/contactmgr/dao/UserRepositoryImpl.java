@@ -89,16 +89,11 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
             jpqlQuery.append(" and");
             jpqlQuery.append(" u.createdAt >= :created_from");
             params.put("created_from", new Date(criteria.getCreatedFrom().getTime()));
-        } else if (!StringUtils.isEmpty(criteria.getCreatedTo())) {
+        }
+        if (!StringUtils.isEmpty(criteria.getCreatedTo())) {
             jpqlQuery.append(" and");
             jpqlQuery.append(" u.createdAt < :created_to");
             System.out.println(criteria.getCreatedTo().getTime());
-            try {
-				System.out.println(new SimpleDateFormat("yyyy-MM-dd").parse("2015-04-20").getTime());
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
             params.put("created_to", new Date(criteria.getCreatedTo().getTime() + (1000L * 60 * 60 * 24)));
         }
 

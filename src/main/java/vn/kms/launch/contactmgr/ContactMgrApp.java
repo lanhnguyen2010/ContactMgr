@@ -1,5 +1,7 @@
 package vn.kms.launch.contactmgr;
 
+import java.util.TimeZone;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,6 +14,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 public class ContactMgrApp {
     public static void main(String[] args) {
         SpringApplication app = new SpringApplication(ContactMgrApp.class);
+        System.setProperty("user.timezone", "UTC");
+        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
 
         SimpleCommandLinePropertySource source = new SimpleCommandLinePropertySource(args);
         addDefaultProfile(app, source);
