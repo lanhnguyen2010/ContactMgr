@@ -25,6 +25,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -41,7 +42,7 @@ import vn.kms.launch.contactmgr.util.SearchResult;
  */
 
 @Controller
-@RequestMapping(value = "/api/photos")
+@RequestMapping(value = "/api/photos/")
 public class PhotoController {
 //	@Autowired
 //	//@Value("${contacts.photo.storage}")
@@ -66,14 +67,13 @@ public class PhotoController {
         return FILTER_IMAGE.contains(type);
     }
 
-    @RequestMapping(value = "/upload/{photoId}", method = POST)
-    public @ResponseBody  ResponseEntity<Photo> uploadPhoto(  @RequestParam("fileUpload") MultipartFile file)
+    @RequestMapping(value = "/upload/", method = POST)
+    public @ResponseBody  ResponseEntity<Photo> uploadPhoto( @RequestBody MultipartFile file)
                                                             throws IOException, ServletException {
 
         Photo res = new Photo();
         String contentTpye = file.getContentType();
         if (!filterUpload(contentTpye)) {
-            //System.out.println("You only upload file .PNG or JPEG");
             return new ResponseEntity<Photo>(HttpStatus.PRECONDITION_FAILED);
         }
 
@@ -90,11 +90,9 @@ public class PhotoController {
     }
 
     @RequestMapping(method = GET)
-    public ResponseEntity<SearchResult<Photo>> getListPhotos(
-                                               @RequestParam(value = "page", defaultValue = "1") int page,
-                                               @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
+    public ResponseEntity<SearchResult<Photo>> getListPhotos( @RequestParam(value = "pageIndex", defaultValue = "1") String pageIndex, @RequestParam(value = "pageSize", defaultValue = "10") String pageSize) {
 
-        SearchResult<Photo> list = uploadService.getListPhotos(page, pageSize);
+        SearchResult<Photo> list = uploadService.getListPhotos(Integer.parseInt(pageIndex), Integer.parseInt(pageSize));
         if (list.getTotalItems() == 0) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

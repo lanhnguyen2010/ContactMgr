@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -61,7 +60,6 @@ public class PhotoService {
         int totalPhotos = result.size();
         int fromIndex = (page - 1) * pageSize + 1;
         int toIndex = page * pageSize;
-        
         if(fromIndex < 1) {
              SearchResult<Photo> returnPhotos = new SearchResult<Photo>(null,null, totalPhotos);
             return returnPhotos;

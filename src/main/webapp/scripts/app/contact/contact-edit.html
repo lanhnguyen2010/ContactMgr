@@ -14,8 +14,8 @@
                         <li class="image-list-upload" style="border: 1px dashed black" ng-click="uploadPhoto()">
                             Add more...
                         </li>
-                        <li ng-repeat="image in images" class="image-list-upload">
-                            <img ng-src='../../../photos/{{image}}' ng-click='selectPhoto(image)'/>
+                        <li ng-repeat="image in imageList" class="image-list-upload">
+                            <img ng-src='api/photos/{{image.pathFull}}' ng-click='selectPhoto(image)'/>
                         </li>
                     </div>
                 </div>
@@ -104,7 +104,7 @@
                     <div class="col-sm-9">
                         <img class="img-thumbnail" id="avatar{{contact.id}}" ng-src="{{getAvatar()}}" 
                         ng-click = "getPhotos(&#34;avatar&#34;)" data-toggle="modal" 
-                        data-target="#imageUploadModal" style="width : 100px; height : 100px; cursor: pointer;">
+                        data-target="#imageUploadModal" style="width : 100px; height : 100px; cursor: pointer;"/>
                     </div>
                 </div>
                 <h3 translate="contact-edit.home.title-home">Home</h3>
@@ -223,10 +223,7 @@
                 <div class="form-group row">
                     <div class="col-sm-3"></div>
                     <div class="col-sm-9">
-                    <img id="logo{{contact.id}}"  ng-src="{{getLogo()}}"
-                            style="width : 70px; height : 70px; background-color: gray;" class="img-thumbnail">
-                             ng-click="getPhotos(&#34;logo&#34;)" data-toggle="modal" data-target="#imageUploadModal"
-                             style="width : 70px; height : 70px; cursor: pointer;">
+                    <img id="logo{{contact.id}}" ng-src="{{getLogo()}}" class="img-thumbnail" style="width : 70px; height : 70px; background-color: gray;"/>
                     </div>
                 </div>
                 <div class="form-group row">
