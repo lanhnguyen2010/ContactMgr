@@ -33,8 +33,9 @@ angular.module('contactmgrApp')
                 	$scope.selectPhoto(data);
                 })
                 .error(function(data, status) {
+                	console.log(status);
                 });
-            
+
         };
 
         var typePhoto = 'avatar';
@@ -47,19 +48,16 @@ angular.module('contactmgrApp')
         }
 
         $scope.pageChanged = function() {
-        	console.log($scope.currentPage);
-        	console.log($scope.maxSize);
             ContactService.getPhotos($scope.currentPage, $scope.maxSize)
                 .success(function(data, status) {
                     $scope.totalItems = data['totalItems'];
                     $scope.imageList = data['items'];
-                    console.log("success");
                 })
                 .error(function(data, status) {
-                    console.log("error");
+                    console.log(status);
                 });
         };
-        
+
         $scope.contact;
         $scope.init = function() {
             ContactService.getViewContact(contactId).success(
@@ -72,20 +70,19 @@ angular.module('contactmgrApp')
           };
         $scope.init();
         $scope.companies;
-        
+
         $scope.selectedCompany = null;
         $scope.companyValidator = null;
-        
+
         $scope.$watch('contact.work.companyId', function(result){
             for(var c in $scope.companies){
                 if($scope.companies[c].id === $scope.contact.work.companyId){
                     $scope.contact.work.company = $scope.companies[c];
-                    //$scope.selectedCompany = $.extend(true, {}, $scope.companies[c]);
                     break;
                 }
             }
         });
-        
+
         $scope.countries;
         $scope.validator;
         // save a contact
@@ -95,23 +92,18 @@ angular.module('contactmgrApp')
                 ContactService
                         .createContact(copyContact)
                         .success(
-                                function(data, status, headers,
-                                        config) {
-                                    // the contact is saved
+                                function(data, status, headers, config) {
                                     window.location = '#contact';
                                 }).error(function(data, status, headers,config) {
-                                    // has error
                                      $scope.validator = data.errors;
                                 });
             } else {
                 ContactService.updateContact($scope.contact.id, copyContact)
                     .success(
                         function(data, status, headers, config) {
-                            // the contact is saved
                             window.location = '#contact';
                         }).error(
                         function(data, status, headers, config) {
-                            // has error
                             $scope.validator = data.errors;
                         });
             }
@@ -123,7 +115,7 @@ angular.module('contactmgrApp')
                  });
          };
          $scope.getCompanies();
-         
+
          $scope.getCountries = function(){
              ContactService.getCountries()
                  .success(function(data, status, headers, config) {
@@ -131,26 +123,20 @@ angular.module('contactmgrApp')
              });
          }
          $scope.getCountries();
-         
+
          $scope.hasSelectedCompany = function(){
              return ($scope.contact.work != null && $scope.contact.work.companyId > 0);
          };
-         
+
          $scope.saveCompany = function(){
              if($scope.selectedCompany != null){
                  if($scope.selectedCompany.id >0){
-                    // Update a existing company
                      ContactService.updateCompany($scope.selectedCompany)
                      .success(function(data, status, headers, config) {
                          $scope.contact.work.company = data;
-                         //$scope.selectedCompany = $.extend(true, {}, $scope.contact.work.company);
                          $scope.selectedCompany = null;
                          $scope.getCompanies();
-                         
-                         // ensure don't highlight on previous error inputs
                          $scope.companyValidator = null;
-                         
-                         // close dialog
                          $('#companyInfoModal').modal('toggle');
                      })
                      .error(function(data, status, headers, config) {
@@ -160,51 +146,37 @@ angular.module('contactmgrApp')
                      ContactService.createCompany($scope.selectedCompany)
                          .success(function(data, status, headers, config) {
                              $scope.contact.work.company = data;
-                             //$scope.selectedCompany = $.extend(true, {}, $scope.contact.work.company);
                              $scope.selectedCompany = null;
                              $scope.contact.work.companyId = data.id;
                              $scope.getCompanies();
-                             
-                             // ensure don't highlight on previous error inputs
                              $scope.companyValidator = null;
-                             
-                             // close dialog
                              $('#companyInfoModal').modal('toggle');
                          })
                          .error(function(data, status, headers, config) {
                              $scope.companyValidator = data.errors;
-                             
+
                          });
                  }
-                
+
              }
          };
-         
+
          $scope.cancelEditCompany = function(){
         	 $scope.selectedCompany = null;
-        	 // ensure don't highlight on previous error inputs
-             $scope.companyValidator = null;
-             /*if($scope.contact.work != null && $scope.contact.work.company != null){
-                 // cancel update a company
-                 $scope.selectedCompany = $.extend(true, {}, $scope.contact.work.company);
-             } else {
-            	 // cancel create a company
-            	 $scope.selectedCompany = null;
-             }*/
-             
+        	 $scope.companyValidator = null;
              $('#companyInfoModal').modal('hide');
          };
-         
+
          $scope.openDialogCreateCompany = function(){
              $scope.selectedCompany = null;
              $('#companyInfoModal').modal('show');
          };
-         
+
          $scope.openDialogUpdateCompany = function(){
              $scope.selectedCompany = $scope.selectedCompany = $.extend(true, {}, $scope.contact.work.company);
              $('#companyInfoModal').modal('show');
          };
-         
+
          $scope.getTitleOfCompanyDialog = function(){
              if($scope.hasSelectedCompany()){
                  return 'contact-edit.work.edit-company';
@@ -221,9 +193,9 @@ angular.module('contactmgrApp')
              if (!regex.test(key)) {
                  theEvent.returnValue = false;
                  if (theEvent.preventDefault) theEvent.preventDefault();
-             }            
+             }
          };
-         
+
          $scope.getAvatar = function(){
              if($scope.contact == null){
                  $scope.contact = {photo: '../../../photos/unknown.jpg'};
@@ -231,7 +203,7 @@ angular.module('contactmgrApp')
              }
              return $scope.contact.photo;
          };
-         
+
          $scope.getLogo = function(){
              if($scope.contact == null){
                  $scope.contact = {work: { company: {logo: '../../../photos/unknown.jpg'}}};
@@ -245,7 +217,7 @@ angular.module('contactmgrApp')
              }
              return $scope.contact.work.company.logo;
          };
-         
+
          $scope.getLogoOfSelectedCompany = function(){
              if($scope.selectedCompany == null){
                  $scope.selectedCompany = {logo: '../../../photos/unknown.jpg'};
