@@ -14,13 +14,16 @@
                         <li class="image-list-upload" style="border: 1px dashed black" ng-click="uploadPhoto()">
                             Add more...
                         </li>
-                        <li ng-repeat="image in images" class="image-list-upload">
-                            <img ng-src='../../../photos/{{image}}' ng-click='selectPhoto(image)'/>
+                        <li ng-repeat="image in imageList | orderBy: '-createdAt'" class="image-list-upload">
+                            <img ng-src='api/photos/{{image.pathFull}}' ng-click='selectPhoto(image)'/>
                         </li>
                     </div>
                 </div>
                 <div class="modal-footer" style="float: left; width: 100%">
-                    <pagination total-items="totalItems" ng-change="pageChanged()" ng-model="currentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" rotate="false" num-pages="numPages"></pagination>
+                    <pagination previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
+                                total-items="totalItems" ng-change="pageChanged()" ng-model="currentPage"
+                                max-size="maxSize" class="pagination-md" boundary-links="true" rotate="false"
+                                num-pages="numPages"></pagination>
                     <button id="closeButton" type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
                 </div>
             </div>
@@ -46,13 +49,13 @@
                             ng-class="{red: validator.firstName}">
                     </div>
                     <div class="col-sm-3" class="form-group">
-                        <input ng-model="contact.middleName" type="text" 
+                        <input ng-model="contact.middleName" type="text"
                             class="form-control" style="margin-bottom: 10px"
                             placeholder="{{'contact-edit.placeholder.middle-name'|translate}} "
                             >
                     </div>
                     <div class="col-sm-3" class="form-group">
-                        <input ng-model="contact.lastName" type="text" 
+                        <input ng-model="contact.lastName" type="text"
                             class="form-control" style="margin-bottom: 10px"
                             placeholder="{{'contact-edit.placeholder.last-name'|translate}}"
                             data-toggle="tooltip"  title="{{validator.lastName}}"
@@ -82,7 +85,7 @@
                     <label class="control-label col-sm-3"
                         translate="contact-edit.general.email">Email</label>
                     <div class="col-sm-9">
-                        <input ng-model="contact.email" 
+                        <input ng-model="contact.email"
                             class="form-control" data-toggle="tooltip" title="{{validator.email}}"
                             placeholder="{{'contact-edit.placeholder.email'|translate}}"
                             ng-class="{red: validator.email}">
@@ -92,7 +95,7 @@
                     <label class="control-label col-sm-3"
                         translate="contact-edit.general.mobile">Mobile</label>
                     <div class="col-sm-9">
-                        <input ng-model="contact.mobile" type="text" 
+                        <input ng-model="contact.mobile" type="text"
                             class="form-control" data-toggle="tooltip" title="{{validator.mobile}}"
                             placeholder="{{'contact-edit.placeholder.mobile'|translate}}"
                             ng-class="{red: validator.mobile}">
@@ -102,9 +105,9 @@
                     <label class="control-label col-sm-3"
                         translate="contact-edit.general.photo">Photo</label>
                     <div class="col-sm-9">
-                        <img class="img-thumbnail" id="avatar{{contact.id}}" ng-src="{{getAvatar()}}" 
-                        ng-click = "getPhotos(&#34;avatar&#34;)" data-toggle="modal" 
-                        data-target="#imageUploadModal" style="width : 100px; height : 100px; cursor: pointer;">
+                        <img class="img-thumbnail" id="avatar{{contact.id}}" ng-src="{{getAvatar()}}"
+                        ng-click = "getPhotos(&#34;avatar&#34;)" data-toggle="modal"
+                        data-target="#imageUploadModal" style="width : 100px; height : 100px; cursor: pointer;"/>
                     </div>
                 </div>
                 <h3 translate="contact-edit.home.title-home">Home</h3>
@@ -145,7 +148,7 @@
                     <label class="control-label col-sm-3"
                         translate="contact-edit.home.zip-code">Zip Code</label>
                     <div class="col-sm-3" style="width: 100px;">
-                        <input ng-model="contact.home.address.postalCode" data-toggle="tooltip" 
+                        <input ng-model="contact.home.address.postalCode" data-toggle="tooltip"
                              title="{{validator.home.address.postalCode}}"
                              ng-class="{red: validator.home.address.postalCode}"
                              class="form-control" ng-keypress="isNumeric(event)" maxlength="5">
@@ -165,7 +168,7 @@
                     <label class="control-label col-sm-3"
                         translate="contact-edit.home.phone">Phone</label>
                     <div class="col-sm-9">
-                        <input ng-model="contact.home.phone" type="text"  data-toggle="tooltip" 
+                        <input ng-model="contact.home.phone" type="text"  data-toggle="tooltip"
                             title="{{validator.home.phone}}" ng-class="{red: validator.home.phone}"
                             class="form-control">
                     </div>
@@ -174,7 +177,7 @@
                     <label class="control-label col-sm-3"
                         translate="contact-edit.home.fax">Fax</label>
                     <div class="col-sm-9">
-                        <input ng-model="contact.home.fax" type="text"  data-toggle="tooltip" 
+                        <input ng-model="contact.home.fax" type="text"  data-toggle="tooltip"
                             title="{{validator.home.fax}}" data-toggle="tooltip" title="fax"
                             ng-class="{red: validator.home.fax}"
                             class="form-control">
@@ -186,14 +189,14 @@
                 <h3>Work</h3>
                 <hr style="border-color: black;" />
                 <div class="form-group row">
-                    <label for="inputEmail" class="control-label col-sm-3" translate="contact-edit.work.job-title">Job Title</label> 
+                    <label for="inputEmail" class="control-label col-sm-3" translate="contact-edit.work.job-title">Job Title</label>
                     <div class="col-sm-9">
                         <input ng-model="contact.work.title" type="text"
                             class="form-control" id="inputEmail">
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="inputMobile" class="control-label col-sm-3" translate="contact-edit.work.department">Department</label> 
+                    <label for="inputMobile" class="control-label col-sm-3" translate="contact-edit.work.department">Department</label>
                     <div class="col-sm-9">
                         <input ng-model="contact.work.department" type="text"
                             class="form-control" id="inputMobile">
@@ -207,14 +210,14 @@
                                  ng-options="company.id as company.name for company in companies">
                              </select>
                          </div>
-                        <div class="col-sm-3" style="margin-bottom: 10px">
-                            <button a href="" class="btn btn-default"
-                                translate="contact-edit.button.edit-company" 
+                        <div class="col-sm-3" style="margin-bottom: 10px;">
+                            <button a href="" class="btn btn-default" style = "width: 100%"
+                                translate="contact-edit.button.edit-company"
                                 ng-disabled="hasSelectedCompany() === false"
                                 ng-click="openDialogUpdateCompany()">Edit</button>
                         </div>
                         <div class="col-sm-3">
-                            <button class="btn btn-default"
+                            <button class="btn btn-default" style = "width: 100%"
                                 translate="contact-edit.button.new-company"
                                 ng-click="openDialogCreateCompany()">New</button>
                         </div>
@@ -223,8 +226,7 @@
                 <div class="form-group row">
                     <div class="col-sm-3"></div>
                     <div class="col-sm-9">
-                    <img id="logo{{contact.id}}"  ng-src="{{getLogo()}}"
-                            style="width : 70px; height : 70px; background-color: gray;" class="img-thumbnail">
+                    <img id="logo{{contact.id}}" ng-src="{{getLogo()}}" class="img-thumbnail" style="width : 100px; height : 100px; background-color: gray;"/>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -327,7 +329,7 @@
             </div>
         </div>
     </form>
-    
+
     <!-- Modal -->
     <div class="modal fade" id="companyInfoModal" role="dialog"
         aria-labelledby="companyInfoLabel" aria-hidden="true">
@@ -340,18 +342,24 @@
                         </button>
                         <h3 class="modal-title" id="companyInfoLabel" style="color: white" ng-attr-translate="{{getTitleOfCompanyDialog()}}">Edit Company</h3>
                     </div>
-
-                    <div class="modal-body row">
-                        <div class="col-md-6">
-                            <div class="form-group row">
-                                <div class="col-sm-3"></div>
-                                <div class="col-sm-9" class="thumbnail">
-                                  <img id="logo{{contact.id}}_2" ng-src="{{getLogoOfSelectedCompany()}}" 
-                                      ng-click = "getPhotos(&#34;logo&#34;)" 
-                                      data-toggle="modal" data-target="#imageUploadModal" 
-                                      style="width : 70px; height : 70px; cursor: pointer;">
+                    <div class="modal-body">
+                        <div class = "row">
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <div class="col-sm-3"></div>
+                                    <div class="col-sm-9" class="thumbnail">
+                                        <img id="logo{{contact.id}}_2" ng-src="{{getLogoOfSelectedCompany()}}"
+                                          ng-click = "getPhotos(&#34;logo&#34;)"
+                                          data-toggle="modal" data-target="#imageUploadModal"
+                                          style="width : 100px; height : 100px; cursor: pointer;"
+                                          class="img-thumbnail">
+                                    </div>
                                 </div>
                             </div>
+
+                        </div>
+                        <div class = "row">
+                        <div class="col-md-6">
                             <div class="form-group row">
                                 <label for="selectCompany" class="control-label col-sm-3" translate="contact-edit.work.company-name">Company Name</label>
                                 <div class="col-sm-9">
@@ -424,22 +432,23 @@
                                 <label for="inputZipCode" class="control-label col-sm-3"
                                     translate="contact-edit.home.zip-code">Zip Code</label>
                                 <div class="col-sm-9">
-                                   <input ng-model="selectedCompany.address.postalCode" class="form-control" 
+                                   <input ng-model="selectedCompany.address.postalCode" class="form-control"
                                        id="inputZipCode" style="width: 100px" ng-keypress="isNumeric(event)" maxlength="5"
                                        data-toggle="tooltip" title="{{companyValidator.address.postalCode}}"
                                        ng-class="{red: companyValidator.address.postalCode}">
                                 </div>
                             </div>
                             <div class="form-group row">
-                            <label for="selectCountry" class="control-label col-sm-3"
-                                translate="contact-edit.home.country">Country</label>
-                            <div class="col-sm-9">
-                                <select class="form-control" id="selectCountry"
-                                    ng-model="selectedCompany.address.country"
-                                    ng-options="c.countryCode as c.country for c in countries">
-                                 </select>
+                                <label for="selectCountry" class="control-label col-sm-3"
+                                    translate="contact-edit.home.country">Country</label>
+                                <div class="col-sm-9">
+                                    <select class="form-control" id="selectCountry"
+                                        ng-model="selectedCompany.address.country"
+                                        ng-options="c.countryCode as c.country for c in countries">
+                                    </select>
+                                </div>
                             </div>
-                </div>
+                        </div>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -456,5 +465,5 @@
             </div>
         </div>
     </div>
-    
+
 </div>

@@ -76,12 +76,13 @@ public class ContactService {
         return contactRepo.save(contact);
     }
 
+    @Transactional
     public List<Itemized> getCompanyNames() {
         return contactRepo.getCompanyNames();
     }
 
     @Transactional
-    public int deleteContacts(int... ids) {
+   public int deleteContacts(int... ids) {
         return contactRepo.deleteByIds(ids);
     }
 
@@ -107,6 +108,7 @@ public class ContactService {
         return countryRepo.findAll();
     }
 
+    
     public List<Company> getAllCompanies() {
         return companyRepo.findAll();
     }
