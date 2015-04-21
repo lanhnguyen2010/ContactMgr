@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.persistence.EntityNotFoundException;
+import vn.kms.launch.contactmgr.util.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -115,11 +115,17 @@ public class UserController {
 
     private ResponseEntity<?> saveUser(User user, Integer id) {
         try {
-            User savedContact = userService.saveUser(user, id);
-            return new ResponseEntity<>(savedContact, OK);
+            
+            User savedUser = userService.saveUser(user, id);
+            
+            return new ResponseEntity<>(savedUser, OK);
+            
         } catch (EntityNotFoundException e) {
+           
             return new ResponseEntity<>(NOT_FOUND);
+            
         } catch (ValidationException e) {
+           
             Map<String, Object> returnObj = new HashMap<>();
             returnObj.put("data", user);
             returnObj.put("errors", e.getErrors());

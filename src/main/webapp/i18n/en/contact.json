@@ -25,11 +25,20 @@
                 "company": "Company"
             }
         },
-        "company-info": {
-            "title": "",
-            "field": {
-                "": ""
-            }
+        "company-info":{
+            "Close": "Close",
+            "Company-Info": "Company Info",
+            "Name":"Name",
+            "Addr-line1":"Addr.line 1",
+            "Addr-line2":"Addr.line 2",
+            "Message":"Message",
+            "City":"City",
+            "Website":"Website",
+            "State":"State",
+            "Phone":"Phone",
+            "Zip-code":"Zip code",
+            "Fax":"Fax",
+            "Country":"Country"
         }
     }
 }

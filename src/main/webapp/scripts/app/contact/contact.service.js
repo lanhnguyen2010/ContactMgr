@@ -20,51 +20,51 @@ angular.module('contactmgrApp')
         }
         
         this.createContact = function (data) {
-        	// only send companyId to service
-        	if(data.work != null && data.work.company != null){
-        		data.work.company = null;
-        	}
-        	
-        	var data1 = this.replaceEmptyDataWithNullOfContact(data);
+           // only send companyId to service
+           if(data.work != null && data.work.company != null){
+           	data.work.company = null;
+           }
+           
+           var data1 = this.replaceEmptyDataWithNullOfContact(data);
             return $http.post('/api/contacts', data1);
         };
         
         this.updateContact = function (id,data) {
-        	// only send companyId to service
-        	if(data.work != null && data.work.company != null){
-        		data.work.company = null;
-        	}
-        	var data1 = this.replaceEmptyDataWithNullOfContact(data);
+           // only send companyId to service
+           if(data.work != null && data.work.company != null){
+           	data.work.company = null;
+           }
+           var data1 = this.replaceEmptyDataWithNullOfContact(data);
             return $http.put('/api/contacts/' + id, data1);
         };
         
         this.replaceEmptyDataWithNullOfContact = function(contact){
-        	if(contact.email == ''){
-        		contact.email = null;
-        	}
-        	if(contact.mobile == ''){
-        		contact.mobile = null;
-        	}
-        	if(contact.home != null){
-        		if(contact.home.address != null){
-        			if(contact.home.address.postalCode == ''){
-                		contact.home.address.postalCode = null;
-                	}
-                	if(contact.home.address.country == ''){
-                		contact.home.address.country = null;
-                	}
-        			
-        		}
-            	if(contact.home.phone == ''){
-            		contact.home.phone = null;
-            	}
-            	
-            	if(contact.home.fax == ''){
-            		contact.home.fax = null;
-            	}
-        	}
-        	
-        	return contact;
+           if(contact.email == ''){
+           	contact.email = null;
+           }
+           if(contact.mobile == ''){
+           	contact.mobile = null;
+           }
+           if(contact.home != null){
+           	if(contact.home.address != null){
+               if(contact.home.address.postalCode == ''){
+                   	contact.home.address.postalCode = null;
+                   }
+                   if(contact.home.address.country == ''){
+                   	contact.home.address.country = null;
+                   }
+               
+           	}
+               if(contact.home.phone == ''){
+               	contact.home.phone = null;
+               }
+               
+               if(contact.home.fax == ''){
+               	contact.home.fax = null;
+               }
+           }
+           
+           return contact;
         };
         
         this.getCountries = function() {
@@ -75,7 +75,7 @@ angular.module('contactmgrApp')
             return $http.get("/api/contacts/" + id);
         };
         this.updateCompany = function(company){
-        	this.replaceEmptyDataWithNullOfCompany(company);
+           this.replaceEmptyDataWithNullOfCompany(company);
             var url = '/api/companies/' + company.id;
             console.log('Update company: ' + url)
             return $http.put(url, company);
@@ -87,7 +87,7 @@ angular.module('contactmgrApp')
         };        
         
         this.uploadPhoto = function(fileUpload) {
-        	var config = {headers: {'Content-Type': undefined}};
+           var config = {headers: {'Content-Type': undefined}};
             return $http.post("/api/photos/upload/", fileUpload, config);
         };
         
@@ -102,7 +102,7 @@ angular.module('contactmgrApp')
             
             if(company.address != null){
                 if(company.address.postalCode == ''){
-                	company.address.postalCode = null;
+                   company.address.postalCode = null;
                 }
             }
         }

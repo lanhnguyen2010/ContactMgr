@@ -139,8 +139,11 @@ Hide ng-cloak on page load, https://docs.angularjs.org/api/ng/directive/ngCloak
   vertical-align: middle;
   background: white;
 }
+.model-company-dialog{
+    width:800px;
+}
 #size-dialog{
-	font-size: 13px;
+    font-size: 13px;
 }
 
 #mid-width .multiselect-container {
@@ -204,3 +207,4 @@ Hide ng-cloak on page load, https://docs.angularjs.org/api/ng/directive/ngCloak
     vertical-align: center;
     width: 95%;
 }
+

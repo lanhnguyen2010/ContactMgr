@@ -31,6 +31,7 @@ angular.module('contactmgrApp').controller(
                     "updatedBy" : "",
                     "username" : "",
                     "password" : "",
+                    "passwordConfirm" : "",
                     "firstname" : "",
                     "lastname" : "",
                     "email" : "",
@@ -38,10 +39,14 @@ angular.module('contactmgrApp').controller(
                     "expiredDate" : "",
                     "active" : false,
                     "language" : "",
-                    "assignedCompanies" : ''
+
                 };
                 $scope.confirmPassword = '';
                 $scope.checkboxSelection = '1';
+            }
+            
+            $scope.confirmPass=function(){
+                return $scope.user.password === $scope.user.passwordConfirm;
             }
             var PAGE_SIZE = 10;
             $scope.users = [];
@@ -49,6 +54,7 @@ angular.module('contactmgrApp').controller(
             $scope.searchClicked = false;
             $scope.currentPage = 1;
             $scope.selectedCompanies=[];
+
             $scope.companysetting={
                     enableSearch: true,
                     scrollable:true,
@@ -56,6 +62,7 @@ angular.module('contactmgrApp').controller(
                     buttonClasses:'form-control col-md-9'};
             $scope.selectcompaniestext={
                     buttonDefaultText: 'Select Assigned Companies'};
+            
             $scope.searchUsers = function() {
                 if ($scope.isLoading) {
                     return;
@@ -64,6 +71,7 @@ angular.module('contactmgrApp').controller(
                 $scope.searchClicked = true;
                 $scope.isLoading = true;
                 $scope.criteria.assignedCompanies="";
+
                 for (var i = 0; i < $scope.selectedCompanies.length; i++){
                     if (i != 0) $scope.criteria.assignedCompanies += ",";
                     $scope.criteria.assignedCompanies += $scope.selectedCompanies[i]["id"];
@@ -72,7 +80,6 @@ angular.module('contactmgrApp').controller(
                 $scope.criteria.createdTo = $filter('date')($scope.criteria.createdTo,'yyyy-MM-dd');
                 angular.copy($scope.criteria,$scope.actualCriteria);
                 $scope.usersTableParams.reload();
-                
             }
 
             $scope.usersTableParams = new ngTableParams({
@@ -98,7 +105,7 @@ angular.module('contactmgrApp').controller(
                         $scope.isLoading = false;
                     })
                     .error(function (data, status) {
-                        console.log("Error", status);
+                                console.log("Error", status);
                     });
 
                     $scope.checkboxes = {
@@ -158,9 +165,9 @@ angular.module('contactmgrApp').controller(
 
             // watch selected users
             $scope.$watch('users|filter:{checked:true}', function(results) {
-            	if (results == null){
-            		return;
-            	}
+                if (results == null){
+                    return;
+                }
                 $scope.selectedIds = results.map(function(user) {
                     return user.id;
                 });
@@ -270,5 +277,6 @@ angular.module('contactmgrApp').controller(
                 $scope.user.assignedCompanies = $scope.user.assignedCompanies + "]";
                 console.log($scope.user.assignedCompanies);
             }
+              
             init();
 })
