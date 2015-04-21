@@ -16,7 +16,8 @@ import vn.kms.launch.contactmgr.service.validator.PasswordsNotEqual;
 
 @PasswordsNotEqual(
         passwordFieldName = "password",
-        passwordVerificationFieldName = "confirmPassword"
+        passwordVerificationFieldName = "confirmPassword",
+        message = "{validation.ConfirmPassWord.message}"
 )
 
 @Entity

@@ -6,6 +6,7 @@ import javax.validation.ConstraintValidatorContext;
 
 public class ValidatorUtil {
 	
+	@SuppressWarnings("deprecation")
 	public static void addValidationError(String field, ConstraintValidatorContext context) {
         context.buildConstraintViolationWithTemplate(context.getDefaultConstraintMessageTemplate())
                 .addNode(field)
