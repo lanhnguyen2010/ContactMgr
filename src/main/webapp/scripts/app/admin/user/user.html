@@ -204,7 +204,9 @@
                                                    translate="user.field.email">Email</label>
 
                                             <div class="col-sm-7">
-                                                <input type="text" class="form-control" name="email"
+                                                <input type="text" class="form-control" name="email" ng-keydown="validator.email = null"
+                                                    ng-class="{red: validator.email}" data-toggle="tooltip" 
+                                                    title="{{validator.email}}"
                                                        ng-model="user.email" placeholder="example@xyz">
                                             </div>
                                         </div>
@@ -235,7 +237,9 @@
                                                    translate="user.field.first-name">First Name</label>
 
                                             <div class="col-sm-7">
-                                                <input type="text" class="form-control" name="first_name"
+                                                <input type="text" class="form-control" name="first_name" ng-keydown="validator.firstname = null"
+                                                    ng-class="{red: validator.firstname}" data-toggle="tooltip" 
+                                                    title="{{validator.firstname}}"
                                                        ng-model="user.firstname">
                                             </div>
                                         </div>
@@ -244,7 +248,9 @@
                                                    translate="user.field.last-name">Last Name</label>
 
                                             <div class="col-sm-7">
-                                                <input type="text" class="form-control" name="last_name"
+                                                <input type="text" class="form-control" name="last_name" ng-keydown="validator.lastname = null"
+                                                    ng-class="{red: validator.lastname}" data-toggle="tooltip" 
+                                                    title="{{validator.lastname}}"
                                                        ng-model="user.lastname">
                                             </div>
                                         </div>
