@@ -23,7 +23,6 @@ public class PasswordsNotEqualValidator implements ConstraintValidator<Passwords
             String passwordVerification = (String) ValidatorUtil.getFieldValue(value, passwordVerificationFieldName);
     
             if (passwordsAreNotEqual(password, passwordVerification)) {
-            	ValidatorUtil.addValidationError(passwordFieldName, context);
                 ValidatorUtil.addValidationError(passwordVerificationFieldName, context);
                 return false;
             }

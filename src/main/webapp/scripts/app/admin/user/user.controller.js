@@ -41,7 +41,6 @@ angular.module('contactmgrApp').controller(
                     "language" : "",
                     "assignedCompanies" : []
                 };
-                $scope.confirmPassword = '';
                 $scope.checkboxSelection = '1';
                 $scope.selectedCompanies = [];
                 $scope.validator = null;
@@ -206,12 +205,12 @@ angular.module('contactmgrApp').controller(
                 $scope.setAssignedCompanies();
                 UsersService.saveUser($scope.user).success(
                         function(data, status, headers, config) {
-                            window.alert("Save user successfull!");
+                            window.alert("Save user successful!");
                             $scope.initUser();
                         }).error(
                         function(data, status, header, config) {
                             $scope.validator = data.errors;
-                            window.alert("Can not save!");
+                            window.alert("Cannot save!");
                         });
 
             };

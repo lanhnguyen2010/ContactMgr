@@ -8,7 +8,7 @@ public class ValidatorUtil {
 	
 	public static void addValidationError(String field, ConstraintValidatorContext context) {
         context.buildConstraintViolationWithTemplate(context.getDefaultConstraintMessageTemplate())
-                .addNode(field)
+                .addPropertyNode(field)
                 .addConstraintViolation();
     }
 	
