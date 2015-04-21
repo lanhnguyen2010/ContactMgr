@@ -4,7 +4,7 @@ angular.module('contactmgrApp')
     .controller('EditContactController', function($scope, $stateParams, ContactService) {
         var contactId = $stateParams.id;
 
-        $scope.imageList = ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg'];
+        $scope.imageList = [];
 
         $scope.uploadPhoto = function() {
             document.getElementById('imageUpload').click();
@@ -12,9 +12,9 @@ angular.module('contactmgrApp')
 
         $scope.selectPhoto = function(imageURL) {
             if(typePhoto == 'avatar'){
-                $scope.contact.photo = imageURL;
+                $scope.contact.photo = "/api/photos/" + imageURL.pathFull;
             } else {
-                $scope.selectedCompany.logo = imageURL;
+                $scope.selectedCompany.logo = "/api/photos/" + imageURL.pathFull;
             }
             document.getElementById('closeButton').click();
         };
@@ -26,16 +26,15 @@ angular.module('contactmgrApp')
 
             var file = document.getElementById(imageUpload).files[0];
             var formData = new FormData();
-            var aImage;
             formData.append('file', file);
 
-            ContactService.uploadPhoto(contactId, formData)
+            ContactService.uploadPhoto(formData)
                 .success(function(data, status) {
-                    aImage = data;
+                	$scope.selectPhoto(data);
                 })
                 .error(function(data, status) {
                 });
-            $scope.selectPhoto(aImage);
+            
         };
 
         var typePhoto = 'avatar';
@@ -47,21 +46,20 @@ angular.module('contactmgrApp')
             $scope.pageChanged();
         }
 
-        $scope.images;
         $scope.pageChanged = function() {
-            // TODO: this is for hard-code test
-            $scope.images = $scope.imageList.slice( ($scope.currentPage - 1) * $scope.maxSize , $scope.currentPage * $scope.maxSize);
-            /*
-            var pageIndex = params.page();
-            var pageSize = params.count();
-            ContactService.getPhotos(contactId, pageIndex, pageSize)
+        	console.log($scope.currentPage);
+        	console.log($scope.maxSize);
+            ContactService.getPhotos($scope.currentPage, $scope.maxSize)
                 .success(function(data, status) {
-                    params.total(data.totalItems);
-                    $scope.images = data.items;
-                    $defer.resolve(data.items);
+                    $scope.totalItems = data['totalItems'];
+                    $scope.imageList = data['items'];
+                    console.log("success");
+                })
+                .error(function(data, status) {
+                    console.log("error");
                 });
-            */
         };
+        
         $scope.contact;
         $scope.init = function() {
             ContactService.getViewContact(contactId).success(
@@ -231,7 +229,7 @@ angular.module('contactmgrApp')
                  $scope.contact = {photo: '../../../photos/unknown.jpg'};
                  return "../../../photos/unknown.jpg";
              }
-             return "../../../photos/" + $scope.contact.photo;
+             return $scope.contact.photo;
          };
          
          $scope.getLogo = function(){
@@ -245,7 +243,7 @@ angular.module('contactmgrApp')
                  $scope.contact.work.company = {logo: '../../../photos/unknown.jpg'};
                  return "../../../photos/unknown.jpg";
              }
-             return "../../../photos/" + $scope.contact.work.company.logo;
+             return $scope.contact.work.company.logo;
          };
          
          $scope.getLogoOfSelectedCompany = function(){
@@ -253,6 +251,6 @@ angular.module('contactmgrApp')
                  $scope.selectedCompany = {logo: '../../../photos/unknown.jpg'};
                  return "../../../photos/unknown.jpg";
              }
-             return "../../../photos/" + $scope.selectedCompany.logo;
+             return $scope.selectedCompany.logo;
          };
     });

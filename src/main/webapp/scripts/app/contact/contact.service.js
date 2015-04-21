@@ -72,7 +72,7 @@ angular.module('contactmgrApp')
         };
 
         this.getViewContact = function(id) {
-            return $http.get("/api/contacts/"+id);
+            return $http.get("/api/contacts/" + id);
         };
         this.updateCompany = function(company){
         	this.replaceEmptyDataWithNullOfCompany(company);
@@ -84,8 +84,11 @@ angular.module('contactmgrApp')
         this.createCompany = function(company){
             this.replaceEmptyDataWithNullOfCompany(company);
             return $http.post('/api/companies', company);
-        };        this.uploadPhoto = function(contactId, fileUpload) {
-            return $http.post("/api/photos/"+contactId, fileUpload);
+        };        
+        
+        this.uploadPhoto = function(fileUpload) {
+        	var config = {headers: {'Content-Type': undefined}, transformRequest: angular.identity};
+            return $http.post("/api/photos/upload/", fileUpload, config);
         };
         
         this.replaceEmptyDataWithNullOfCompany = function(company){
@@ -104,8 +107,8 @@ angular.module('contactmgrApp')
             }
         }
 
-        this.getPhotos = function(contactId, pageIndex, pageSize) {
-            return $http.get("/api/photos/"+contactId, pageIndex, pageSize);
+        this.getPhotos = function(pageIndex, pageSize) {
+            return $http.get("/api/photos/?pageIndex=" + pageIndex + "&pageSize=" + pageSize);
         };
         
         this.getCompanieById = function(id) {
