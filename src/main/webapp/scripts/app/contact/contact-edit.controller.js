@@ -48,7 +48,7 @@ angular.module('contactmgrApp')
         }
 
         $scope.pageChanged = function() {
-            ContactService.getPhotos($scope.currentPage, $scope.maxSize)
+            ContactService.getPhotos($scope.currentPage,$scope.maxSize)
                 .success(function(data, status) {
                     $scope.totalItems = data['totalItems'];
                     $scope.imageList = data['items'];
