@@ -62,11 +62,11 @@ public class PhotoService {
         int toIndex = page * pageSize;
         
         if (toIndex > totalPhotos) {
-            //OutOfIndex will be returned all photos.
-            if (fromIndex >= totalPhotos){
-                fromIndex = 1;
-                toIndex = totalPhotos;
-            }else{
+            //if OutOfIndex will be returned null
+            if (fromIndex > totalPhotos){
+            	SearchResult<Photo> returnPhotos = new SearchResult<Photo>(null,null, totalPhotos);
+                return returnPhotos;
+            }else {
                 toIndex = totalPhotos;
             }
         }
