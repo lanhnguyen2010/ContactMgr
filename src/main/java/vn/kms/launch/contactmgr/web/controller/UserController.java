@@ -50,8 +50,7 @@ public class UserController {
 
 
     @RequestMapping(value = "/search", method = POST)
-    public SearchResult<User> searchUser(
-        @RequestBody UserSearchCriteria criteria) {
+    public SearchResult<User> searchUser( @RequestBody UserSearchCriteria criteria) {
         return userService.searchUsers(criteria);
     }
 

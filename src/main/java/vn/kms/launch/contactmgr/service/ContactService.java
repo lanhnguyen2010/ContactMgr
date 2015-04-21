@@ -30,16 +30,16 @@ public class ContactService {
     @Autowired
     private ContactRepository contactRepo;
 
-    //@Autowired
+    @Autowired
     private CompanyRepository companyRepo;
 
     @Autowired
     private CountryRepository countryRepo;
 
-   // @Autowired
+    @Autowired
     private PhotoRepository photoRepo;
 
-   // @Autowired
+    @Autowired
     private Validator validator;
 
     public Contact getContact(int id) {
@@ -76,6 +76,7 @@ public class ContactService {
         return contactRepo.save(contact);
     }
 
+    @Transactional
     public List<Itemized> getCompanyNames() {
         return contactRepo.getCompanyNames();
     }
@@ -107,6 +108,7 @@ public class ContactService {
         return countryRepo.findAll();
     }
 
+    
     public List<Company> getAllCompanies() {
         return companyRepo.findAll();
     }
