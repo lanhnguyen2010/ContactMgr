@@ -87,7 +87,7 @@ angular.module('contactmgrApp')
         };        
         
         this.uploadPhoto = function(fileUpload) {
-        	var config = {headers: {'Content-Type': undefined}, transformRequest: angular.identity};
+        	var config = {headers: {'Content-Type': undefined}};
             return $http.post("/api/photos/upload/", fileUpload, config);
         };
         

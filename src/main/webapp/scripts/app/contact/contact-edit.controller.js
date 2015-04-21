@@ -33,6 +33,7 @@ angular.module('contactmgrApp')
                 	$scope.selectPhoto(data);
                 })
                 .error(function(data, status) {
+                	console.log(status);
                 });
             
         };
@@ -47,16 +48,13 @@ angular.module('contactmgrApp')
         }
 
         $scope.pageChanged = function() {
-        	console.log($scope.currentPage);
-        	console.log($scope.maxSize);
             ContactService.getPhotos($scope.currentPage, $scope.maxSize)
                 .success(function(data, status) {
                     $scope.totalItems = data['totalItems'];
                     $scope.imageList = data['items'];
-                    console.log("success");
                 })
                 .error(function(data, status) {
-                    console.log("error");
+                    console.log(status);
                 });
         };
         
@@ -80,7 +78,6 @@ angular.module('contactmgrApp')
             for(var c in $scope.companies){
                 if($scope.companies[c].id === $scope.contact.work.companyId){
                     $scope.contact.work.company = $scope.companies[c];
-                    //$scope.selectedCompany = $.extend(true, {}, $scope.companies[c]);
                     break;
                 }
             }
@@ -95,23 +92,18 @@ angular.module('contactmgrApp')
                 ContactService
                         .createContact(copyContact)
                         .success(
-                                function(data, status, headers,
-                                        config) {
-                                    // the contact is saved
+                                function(data, status, headers, config) {
                                     window.location = '#contact';
                                 }).error(function(data, status, headers,config) {
-                                    // has error
                                      $scope.validator = data.errors;
                                 });
             } else {
                 ContactService.updateContact($scope.contact.id, copyContact)
                     .success(
                         function(data, status, headers, config) {
-                            // the contact is saved
                             window.location = '#contact';
                         }).error(
                         function(data, status, headers, config) {
-                            // has error
                             $scope.validator = data.errors;
                         });
             }
@@ -139,18 +131,12 @@ angular.module('contactmgrApp')
          $scope.saveCompany = function(){
              if($scope.selectedCompany != null){
                  if($scope.selectedCompany.id >0){
-                    // Update a existing company
                      ContactService.updateCompany($scope.selectedCompany)
                      .success(function(data, status, headers, config) {
                          $scope.contact.work.company = data;
-                         //$scope.selectedCompany = $.extend(true, {}, $scope.contact.work.company);
                          $scope.selectedCompany = null;
                          $scope.getCompanies();
-                         
-                         // ensure don't highlight on previous error inputs
                          $scope.companyValidator = null;
-                         
-                         // close dialog
                          $('#companyInfoModal').modal('toggle');
                      })
                      .error(function(data, status, headers, config) {
@@ -160,15 +146,10 @@ angular.module('contactmgrApp')
                      ContactService.createCompany($scope.selectedCompany)
                          .success(function(data, status, headers, config) {
                              $scope.contact.work.company = data;
-                             //$scope.selectedCompany = $.extend(true, {}, $scope.contact.work.company);
                              $scope.selectedCompany = null;
                              $scope.contact.work.companyId = data.id;
                              $scope.getCompanies();
-                             
-                             // ensure don't highlight on previous error inputs
                              $scope.companyValidator = null;
-                             
-                             // close dialog
                              $('#companyInfoModal').modal('toggle');
                          })
                          .error(function(data, status, headers, config) {
@@ -182,14 +163,7 @@ angular.module('contactmgrApp')
          
          $scope.cancelEditCompany = function(){
         	 $scope.selectedCompany = null;
-             /*if($scope.contact.work != null && $scope.contact.work.company != null){
-                 // cancel update a company
-                 $scope.selectedCompany = $.extend(true, {}, $scope.contact.work.company);
-             } else {
-            	 // cancel create a company
-            	 $scope.selectedCompany = null;
-             }*/
-             
+        	 $scope.companyValidator = null;
              $('#companyInfoModal').modal('hide');
          };
          
