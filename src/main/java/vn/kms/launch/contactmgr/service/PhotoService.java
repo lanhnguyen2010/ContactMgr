@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,8 +41,8 @@ public class PhotoService {
     public Photo uploadImage( InputStream in,
                               String originalFilename,
                               String contentType) throws Exception {
-    	
-    	String uuid = UUID.randomUUID().toString();
+         
+         String uuid = UUID.randomUUID().toString();
         Photo res = new Photo();
         
         res.setFileName(originalFilename);
@@ -61,14 +62,18 @@ public class PhotoService {
         int fromIndex = (page - 1) * pageSize + 1;
         int toIndex = page * pageSize;
         
-        if (toIndex > totalPhotos) {
-            //if OutOfIndex will be returned null
-            if (fromIndex > totalPhotos){
-            	SearchResult<Photo> returnPhotos = new SearchResult<Photo>(null,null, totalPhotos);
-                return returnPhotos;
-            }else {
-                toIndex = totalPhotos;
-            }
+        if(fromIndex < 1) {
+             SearchResult<Photo> returnPhotos = new SearchResult<Photo>(null,null, totalPhotos);
+            return returnPhotos;
+        }else {
+            if (toIndex > totalPhotos) {
+                 if (fromIndex > totalPhotos) {
+                     SearchResult<Photo> returnPhotos = new SearchResult<Photo>(null,null, totalPhotos);
+                     return returnPhotos;
+                 }else {
+                     toIndex = totalPhotos;
+                 }
+             }
         }
 
         List<Photo> unsortedPhotos = result.subList(fromIndex - 1, toIndex);

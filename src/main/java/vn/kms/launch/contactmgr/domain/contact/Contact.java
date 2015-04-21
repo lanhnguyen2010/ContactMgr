@@ -19,7 +19,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Contact extends vn.kms.launch.contactmgr.domain.Entity {
     private static final long serialVersionUID = 1L;
 
-    @Size(max = 150, message = "{validation.size-150.message}")
+    @Size(max = 152, message = "{validation.size-152.message}")
     @NotBlank(message = "{validation.not-empty.message}")
     @Column(name = "DISPLAY_NAME")
     private String displayName;
