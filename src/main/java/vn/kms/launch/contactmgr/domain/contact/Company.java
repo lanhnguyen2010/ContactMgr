@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -37,6 +38,7 @@ public class Company extends vn.kms.launch.contactmgr.domain.Entity {
     private String fax;
 
     @Embedded
+    @Valid
     private Address address;
 
     public String getPhone() {

@@ -19,7 +19,7 @@ import vn.kms.launch.contactmgr.domain.contact.ContactSearchCriteria;
 import vn.kms.launch.contactmgr.domain.contact.Country;
 import vn.kms.launch.contactmgr.domain.contact.CountryRepository;
 import vn.kms.launch.contactmgr.domain.contact.Work;
-import vn.kms.launch.contactmgr.repository.PhotoRepository;
+import vn.kms.launch.contactmgr.domain.image.PhotoRepository;
 import vn.kms.launch.contactmgr.util.EntityNotFoundException;
 import vn.kms.launch.contactmgr.util.SearchResult;
 import vn.kms.launch.contactmgr.util.ValidationException;
@@ -76,12 +76,13 @@ public class ContactService {
         return contactRepo.save(contact);
     }
 
+    @Transactional
     public List<Itemized> getCompanyNames() {
         return contactRepo.getCompanyNames();
     }
 
     @Transactional
-    public int deleteContacts(int... ids) {
+   public int deleteContacts(int... ids) {
         return contactRepo.deleteByIds(ids);
     }
 
@@ -96,10 +97,18 @@ public class ContactService {
         }
     }
 
+    public void validateCompany(Company company) throws ValidationException {
+        Set<ConstraintViolation<Company>> violations = validator.validate(company);
+        if (!violations.isEmpty()) {
+            throw new ValidationException(violations.toArray(new ConstraintViolation[0]));
+        }
+    }
+    
     public List<Country> getCountries() {
         return countryRepo.findAll();
     }
 
+    
     public List<Company> getAllCompanies() {
         return companyRepo.findAll();
     }
@@ -107,6 +116,7 @@ public class ContactService {
     @Transactional
     public Company saveCompany(Company company, int id) {
         if (company != null) {
+            validateCompany(company);
             if (id == 0) {
                 // create a new company
                 return companyRepo.save(company);

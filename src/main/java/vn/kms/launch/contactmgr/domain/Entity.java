@@ -23,14 +23,14 @@ public class Entity implements Serializable {
     @Column(name = "ID")
     private Integer id;
 
-    @DateTimeFormat(pattern = "yyyy-mm-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "CREATED_AT")
     private Date createdAt;
 
     @Column(name = "CREATED_BY")
     private String createdBy;
 
-    @DateTimeFormat(pattern = "yyyy-mm-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "UPDATED_AT")
     private Date updatedAt;
 
