@@ -10,7 +10,9 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+
 
 @Entity
 @Table(name = "USERS")
@@ -38,14 +40,16 @@ public class User extends vn.kms.launch.contactmgr.domain.Entity {
     private String lastname;
 
     @Size(max = 255, message = "{validation.size-255.message}")
-    @Email(message = "{validation.email.message}")
-    @Column(name = "EMAIL")
+//    @Email(message = "{validation.email.message}")
+    @Pattern(regexp ="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "{validation.email.message}")
     private String email;
 
     @Column(name = "ROLE")
     private String role;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+    //"(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((19|20)\\d\\d)"
+//    @Pattern(regexp = "^\\d{4}\\/(0?[1-9]|1[012])\\/(0?[1-9]|[12][0-9]|3[01])$", message = "{validation.expiredDate.message}")
     @Column(name = "EXPIRED_DATE")
     private Date expiredDate;
 

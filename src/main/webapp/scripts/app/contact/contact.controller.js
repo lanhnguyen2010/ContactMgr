@@ -44,6 +44,7 @@ angular.module('contactmgrApp')
                 }
                 if($scope.firstPageLoad){
                     $scope.actualCriteria.pageIndex = 1;
+                    params.page(1);
                      $scope.firstPageLoad = false;
                 }else{
                      $scope.actualCriteria.pageIndex = params.page();
