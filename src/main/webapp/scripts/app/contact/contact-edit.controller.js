@@ -168,11 +168,13 @@ angular.module('contactmgrApp')
          };
 
          $scope.openDialogCreateCompany = function(){
+        	 $scope.companyValidator = null;
              $scope.selectedCompany = null;
              $('#companyInfoModal').modal('show');
          };
 
          $scope.openDialogUpdateCompany = function(){
+        	 $scope.companyValidator = null;
              $scope.selectedCompany = $scope.selectedCompany = $.extend(true, {}, $scope.contact.work.company);
              $('#companyInfoModal').modal('show');
          };
