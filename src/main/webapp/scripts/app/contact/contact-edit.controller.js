@@ -182,6 +182,8 @@ angular.module('contactmgrApp')
          
          $scope.cancelEditCompany = function(){
         	 $scope.selectedCompany = null;
+        	 // ensure don't highlight on previous error inputs
+             $scope.companyValidator = null;
              /*if($scope.contact.work != null && $scope.contact.work.company != null){
                  // cancel update a company
                  $scope.selectedCompany = $.extend(true, {}, $scope.contact.work.company);
