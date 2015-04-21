@@ -30,16 +30,16 @@ public class ContactService {
     @Autowired
     private ContactRepository contactRepo;
 
-    @Autowired
+    //@Autowired
     private CompanyRepository companyRepo;
 
     @Autowired
     private CountryRepository countryRepo;
 
-    @Autowired
+   // @Autowired
     private PhotoRepository photoRepo;
 
-    @Autowired
+   // @Autowired
     private Validator validator;
 
     public Contact getContact(int id) {
@@ -81,7 +81,7 @@ public class ContactService {
     }
 
     @Transactional
-    public int deleteContacts(int... ids) {
+   public int deleteContacts(int... ids) {
         return contactRepo.deleteByIds(ids);
     }
 
