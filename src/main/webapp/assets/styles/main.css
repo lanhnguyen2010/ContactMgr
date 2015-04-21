@@ -138,6 +138,7 @@ Hide ng-cloak on page load, https://docs.angularjs.org/api/ng/directive/ngCloak
   display: inline-block;
   text-align: left;
   vertical-align: middle;
+  width:800px;
 }
 #size-dialog{
 	font-size: 13px;
@@ -155,3 +156,4 @@ Hide ng-cloak on page load, https://docs.angularjs.org/api/ng/directive/ngCloak
 .ng-valid.ng-dirty {
     border-color: green;
 }
+
