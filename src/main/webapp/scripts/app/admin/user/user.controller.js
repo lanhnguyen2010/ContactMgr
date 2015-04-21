@@ -39,11 +39,12 @@ angular.module('contactmgrApp').controller(
                     "expiredDate" : "",
                     "active" : false,
                     "language" : "",
-                    "assignedCompanies" : ''
+                    "assignedCompanies" : []
                 };
                 $scope.confirmPassword = '';
                 $scope.checkboxSelection = '1';
                 $scope.selectedCompanies = [];
+                $scope.validator = null;
             }
             var PAGE_SIZE = 10;
             $scope.users = [];
@@ -193,17 +194,14 @@ angular.module('contactmgrApp').controller(
                 UsersService.getCompanies().success(function(data, status) {
                     $scope.assignedcompanies = data;
                 }).error(function(data, status) {
-                    console.log("Error get companies", status);
                 });
             }
             // save user
             $scope.saveUser = function() {
                 if ($scope.checkboxSelection == "1") {
                     $scope.user.active = true;
-                    console.log("value active true");
                 } else {
                     $scope.user.active = false;
-                    console.log("value active false");
                 }
                 $scope.setAssignedCompanies();
                 UsersService.saveUser($scope.user).success(
@@ -212,7 +210,6 @@ angular.module('contactmgrApp').controller(
                             $scope.initUser();
                         }).error(
                         function(data, status, header, config) {
-                            console.log("Error: " + status);
                             $scope.validator = data.errors;
                             window.alert("Can not save!");
                         });
@@ -231,11 +228,6 @@ angular.module('contactmgrApp').controller(
                 }
             };
             $scope.minDate = new Date();
-            $scope.toggleMin = function() {
-                $scope.minDate = $scope.minDate ? null : new Date();
-            };
-            $scope.toggleMin();
-
             $scope.openCalendar = function($event, isTo) {
                 $event.preventDefault();
                 $event.stopPropagation();
@@ -260,30 +252,21 @@ angular.module('contactmgrApp').controller(
                 startingDay : 1
             };
             $scope.setAssignedCompanies = function(){
-                $scope.user.assignedCompanies = "[";
                 for (var i = 0; i < $scope.selectedCompanies.length; i++){
-                    $scope.user.assignedCompanies = $scope.user.assignedCompanies + parseInt($scope.selectedCompanies[i]["id"]);
-                    if (i < $scope.selectedCompanies.length - 1) {
-                        $scope.user.assignedCompanies = $scope.user.assignedCompanies + ", ";
-                    }
+                    $scope.user.assignedCompanies = $scope.user.assignedCompanies.push(selectedCompanies[i]["id"]);
                 }
-                $scope.user.assignedCompanies = $scope.user.assignedCompanies + "]";
-                console.log($scope.user.assignedCompanies);
             }
          // set list companies that user are managing into interface
             $scope.getCompaniesToDisplayUI = function() {
                 $scope.selectedCompanies = [];
                 if ($scope.user.assignedCompanies != null) {
-                    var listCompanies = $scope.user.assignedCompanies
-                            .split(",");
-                    listCompanies.forEach(function(entry) {
+                    console.log($scope.user.assignedCompanies.length);
+                    $scope.user.assignedCompanies.forEach(function(entry) {
                         var singleObj = {}
                         singleObj['id'] = entry;
                         $scope.selectedCompanies.push(singleObj);
                     });
                 }
-
             }
-
             init();
 })

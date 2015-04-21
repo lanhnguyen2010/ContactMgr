@@ -171,7 +171,7 @@
                                                    translate="user.field.username">Username</label>
 
                                             <div class="col-sm-7">
-                                                <input type="text" class="form-control" name="username"
+                                                <input type="text" class="form-control" name="username" ng-keydown="validator.username = null"
                                                     ng-class="{red: validator.username}" data-toggle="tooltip" 
                                                     title="{{validator.username}}"
                                                     ng-model="user.username">
@@ -182,7 +182,7 @@
                                                    translate="user.field.pass">New Password</label>
 
                                             <div class="col-sm-7">
-                                                <input type="password" class="form-control" name="password"
+                                                <input type="password" class="form-control" name="password" ng-keydown="validator.password = null"
                                                     ng-model="user.password" ng-class="{red: validator.password}" data-toggle="tooltip" 
                                                     title="{{validator.password}}">
                                             </div>
@@ -194,7 +194,9 @@
 
                                             <div class="col-sm-7">
                                                 <input type="password" class="form-control"
-                                                       name="confirm-password" ng-model="user.confirmPassword">
+                                                       name="confirm-password" ng-model="user.confirmPassword" ng-keydown="validator.confirmPassword = null"
+                                                       ng-class="{red: validator.confirmPassword}" data-toggle="tooltip" 
+                                                    title="{{validator.confirmPassword}}">
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -203,7 +205,7 @@
 
                                             <div class="col-sm-7">
                                                 <input type="text" class="form-control" name="email"
-                                                       ng-model="user.email">
+                                                       ng-model="user.email" placeholder="example@xyz">
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -252,7 +254,7 @@
                                             <div class="col-sm-7">
                                                 <div ng-dropdown-multiselect="" options="assignedcompanies"
                                                     selected-model="selectedCompanies" checkboxes="true"
-                                                    extra-settings="companysetting" translation-texts="selectcompaniestext"></div>
+                                                    extra-settings="companysetting" translation-texts=""></div>
                                             </div>
                                         </div>
                                         <div class="form-group">
