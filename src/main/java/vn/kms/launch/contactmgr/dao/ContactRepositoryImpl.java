@@ -1,21 +1,23 @@
 package vn.kms.launch.contactmgr.dao;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
+
 import vn.kms.launch.contactmgr.domain.Item;
 import vn.kms.launch.contactmgr.domain.Itemized;
 import vn.kms.launch.contactmgr.domain.contact.Contact;
 import vn.kms.launch.contactmgr.domain.contact.ContactRepositoryCustom;
 import vn.kms.launch.contactmgr.domain.contact.ContactSearchCriteria;
 import vn.kms.launch.contactmgr.util.SearchResult;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Repository
 public class ContactRepositoryImpl implements ContactRepositoryCustom {

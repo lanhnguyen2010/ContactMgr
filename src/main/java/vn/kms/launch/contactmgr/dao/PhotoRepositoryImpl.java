@@ -31,15 +31,16 @@ public class PhotoRepositoryImpl implements PhotoRepositoryCustom {
         }
         int totalPhotos = ((Number) query.getSingleResult()).intValue();
 
-        // get page of Greetings matched search criteria
+        // get page of Photos matched search criteria
         query = em.createQuery("select p from Photo p where 1=1 order by p.createdAt desc");
+        
         for (String name : params.keySet()) {
             query.setParameter(name, params.get(name));
         }
-        query.setFirstResult((criteria.getPageIndex() - 1)
-            * criteria.getPageSize());
+        query.setFirstResult((criteria.getPageIndex() - 1) * criteria.getPageSize());
         query.setMaxResults(criteria.getPageSize());
         List<Photo> photos = query.getResultList();
+        
         return new SearchResult<>(criteria, photos, totalPhotos);
     }
 }

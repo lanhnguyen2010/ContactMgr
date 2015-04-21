@@ -16,22 +16,23 @@ public class User extends vn.kms.launch.contactmgr.domain.Entity {
     private static final long serialVersionUID = 1L;
 
     @NotBlank(message = "{validation.not-empty.message}")
-    @Size(max = 16, message = "{validation.maxUserName.message}")
-    @Pattern(regexp = "^([A-Za-z0-9]+)$", message = "{validation.UserName.message}")
+    @Size(max = 16, message = "{validation.maxSize-16.message}")
+    @Pattern(regexp = "^([A-Za-z0-9]+)$", message = "{validation.userName.message}")
     @Column(name = "USERNAME")
     private String username;
 
     @NotBlank(message = "{validation.not-empty.message}")
-    @Size(min = 6, message = "{validation.minPassWord.message}")
-    @Pattern(regexp = "^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[@#$!%&]).{1,50}$", message = "{validation.PassWord.message}")
+    @Size(min = 6, message = "{validation.minSize-6.message}")
+    @Pattern(regexp = "^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[@#$!%&]).{1,50}$", 
+             message = "{validation.passWord.message}")
     @Column(name="PASSWORD")
     private String password;
 
-    @Size(max = 20, message = "{validation.maxName.message}")
+    @Size(max = 20, message = "{validation.maxSize-20.message}")
     @Column(name = "FIRST_NAME")
     private String firstname;
 
-    @Size(max = 20, message = "{validation.maxName.message}")
+    @Size(max = 20, message = "{validation.maxSize-20.message}")
     @Column(name = "LAST_NAME")
     private String lastname;
 
