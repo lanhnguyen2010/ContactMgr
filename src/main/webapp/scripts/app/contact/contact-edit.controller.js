@@ -35,7 +35,7 @@ angular.module('contactmgrApp')
                 .error(function(data, status) {
                 	console.log(status);
                 });
-            
+
         };
 
         var typePhoto = 'avatar';
@@ -57,7 +57,7 @@ angular.module('contactmgrApp')
                     console.log(status);
                 });
         };
-        
+
         $scope.contact;
         $scope.init = function() {
             ContactService.getViewContact(contactId).success(
@@ -70,10 +70,10 @@ angular.module('contactmgrApp')
           };
         $scope.init();
         $scope.companies;
-        
+
         $scope.selectedCompany = null;
         $scope.companyValidator = null;
-        
+
         $scope.$watch('contact.work.companyId', function(result){
             for(var c in $scope.companies){
                 if($scope.companies[c].id === $scope.contact.work.companyId){
@@ -82,7 +82,7 @@ angular.module('contactmgrApp')
                 }
             }
         });
-        
+
         $scope.countries;
         $scope.validator;
         // save a contact
@@ -115,7 +115,7 @@ angular.module('contactmgrApp')
                  });
          };
          $scope.getCompanies();
-         
+
          $scope.getCountries = function(){
              ContactService.getCountries()
                  .success(function(data, status, headers, config) {
@@ -123,11 +123,11 @@ angular.module('contactmgrApp')
              });
          }
          $scope.getCountries();
-         
+
          $scope.hasSelectedCompany = function(){
              return ($scope.contact.work != null && $scope.contact.work.companyId > 0);
          };
-         
+
          $scope.saveCompany = function(){
              if($scope.selectedCompany != null){
                  if($scope.selectedCompany.id >0){
@@ -154,29 +154,29 @@ angular.module('contactmgrApp')
                          })
                          .error(function(data, status, headers, config) {
                              $scope.companyValidator = data.errors;
-                             
+
                          });
                  }
-                
+
              }
          };
-         
+
          $scope.cancelEditCompany = function(){
         	 $scope.selectedCompany = null;
         	 $scope.companyValidator = null;
              $('#companyInfoModal').modal('hide');
          };
-         
+
          $scope.openDialogCreateCompany = function(){
              $scope.selectedCompany = null;
              $('#companyInfoModal').modal('show');
          };
-         
+
          $scope.openDialogUpdateCompany = function(){
              $scope.selectedCompany = $scope.selectedCompany = $.extend(true, {}, $scope.contact.work.company);
              $('#companyInfoModal').modal('show');
          };
-         
+
          $scope.getTitleOfCompanyDialog = function(){
              if($scope.hasSelectedCompany()){
                  return 'contact-edit.work.edit-company';
@@ -193,9 +193,9 @@ angular.module('contactmgrApp')
              if (!regex.test(key)) {
                  theEvent.returnValue = false;
                  if (theEvent.preventDefault) theEvent.preventDefault();
-             }            
+             }
          };
-         
+
          $scope.getAvatar = function(){
              if($scope.contact == null){
                  $scope.contact = {photo: '../../../photos/unknown.jpg'};
@@ -203,7 +203,7 @@ angular.module('contactmgrApp')
              }
              return $scope.contact.photo;
          };
-         
+
          $scope.getLogo = function(){
              if($scope.contact == null){
                  $scope.contact = {work: { company: {logo: '../../../photos/unknown.jpg'}}};
@@ -217,7 +217,7 @@ angular.module('contactmgrApp')
              }
              return $scope.contact.work.company.logo;
          };
-         
+
          $scope.getLogoOfSelectedCompany = function(){
              if($scope.selectedCompany == null){
                  $scope.selectedCompany = {logo: '../../../photos/unknown.jpg'};
