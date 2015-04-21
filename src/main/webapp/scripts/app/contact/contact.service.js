@@ -35,7 +35,7 @@ angular.module('contactmgrApp')
         		data.work.company = null;
         	}
         	var data1 = this.replaceEmptyDataWithNullOfContact(data);
-            return $http.put('/api/contacts/' + id, data);
+            return $http.put('/api/contacts/' + id, data1);
         };
         
         this.replaceEmptyDataWithNullOfContact = function(contact){
