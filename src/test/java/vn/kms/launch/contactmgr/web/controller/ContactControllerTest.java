@@ -23,36 +23,37 @@ import vn.kms.launch.contactmgr.ContactMgrApp;
 public class ContactControllerTest {
     @Autowired
     private WebApplicationContext wac;
-    
+
     private MockMvc mockMvc;
-    
-    
+
+
     @Before
     public void setUp() throws Exception {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
     }
-    
-    
+
+
     /**
      * Test action get a contact by id (GET:/api/contacts{id})
+     *
      * @throws Exception
      */
     @Test
     public void testGetContact() throws Exception {
         // Get an existing contact
         this.mockMvc
-                .perform(
-                        get("/api/contacts/1")
-                                .accept(MediaType
-                                        .parseMediaType("application/json;charset=UTF-8")))
-                .andExpect(status().isOk());
+            .perform(
+                get("/api/contacts/1")
+                    .accept(MediaType
+                        .parseMediaType("application/json;charset=UTF-8")))
+            .andExpect(status().isOk());
 
         // Get a contact which doesn't exist
         this.mockMvc
-                .perform(
-                        get("/api/contacts/-1")
-                                .accept(MediaType
-                                        .parseMediaType("application/json;charset=UTF-8")))
-                .andExpect(status().isNotFound());
+            .perform(
+                get("/api/contacts/-1")
+                    .accept(MediaType
+                        .parseMediaType("application/json;charset=UTF-8")))
+            .andExpect(status().isNotFound());
     }
 }

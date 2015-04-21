@@ -1,8 +1,12 @@
 <!doctype html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js"> <!--<![endif]-->
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -24,18 +28,19 @@
     <!-- endbuild -->
 </head>
 <body ng-app="contactmgrApp">
-    <!--[if lt IE 10]>
-    <p class="browser-upgrade" translate="global.browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-    <![endif]-->
-    <div ui-view="navbar" ng-cloak=""></div>
-    <div class="container">
-        <div class="well" ui-view="content"></div>
-        <div class="footer">
-            <div class="container">
-                <p class="text-muted" translate="global.copyright">Copyright &copy;2015 KMS Technology, Inc.</p>
-            </div>
+<!--[if lt IE 10]>
+<p class="browser-upgrade" translate="global.browserupgrade">You are using an <strong>outdated</strong> browser. Please
+    <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+<![endif]-->
+<div ui-view="navbar" ng-cloak=""></div>
+<div class="container">
+    <div class="well" ui-view="content"></div>
+    <div class="footer">
+        <div class="container">
+            <p class="text-muted" translate="global.copyright">Copyright &copy;2015 KMS Technology, Inc.</p>
         </div>
     </div>
+</div>
 
     <!-- build:js scripts/vendor.js -->
     <!-- bower:js -->
@@ -63,28 +68,30 @@
     <!-- endbower -->
     <!-- endbuild -->
 
+<!-- build:js({.tmp,src/main/webapp}) scripts/app.js -->
+<script src="scripts/app/app.js"></script>
+<script src="scripts/app/app.constants.js"></script>
+<script src="scripts/app/error/error.js"></script>
+<script src="scripts/app/home/home.js"></script>
+<script src="scripts/app/home/home.controller.js"></script>
+<script src="scripts/app/contact/contact.js"></script>
+<script src="scripts/app/contact/contact.controller.js"></script>
+<script src="scripts/app/contact/contact.service.js"></script>
 
-    <!-- build:js({.tmp,src/main/webapp}) scripts/app.js -->
-    <script src="scripts/app/app.js"></script>
-    <script src="scripts/app/app.constants.js"></script>
-    <script src="scripts/app/error/error.js"></script>
-    <script src="scripts/app/home/home.js"></script>
-    <script src="scripts/app/home/home.controller.js"></script>
-    <script src="scripts/app/contact/contact.js"></script>
-    <script src="scripts/app/contact/contact.controller.js"></script>
-    <script src="scripts/app/contact/contact.service.js"></script>
-    <script src="scripts/app/contact/contact-edit.controller.js"></script>
-    <script src="scripts/app/admin/user/user.js"></script>
-    <script src="scripts/app/admin/user/user.controller.js"></script>
-    <script src="scripts/app/admin/user/user.service.js"></script>
-    <!-- 
-    <script src="scripts/app/greetings/greetings.js"></script>
-    <script src="scripts/app/greetings/greetings.controller.js"></script>
-     -->
-    <script src="scripts/components/language/language.service.js"></script>
-    <script src="scripts/components/language/language.controller.js"></script>
-    <script src="scripts/components/navbar/navbar.directive.js"></script>
-    <script src="scripts/components/navbar/navbar.controller.js"></script>
-    <!-- endbuild -->
+<script src="scripts/app/contact/contact-edit.controller.js"></script>
+<script src="scripts/app/admin/user/user.js"></script>
+<script src="scripts/app/admin/user/user.controller.js"></script>
+<script src="scripts/app/admin/user/user.service.js"></script>
+
+
+<!--
+<script src="scripts/app/greetings/greetings.js"></script>
+<script src="scripts/app/greetings/greetings.controller.js"></script>
+ -->
+<script src="scripts/components/language/language.service.js"></script>
+<script src="scripts/components/language/language.controller.js"></script>
+<script src="scripts/components/navbar/navbar.directive.js"></script>
+<script src="scripts/components/navbar/navbar.controller.js"></script>
+<!-- endbuild -->
 </body>
 </html>

@@ -7,3 +7,5 @@ spring:
                 persistence:
                     validation:
                         mode: none
+app:
+    image-dir: D:/Project/Challengs/launch-contact-manager/etc/photos                   

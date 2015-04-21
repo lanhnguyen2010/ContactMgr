@@ -13,7 +13,7 @@ public class UserSearchCriteria extends SearchCriteria {
     private String assignedCompanies;
     private Date createdFrom;
     private Date createdTo;
-    
+
     public String getFirstlastName() {
         return firstlastName;
     }

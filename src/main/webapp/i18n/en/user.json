@@ -1,6 +1,6 @@
 {
-    "user":{
-        "field":{
+    "user": {
+        "field": {
             "title": "Add/Edit user",
             "username": "Username",
             "pass": "New Password",
@@ -13,37 +13,37 @@
             "language": "Language",
             "active": "Active",
             "yes-active": "Yes",
-            "no-active": "No"  
+            "no-active": "No"
         },
-        "button":{
+        "button": {
             "btn-save": "Save",
             "btn-cancel": "Cancel",
-             "add-user": "Add User",
+            "add-user": "Add User",
             "search": "Search",
             "delete": "Delete",
             "activate":"Activate",
-            "inactivate":"Inactivate"
+            "inactivate":"Deactivate"
          },
         "search-form": {
             "username": "Username",
             "firstlastname": "First Name/ LastName",
             "email": "E-mail",
-            "role" : "Role",
+            "role": "Role",
             "assignedcompanies": "Assigned Companies",
             "createdfrom": "Created From",
             "createdto": "To"
-         },
-         "search-result":{
+        },
+        "search-result": {
             "username": "Username",
             "result": "Search Results",
             "noresult": "No Result",
             "firstname": "First Name",
             "lastname": "Last Name",
             "email": "E-mail",
-            "role" : "Role",
-            "status" : "Status",
+            "role": "Role",
+            "status": "Status",
             "active": "Active",
             "inactive": "Inactive"
-         }
+        }
     }
 }

@@ -4,22 +4,28 @@ import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "COMPANIES")
 public class Company extends vn.kms.launch.contactmgr.domain.Entity {
     private static final long serialVersionUID = 1L;
 
+    @Size(max = 100, message = "{validation.size-100.message}")
     @Column(name = "NAME")
     private String name;
 
+    @Size(max = 255, message = "{validation.size-255.message}")
     @Column(name = "WEBSITE")
     private String website;
 
+    @Size(max = 255, message = "{validation.size-255.message}")
     @Column(name = "LOGO")
     private String logo;
 
+    @Size(max = 255, message = "{validation.size-255.message}")
     @Column(name = "MESSAGE")
     private String message;
 
@@ -32,6 +38,7 @@ public class Company extends vn.kms.launch.contactmgr.domain.Entity {
     private String fax;
 
     @Embedded
+    @Valid
     private Address address;
 
     public String getPhone() {

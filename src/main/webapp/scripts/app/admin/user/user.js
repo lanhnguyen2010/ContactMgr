@@ -23,24 +23,4 @@ angular.module('contactmgrApp')
                     }]
                 }
             })
-            .state('create-user', {
-	            parent: 'site',
-	            url: '/admin/user/new',
-	            data: {
-	                roles: []
-	            },
-	            views: {
-	                'content@': {
-	                    templateUrl: 'scripts/app/admin/user/create-user.html',
-	                    controller: 'UsersController'
-	
-	                }
-	            },
-	            resolve: {
-	                mainTranslatePartialLoader: ['$translate', '$translatePartialLoader', function($translate,$translatePartialLoader) {
-	                    $translatePartialLoader.addPart('user');
-	                    return $translate.refresh();
-	                }]
-	            }
-	        });
         });
