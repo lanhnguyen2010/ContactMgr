@@ -8,7 +8,9 @@ import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "USERS")
@@ -35,12 +37,15 @@ public class User extends vn.kms.launch.contactmgr.domain.Entity {
     @Column(name = "LAST_NAME")
     private String lastname;
 
+    @Size(max = 255, message = "{validation.size-255.message}")
+    @Email(message = "{validation.email.message}")
     @Column(name = "EMAIL")
     private String email;
 
     @Column(name = "ROLE")
     private String role;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "EXPIRED_DATE")
     private Date expiredDate;
 
