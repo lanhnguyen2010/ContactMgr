@@ -20,11 +20,53 @@ angular.module('contactmgrApp')
         }
         
         this.createContact = function (data) {
-            return $http.post('/api/contacts', data);
+        	// only send companyId to service
+        	if(data.work != null && data.work.company != null){
+        		data.work.company = null;
+        	}
+        	
+        	var data1 = this.replaceEmptyDataWithNullOfContact(data);
+            return $http.post('/api/contacts', data1);
         };
+        
         this.updateContact = function (id,data) {
+        	// only send companyId to service
+        	if(data.work != null && data.work.company != null){
+        		data.work.company = null;
+        	}
+        	var data1 = this.replaceEmptyDataWithNullOfContact(data);
             return $http.put('/api/contacts/' + id, data);
         };
+        
+        this.replaceEmptyDataWithNullOfContact = function(contact){
+        	if(contact.email == ''){
+        		contact.email = null;
+        	}
+        	if(contact.mobile == ''){
+        		contact.mobile = null;
+        	}
+        	if(contact.home != null){
+        		if(contact.home.address != null){
+        			if(contact.home.address.postalCode == ''){
+                		contact.home.address.postalCode = null;
+                	}
+                	if(contact.home.address.country == ''){
+                		contact.home.address.country = null;
+                	}
+        			
+        		}
+            	if(contact.home.phone == ''){
+            		contact.home.phone = null;
+            	}
+            	
+            	if(contact.home.fax == ''){
+            		contact.home.fax = null;
+            	}
+        	}
+        	
+        	return contact;
+        };
+        
         this.getCountries = function() {
             return $http.get("/api/countries");
         };
@@ -33,16 +75,34 @@ angular.module('contactmgrApp')
             return $http.get("/api/contacts/"+id);
         };
         this.updateCompany = function(company){
+        	this.replaceEmptyDataWithNullOfCompany(company);
             var url = '/api/companies/' + company.id;
             console.log('Update company: ' + url)
             return $http.put(url, company);
         };
         
         this.createCompany = function(company){
+            this.replaceEmptyDataWithNullOfCompany(company);
             return $http.post('/api/companies', company);
         };        this.uploadPhoto = function(contactId, fileUpload) {
             return $http.post("/api/photos/"+contactId, fileUpload);
         };
+        
+        this.replaceEmptyDataWithNullOfCompany = function(company){
+            if(company.phone == ''){
+                company.phone = null;
+            }
+            
+            if(company.fax == ''){
+                company.fax = null;
+            }
+            
+            if(company.address != null){
+                if(company.address.postalCode == ''){
+                	company.address.postalCode = null;
+                }
+            }
+        }
 
         this.getPhotos = function(contactId, pageIndex, pageSize) {
             return $http.get("/api/photos/"+contactId, pageIndex, pageSize);

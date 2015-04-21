@@ -68,7 +68,7 @@ angular.module('contactmgrApp')
                     function(data) {
                         $scope.contact = data;
                         if($scope.contact.work != null && $scope.contact.work.company != null){
-                            $scope.selectedCompany = $scope.contact.work.company;
+                            //$scope.selectedCompany = $.extend(true, {}, $scope.contact.work.company);
                         }
                     })
           };
@@ -82,7 +82,7 @@ angular.module('contactmgrApp')
             for(var c in $scope.companies){
                 if($scope.companies[c].id === $scope.contact.work.companyId){
                     $scope.contact.work.company = $scope.companies[c];
-                    $scope.selectedCompany = $scope.companies[c];
+                    //$scope.selectedCompany = $.extend(true, {}, $scope.companies[c]);
                     break;
                 }
             }
@@ -92,9 +92,10 @@ angular.module('contactmgrApp')
         $scope.validator;
         // save a contact
         $scope.saveContact = function() {
+            var copyContact = $.extend(true, {}, $scope.contact);
             if (typeof $scope.contact ==='undefined' || $scope.contact.id==null) {
                 ContactService
-                        .createContact($scope.contact)
+                        .createContact(copyContact)
                         .success(
                                 function(data, status, headers,
                                         config) {
@@ -105,8 +106,8 @@ angular.module('contactmgrApp')
                                      $scope.validator = data.errors;
                                 });
             } else {
-                ContactService.updateContact($scope.contact.id,
-                        $scope.contact).success(
+                ContactService.updateContact($scope.contact.id, copyContact)
+                    .success(
                         function(data, status, headers, config) {
                             // the contact is saved
                             window.location = '#contact';
@@ -134,7 +135,7 @@ angular.module('contactmgrApp')
          $scope.getCountries();
          
          $scope.hasSelectedCompany = function(){
-             return ($scope.selectedCompany != null && $scope.selectedCompany.id > 0);
+             return ($scope.contact.work != null && $scope.contact.work.companyId > 0);
          };
          
          $scope.saveCompany = function(){
@@ -143,10 +144,14 @@ angular.module('contactmgrApp')
                     // Update a existing company
                      ContactService.updateCompany($scope.selectedCompany)
                      .success(function(data, status, headers, config) {
-                         $scope.selectedCompany = data;
-                         $scope.contact.work.company = $scope.selectedCompany;
-                         $scope.contact.work.companyId = data.id;
+                         $scope.contact.work.company = data;
+                         //$scope.selectedCompany = $.extend(true, {}, $scope.contact.work.company);
+                         $scope.selectedCompany = null;
                          $scope.getCompanies();
+                         
+                         // ensure don't highlight on previous error inputs
+                         $scope.companyValidator = null;
+                         
                          // close dialog
                          $('#companyInfoModal').modal('toggle');
                      })
@@ -156,15 +161,20 @@ angular.module('contactmgrApp')
                  } else{
                      ContactService.createCompany($scope.selectedCompany)
                          .success(function(data, status, headers, config) {
-                             $scope.selectedCompany = data;
-                             $scope.contact.work.company = $scope.selectedCompany;
+                             $scope.contact.work.company = data;
+                             //$scope.selectedCompany = $.extend(true, {}, $scope.contact.work.company);
+                             $scope.selectedCompany = null;
                              $scope.contact.work.companyId = data.id;
                              $scope.getCompanies();
+                             
+                             // ensure don't highlight on previous error inputs
+                             $scope.companyValidator = null;
+                             
                              // close dialog
                              $('#companyInfoModal').modal('toggle');
                          })
                          .error(function(data, status, headers, config) {
-                        	 $scope.companyValidator = data.errors;
+                             $scope.companyValidator = data.errors;
                              
                          });
                  }
@@ -173,18 +183,14 @@ angular.module('contactmgrApp')
          };
          
          $scope.cancelEditCompany = function(){
-             if($scope.selectedCompany.id > 0){
-                 // Don't update a existing company
-                 // Update info of company on service
-                 ContactService.getCompanieById($scope.selectedCompany.id)
-                 .success(function(data, status, headers, config) {
-                     $scope.selectedCompany = data;
-                     $scope.contact.work.company = $scope.selectedCompany;
-                 });
+        	 $scope.selectedCompany = null;
+             /*if($scope.contact.work != null && $scope.contact.work.company != null){
+                 // cancel update a company
+                 $scope.selectedCompany = $.extend(true, {}, $scope.contact.work.company);
              } else {
-                 // Don't create a new company
-                $scope.selectedCompany = $scope.contact.work.company;
-             }
+            	 // cancel create a company
+            	 $scope.selectedCompany = null;
+             }*/
              
              $('#companyInfoModal').modal('hide');
          };
@@ -195,7 +201,7 @@ angular.module('contactmgrApp')
          };
          
          $scope.openDialogUpdateCompany = function(){
-             $scope.selectedCompany = $scope.contact.work.company;
+             $scope.selectedCompany = $scope.selectedCompany = $.extend(true, {}, $scope.contact.work.company);
              $('#companyInfoModal').modal('show');
          };
          
