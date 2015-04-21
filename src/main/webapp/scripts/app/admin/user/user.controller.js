@@ -9,7 +9,7 @@ angular.module('contactmgrApp').controller(
                 $scope.getRoles();
                 $scope.initUser();
             };
-            
+
             $scope.criteria = {
                 username : '',
                 firstlastName : '',
@@ -31,6 +31,7 @@ angular.module('contactmgrApp').controller(
                     "updatedBy" : "",
                     "username" : "",
                     "password" : "",
+                    "confirmPassword" : "",
                     "firstname" : "",
                     "lastname" : "",
                     "email" : "",
@@ -38,10 +39,12 @@ angular.module('contactmgrApp').controller(
                     "expiredDate" : "",
                     "active" : false,
                     "language" : "",
-                    "assignedCompanies" : ''
+                    "assignedCompanies" : []
                 };
                 $scope.confirmPassword = '';
                 $scope.checkboxSelection = '1';
+                $scope.selectedCompanies = [];
+                $scope.validator = null;
             }
             var PAGE_SIZE = 10;
             $scope.users = [];
@@ -72,7 +75,7 @@ angular.module('contactmgrApp').controller(
                 $scope.criteria.createdTo = $filter('date')($scope.criteria.createdTo,'yyyy-MM-dd');
                 angular.copy($scope.criteria,$scope.actualCriteria);
                 $scope.usersTableParams.reload();
-                
+
             }
 
             $scope.usersTableParams = new ngTableParams({
@@ -88,7 +91,7 @@ angular.module('contactmgrApp').controller(
                         $scope.criteria.pageIndex = 1;
                         params.page(1);
                     }
-                    
+
                     $scope.currentPage = params.page();
                     UsersService.searchUsers($scope.actualCriteria)
                     .success(function(data, status) {
@@ -158,9 +161,9 @@ angular.module('contactmgrApp').controller(
 
             // watch selected users
             $scope.$watch('users|filter:{checked:true}', function(results) {
-            	if (results == null){
-            		return;
-            	}
+                if (results == null){
+                    return;
+                }
                 $scope.selectedIds = results.map(function(user) {
                     return user.id;
                 });
@@ -191,31 +194,24 @@ angular.module('contactmgrApp').controller(
                 UsersService.getCompanies().success(function(data, status) {
                     $scope.assignedcompanies = data;
                 }).error(function(data, status) {
-                    console.log("Error get companies", status);
                 });
             }
             // save user
             $scope.saveUser = function() {
                 if ($scope.checkboxSelection == "1") {
                     $scope.user.active = true;
-                    console.log("value active true");
                 } else {
                     $scope.user.active = false;
-                    console.log("value active false");
                 }
                 $scope.setAssignedCompanies();
                 UsersService.saveUser($scope.user).success(
                         function(data, status, headers, config) {
-                            console.log("Save user successfull!");
                             window.alert("Save user successfull!");
                             $scope.initUser();
                         }).error(
                         function(data, status, header, config) {
-                            console.log("Error: " + status);
                             $scope.validator = data.errors;
-                            window.alert("Can not save!"
-                                    + $scope.validator.username + " "
-                                    + $scope.validator.password);
+                            window.alert("Can not save!");
                         });
 
             };
@@ -223,6 +219,7 @@ angular.module('contactmgrApp').controller(
             // to update
             $scope.addUser = function(user) {
                 angular.copy(user,$scope.user);
+                $scope.getCompaniesToDisplayUI();
                 console.log("Date: " + $scope.user.expiredDate);
                 if ($scope.user.active == true) {
                     $scope.checkboxSelection = '1';
@@ -230,7 +227,7 @@ angular.module('contactmgrApp').controller(
                     $scope.checkboxSelection = '0';
                 }
             };
-
+            $scope.minDate = new Date();
             $scope.openCalendar = function($event, isTo) {
                 $event.preventDefault();
                 $event.stopPropagation();
@@ -255,15 +252,21 @@ angular.module('contactmgrApp').controller(
                 startingDay : 1
             };
             $scope.setAssignedCompanies = function(){
-                $scope.user.assignedCompanies = "[";
                 for (var i = 0; i < $scope.selectedCompanies.length; i++){
-                    $scope.user.assignedCompanies = $scope.user.assignedCompanies + parseInt($scope.selectedCompanies[i]["id"]);
-                    if (i < $scope.selectedCompanies.length - 1) {
-                        $scope.user.assignedCompanies = $scope.user.assignedCompanies + ", ";
-                    }
+                    $scope.user.assignedCompanies = $scope.user.assignedCompanies.push(selectedCompanies[i]["id"]);
                 }
-                $scope.user.assignedCompanies = $scope.user.assignedCompanies + "]";
-                console.log($scope.user.assignedCompanies);
+            }
+         // set list companies that user are managing into interface
+            $scope.getCompaniesToDisplayUI = function() {
+                $scope.selectedCompanies = [];
+                if ($scope.user.assignedCompanies != null) {
+                    console.log($scope.user.assignedCompanies.length);
+                    $scope.user.assignedCompanies.forEach(function(entry) {
+                        var singleObj = {}
+                        singleObj['id'] = entry;
+                        $scope.selectedCompanies.push(singleObj);
+                    });
+                }
             }
             init();
 })
