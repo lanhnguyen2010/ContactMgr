@@ -32,7 +32,7 @@ public class User extends vn.kms.launch.contactmgr.domain.Entity {
     private String username;
     
     @Size(min = 6, message = "{validation.PassWord.message}")
-	@Pattern(regexp = "^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[@#$!%&]).{6,20}$", message = "{validation.PassWord.message}")
+	@Pattern(regexp = "^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*]).{6,20}$", message = "{validation.PassWord.message}")
     @Column(name="PASSWORD")
     private String password;
     
