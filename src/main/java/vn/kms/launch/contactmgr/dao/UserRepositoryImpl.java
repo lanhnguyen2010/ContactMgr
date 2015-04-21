@@ -1,5 +1,7 @@
 package vn.kms.launch.contactmgr.dao;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -83,19 +85,15 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
             }
             params.put("email", replaceWildcards(criteria.getEmail()));
         }
-        if (!StringUtils.isEmpty(criteria.getCreatedFrom())
-            && !StringUtils.isEmpty(criteria.getCreatedTo())) {
-            jpqlQuery.append(" and");
-            jpqlQuery.append(" (u.createdAt >= :created_from and u.createdAt < :created_to)");
-            params.put("created_from", new Date(criteria.getCreatedFrom().getTime()));
-            params.put("created_to", new Date(criteria.getCreatedTo().getTime() + (1000L * 60 * 60 * 24)));
-        } else if (!StringUtils.isEmpty(criteria.getCreatedFrom())) {
+        if (!StringUtils.isEmpty(criteria.getCreatedFrom())) {
             jpqlQuery.append(" and");
             jpqlQuery.append(" u.createdAt >= :created_from");
             params.put("created_from", new Date(criteria.getCreatedFrom().getTime()));
-        } else if (!StringUtils.isEmpty(criteria.getCreatedTo())) {
+        }
+        if (!StringUtils.isEmpty(criteria.getCreatedTo())) {
             jpqlQuery.append(" and");
-            jpqlQuery.append(" u.createdAt <= :created_to");
+            jpqlQuery.append(" u.createdAt < :created_to");
+            System.out.println(criteria.getCreatedTo().getTime());
             params.put("created_to", new Date(criteria.getCreatedTo().getTime() + (1000L * 60 * 60 * 24)));
         }
 

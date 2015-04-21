@@ -41,7 +41,6 @@ angular.module('contactmgrApp').controller(
                     "language" : "",
                     "assignedCompanies" : []
                 };
-                $scope.confirmPassword = '';
                 $scope.checkboxSelection = '1';
                 $scope.selectedCompanies = [];
                 $scope.validator = null;
