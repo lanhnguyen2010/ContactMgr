@@ -8,12 +8,15 @@ import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 @Entity
 @Table(name = "COMPANIES")
 public class Company extends vn.kms.launch.contactmgr.domain.Entity {
     private static final long serialVersionUID = 1L;
 
     @Size(max = 100, message = "{validation.size-100.message}")
+    @NotBlank(message = "{validation.not-empty.message}")
     @Column(name = "NAME")
     private String name;
 
