@@ -1,6 +1,7 @@
 package vn.kms.launch.contactmgr.domain.user;
 
 import java.util.Date;
+import java.util.List;
 
 import vn.kms.launch.contactmgr.util.SearchCriteria;
 
@@ -10,7 +11,7 @@ public class UserSearchCriteria extends SearchCriteria {
     private String firstlastName;
     private String email;
     private String role;
-    private String assignedCompanies;
+    private List<Integer> assignedCompanies;
     private Date createdFrom;
     private Date createdTo;
 
@@ -45,16 +46,16 @@ public class UserSearchCriteria extends SearchCriteria {
     public void setUsername(String username) {
         this.username = username;
     }
+    
+	public List<Integer> getAssignedCompanies() {
+		return assignedCompanies;
+	}
 
-    public String getAssignedCompanies() {
-        return assignedCompanies;
-    }
+	public void setAssignedCompanies(List<Integer> assignedCompanies) {
+		this.assignedCompanies = assignedCompanies;
+	}
 
-    public void setAssignedCompanies(String assignedCompanies) {
-        this.assignedCompanies = assignedCompanies;
-    }
-
-    public Date getCreatedFrom() {
+	public Date getCreatedFrom() {
         return createdFrom;
     }
 

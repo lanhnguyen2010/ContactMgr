@@ -1,9 +1,13 @@
 package vn.kms.launch.contactmgr.domain.user;
 
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.Pattern;
@@ -63,8 +67,10 @@ public class User extends vn.kms.launch.contactmgr.domain.Entity {
     @Column(name = "LANGUAGE")
     private String language;
 
-    @Column(name = "ASSIGNED_COMPANIES")
-    private String assignedCompanies;
+    @ElementCollection
+    @CollectionTable(name = "USER_ASSIGNEDCOMPANIES", joinColumns = @JoinColumn(name= "user_id"))
+    @Column(name = "company_id")
+    private List<Integer> assignedCompanies;
 
     public String getUsername() {
         return username;
@@ -146,15 +152,16 @@ public class User extends vn.kms.launch.contactmgr.domain.Entity {
         this.language = language;
     }
 
-    public String getAssignedCompanies() {
-        return assignedCompanies;
-    }
+	public List<Integer> getAssignedCompanies() {
+		return assignedCompanies;
+	}
 
-    public void setAssignedCompanies(String assignedCompanies) {
-        this.assignedCompanies = assignedCompanies;
-    }
+	public void setAssignedCompanies(List<Integer> assignedCompanies) {
+		this.assignedCompanies = assignedCompanies;
+	}
 
-    public static long getSerialversionuid() {
+	public static long getSerialversionuid() {
         return serialVersionUID;
     }
+
 }
