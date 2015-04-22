@@ -13,8 +13,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import vn.kms.launch.contactmgr.util.EntityNotFoundException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 import vn.kms.launch.contactmgr.domain.user.User;
 import vn.kms.launch.contactmgr.domain.user.UserSearchCriteria;
 import vn.kms.launch.contactmgr.service.UserService;
+import vn.kms.launch.contactmgr.util.EntityNotFoundException;
 import vn.kms.launch.contactmgr.util.SearchResult;
 import vn.kms.launch.contactmgr.util.ValidationException;
 
@@ -113,23 +112,17 @@ public class UserController {
 
     private ResponseEntity<?> saveUser(User user, Integer id) {
         try {
-            
-            User savedUser = userService.saveUser(user, id);
-            
-            return new ResponseEntity<>(savedUser, OK);
-            
+            User savedContact = userService.saveUser(user, id);
+            return new ResponseEntity<>(savedContact, OK);
         } catch (EntityNotFoundException e) {
-           
             return new ResponseEntity<>(NOT_FOUND);
-            
         } catch (ValidationException e) {
-           
             Map<String, Object> returnObj = new HashMap<>();
             returnObj.put("data", user);
             returnObj.put("errors", e.getErrors());
             return new ResponseEntity<>(returnObj, BAD_REQUEST);
         }
     }
-    
-    
+
+
 }

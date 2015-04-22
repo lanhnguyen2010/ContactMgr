@@ -28,6 +28,7 @@ public class ContactRepositoryImpl implements ContactRepositoryCustom {
     public List<Itemized> getCompanyNames() {
         List<Itemized> items = new ArrayList<>();
         Query query = em.createQuery("select id, name from Company");
+
         List<Object[]> results = query.getResultList();
 
         for (Object[] row : results) {

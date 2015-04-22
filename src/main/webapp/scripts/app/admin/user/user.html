@@ -45,11 +45,11 @@
 
                     <div class="col-md-4">
                         <p class="input-group">
-                            <input type="text" class="form-control" datepicker-popup="yyyy-MM-dd" 
+                            <input type="text" class="form-control" datepicker-popup="yyyy-MM-dd"
                                    ng-model="criteria.createdFrom" is-open="openedCalendarFrom" placeholder="YYYY-MM-DD"
                                    close-text="Close" disabled />
                                 <span class="input-group-btn">
-                                    <button type="button" class="btn btn-default" ng-click="openCalendar($event, 1)"><i 
+                                    <button type="button" class="btn btn-default" ng-click="openCalendar($event, 1)"><i
                                             class="glyphicon glyphicon-calendar"></i></button>
                                </span>
                         </p>
@@ -59,13 +59,13 @@
 
                     <div class="col-md-4">
                         <p class="input-group">
-                            <input type="text" class="form-control" datepicker-popup="yyyy-MM-dd" 
-                                   ng-model="criteria.createdTo" date-disabled="disabled(date, mode)" 
-                                   is-open="openedCalendarTo" placeholder="YYYY-MM-DD"
+
+                            <input type="text" class="form-control" datepicker-popup="yyyy-MM-dd"
+                                   ng-model="criteria.createdTo" date-disabled="disabled(date, mode)" is-open="openedCalendarTo" placeholder="YYYY-MM-DD"
                                    close-text="Close" disabled />
                                 <span class="input-group-btn">
-                                    <button type="button" class="btn btn-default" ng-click="openCalendar($event, 2)"><i 
-                                            class="glyphicon glyphicon-calendar"></i></button>
+                                    <button type="button" class="btn btn-default" ng-click="openCalendar($event, 2)">
+                                        <i class="glyphicon glyphicon-calendar"></i></button>
                                </span>
                         </p>
                      </div>
@@ -148,7 +148,6 @@
             </tr>
         </table>
     </div>
-    
     <!-- Show add user dialog -->
     <form novalidate name="addUser_form" class="form-horizontal" role="form" ng-submit="saveUser()">
        <div class="modal fade" id="userModal" tabindex="-1" role="dialog"
@@ -173,9 +172,10 @@
 
                                             <div class="col-sm-7">
                                                 <input type="text" class="form-control" name="username" ng-keydown="validator.username = null"
-                                                    ng-class="{red: validator.username}" data-toggle="tooltip" 
-                                                    title="{{validator.username}}">
-                                                </div>
+                                                    ng-class="{red: validator.username}" data-toggle="tooltip"
+                                                    title="{{validator.username}}"
+                                                    ng-model="user.username">
+                                            </div>
                                         </div>
                                         <div class="form-group">
                                             <label for="password" class="col-sm-5 control-label"
@@ -183,7 +183,7 @@
 
                                             <div class="col-sm-7">
                                                 <input type="password" class="form-control" name="password" ng-keydown="validator.password = null"
-                                                    ng-model="user.password" ng-class="{red: validator.password}" data-toggle="tooltip" 
+                                                    ng-model="user.password" ng-class="{red: validator.password}" data-toggle="tooltip"
                                                     title="{{validator.password}}">
                                             </div>
                                         </div>
@@ -194,7 +194,7 @@
                                             <div class="col-sm-7">
                                                 <input type="password" class="form-control"
                                                        name="confirm-password" ng-model="user.confirmPassword" ng-keydown="validator.confirmPassword = null"
-                                                       ng-class="{red: validator.confirmPassword}" data-toggle="tooltip" 
+                                                       ng-class="{red: validator.confirmPassword}" data-toggle="tooltip"
                                                     title="{{validator.confirmPassword}}">
                                             </div>
                                         </div>

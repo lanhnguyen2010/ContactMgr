@@ -252,7 +252,7 @@ angular.module('contactmgrApp').controller(
                 startingDay : 1
             };
             $scope.setAssignedCompanies = function(){
-            	$scope.user.assignedCompanies = [];
+                $scope.user.assignedCompanies = [];
                 for (var i = 0; i < $scope.selectedCompanies.length; i++){
                     $scope.user.assignedCompanies.push(parseInt($scope.selectedCompanies[i]["id"]));
                 }
