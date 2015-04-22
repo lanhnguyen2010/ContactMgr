@@ -9,6 +9,7 @@
             "role": "Vai trò",
             "first-name": "Tên",
             "last-name": "Họ",
+            "email": "Email",
             "ex-date": "Ngày hết hạn",
             "language": "Ngôn ngữ",
             "active": "Trạng thái",

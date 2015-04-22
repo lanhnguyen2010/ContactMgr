@@ -7,6 +7,7 @@
             "pass-conf": "Confirm New Password",
             "ass-com": "Assigned Companies",
             "role": "Role",
+            "email": "Email",
             "first-name": "First Name",
             "last-name": "Last Name",
             "ex-date": "Expired Date",
@@ -22,7 +23,7 @@
             "search": "Search",
             "delete": "Delete",
             "activate":"Activate",
-            "inactivate":"Deactivate"
+            "inactivate":"Inactivate"
          },
         "search-form": {
             "username": "Username",
