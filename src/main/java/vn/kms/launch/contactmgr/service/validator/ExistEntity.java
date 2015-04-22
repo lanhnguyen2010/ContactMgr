@@ -19,18 +19,18 @@ import vn.kms.launch.contactmgr.domain.contact.Company;
 @Retention(RUNTIME)
 public @interface ExistEntity {
 
-	String message() default "{validation.existEntity.message}";
+    String message() default "{validation.existEntity.message}";
 
-	Class<?>[] groups() default { };
+    Class<?>[] groups() default { };
 
-	Class<? extends Payload>[] payload() default { };
-	
-	@Target({ METHOD, FIELD})
-	@Retention(RUNTIME)
-	@Documented
-	public @interface List {
-		ExistEntity[] value();
-	}
+    Class<? extends Payload>[] payload() default { };
+    
+    @Target({ METHOD, FIELD})
+    @Retention(RUNTIME)
+    @Documented
+    public @interface List {
+        ExistEntity[] value();
+    }
 
-	Class<Company> type();
+    Class<Company> type();
 }

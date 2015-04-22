@@ -1,6 +1,6 @@
 CREATE TABLE companies (
     id INT NOT NULL AUTO_INCREMENT,
-    name VARCHAR(100),
+    name VARCHAR(100) NOT NULL,
     website VARCHAR(255),
     logo VARCHAR(255),
     message VARCHAR(255),
@@ -21,7 +21,7 @@ CREATE TABLE companies (
 
 CREATE TABLE contacts (
     id INT NOT NULL AUTO_INCREMENT,
-    display_name VARCHAR(150) NOT NULL,
+    display_name VARCHAR(152) NOT NULL,
     first_name VARCHAR(50),
     middle_name VARCHAR(50),
     last_name VARCHAR(50),
