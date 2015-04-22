@@ -29,11 +29,11 @@ CREATE TABLE `users` (
   `FIRST_NAME` varchar(45) DEFAULT NULL,
   `LAST_NAME` varchar(45) DEFAULT NULL,
   `ROLE` varchar(45) DEFAULT NULL,
-  `EXPIRED_DATE` date DEFAULT NULL,
+  `EXPIRED_DATE` timestamp,
   `ACTIVE` int(1) DEFAULT NULL,
-  `CREATED_AT` date DEFAULT NULL,
+  `CREATED_AT` timestamp,
   `CREATED_BY` varchar(100) DEFAULT NULL,
-  `UPDATED_AT` date DEFAULT NULL,
+  `UPDATED_AT` timestamp,
   `UPDATED_BY` varchar(100) DEFAULT NULL,
   `EMAIL` varchar(100) DEFAULT NULL,
   `LANGUAGE` varchar(15) DEFAULT NULL,
@@ -47,7 +47,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (8,'','','','','',NULL,0,NULL,'','2015-04-16','system','','VI'),(9,'','123','','','',NULL,0,NULL,'','2015-04-16','system','','');
+INSERT INTO `users` VALUES (8,'','','','','',null,0,null,'','2015-04-16','system','','VI'),(9,'','123','','','',null,0,null,'','2015-04-16','system','','');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
