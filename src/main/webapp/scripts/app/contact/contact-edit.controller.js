@@ -20,7 +20,7 @@ angular.module('contactmgrApp')
         };
 
         $scope.selectUploadPhoto = function(imageUpload) {
-            if (!confirm('Are you sure you want to upload this photo?')) {
+            if (!confirm('Are you sure to want to upload this photo?')) {
                 return;
             }
 
@@ -33,7 +33,10 @@ angular.module('contactmgrApp')
                 	$scope.selectPhoto(data);
                 })
                 .error(function(data, status) {
-                	console.log(status);
+                	if (status == '412') {
+                	    alert('invalid photo type!');
+                        document.getElementById('closeButton').click();
+                    }
                 });
 
         };
@@ -48,7 +51,7 @@ angular.module('contactmgrApp')
         }
 
         $scope.pageChanged = function() {
-            ContactService.getPhotos($scope.currentPage, $scope.maxSize)
+            ContactService.getPhotos($scope.currentPage,$scope.maxSize)
                 .success(function(data, status) {
                     $scope.totalItems = data['totalItems'];
                     $scope.imageList = data['items'];
@@ -60,6 +63,7 @@ angular.module('contactmgrApp')
 
         $scope.contact;
         $scope.init = function() {
+        	if (contactId == null) return;
             ContactService.getViewContact(contactId).success(
                     function(data) {
                         $scope.contact = data;
@@ -68,7 +72,7 @@ angular.module('contactmgrApp')
                         }
                     })
           };
-        $scope.init();
+        
         $scope.companies;
 
         $scope.selectedCompany = null;
@@ -168,11 +172,13 @@ angular.module('contactmgrApp')
          };
 
          $scope.openDialogCreateCompany = function(){
+        	 $scope.companyValidator = null;
              $scope.selectedCompany = null;
              $('#companyInfoModal').modal('show');
          };
 
          $scope.openDialogUpdateCompany = function(){
+        	 $scope.companyValidator = null;
              $scope.selectedCompany = $scope.selectedCompany = $.extend(true, {}, $scope.contact.work.company);
              $('#companyInfoModal').modal('show');
          };
@@ -206,23 +212,25 @@ angular.module('contactmgrApp')
 
          $scope.getLogo = function(){
              if($scope.contact == null){
-                 $scope.contact = {work: { company: {logo: '../../../photos/unknown.jpg'}}};
-                 return "../../../photos/unknown.jpg";
+                 $scope.contact = {work: { company: {logo: '../../../photos/missing-logo.jpg'}}};
+                 return "../../../photos/missing-logo.jpg";
              } else if($scope.contact.work == null){
-                 $scope.contact.work = { company: {logo: '../../../photos/unknown.jpg'}};
-                 return "../../../photos/unknown.jpg";
+                 $scope.contact.work = { company: {logo: '../../../photos/missing-logo.jpg'}};
+                 return "../../../photos/missing-logo.jpg";
              } else if($scope.contact.work.company == null){
-                 $scope.contact.work.company = {logo: '../../../photos/unknown.jpg'};
-                 return "../../../photos/unknown.jpg";
+                 $scope.contact.work.company = {logo: '../../../photos/missing-logo.jpg'};
+                 return "../../../photos/missing-logo.jpg";
              }
              return $scope.contact.work.company.logo;
          };
 
          $scope.getLogoOfSelectedCompany = function(){
              if($scope.selectedCompany == null){
-                 $scope.selectedCompany = {logo: '../../../photos/unknown.jpg'};
-                 return "../../../photos/unknown.jpg";
+                 $scope.selectedCompany = {logo: '../../../photos/missing-logo.jpg'};
+                 return "../../../photos/missing-logo.jpg";
              }
              return $scope.selectedCompany.logo;
          };
+         
+         $scope.init();
     });

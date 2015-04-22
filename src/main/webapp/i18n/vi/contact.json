@@ -1,13 +1,13 @@
 {
     "contact": {
         "button": {
-            "add-contact": "Thêm Mới",
+            "add-contact": "Thêm mới",
             "search": "Tìm Kiếm",
             "delete": "Xóa"
         },
         "search-form": {
-            "name": "Tên",
-            "mobile": "Điện Thoại",
+            "name": "Tên người dùng",
+            "mobile": "Số điện thoại",
             "email": "E-mail",
             "job-title": "Chức vụ",
             "department": "Phòng ban",
@@ -15,21 +15,30 @@
         },
         "search-results": {
             "message": "Kết quả tìm kiếm",
-            "no-result": "Không tìm thấy",
+            "no-result": "Không có kết quả tìm kiếm",
             "column": {
-                "display-name": "Tên truy cập",
-                "mobile": "Di động",
+                "display-name": "Tên hiển thị",
+                "mobile": "Số điện thoại",
                 "email": "E-mail",
                 "job-title": "Chức vụ",
                 "department": "Phòng ban",
                 "company": "Công ty"
             }
         },
-        "company-info": {
-            "title": "",
-            "field": {
-                "": ""
-            }
+        "company-info":{
+            "Close": "Đóng",
+            "Company-Info": "Thông tin công ty",
+            "Name":"Tên công ty",
+            "Addr-line1":"Địa chỉ 1",
+            "Addr-line2":"Địa chỉ 2",
+            "Message":"Thông điệp",
+            "City":"Thành phố",
+            "Website":"Trang web",
+            "State":"Tiểu bang",
+            "Phone":"Điện thoại",
+            "Zip-code":"Mã số bưu điện",
+            "Fax":"Số fax",
+            "Country":"Quốc gia"
         }
     }
 }

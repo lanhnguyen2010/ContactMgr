@@ -45,11 +45,11 @@
 
                     <div class="col-md-4">
                         <p class="input-group">
-                            <input type="text" class="form-control" datepicker-popup="yyyy-MM-dd" 
+                            <input type="text" class="form-control" datepicker-popup="yyyy-MM-dd"
                                    ng-model="criteria.createdFrom" is-open="openedCalendarFrom" placeholder="YYYY-MM-DD"
                                    close-text="Close" disabled />
                                 <span class="input-group-btn">
-                                    <button type="button" class="btn btn-default" ng-click="openCalendar($event, 1)"><i 
+                                    <button type="button" class="btn btn-default" ng-click="openCalendar($event, 1)"><i
                                             class="glyphicon glyphicon-calendar"></i></button>
                                </span>
                         </p>
@@ -59,12 +59,13 @@
 
                     <div class="col-md-4">
                         <p class="input-group">
-                            <input type="text" class="form-control" datepicker-popup="yyyy-MM-dd" 
+
+                            <input type="text" class="form-control" datepicker-popup="yyyy-MM-dd"
                                    ng-model="criteria.createdTo" date-disabled="disabled(date, mode)" is-open="openedCalendarTo" placeholder="YYYY-MM-DD"
                                    close-text="Close" disabled />
                                 <span class="input-group-btn">
-                                    <button type="button" class="btn btn-default" ng-click="openCalendar($event, 2)"><i 
-                                            class="glyphicon glyphicon-calendar"></i></button>
+                                    <button type="button" class="btn btn-default" ng-click="openCalendar($event, 2)">
+                                        <i class="glyphicon glyphicon-calendar"></i></button>
                                </span>
                         </p>
                      </div>
@@ -77,7 +78,8 @@
                         translate="user.search-form.assignedcompanies">Assigned Companies</label>
                     <div class="col-md-9">
                         <div ng-dropdown-multiselect="" options="assignedcompanies" selected-model="selectedCompanies"
-                        checkboxes="true" extra-settings="companysetting" translation-texts="selectcompaniestext" ></div>
+                        checkboxes="true" extra-settings="companysetting" translation-texts="selectcompaniestext" >
+                        </div>
                     </div>
                 </div>
                 <div class="form-group col-md-6">
@@ -146,11 +148,9 @@
             </tr>
         </table>
     </div>
-    
     <!-- Show add user dialog -->
-    <form name="addUser_form" novalidate class="form-horizontal"
-          role="form" ng-submit="saveUser()">
-        <div class="modal fade" id="userModal" tabindex="-1" role="dialog"
+    <form novalidate name="addUser_form" class="form-horizontal" role="form" ng-submit="saveUser()">
+       <div class="modal fade" id="userModal" tabindex="-1" role="dialog"
              aria-labelledby="myModalLabel" aria-hidden="false">
             <div class="vertical-alignment-helper">
                 <div class="vertical-alignment-helper">
@@ -172,7 +172,7 @@
 
                                             <div class="col-sm-7">
                                                 <input type="text" class="form-control" name="username" ng-keydown="validator.username = null"
-                                                    ng-class="{red: validator.username}" data-toggle="tooltip" 
+                                                    ng-class="{red: validator.username}" data-toggle="tooltip"
                                                     title="{{validator.username}}"
                                                     ng-model="user.username">
                                             </div>
@@ -183,7 +183,7 @@
 
                                             <div class="col-sm-7">
                                                 <input type="password" class="form-control" name="password" ng-keydown="validator.password = null"
-                                                    ng-model="user.password" ng-class="{red: validator.password}" data-toggle="tooltip" 
+                                                    ng-model="user.password" ng-class="{red: validator.password}" data-toggle="tooltip"
                                                     title="{{validator.password}}">
                                             </div>
                                         </div>
@@ -191,11 +191,10 @@
                                             <label for="confirm-password" class="col-sm-5 control-label"
                                                    required translate="user.field.pass-conf">Confirm
                                                 New Password</label>
-
                                             <div class="col-sm-7">
                                                 <input type="password" class="form-control"
                                                        name="confirm-password" ng-model="user.confirmPassword" ng-keydown="validator.confirmPassword = null"
-                                                       ng-class="{red: validator.confirmPassword}" data-toggle="tooltip" 
+                                                       ng-class="{red: validator.confirmPassword}" data-toggle="tooltip"
                                                     title="{{validator.confirmPassword}}">
                                             </div>
                                         </div>
@@ -211,7 +210,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="language" class="col-sm-5 control-label"
+                                              <label for="language" class="col-sm-5 control-label"
                                                    translate="user.field.language">Language</label>
 
                                             <div class="col-sm-7">
@@ -259,7 +258,7 @@
                                                 translate="user.field.ass-com">Assigned Companies</label>
                                             <div class="col-sm-7">
                                                 <div ng-dropdown-multiselect="" options="assignedcompanies"
-                                                    selected-model="selectedCompanies" checkboxes="true"
+                                                    selected-model="exitedCompanies" checkboxes="true"
                                                     extra-settings="companysetting" translation-texts=""></div>
                                             </div>
                                         </div>
@@ -299,7 +298,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-6 col-xs-6">
+                                     <div class="col-md-6 col-xs-6">
                                         <button type="submit" class="btn btn-primary save-user-button"
                                             style="float: right; width: 80px" value="save"
                                             translate="user.button.btn-save">Save</button>

@@ -11,19 +11,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
-import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.http.HttpEntity;	
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,6 +30,7 @@ import org.springframework.web.multipart.MultipartResolver;
 
 import vn.kms.launch.contactmgr.domain.image.Photo;
 import vn.kms.launch.contactmgr.service.PhotoService;
+import vn.kms.launch.contactmgr.util.SearchCriteria;
 import vn.kms.launch.contactmgr.util.SearchResult;
 
 /**
@@ -42,11 +38,11 @@ import vn.kms.launch.contactmgr.util.SearchResult;
  */
 
 @Controller
-@RequestMapping(value = "/api/photos/")
+@RequestMapping(value = "/api/photos")
 public class PhotoController {
-//	@Autowired
-//	//@Value("${contacts.photo.storage}")
-//	private String photoDir;
+//    @Autowired
+//    //@Value("${contacts.photo.storage}")
+//    private String photoDir;
 
     private static final List<MediaType> FILTER_IMAGE = new ArrayList<MediaType>();
 
@@ -71,9 +67,13 @@ public class PhotoController {
     public @ResponseBody  ResponseEntity<Photo> uploadPhoto( @RequestBody MultipartFile file)
                                                             throws IOException, ServletException {
 
+    	if (file == null){
+    		return new ResponseEntity<Photo>(HttpStatus.PRECONDITION_FAILED);
+    	}
+    	
         Photo res = new Photo();
-        String contentTpye = file.getContentType();
-        if (!filterUpload(contentTpye)) {
+        String contentType = file.getContentType();
+        if (!filterUpload(contentType)) {
             return new ResponseEntity<Photo>(HttpStatus.PRECONDITION_FAILED);
         }
 
@@ -81,28 +81,28 @@ public class PhotoController {
             res = uploadService.uploadImage(
                 file.getInputStream(),
                 file.getOriginalFilename(),
-                contentTpye);
+                contentType);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
         return new ResponseEntity<Photo>(res, HttpStatus.CREATED);
     }
-
+    
     @RequestMapping(method = GET)
-    public ResponseEntity<SearchResult<Photo>> getListPhotos( @RequestParam(value = "pageIndex", defaultValue = "1") String pageIndex, @RequestParam(value = "pageSize", defaultValue = "10") String pageSize) {
-
-        SearchResult<Photo> list = uploadService.getListPhotos(Integer.parseInt(pageIndex), Integer.parseInt(pageSize));
-        if (list.getTotalItems() == 0) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(list, HttpStatus.OK);
+    public ResponseEntity<SearchResult> getListPhotos(
+                                        @RequestParam(value="pageIndex",defaultValue = "1") int pageIndex,
+                                        @RequestParam(value="pageSize",defaultValue = "5") int pageSize ) {
+        SearchCriteria criteria = new SearchCriteria();
+        criteria.setPageSize(pageSize);
+        criteria.setPageIndex(pageIndex);
+        return new ResponseEntity<>(uploadService.searchPhotos(criteria), HttpStatus.OK);
     }
     
     @RequestMapping(value="/{uuid}", method = GET)
     public HttpEntity<byte[]> getPhoto(@PathVariable String uuid, WebRequest request) throws IOException {
-    	
-    	File photoFile = new File(uploadService.getPathFull(uuid));
+        
+        File photoFile = new File(uploadService.getPathFull(uuid));
         
         if (request.checkNotModified(photoFile.lastModified())) {
             return null; // return 304 code

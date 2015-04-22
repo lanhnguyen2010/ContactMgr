@@ -4,15 +4,18 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @Table(name = "COUNTRIES")
 public class Country {
+	
     @Id
     @Column(name = "COUNTRY_CODE")
     private String countryCode;
 
     @Column(name = "COUNTRY")
+    @Pattern(regexp = "^([A-Z]{2})$", message = "{validation.country.message}")
     private String country;
 
     public String getCountryCode() {
