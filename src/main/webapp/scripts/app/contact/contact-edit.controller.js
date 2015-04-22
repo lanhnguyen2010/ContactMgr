@@ -20,7 +20,7 @@ angular.module('contactmgrApp')
         };
 
         $scope.selectUploadPhoto = function(imageUpload) {
-            if (!confirm('Are you sure you want to upload this photo?')) {
+            if (!confirm('Are you sure to want to upload this photo?')) {
                 return;
             }
 
@@ -33,7 +33,10 @@ angular.module('contactmgrApp')
                 	$scope.selectPhoto(data);
                 })
                 .error(function(data, status) {
-                	console.log(status);
+                	if (status == '412') {
+                	    alert('invalid photo type!');
+                        document.getElementById('closeButton').click();
+                    }
                 });
 
         };
@@ -206,22 +209,22 @@ angular.module('contactmgrApp')
 
          $scope.getLogo = function(){
              if($scope.contact == null){
-                 $scope.contact = {work: { company: {logo: '../../../photos/unknown.jpg'}}};
-                 return "../../../photos/unknown.jpg";
+                 $scope.contact = {work: { company: {logo: '../../../photos/missing-logo.jpg'}}};
+                 return "../../../photos/missing-logo.jpg";
              } else if($scope.contact.work == null){
-                 $scope.contact.work = { company: {logo: '../../../photos/unknown.jpg'}};
-                 return "../../../photos/unknown.jpg";
+                 $scope.contact.work = { company: {logo: '../../../photos/missing-logo.jpg'}};
+                 return "../../../photos/missing-logo.jpg";
              } else if($scope.contact.work.company == null){
-                 $scope.contact.work.company = {logo: '../../../photos/unknown.jpg'};
-                 return "../../../photos/unknown.jpg";
+                 $scope.contact.work.company = {logo: '../../../photos/missing-logo.jpg'};
+                 return "../../../photos/missing-logo.jpg";
              }
              return $scope.contact.work.company.logo;
          };
 
          $scope.getLogoOfSelectedCompany = function(){
              if($scope.selectedCompany == null){
-                 $scope.selectedCompany = {logo: '../../../photos/unknown.jpg'};
-                 return "../../../photos/unknown.jpg";
+                 $scope.selectedCompany = {logo: '../../../photos/missing-logo.jpg'};
+                 return "../../../photos/missing-logo.jpg";
              }
              return $scope.selectedCompany.logo;
          };

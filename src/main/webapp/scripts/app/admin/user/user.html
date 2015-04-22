@@ -45,11 +45,11 @@
 
                     <div class="col-md-4">
                         <p class="input-group">
-                            <input type="text" class="form-control" datepicker-popup="yyyy-MM-dd" 
+                            <input type="text" class="form-control" datepicker-popup="yyyy-MM-dd"
                                    ng-model="criteria.createdFrom" is-open="openedCalendarFrom" placeholder="YYYY-MM-DD"
                                    close-text="Close" disabled />
                                 <span class="input-group-btn">
-                                    <button type="button" class="btn btn-default" ng-click="openCalendar($event, 1)"><i 
+                                    <button type="button" class="btn btn-default" ng-click="openCalendar($event, 1)"><i
                                             class="glyphicon glyphicon-calendar"></i></button>
                                </span>
                         </p>
@@ -59,11 +59,11 @@
 
                     <div class="col-md-4">
                         <p class="input-group">
-                            <input type="text" class="form-control" datepicker-popup="yyyy-MM-dd" 
+                            <input type="text" class="form-control" datepicker-popup="yyyy-MM-dd"
                                    ng-model="criteria.createdTo" date-disabled="disabled(date, mode)" is-open="openedCalendarTo" placeholder="YYYY-MM-DD"
                                    close-text="Close" disabled />
                                 <span class="input-group-btn">
-                                    <button type="button" class="btn btn-default" ng-click="openCalendar($event, 2)"><i 
+                                    <button type="button" class="btn btn-default" ng-click="openCalendar($event, 2)"><i
                                             class="glyphicon glyphicon-calendar"></i></button>
                                </span>
                         </p>
@@ -146,7 +146,7 @@
             </tr>
         </table>
     </div>
-    
+
     <!-- Show add user dialog -->
     <form name="addUser_form" novalidate class="form-horizontal"
           role="form" ng-submit="saveUser()">
@@ -172,7 +172,7 @@
 
                                             <div class="col-sm-7">
                                                 <input type="text" class="form-control" name="username" ng-keydown="validator.username = null"
-                                                    ng-class="{red: validator.username}" data-toggle="tooltip" 
+                                                    ng-class="{red: validator.username}" data-toggle="tooltip"
                                                     title="{{validator.username}}"
                                                     ng-model="user.username">
                                             </div>
@@ -183,7 +183,7 @@
 
                                             <div class="col-sm-7">
                                                 <input type="password" class="form-control" name="password" ng-keydown="validator.password = null"
-                                                    ng-model="user.password" ng-class="{red: validator.password}" data-toggle="tooltip" 
+                                                    ng-model="user.password" ng-class="{red: validator.password}" data-toggle="tooltip"
                                                     title="{{validator.password}}">
                                             </div>
                                         </div>
@@ -195,7 +195,7 @@
                                             <div class="col-sm-7">
                                                 <input type="password" class="form-control"
                                                        name="confirm-password" ng-model="user.confirmPassword" ng-keydown="validator.confirmPassword = null"
-                                                       ng-class="{red: validator.confirmPassword}" data-toggle="tooltip" 
+                                                       ng-class="{red: validator.confirmPassword}" data-toggle="tooltip"
                                                     title="{{validator.confirmPassword}}">
                                             </div>
                                         </div>
@@ -204,7 +204,9 @@
                                                    translate="user.field.email">Email</label>
 
                                             <div class="col-sm-7">
-                                                <input type="text" class="form-control" name="email"
+                                                <input type="text" class="form-control" name="email" ng-keydown="validator.email = null"
+                                                       ng-class="{red: validator.email}" data-toggle="tooltip"
+                                                       title="{{validator.email}}"
                                                        ng-model="user.email" placeholder="example@xyz">
                                             </div>
                                         </div>
@@ -235,7 +237,9 @@
                                                    translate="user.field.first-name">First Name</label>
 
                                             <div class="col-sm-7">
-                                                <input type="text" class="form-control" name="first_name"
+                                                <input type="text" class="form-control" name="first_name" ng-keydown="validator.firstname = null"
+                                                       ng-class="{red: validator.firstname}" data-toggle="tooltip"
+                                                       title="{{validator.firstname}}"
                                                        ng-model="user.firstname">
                                             </div>
                                         </div>
@@ -244,7 +248,9 @@
                                                    translate="user.field.last-name">Last Name</label>
 
                                             <div class="col-sm-7">
-                                                <input type="text" class="form-control" name="last_name"
+                                                <input type="text" class="form-control" name="last_name" ng-keydown="validator.lastname = null"
+                                                       ng-class="{red: validator.lastname}" data-toggle="tooltip"
+                                                       title="{{validator.lastname}}"
                                                        ng-model="user.lastname">
                                             </div>
                                         </div>

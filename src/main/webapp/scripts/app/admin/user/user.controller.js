@@ -39,7 +39,7 @@ angular.module('contactmgrApp').controller(
                     "expiredDate" : "",
                     "active" : false,
                     "language" : "",
-                    "assignedCompanies" : []
+                    "assignedCompanies" : ''
                 };
                 $scope.checkboxSelection = '1';
                 $scope.selectedCompanies = [];
@@ -250,21 +250,30 @@ angular.module('contactmgrApp').controller(
                 formatYear : 'yy',
                 startingDay : 1
             };
-            $scope.setAssignedCompanies = function(){
-                for (var i = 0; i < $scope.selectedCompanies.length; i++){
-                    $scope.user.assignedCompanies = $scope.user.assignedCompanies.push(selectedCompanies[i]["id"]);
+            $scope.setAssignedCompanies = function() {
+                $scope.user.assignedCompanies = "";
+                for (var i = 0; i < $scope.selectedCompanies.length; i++) {
+                    $scope.user.assignedCompanies = $scope.user.assignedCompanies
+                            + parseInt($scope.selectedCompanies[i]["id"]);
+                    if (i < $scope.selectedCompanies.length - 1) {
+                        $scope.user.assignedCompanies = $scope.user.assignedCompanies
+                                + ", ";
+                    }
                 }
+                console.log($scope.user.assignedCompanies);
             }
-         // set list companies that user are managing into interface
+                // set list companies that user are managing into interface
             $scope.getCompaniesToDisplayUI = function() {
                 $scope.selectedCompanies = [];
                 if ($scope.user.assignedCompanies != null) {
-                    console.log($scope.user.assignedCompanies.length);
-                    $scope.user.assignedCompanies.forEach(function(entry) {
+                    var listCompanies = $scope.user.assignedCompanies
+                            .split(",");
+                    listCompanies.forEach(function(entry) {
                         var singleObj = {}
                         singleObj['id'] = entry;
                         $scope.selectedCompanies.push(singleObj);
                     });
+                    console.log($scope.selectedCompanies);
                 }
             }
             init();
