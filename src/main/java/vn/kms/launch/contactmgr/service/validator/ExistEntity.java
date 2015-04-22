@@ -11,8 +11,6 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
-import vn.kms.launch.contactmgr.domain.contact.Company;
-
 @Documented
 @Constraint(validatedBy = ExistEntityValidate.class)
 @Target({ METHOD, FIELD })
@@ -24,6 +22,8 @@ public @interface ExistEntity {
     Class<?>[] groups() default { };
 
     Class<? extends Payload>[] payload() default { };
+
+    Class<?> type();
     
     @Target({ METHOD, FIELD})
     @Retention(RUNTIME)
@@ -31,6 +31,4 @@ public @interface ExistEntity {
     public @interface List {
         ExistEntity[] value();
     }
-
-    Class<Company> type();
 }

@@ -23,7 +23,7 @@ public class Work extends ValueObject<Work> {
     private String department;
 
     @Column(name = "COMPANY_ID")
-    @ExistEntity(type=Company.class)
+    @ExistEntity(type = Company.class)
     private Integer companyId;
 
     @ManyToOne
