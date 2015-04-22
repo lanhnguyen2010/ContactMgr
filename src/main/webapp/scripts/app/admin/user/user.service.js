@@ -21,7 +21,5 @@ angular.module('contactmgrApp')
         this.getRoles=function(){
             return $http.get("/api/users/roles");
         };
-        this.saveUser = function(user){
-            return (user.id <= 0) ?  $http.post("/api/users", user) : $http.put("/api/users/" + user.id , user);
-     };
-    })
+        this.saveUser = function(user){);
+            return (user.id <= 0) ?  $http.post("/api/users", user) : $http.put("/api/users/" + user.id , user);      };    })

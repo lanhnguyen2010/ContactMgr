@@ -17,7 +17,7 @@ angular.module('contactmgrApp').controller(
                 role : '',
                 createdFrom:'',
                 createdTo:'',
-                assignedCompanies:"",
+                assignedCompanies: [],
                 pageIndex:1,
                 pageSize:10
             };
@@ -39,7 +39,7 @@ angular.module('contactmgrApp').controller(
                     "expiredDate" : "",
                     "active" : false,
                     "language" : "",
-                    "assignedCompanies" : ''
+                    "assignedCompanies" : []
                 };
                 $scope.checkboxSelection = '1';
                 $scope.selectedCompanies = [];
@@ -65,10 +65,9 @@ angular.module('contactmgrApp').controller(
 
                 $scope.searchClicked = true;
                 $scope.isLoading = true;
-                $scope.criteria.assignedCompanies="";
+                $scope.criteria.assignedCompanies=[];
                 for (var i = 0; i < $scope.selectedCompanies.length; i++){
-                    if (i != 0) $scope.criteria.assignedCompanies += ",";
-                    $scope.criteria.assignedCompanies += $scope.selectedCompanies[i]["id"];
+                    $scope.criteria.assignedCompanies.push(parseInt($scope.selectedCompanies[i]["id"]));
                 }
                 $scope.criteria.createdFrom = $filter('date')($scope.criteria.createdFrom,'yyyy-MM-dd');
                 $scope.criteria.createdTo = $filter('date')($scope.criteria.createdTo,'yyyy-MM-dd');
@@ -206,6 +205,8 @@ angular.module('contactmgrApp').controller(
                 UsersService.saveUser($scope.user).success(
                         function(data, status, headers, config) {
                             window.alert("Save user successful!");
+                            $scope.currentPage = $scope.currentPage-1;
+                            $scope.usersTableParams.reload();
                             $scope.initUser();
                         }).error(
                         function(data, status, header, config) {
@@ -250,30 +251,22 @@ angular.module('contactmgrApp').controller(
                 formatYear : 'yy',
                 startingDay : 1
             };
-            $scope.setAssignedCompanies = function() {
-                $scope.user.assignedCompanies = "";
-                for (var i = 0; i < $scope.selectedCompanies.length; i++) {
-                    $scope.user.assignedCompanies = $scope.user.assignedCompanies
-                            + parseInt($scope.selectedCompanies[i]["id"]);
-                    if (i < $scope.selectedCompanies.length - 1) {
-                        $scope.user.assignedCompanies = $scope.user.assignedCompanies
-                                + ", ";
-                    }
+            $scope.setAssignedCompanies = function(){
+                $scope.user.assignedCompanies = [];
+                for (var i = 0; i < $scope.selectedCompanies.length; i++){
+                    $scope.user.assignedCompanies.push(parseInt($scope.selectedCompanies[i]["id"]));
                 }
-                console.log($scope.user.assignedCompanies);
             }
-                // set list companies that user are managing into interface
+         // set list companies that user are managing into interface
             $scope.getCompaniesToDisplayUI = function() {
                 $scope.selectedCompanies = [];
                 if ($scope.user.assignedCompanies != null) {
-                    var listCompanies = $scope.user.assignedCompanies
-                            .split(",");
-                    listCompanies.forEach(function(entry) {
+                    console.log($scope.user.assignedCompanies.length);
+                    $scope.user.assignedCompanies.forEach(function(entry) {
                         var singleObj = {}
-                        singleObj['id'] = entry;
+                        singleObj['id'] = entry.toString();
                         $scope.selectedCompanies.push(singleObj);
                     });
-                    console.log($scope.selectedCompanies);
                 }
             }
             init();

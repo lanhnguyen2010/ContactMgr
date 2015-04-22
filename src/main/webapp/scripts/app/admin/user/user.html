@@ -146,7 +146,6 @@
             </tr>
         </table>
     </div>
-
     <!-- Show add user dialog -->
     <form name="addUser_form" novalidate class="form-horizontal"
           role="form" ng-submit="saveUser()">
@@ -205,8 +204,8 @@
 
                                             <div class="col-sm-7">
                                                 <input type="text" class="form-control" name="email" ng-keydown="validator.email = null"
-                                                       ng-class="{red: validator.email}" data-toggle="tooltip"
-                                                       title="{{validator.email}}"
+                                                    ng-class="{red: validator.email}" data-toggle="tooltip" 
+                                                    title="{{validator.email}}"
                                                        ng-model="user.email" placeholder="example@xyz">
                                             </div>
                                         </div>
@@ -238,8 +237,8 @@
 
                                             <div class="col-sm-7">
                                                 <input type="text" class="form-control" name="first_name" ng-keydown="validator.firstname = null"
-                                                       ng-class="{red: validator.firstname}" data-toggle="tooltip"
-                                                       title="{{validator.firstname}}"
+                                                    ng-class="{red: validator.firstname}" data-toggle="tooltip" 
+                                                    title="{{validator.firstname}}"
                                                        ng-model="user.firstname">
                                             </div>
                                         </div>
@@ -249,8 +248,8 @@
 
                                             <div class="col-sm-7">
                                                 <input type="text" class="form-control" name="last_name" ng-keydown="validator.lastname = null"
-                                                       ng-class="{red: validator.lastname}" data-toggle="tooltip"
-                                                       title="{{validator.lastname}}"
+                                                    ng-class="{red: validator.lastname}" data-toggle="tooltip" 
+                                                    title="{{validator.lastname}}"
                                                        ng-model="user.lastname">
                                             </div>
                                         </div>

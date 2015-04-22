@@ -43,7 +43,6 @@ public class UserController {
 
     @RequestMapping(value = "/{id}", method = PUT)
     public ResponseEntity<?> updateUser(@PathVariable int id, @RequestBody User user) {
-        System.out.println("UPDATE HERE");
         return saveUser(user, id);
     }
 
@@ -55,7 +54,6 @@ public class UserController {
 
     @RequestMapping(value = "/{id}", method = DELETE)
     public ResponseEntity<Void> deleteUser(@PathVariable int id) {
-
         int deleteId = userService.deleteUsers(id);
         return new ResponseEntity<>((deleteId == 0) ? NOT_FOUND : NO_CONTENT);
     }
@@ -71,7 +69,7 @@ public class UserController {
 
     @RequestMapping(value = "/active/", method = PUT)
     public ResponseEntity<Integer> activeUser(@RequestParam int... ids) {
-        Integer result = userService.activeUser(ids);
+        int result = userService.activeUser(ids);
         if (result == ids.length) {
             return new ResponseEntity<Integer>(result,
                 HttpStatus.OK);
@@ -83,7 +81,7 @@ public class UserController {
 
     @RequestMapping(value = "/deactive/", method = PUT)
     public ResponseEntity<Integer> deactiveUser(@RequestParam int... ids) {
-        Integer result = userService.deactiveUser(ids);
+        int result = userService.deactiveUser(ids);
         if (result == ids.length) {
             return new ResponseEntity<Integer>(result,
                 HttpStatus.OK);
