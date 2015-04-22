@@ -51,4 +51,31 @@ angular.module('contactmgrApp', ['LocalStorageModule', 'tmh.dynamicLocale','ngRe
 
         tmhDynamicLocaleProvider.localeLocationPattern('bower_components/angular-i18n/angular-locale_{{locale}}.js');
         tmhDynamicLocaleProvider.useCookieStorage('NG_TRANSLATE_LANG_KEY');
-    });
+    }).factory('authHttpResponseInterceptor',['$q','$location',function($q,$location){
+        return {
+//            response: function(response){
+//                if (response.status === 401) {
+//                    console.log("Response 401");
+//                }
+//                return response || $q.when(response);
+//            },
+            responseError: function(rejection) {
+                if (rejection.status === 404) {
+                    console.log("Response Error 404",rejection);
+                    $location.path('/not_found');
+                }
+                if (rejection.status === 500) {
+                    console.log("Response Error 500",rejection);
+                    $location.path('/error');
+                }
+                if (rejection.status === 403) {
+                    console.log("Response Error 403",rejection);
+                    $location.path('/access_denied');
+                }
+                return $q.reject(rejection);
+            }
+        }
+    }]).config(['$httpProvider',function($httpProvider) {
+        //Http Intercpetor to check auth failures for xhr requests
+        $httpProvider.interceptors.push('authHttpResponseInterceptor');
+    }]);
