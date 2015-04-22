@@ -42,7 +42,7 @@ angular.module('contactmgrApp').controller(
                     "assignedCompanies" : []
                 };
                 $scope.checkboxSelection = '1';
-                $scope.selectedCompanies = [];
+                $scope.exitedCompanies = [];
                 $scope.validator = null;
             }
             var PAGE_SIZE = 10;
@@ -253,19 +253,19 @@ angular.module('contactmgrApp').controller(
             };
             $scope.setAssignedCompanies = function(){
                 $scope.user.assignedCompanies = [];
-                for (var i = 0; i < $scope.selectedCompanies.length; i++){
+                for (var i = 0; i < $scope.exitedCompanies.length; i++){
                     $scope.user.assignedCompanies.push(parseInt($scope.selectedCompanies[i]["id"]));
                 }
             }
          // set list companies that user are managing into interface
             $scope.getCompaniesToDisplayUI = function() {
-                $scope.selectedCompanies = [];
+                $scope.exitedCompanies = [];
                 if ($scope.user.assignedCompanies != null) {
                     console.log($scope.user.assignedCompanies.length);
                     $scope.user.assignedCompanies.forEach(function(entry) {
                         var singleObj = {}
                         singleObj['id'] = entry.toString();
-                        $scope.selectedCompanies.push(singleObj);
+                        $scope.exitedCompanies.push(singleObj);
                     });
                 }
             }
