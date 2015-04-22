@@ -72,6 +72,9 @@ public class ContactRepositoryImpl implements ContactRepositoryCustom {
             Map<String, Object> params) {
         StringBuilder jpqlQuery = new StringBuilder(
                 "from Contact c left join c.work.company where 1=1 ");
+        
+        jpqlQuery.append(" and exists (from User u left join u.assignedCompanies as companyId where u.id = :userId and c.work.company.id = companyId )");
+        params.put("userId", criteria.getUserId());
 
         if (!StringUtils.isEmpty(criteria.getName())) {
             jpqlQuery
