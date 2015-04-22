@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 
@@ -13,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import vn.kms.launch.contactmgr.domain.contact.Company;
-import vn.kms.launch.contactmgr.domain.contact.Work;
 import vn.kms.launch.contactmgr.domain.user.Role;
 import vn.kms.launch.contactmgr.domain.user.User;
 import vn.kms.launch.contactmgr.domain.user.UserRepository;
@@ -26,9 +22,6 @@ import vn.kms.launch.contactmgr.util.ValidationException;
 @Service
 @Transactional(readOnly = true)
 public class UserService {
-
-    @PersistenceContext
-    private EntityManager em;
 
     @Autowired
     private UserRepository userRepository;
@@ -53,16 +46,17 @@ public class UserService {
 
     @Transactional
     public User saveUser(User user, Integer id) throws ValidationException {
-
         if (user == null) {
             return null;
         }
-
         if (id != null && !userRepository.exists(id)) {
             throw new EntityNotFoundException();
         }
         user.setId(id);
         validateUser(user);
+        if (id != null && !user.getAssignedCompanies().isEmpty()){
+        	userRepository.updateUserAssignedCompanies(id);
+        }
         return userRepository.save(user);
     }
 

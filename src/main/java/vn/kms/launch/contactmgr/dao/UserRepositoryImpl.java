@@ -1,7 +1,5 @@
 package vn.kms.launch.contactmgr.dao;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -30,7 +28,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
     public SearchResult<User> searchByCriteria(UserSearchCriteria criteria) {
         Map<String, Object> params = new HashMap<>();
         String baseQuery = buildBaseQuery(criteria, params);
-        Query query = em.createQuery("select count(u) " + baseQuery);
+        Query query = em.createQuery("select count(distinct u) " + baseQuery);
 
         for (String name : params.keySet()) {
             query.setParameter(name, params.get(name));
@@ -38,14 +36,18 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
         int totalUsers = ((Number) query.getSingleResult()).intValue();
 
         // get page of Greetings matched search criteria
-        query = em.createQuery("select u " + baseQuery);
+        query = em.createQuery("select distinct u " + baseQuery);
         for (String name : params.keySet()) {
             query.setParameter(name, params.get(name));
         }
         query.setFirstResult((criteria.getPageIndex() - 1)
             * criteria.getPageSize());
         query.setMaxResults(criteria.getPageSize());
-        List<User> users = query.getResultList();
+        
+        List<User> users = new ArrayList<User>();
+        if (!isContainPercenSign(criteria)){
+        	users = query.getResultList();
+        }
 
         return new SearchResult<>(criteria, users, totalUsers);
 
@@ -53,8 +55,15 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
 
     private String buildBaseQuery(UserSearchCriteria criteria,
                                   Map<String, Object> params) {
+    	
+    	StringBuilder jpqlQuery = new StringBuilder("");
 
-        StringBuilder jpqlQuery = new StringBuilder("from User u where 1=1");
+    	if (!criteria.getAssignedCompanies().isEmpty()) {
+    		jpqlQuery.append("from User u join u.assignedCompanies ac where ac in :assignCompanies");
+    		params.put("assignCompanies", criteria.getAssignedCompanies());
+        } else {
+        	jpqlQuery.append("from User u where 1=1");
+        }
 
         if (!StringUtils.isEmpty(criteria.getUsername())) {
             jpqlQuery.append(" and");
@@ -96,16 +105,6 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
             System.out.println(criteria.getCreatedTo().getTime());
             params.put("created_to", new Date(criteria.getCreatedTo().getTime() + (1000L * 60 * 60 * 24)));
         }
-
-        if (!StringUtils.isEmpty(criteria.getAssignedCompanies())) {
-            for (String companyCriteria: criteria.getAssignedCompanies().split(",")) {
-            	companyCriteria.trim();
-            	companyCriteria = "%" + companyCriteria + "%";
-                jpqlQuery.append(" and");
-                jpqlQuery.append(" u.assignedCompanies like :assignedCompanies");
-                params.put("assignedCompanies", companyCriteria);
-            }
-        }
         if (!StringUtils.isEmpty(criteria.getRole())) {
             jpqlQuery.append(" and");
             jpqlQuery.append(" u.role like :role");
@@ -114,13 +113,19 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
 
         return jpqlQuery.toString();
     }
+    
+    private boolean isContainPercenSign(UserSearchCriteria criteria){
+    	if (criteria.getEmail().contains("%") || criteria.getFirstlastName().contains("%") || criteria.getUsername().contains("%"))
+    		return true;
+    	return false;
+    }
 
     private String replaceWildcards(String text) {
         return text.replace('*', '%');
     }
 
     @Override
-    public Integer activeUser(int... ids) {
+    public int activeUser(int... ids) {
         List<Integer> lst = new ArrayList<>();
         for (int i : ids) {
             lst.add(i);
@@ -133,16 +138,37 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
     }
 
     @Override
-    public Integer deactiveUser(int... ids) {
+    public int deactiveUser(int... ids) {
         List<Integer> lst = new ArrayList<>();
         for (int i : ids) {
             lst.add(i);
         }
-        Query query = em
-            .createQuery("update User u set u.active=0 where u.id in :ids");
+        Query query = em.createQuery("update User u set u.active=0 where u.id in :ids");
         query.setParameter("ids", lst);
         int result = query.executeUpdate();
         return result;
     }
+
+	@Override
+	public int deleteUsers(int... ids) {
+		List<Integer> lst = new ArrayList<>();
+        for (int i : ids) {
+            lst.add(i);
+        }
+		Query query = em.createQuery("delete from User u where u.id in :ids");
+		query.setParameter("ids", lst);
+		int result = query.executeUpdate();
+		query = em.createNativeQuery("delete from user_assignedcompanies where user_id in :ids");
+		query.setParameter("ids", lst);
+		query.executeUpdate();
+		return result;
+	}
+
+	@Override
+	public int updateUserAssignedCompanies(int userId) {
+		Query query = em.createNativeQuery("delete from user_assignedcompanies where user_id = :id");
+		query.setParameter("id", userId);
+		return query.executeUpdate();
+	}
 
 }

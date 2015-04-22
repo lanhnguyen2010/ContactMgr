@@ -7,8 +7,12 @@ public interface UserRepositoryCustom {
 
     public SearchResult<User> searchByCriteria(UserSearchCriteria criteria);
 
-    public Integer activeUser(int... ids);
+    public int activeUser(int... ids);
 
-    public Integer deactiveUser(int... ids);
+    public int deactiveUser(int... ids);
+    
+    public int deleteUsers(int... ids);
+    
+    public int updateUserAssignedCompanies(int userId);
 
 }
