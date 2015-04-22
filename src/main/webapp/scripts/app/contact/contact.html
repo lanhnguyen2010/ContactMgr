@@ -106,7 +106,6 @@
                 <td data-title="'Name'">
                     <a href="#/contact/edit/{{contact.id}}">{{contact.displayName}}</a>
                 </td>
-                <td data-title="'Name'">{{contact.firstName}}</td>
                 <td data-title="'Mobile'">{{contact.mobile}}</td>
                 <td data-title="'Email'">{{contact.email}}</td>
                 <td data-title="'Job Title'">{{contact.work.title}}</td>
@@ -145,8 +144,7 @@
                                 <p class="pull-right"></p>
                             </div>
                             <div class="col-sm-4">
-
-                                <img class="pull-left" src="{{selectedCompany.logo}}" />
+                                <img style="width:70%;" class="pull-left" src="{{selectedCompany.logo}}" />
                             </div>
                             <div class="col-sm-2">
                                 <p class="pull-right"
