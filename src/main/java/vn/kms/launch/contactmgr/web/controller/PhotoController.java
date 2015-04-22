@@ -67,6 +67,10 @@ public class PhotoController {
     public @ResponseBody  ResponseEntity<Photo> uploadPhoto( @RequestBody MultipartFile file)
                                                             throws IOException, ServletException {
 
+    	if (file == null){
+    		return new ResponseEntity<Photo>(HttpStatus.PRECONDITION_FAILED);
+    	}
+    	
         Photo res = new Photo();
         String contentType = file.getContentType();
         if (!filterUpload(contentType)) {

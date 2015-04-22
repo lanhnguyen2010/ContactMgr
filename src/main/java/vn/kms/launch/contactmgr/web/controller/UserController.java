@@ -69,27 +69,22 @@ public class UserController {
 
     @RequestMapping(value = "/active/", method = PUT)
     public ResponseEntity<Integer> activeUser(@RequestParam int... ids) {
-        int result = userService.activeUser(ids);
-        if (result == ids.length) {
-            return new ResponseEntity<Integer>(result,
-                HttpStatus.OK);
-        } else {
-            return new ResponseEntity<Integer>(result, HttpStatus.BAD_REQUEST);
+        if (ids.length == 0) {
+            return new ResponseEntity<>(BAD_REQUEST);
         }
-
+        Integer result = userService.activeUser(ids);
+        return new ResponseEntity<>((result == 0) ? NOT_FOUND : OK);
     }
 
     @RequestMapping(value = "/deactive/", method = PUT)
     public ResponseEntity<Integer> deactiveUser(@RequestParam int... ids) {
-        int result = userService.deactiveUser(ids);
-        if (result == ids.length) {
-            return new ResponseEntity<Integer>(result,
-                HttpStatus.OK);
-        } else {
-            return new ResponseEntity<Integer>(result, HttpStatus.BAD_REQUEST);
+        if (ids.length == 0) {
+            return new ResponseEntity<>(BAD_REQUEST);
         }
+        Integer result = userService.deactiveUser(ids);
+        return new ResponseEntity<>((result == 0) ? NOT_FOUND : OK);
     }
-
+    
     @RequestMapping(value = "/roles", method = GET)
     public ResponseEntity<List<String>> getRoles() {
         List<String> result = userService.getRoles();

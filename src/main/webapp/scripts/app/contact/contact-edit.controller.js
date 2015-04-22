@@ -63,6 +63,7 @@ angular.module('contactmgrApp')
 
         $scope.contact;
         $scope.init = function() {
+        	if (contactId == null) return;
             ContactService.getViewContact(contactId).success(
                     function(data) {
                         $scope.contact = data;
@@ -71,7 +72,7 @@ angular.module('contactmgrApp')
                         }
                     })
           };
-        $scope.init();
+        
         $scope.companies;
 
         $scope.selectedCompany = null;
@@ -230,4 +231,6 @@ angular.module('contactmgrApp')
              }
              return $scope.selectedCompany.logo;
          };
+         
+         $scope.init();
     });

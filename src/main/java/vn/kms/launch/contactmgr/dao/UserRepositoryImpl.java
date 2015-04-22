@@ -46,7 +46,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
         
         List<User> users = new ArrayList<User>();
         if (!isContainPercenSign(criteria)){
-        	users = query.getResultList();
+            users = query.getResultList();
         }
 
         return new SearchResult<>(criteria, users, totalUsers);
@@ -55,14 +55,14 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
 
     private String buildBaseQuery(UserSearchCriteria criteria,
                                   Map<String, Object> params) {
-    	
-    	StringBuilder jpqlQuery = new StringBuilder("");
+        
+        StringBuilder jpqlQuery = new StringBuilder("");
 
-    	if (!criteria.getAssignedCompanies().isEmpty()) {
-    		jpqlQuery.append("from User u join u.assignedCompanies ac where ac in :assignCompanies");
-    		params.put("assignCompanies", criteria.getAssignedCompanies());
+        if (!criteria.getAssignedCompanies().isEmpty()) {
+            jpqlQuery.append("from User u join u.assignedCompanies ac where ac in :assignCompanies");
+            params.put("assignCompanies", criteria.getAssignedCompanies());
         } else {
-        	jpqlQuery.append("from User u where 1=1");
+            jpqlQuery.append("from User u where 1=1");
         }
 
         if (!StringUtils.isEmpty(criteria.getUsername())) {
@@ -115,9 +115,9 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
     }
     
     private boolean isContainPercenSign(UserSearchCriteria criteria){
-    	if (criteria.getEmail().contains("%") || criteria.getFirstlastName().contains("%") || criteria.getUsername().contains("%"))
-    		return true;
-    	return false;
+        if (criteria.getEmail().contains("%") || criteria.getFirstlastName().contains("%") || criteria.getUsername().contains("%"))
+            return true;
+        return false;
     }
 
     private String replaceWildcards(String text) {
@@ -149,26 +149,26 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
         return result;
     }
 
-	@Override
-	public int deleteUsers(int... ids) {
-		List<Integer> lst = new ArrayList<>();
+    @Override
+    public int deleteUsers(int... ids) {
+        List<Integer> lst = new ArrayList<>();
         for (int i : ids) {
             lst.add(i);
         }
-		Query query = em.createQuery("delete from User u where u.id in :ids");
-		query.setParameter("ids", lst);
-		int result = query.executeUpdate();
-		query = em.createNativeQuery("delete from user_assignedcompanies where user_id in :ids");
-		query.setParameter("ids", lst);
-		query.executeUpdate();
-		return result;
-	}
+        Query query = em.createQuery("delete from User u where u.id in :ids");
+        query.setParameter("ids", lst);
+        int result = query.executeUpdate();
+        query = em.createNativeQuery("delete from user_assignedcompanies where user_id in :ids");
+        query.setParameter("ids", lst);
+        query.executeUpdate();
+        return result;
+    }
 
-	@Override
-	public int updateUserAssignedCompanies(int userId) {
-		Query query = em.createNativeQuery("delete from user_assignedcompanies where user_id = :id");
-		query.setParameter("id", userId);
-		return query.executeUpdate();
-	}
+    @Override
+    public int updateUserAssignedCompanies(int userId) {
+        Query query = em.createNativeQuery("delete from user_assignedcompanies where user_id = :id");
+        query.setParameter("id", userId);
+        return query.executeUpdate();
+    }
 
 }
