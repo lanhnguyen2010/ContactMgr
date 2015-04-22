@@ -1,4 +1,4 @@
-package vn.kms.launch.contactmgr.domain.validator;
+package vn.kms.launch.contactmgr.service.validator;
 
 import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.ElementType.METHOD;
@@ -10,6 +10,8 @@ import java.lang.annotation.Target;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
+
+import vn.kms.launch.contactmgr.domain.contact.Company;
 
 @Documented
 @Constraint(validatedBy = ExistEntityValidate.class)
@@ -29,4 +31,6 @@ public @interface ExistEntity {
 	public @interface List {
 		ExistEntity[] value();
 	}
+
+	Class<Company> type();
 }

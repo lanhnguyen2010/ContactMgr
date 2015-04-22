@@ -7,7 +7,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 
 @Entity
-//@ExistEntity (message = "{validation.existEntity.message}")
 @Table(name = "COUNTRIES")
 public class Country {
 	

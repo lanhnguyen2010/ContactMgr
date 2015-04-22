@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.Size;
 
 import vn.kms.launch.contactmgr.domain.ValueObject;
+import vn.kms.launch.contactmgr.service.validator.ExistEntity;
 
 @Embeddable
 public class Work extends ValueObject<Work> {
@@ -22,6 +23,7 @@ public class Work extends ValueObject<Work> {
     private String department;
 
     @Column(name = "COMPANY_ID")
+    @ExistEntity(type=Company.class)
     private Integer companyId;
 
     @ManyToOne

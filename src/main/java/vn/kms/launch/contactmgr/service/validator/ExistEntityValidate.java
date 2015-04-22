@@ -1,4 +1,4 @@
-package vn.kms.launch.contactmgr.domain.validator;
+package vn.kms.launch.contactmgr.service.validator;
 
 import javax.persistence.Entity;
 import javax.validation.ConstraintValidator;
