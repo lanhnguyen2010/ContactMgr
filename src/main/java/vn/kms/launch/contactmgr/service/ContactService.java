@@ -1,5 +1,6 @@
 package vn.kms.launch.contactmgr.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -20,8 +21,13 @@ import vn.kms.launch.contactmgr.domain.contact.Country;
 import vn.kms.launch.contactmgr.domain.contact.CountryRepository;
 import vn.kms.launch.contactmgr.domain.contact.Work;
 import vn.kms.launch.contactmgr.domain.image.PhotoRepository;
+import vn.kms.launch.contactmgr.domain.user.Role;
+import vn.kms.launch.contactmgr.domain.user.User;
+import vn.kms.launch.contactmgr.domain.user.UserRepositoryCustom;
+import vn.kms.launch.contactmgr.util.AuthorizationException;
 import vn.kms.launch.contactmgr.util.EntityNotFoundException;
 import vn.kms.launch.contactmgr.util.SearchResult;
+import vn.kms.launch.contactmgr.util.UserUtil;
 import vn.kms.launch.contactmgr.util.ValidationException;
 
 @Service
@@ -41,13 +47,17 @@ public class ContactService {
 
     @Autowired
     private Validator validator;
+    
+    @Autowired
+    private UserUtil userUtil;
 
     public Contact getContact(int id) {
         return contactRepo.findOne(id);
     }
 
     @Transactional
-    public Contact saveContact(Contact contact, Integer contactId) throws ValidationException {
+    public Contact saveContact(Contact contact, Integer contactId)
+            throws ValidationException {
         if (contact == null) {
             return null;
         }
@@ -82,35 +92,53 @@ public class ContactService {
     }
 
     @Transactional
-   public int deleteContacts(int... ids) {
+    public int deleteContacts(int... ids) {
         return contactRepo.deleteByIds(ids);
     }
 
     public SearchResult searchContacts(ContactSearchCriteria criteria) {
+        User user = userUtil.getCurrentLoggedUser();
+        if (user == null) {
+            return null;
+        }
+
+        criteria.setUserId(user.getId());
         return contactRepo.searchByCriteria(criteria);
     }
 
     public void validateContact(Contact contact) throws ValidationException {
-        Set<ConstraintViolation<Contact>> violations = validator.validate(contact);
+        Set<ConstraintViolation<Contact>> violations = validator
+                .validate(contact);
         if (!violations.isEmpty()) {
-            throw new ValidationException(violations.toArray(new ConstraintViolation[0]));
+            throw new ValidationException(
+                    violations.toArray(new ConstraintViolation[0]));
         }
     }
 
     public void validateCompany(Company company) throws ValidationException {
-        Set<ConstraintViolation<Company>> violations = validator.validate(company);
+        Set<ConstraintViolation<Company>> violations = validator
+                .validate(company);
         if (!violations.isEmpty()) {
-            throw new ValidationException(violations.toArray(new ConstraintViolation[0]));
+            throw new ValidationException(
+                    violations.toArray(new ConstraintViolation[0]));
         }
     }
-    
+
     public List<Country> getCountries() {
         return countryRepo.findAll();
     }
 
-    
-    public List<Company> getAllCompanies() {
-        return companyRepo.findAll();
+    public List<Company> getAllCompanies() throws AuthorizationException {
+        User user = userUtil.getCurrentLoggedUser();
+        if (user == null) {
+            throw new AuthorizationException();
+        }
+        
+        if(user.getRole().equals(Role.ADMINISTRATOR.name())){
+            return companyRepo.findAll();
+        }
+
+        return companyRepo.findAll(user.getAssignedCompanies());
     }
 
     @Transactional

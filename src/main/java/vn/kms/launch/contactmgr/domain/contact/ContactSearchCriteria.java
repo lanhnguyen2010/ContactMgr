@@ -3,12 +3,22 @@ package vn.kms.launch.contactmgr.domain.contact;
 import vn.kms.launch.contactmgr.util.SearchCriteria;
 
 public class ContactSearchCriteria extends SearchCriteria {
+    private int userId;
     private String name;
     private String mobile;
     private String email;
     private String jobTitle;
     private String department;
     private String company;
+    
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
 
     public String getName() {
         return name;

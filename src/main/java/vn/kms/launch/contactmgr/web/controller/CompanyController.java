@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import vn.kms.launch.contactmgr.domain.Itemized;
 import vn.kms.launch.contactmgr.domain.contact.Company;
 import vn.kms.launch.contactmgr.service.ContactService;
+import vn.kms.launch.contactmgr.util.AuthorizationException;
 import vn.kms.launch.contactmgr.util.EntityNotFoundException;
 import vn.kms.launch.contactmgr.util.ValidationException;
 
@@ -39,7 +40,12 @@ public class CompanyController {
 
     @RequestMapping(method = GET)
     public ResponseEntity<List<Company>> getAllCompanies() {
-        List<Company> companies = contactService.getAllCompanies();
+        List<Company> companies;
+        try {
+            companies = contactService.getAllCompanies();
+        } catch (AuthorizationException e) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
         return new ResponseEntity<>(companies, HttpStatus.OK);
     }
     
