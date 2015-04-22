@@ -254,7 +254,7 @@ angular.module('contactmgrApp').controller(
             $scope.setAssignedCompanies = function(){
                 $scope.user.assignedCompanies = [];
                 for (var i = 0; i < $scope.exitedCompanies.length; i++){
-                    $scope.user.assignedCompanies.push(parseInt($scope.selectedCompanies[i]["id"]));
+                    $scope.user.assignedCompanies.push(parseInt($scope.exitedCompanies[i]["id"]));
                 }
             }
          // set list companies that user are managing into interface
