@@ -17,10 +17,6 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @EnableJpaRepositories(basePackages = "vn.kms.launch.contactmgr")
 @EnableAutoConfiguration
 @SpringBootApplication
-//@Configuration
-//@EnableWebMvc
-//@ComponentScan
-@EnableConfigurationProperties
 public class ContactMgrApp  extends SpringBootServletInitializer {
     
     @Override
@@ -30,14 +26,12 @@ public class ContactMgrApp  extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
         SpringApplication app = new SpringApplication(ContactMgrApp.class);
-//        System.setProperty("user.timezone", "UTC");
-//        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
-//
+        System.setProperty("user.timezone", "UTC");
+        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
         SimpleCommandLinePropertySource source = new SimpleCommandLinePropertySource(args);
         addDefaultProfile(app, source);
         app.run(args).getEnvironment();
         
-//        SpringApplication.run(ContactMgrApp.class, args).getEnvironment();
     }
 
     private static void addDefaultProfile(SpringApplication app,
