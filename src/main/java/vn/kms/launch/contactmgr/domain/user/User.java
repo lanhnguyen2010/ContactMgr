@@ -77,6 +77,10 @@ public class User extends vn.kms.launch.contactmgr.domain.Entity {
     @Column(name = "company_id")
     private List<Integer> assignedCompanies;
 
+    public User(String username) {
+       this.username = username;
+    }
+
     public String getUsername() {
         return username;
     }
