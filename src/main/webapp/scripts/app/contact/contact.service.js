@@ -110,8 +110,4 @@ angular.module('contactmgrApp')
         this.getPhotos = function(pageIndex,pageSize) {
             return $http.get("/api/photos?pageIndex=" + pageIndex + "&pageSize=" + pageSize);
         };
-        
-        this.getCompanieById = function(id) {
-            return $http.get("/api/companies/" + id);
-        };
     });

@@ -4,6 +4,7 @@ import vn.kms.launch.contactmgr.util.SearchCriteria;
 
 public class ContactSearchCriteria extends SearchCriteria {
     private int userId;
+    private String userRole;
     private String name;
     private String mobile;
     private String email;
@@ -18,6 +19,14 @@ public class ContactSearchCriteria extends SearchCriteria {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public String getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(String userRole) {
+        this.userRole = userRole;
     }
 
     public String getName() {
