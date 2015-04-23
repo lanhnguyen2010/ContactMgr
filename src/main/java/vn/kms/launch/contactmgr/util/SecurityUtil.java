@@ -18,4 +18,8 @@ public class SecurityUtil {
     public static String getCurrentUserRole(){
         return Role.ADMINISTRATOR.name(); // only for test
     }
+    
+    public static String getCurrentUsername(){
+        return null;
+    }
 }
