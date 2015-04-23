@@ -39,15 +39,9 @@ public class CompanyController {
 
     @RequestMapping(method = GET)
     public ResponseEntity<List<Company>> getAllCompanies() {
-        List<Company> companies = contactService.getAllCompanies();
+        List<Company> companies;
+        companies = contactService.getAllCompanies();
         return new ResponseEntity<>(companies, HttpStatus.OK);
-    }
-    
-    @RequestMapping(value = "/{id}", method = GET)
-    public ResponseEntity<Company> getCompany(@PathVariable int id){
-        Company company = contactService.getCompany(id);
-        
-        return new ResponseEntity<>(company, (company == null)? NOT_FOUND : OK);
     }
     
     @RequestMapping(value = "/{id}", method = PUT)
