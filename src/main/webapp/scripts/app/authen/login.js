@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('contactmgrApp')
-    .config(function($stateProvider) {
+    .config(function($stateProvider,$httpProvider) {
         $stateProvider
             .state('login', {
                 parent: 'site',
@@ -21,5 +21,6 @@ angular.module('contactmgrApp')
                         return $translate.refresh();
                     }]
                 }
-            })
+            }),
+            $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
         });

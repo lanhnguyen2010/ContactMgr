@@ -207,4 +207,7 @@ Hide ng-cloak on page load, https://docs.angularjs.org/api/ng/directive/ngCloak
     vertical-align: center;
     width: 95%;
 }
-
+#dialog-small-size{
+    max-width:325px;
+    overflow:auto;
+}
