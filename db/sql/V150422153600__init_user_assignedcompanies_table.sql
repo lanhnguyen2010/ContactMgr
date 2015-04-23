@@ -1,4 +1,3 @@
-DROP TABLE IF EXISTS `user_assignedcompanies`;
 create table user_assignedcompanies(
     user_id INT,
     company_id INT,
