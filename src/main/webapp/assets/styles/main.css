@@ -207,6 +207,10 @@ Hide ng-cloak on page load, https://docs.angularjs.org/api/ng/directive/ngCloak
     vertical-align: center;
     width: 95%;
 }
+#dialog-small-size{
+    max-width:400px;
+    overflow:auto;
+}
 
 .dropdown-submenu {
     position: relative;
@@ -255,4 +259,3 @@ Hide ng-cloak on page load, https://docs.angularjs.org/api/ng/directive/ngCloak
     -moz-border-radius: 6px 0 6px 6px;
     border-radius: 6px 0 6px 6px;
 }
-
