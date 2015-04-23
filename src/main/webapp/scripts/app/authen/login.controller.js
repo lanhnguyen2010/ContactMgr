@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('contactmgrApp').controller(
-        'LoginController',function($rootScope, $scope, $http, $location) {
+        'LoginController',function($rootScope, $scope, $http, $location, LoginService) {
             
             var authenticate = function(credentials, callback) {
                 var headers = credentials ? {
@@ -18,4 +18,5 @@ angular.module('contactmgrApp').controller(
             $scope.checkLogin=function(){
                 console.log($scope.credentials.username)
             }
+            
         });
