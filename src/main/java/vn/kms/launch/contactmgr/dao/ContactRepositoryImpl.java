@@ -17,6 +17,7 @@ import vn.kms.launch.contactmgr.domain.Itemized;
 import vn.kms.launch.contactmgr.domain.contact.Contact;
 import vn.kms.launch.contactmgr.domain.contact.ContactRepositoryCustom;
 import vn.kms.launch.contactmgr.domain.contact.ContactSearchCriteria;
+import vn.kms.launch.contactmgr.domain.user.Role;
 import vn.kms.launch.contactmgr.util.SearchResult;
 
 @Repository
@@ -72,8 +73,14 @@ public class ContactRepositoryImpl implements ContactRepositoryCustom {
         StringBuilder jpqlQuery = new StringBuilder(
                 "from Contact c left join c.work.company where 1=1 ");
         
-        jpqlQuery.append(" and exists (from User u left join u.assignedCompanies as companyId where u.id = :userId and c.work.company.id = companyId )");
+        if(!criteria.getUserRole().equals(Role.ADMINISTRATOR.name())){
+            jpqlQuery.append(" and exists (from User u left join u.assignedCompanies as companyId where u.id = :userId "
+                    + "and c.work.company.id = companyId and u.role = :userRole)");
+        } else{
+            jpqlQuery.append(" and exists (from User u where u.id = :userId and u.role = :userRole)");
+        }
         params.put("userId", criteria.getUserId());
+        params.put("userRole", criteria.getUserRole());
 
         if (!StringUtils.isEmpty(criteria.getName())) {
             jpqlQuery

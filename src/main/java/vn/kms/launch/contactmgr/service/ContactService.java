@@ -103,6 +103,7 @@ public class ContactService {
         }
 
         criteria.setUserId(user.getId());
+        criteria.setUserRole(user.getRole());
         return contactRepo.searchByCriteria(criteria);
     }
 
