@@ -1,6 +1,5 @@
 package vn.kms.launch.contactmgr.service;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -23,11 +22,10 @@ import vn.kms.launch.contactmgr.domain.contact.Work;
 import vn.kms.launch.contactmgr.domain.image.PhotoRepository;
 import vn.kms.launch.contactmgr.domain.user.Role;
 import vn.kms.launch.contactmgr.domain.user.User;
-import vn.kms.launch.contactmgr.domain.user.UserRepositoryCustom;
-import vn.kms.launch.contactmgr.util.AuthorizationException;
+import vn.kms.launch.contactmgr.domain.user.UserRepository;
 import vn.kms.launch.contactmgr.util.EntityNotFoundException;
 import vn.kms.launch.contactmgr.util.SearchResult;
-import vn.kms.launch.contactmgr.util.UserUtil;
+import vn.kms.launch.contactmgr.util.SecurityUtil;
 import vn.kms.launch.contactmgr.util.ValidationException;
 
 @Service
@@ -44,12 +42,12 @@ public class ContactService {
 
     @Autowired
     private PhotoRepository photoRepo;
+    
+    @Autowired
+    private UserRepository userRepo;
 
     @Autowired
     private Validator validator;
-    
-    @Autowired
-    private UserUtil userUtil;
 
     public Contact getContact(int id) {
         return contactRepo.findOne(id);
@@ -96,15 +94,10 @@ public class ContactService {
         return contactRepo.deleteByIds(ids);
     }
 
-    public SearchResult searchContacts(ContactSearchCriteria criteria) {
-        User user = userUtil.getCurrentLoggedUser();
-        if (user == null) {
-            return null;
-        }
-
-        criteria.setUserId(user.getId());
-        criteria.setUserRole(user.getRole());
-        return contactRepo.searchByCriteria(criteria);
+    public SearchResult<Contact> searchContacts(ContactSearchCriteria criteria) {
+        return contactRepo.searchByCriteria(criteria, 
+                SecurityUtil.getCurrentUserId(), 
+                SecurityUtil.getCurrentUserRole());
     }
 
     public void validateContact(Contact contact) throws ValidationException {
@@ -129,16 +122,12 @@ public class ContactService {
         return countryRepo.findAll();
     }
 
-    public List<Company> getAllCompanies() throws AuthorizationException {
-        User user = userUtil.getCurrentLoggedUser();
-        if (user == null) {
-            throw new AuthorizationException();
-        }
-        
-        if(user.getRole().equals(Role.ADMINISTRATOR.name())){
+    public List<Company> getAllCompanies() {
+        if(SecurityUtil.getCurrentUserRole().equals(Role.ADMINISTRATOR.name())){
             return companyRepo.findAll();
         }
 
+        User user = userRepo.findOne(SecurityUtil.getCurrentUserId());
         return companyRepo.findAll(user.getAssignedCompanies());
     }
 
@@ -151,7 +140,6 @@ public class ContactService {
                 return companyRepo.save(company);
             } else {
                 // update a existing company
-
                 company.setId(id);
                 return companyRepo.save(company);
             }
