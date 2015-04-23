@@ -1,5 +1,8 @@
 package vn.kms.launch.contactmgr.service.validator;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
@@ -8,16 +11,19 @@ public class ExistEntityValidate implements ConstraintValidator<ExistEntity, Int
     
     private Class<?> entity;
     
+    @PersistenceContext
+    private EntityManager em;
+    
     public void initialize(ExistEntity annotation) {
         this.entity = annotation.type();
     }
 
     @Override
     public boolean isValid(Integer id, ConstraintValidatorContext context) {
-
-    	if((id == null) || (id < 1)){
-            System.out.println("1: " + entity.hashCode());
-            return false;
+        String entityTable = entity.getSimpleName();
+        if(em != null){
+            Query q = em.createQuery("select id from " + entityTable + " where id=" + id);
+            return q.getResultList().size() > 0;
         }
         return false;
     }
