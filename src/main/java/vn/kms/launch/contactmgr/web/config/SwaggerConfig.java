@@ -1,9 +1,5 @@
 package vn.kms.launch.contactmgr.web.config;
 
-import com.mangofactory.swagger.configuration.SpringSwaggerConfig;
-import com.mangofactory.swagger.models.dto.ApiInfo;
-import com.mangofactory.swagger.plugin.EnableSwagger;
-import com.mangofactory.swagger.plugin.SwaggerSpringMvcPlugin;
 import org.springframework.boot.bind.RelaxedPropertyResolver;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
@@ -11,6 +7,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StopWatch;
+
+import com.mangofactory.swagger.configuration.SpringSwaggerConfig;
+import com.mangofactory.swagger.models.dto.ApiInfo;
+import com.mangofactory.swagger.plugin.EnableSwagger;
+import com.mangofactory.swagger.plugin.SwaggerSpringMvcPlugin;
 
 @Configuration
 @EnableSwagger
