@@ -1,0 +1,15 @@
+{
+    "login":{
+        "title": "Login",
+        "notice": "The authentication was failed. Please double-check and try again.",
+        "placeholder":{
+            "username": "Username or Email",
+            "password": "Password"
+        },
+        "button":{
+            "login": "Login",
+            "remember-me": "Remember me",
+            "forgot-pass": "Forgot password?"
+        }
+    }
+}

@@ -11,7 +11,7 @@ angular.module('contactmgrApp')
                 },
                 views: {
                     'content@': {
-                        templateUrl: 'scripts/app/authen/login.html',
+                        templateUrl: 'scripts/app/authen/login/login.html',
                         controller: 'LoginController'
                     }
                 },
