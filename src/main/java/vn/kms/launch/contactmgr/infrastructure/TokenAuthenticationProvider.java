@@ -1,4 +1,4 @@
-package vn.kms.launch.contactmgr;
+package vn.kms.launch.contactmgr.infrastructure;
 
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -11,6 +11,7 @@ import com.google.common.base.Optional;
 public class TokenAuthenticationProvider implements AuthenticationProvider {
 
     private TokenService tokenService;
+    
     public TokenAuthenticationProvider(TokenService tokenService) {
         this.tokenService = tokenService;
     }
@@ -23,10 +24,12 @@ public class TokenAuthenticationProvider implements AuthenticationProvider {
         if (!tokenService.contains(token.get())) {
             throw new BadCredentialsException("Invalid token or token expired");
         }
+       
         return tokenService.retrieve(token.get());
     }
 
     @Override
+    
     public boolean supports(Class<?> authentication) {
         return authentication.equals(PreAuthenticatedAuthenticationToken.class);
     }

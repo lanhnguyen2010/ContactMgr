@@ -1,4 +1,4 @@
-package vn.kms.launch.contactmgr;
+package vn.kms.launch.contactmgr.infrastructure;
 
 import org.springframework.security.core.authority.AuthorityUtils;
 
@@ -14,7 +14,4 @@ public class SomeExternalServiceAuthenticator implements ExternalServiceAuthenti
         authenticatedExternalWebService.setExternalWebService(externalWebService);
         return authenticatedExternalWebService;
     }
-
-  
-
 }

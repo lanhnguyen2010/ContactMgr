@@ -1,10 +1,14 @@
-package vn.kms.launch.contactmgr;
+package vn.kms.launch.contactmgr.infrastructure;
 
 import java.util.Collection;
 
 import org.springframework.security.core.GrantedAuthority;
 
 public class AuthenticatedExternalWebService extends AuthenticationWithToken{
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
     private ExternalWebServiceStub externalWebServiceStub;
 
     public AuthenticatedExternalWebService(Object aPrincipal,

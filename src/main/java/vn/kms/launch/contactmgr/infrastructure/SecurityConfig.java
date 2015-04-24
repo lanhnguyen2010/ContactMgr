@@ -1,4 +1,4 @@
-package vn.kms.launch.contactmgr;
+package vn.kms.launch.contactmgr.infrastructure;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -16,22 +16,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/", "/api/authenticate")
-                .authenticated();
+        http.authorizeRequests().antMatchers("/api/authenticate").authenticated();
+        http.authorizeRequests().antMatchers("/**").authenticated();
         http.csrf().disable();
-        http.addFilterBefore(new AuthenticationFilter(authenticationManager()),
-                BasicAuthenticationFilter.class);
+        http.addFilterBefore(new AuthenticationFilter(authenticationManager()),BasicAuthenticationFilter.class);
     }
 
     @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth)
-            throws Exception {
-        auth.authenticationProvider(domainUsernamePasswordAuthenticationProvider()).
-        // authenticationProvider(backendAdminUsernamePasswordAuthenticationProvider()).
-         authenticationProvider(tokenAuthenticationProvider());
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.authenticationProvider(domainUsernamePasswordAuthenticationProvider()).authenticationProvider(tokenAuthenticationProvider());
     }
 
-    private AuthenticationProvider tokenAuthenticationProvider() {
+    @Bean
+    public AuthenticationProvider tokenAuthenticationProvider() {
         return new TokenAuthenticationProvider(tokenService());
     }
 
@@ -47,7 +44,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public AuthenticationProvider domainUsernamePasswordAuthenticationProvider() {
-        // TODO Auto-generated method stub
         return new DomainUsernamePasswordAuthenticationProvider(tokenService(),someExternalServiceAuthenticator());
     }
 

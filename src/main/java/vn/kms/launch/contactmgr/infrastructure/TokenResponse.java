@@ -1,4 +1,4 @@
-package vn.kms.launch.contactmgr;
+package vn.kms.launch.contactmgr.infrastructure;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

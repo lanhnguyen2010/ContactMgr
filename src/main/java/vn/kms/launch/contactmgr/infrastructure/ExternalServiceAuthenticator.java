@@ -1,4 +1,4 @@
-package vn.kms.launch.contactmgr;
+package vn.kms.launch.contactmgr.infrastructure;
 
 public interface ExternalServiceAuthenticator {
 

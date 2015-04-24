@@ -10,9 +10,13 @@ public interface UserRepositoryCustom {
     public int activeUser(int... ids);
 
     public int deactiveUser(int... ids);
-    
+
     public int deleteUsers(int... ids);
-    
+
     public int updateUserAssignedCompanies(int userId);
 
+    public int updateLanguage(int id, String language);
+
+
+    public int updatePassword(int id, String password, String passwordConfirm);
 }
