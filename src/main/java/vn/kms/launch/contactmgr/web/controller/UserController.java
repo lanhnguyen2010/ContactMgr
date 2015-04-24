@@ -10,6 +10,7 @@ import vn.kms.launch.contactmgr.dto.user.ChangeLanguageInfo;
 import vn.kms.launch.contactmgr.dto.user.ChangePasswordInfo;
 import vn.kms.launch.contactmgr.service.UserService;
 import vn.kms.launch.contactmgr.util.EntityNotFoundException;
+import vn.kms.launch.contactmgr.util.PasswordNotExistException;
 import vn.kms.launch.contactmgr.util.SearchResult;
 import vn.kms.launch.contactmgr.util.ValidationException;
 
@@ -98,28 +99,20 @@ public class UserController {
 
     @RequestMapping(value = "/updateLanguage", method = PUT)
     public ResponseEntity<?> updateLanguage(@RequestBody ChangeLanguageInfo changeLanguageInfo) {
-        try {
-            int id = changeLanguageInfo.getId();
-            String language = changeLanguageInfo.getLanguage();
-            Integer update = userService.updateLanguage(id, language);
-            return new ResponseEntity<>(update, OK);
-        } catch (EntityNotFoundException ex) {
-            return new ResponseEntity<>(NOT_FOUND);
-        }
+        Integer update = userService.updateLanguage(changeLanguageInfo);
+        return new ResponseEntity<>((update == 0) ? NOT_FOUND : OK);
     }
 
     @RequestMapping(value = "/updatePassword", method = PUT)
     public ResponseEntity<?> updatePassword(@RequestBody ChangePasswordInfo changePasswordInfo) {
-        try{
-            int id = changePasswordInfo.getId();
-            String password= changePasswordInfo.getPassword();
-            String passwordConfirm = changePasswordInfo.getPasswordconfirm();
-            Integer update = userService.updatePassword(id, password, passwordConfirm);
-            return new ResponseEntity<>(update, OK);
-        } catch (EntityNotFoundException ex) {
-            return new ResponseEntity<>(NOT_FOUND);
+        try {
+            Integer update = userService.updatePassword(changePasswordInfo);
+            return new ResponseEntity<>((update == 0) ? NO_CONTENT : OK);
+        } catch (PasswordNotExistException ex) {
+            return new ResponseEntity<Object>(new String(ex.getMessage()), BAD_REQUEST);
         } catch (ValidationException ex) {
             Map<String, Object> exception = new HashMap<>();
+            exception.put("data", changePasswordInfo);
             exception.put("errors", ex.getErrors());
             return new ResponseEntity<>(exception, BAD_REQUEST);
         }

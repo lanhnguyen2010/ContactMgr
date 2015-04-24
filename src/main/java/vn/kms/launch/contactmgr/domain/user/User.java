@@ -23,7 +23,7 @@ public class User extends vn.kms.launch.contactmgr.domain.Entity {
     @NotBlank(message = "{validation.UserName.message}")
     @Size(max = 16, message = "{validation.UserName.message}")
     @Pattern(regexp = "^([A-Za-z0-9]+)$", message = "{validation.UserName.message}")
-    @Column(name = "USERNAME")
+    @Column(name = "USERNAME", unique = true)
     private String username;
 
     @NotBlank(message = "{validation.PassWord.message}")
@@ -47,6 +47,7 @@ public class User extends vn.kms.launch.contactmgr.domain.Entity {
     @Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)"
         + "*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?",
         message = "{validation.email.message}")
+    @Column(name = "EMAIL", unique = true)
     private String email;
 
     @Column(name = "ROLE")

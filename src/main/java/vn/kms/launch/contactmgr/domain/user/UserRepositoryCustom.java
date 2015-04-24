@@ -15,8 +15,10 @@ public interface UserRepositoryCustom {
 
     public int updateUserAssignedCompanies(int userId);
 
-    public int updateLanguage(int id, String language);
+    public int updateLanguage(String username, String language);
 
-    public int updatePassword(int id, String password, String passwordConfirm);
+    public int updatePassword(String username, String password);
+
+    public User findByUsername(String username);
 
 }
