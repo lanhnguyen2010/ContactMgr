@@ -18,10 +18,9 @@ import vn.kms.launch.contactmgr.domain.user.Role;
 import vn.kms.launch.contactmgr.domain.user.User;
 import vn.kms.launch.contactmgr.domain.user.UserRepository;
 import vn.kms.launch.contactmgr.domain.user.UserSearchCriteria;
-import vn.kms.launch.contactmgr.util.EntityNotFoundException;
-import vn.kms.launch.contactmgr.util.HashString;
-import vn.kms.launch.contactmgr.util.SearchResult;
-import vn.kms.launch.contactmgr.util.ValidationException;
+import vn.kms.launch.contactmgr.dto.user.ChangeLanguageInfo;
+import vn.kms.launch.contactmgr.dto.user.ChangePasswordInfo;
+import vn.kms.launch.contactmgr.util.*;
 
 @Service
 @Transactional(readOnly = true)
@@ -80,7 +79,6 @@ public class UserService {
         user.setId(id);
         validateUser(user);
         user.setPassword(HashString.MD5(user.getPassword()));
-        user.setConfirmPassword(HashString.MD5(user.getConfirmPassword()));
         user.setResetPassword(HashString.MD5(user.getConfirmPassword()));
 
         if (id != null && !user.getAssignedCompanies().isEmpty()) {
@@ -110,34 +108,31 @@ public class UserService {
     }
 
     @Transactional
-    public int updateLanguage(int id, String language) {
-        if (id == 0) {
-            return 0;
+    public Integer updateLanguage(ChangeLanguageInfo changeLanguageInfo) {
+        String username = "thanhtuong";// get from SecurityUtil
+        if (username.equals("") || username.isEmpty()) {
+            return null;
         }
-        if (id != 0 && !userRepository.exists(id)) {
-            throw new EntityNotFoundException();
-        }
-        return userRepository.updateLanguage(id, language);
+        return userRepository.updateLanguage(username, changeLanguageInfo.getLanguage());
     }
 
     @Transactional
-    public int updatePassword(int id, String password, String passwordConfirm) {
-        if (id == 0 || !password.equals(passwordConfirm)) {
-            return 0;
+    public Integer updatePassword(ChangePasswordInfo changePasswordInfo) {
+        String username = "thanhtuong"; // get from SecurityUtil
+        if (username.equals("") || username.isEmpty()) {
+            return null;
         }
-        if (id != 0 && !userRepository.exists(id)) {
-            throw new EntityNotFoundException();
+        User user = userRepository.findByUsername(username);
+        if (!user.getPassword().equals(HashString.MD5(changePasswordInfo.getOldPassword()))) {
+            throw new PasswordNotExistException("Password not exist");
         }
-        System.out.println("ID::::::::::::::::"+id);
-        User user = userRepository.findOne(id);
-        user.setPassword(password);
-        user.setConfirmPassword(passwordConfirm);
-        validateUser(user);
-        return userRepository.updatePassword(id, HashString.MD5(password), passwordConfirm);
+        validateUser(changePasswordInfo);
+        return userRepository.updatePassword(username, HashString.MD5(changePasswordInfo.getPassword()));
     }
 
-    public void validateUser(User user) throws ValidationException {
-        Set<ConstraintViolation<User>> violations = validator.validate(user);
+
+    public <T> void validateUser(T t) throws ValidationException {
+        Set<ConstraintViolation<T>> violations = validator.validate(t);
         if (!violations.isEmpty()) {
             throw new ValidationException(violations.toArray(new ConstraintViolation[0]));
         }
