@@ -70,6 +70,12 @@ public class User extends vn.kms.launch.contactmgr.domain.Entity {
     @Column(name = "LANGUAGE")
     private String language;
 
+    @NotBlank(message = "{validation.PassWord.message}")
+    @Pattern(regexp = "^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*]).{6,20}$",
+        message = "{validation.PassWord.message}")
+    @Column(name = "RESET_PASSWORD")
+    private String resetPassword;
+
     @ElementCollection
     @CollectionTable(name = "USER_ASSIGNEDCOMPANIES", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "company_id")
@@ -89,6 +95,14 @@ public class User extends vn.kms.launch.contactmgr.domain.Entity {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getResetPassword() {
+        return resetPassword;
+    }
+
+    public void setResetPassword(String resetPassword) {
+        this.resetPassword = resetPassword;
     }
 
     public String getConfirmPassword() {

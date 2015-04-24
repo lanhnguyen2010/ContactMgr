@@ -20,14 +20,13 @@ angular.module('contactmgrApp').controller(
             };
             $scope.sendEmail = function(){
                 LoginService.checkEmail($scope.email).success(function(status) {
-                    if(status === 200){
-                        $scope.notice = 'The new password was sent to your email';
-                        $scope.isHidden = false;
-                        x.style.color = "Red";
-                    }
-                    if(status === 404){
-                        $scope.notice = 'The email is not existed';
-                    }
+                	console.log(status);
+                	$scope.notice = 'The new password was sent to your email';
+                    $scope.isHidden = false;
+                }).error(function(status){
+                	console.log(status);
+                    $scope.notice = 'The email is not existed';
+                    x.style.color = "Red";
                 });
             };
             $scope.checkLogin=function(){

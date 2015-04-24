@@ -6,6 +6,6 @@ angular.module('contactmgrApp')
     		return $http.post("/api/authen/login",paraLogin);
         };
         this.checkEmail=function(email){
-            return $http.put("/api/users/password?email=" + email);
+            return $http.put("/api/users/reset_password?email=" + email);
         };
     });
