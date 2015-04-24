@@ -22,15 +22,15 @@ angular.module('contactmgrApp')
                     }]
                 }
             })
-            .state('accessdenied', {
+            .state('access_denied', {
                 parent: 'site',
-                url: '/accessdenied',
+                url: '/access_denied',
                 data: {
                     roles: []
                 },
                 views: {
                     'content@': {
-                        templateUrl: 'scripts/app/error/access-denied.html'
+                        templateUrl: 'scripts/app/error/access_denied.html'
                     }
                 },
                 resolve: {
@@ -39,5 +39,23 @@ angular.module('contactmgrApp')
                         return $translate.refresh();
                     }]
                 }
-            });
+            })
+        .state('not_found', {
+            parent: 'site',
+            url: '/not_found',
+            data: {
+                roles: []
+            },
+            views: {
+                'content@': {
+                    templateUrl: 'scripts/app/error/not_found.html'
+                }
+            },
+            resolve: {
+                mainTranslatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
+                    $translatePartialLoader.addPart('errors');
+                    return $translate.refresh();
+                }]
+            }
+        });
     });
