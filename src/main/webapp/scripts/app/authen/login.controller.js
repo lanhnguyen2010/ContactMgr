@@ -11,7 +11,7 @@ angular.module('contactmgrApp').controller(
                 } : {};
                 console.log($scope.credentials.username);
             };
-            var x =document.getElementById("notice");
+            var x = document.getElementById("notice");
             $scope.resetEmail = function(){
                 $scope.isLoading = false;
                 $scope.btnSend = true;
