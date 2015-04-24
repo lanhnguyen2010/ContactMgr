@@ -13,14 +13,20 @@ import javax.validation.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import vn.kms.launch.contactmgr.domain.user.Role;
 import vn.kms.launch.contactmgr.domain.user.User;
 import vn.kms.launch.contactmgr.domain.user.UserRepository;
 import vn.kms.launch.contactmgr.domain.user.UserSearchCriteria;
 import vn.kms.launch.contactmgr.util.EntityNotFoundException;
+import vn.kms.launch.contactmgr.util.HashString;
 import vn.kms.launch.contactmgr.util.SearchResult;
 import vn.kms.launch.contactmgr.util.ValidationException;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional(readOnly = true)
@@ -53,15 +59,9 @@ public class UserService {
         return (int) results.get(0);
     }
 
-    @Transactional
-    public User updatePasswordByEmail(String email, String password) {
+    public int updatePasswordByEmail(String email, String resetPassword) {
         int id = getIdByEmail(email);
-        User user = getUser(id);
-
-        user.setPassword(password);
-        user.setConfirmPassword(password);
-
-        return saveUser(user, id);
+        return userRepository.updateResetPassword(id, HashString.MD5(resetPassword));
     }
 
     @Transactional
@@ -84,8 +84,12 @@ public class UserService {
         }
         user.setId(id);
         validateUser(user);
-        if (id != null && !user.getAssignedCompanies().isEmpty()){
-        	userRepository.updateUserAssignedCompanies(id);
+        user.setPassword(HashString.MD5(user.getPassword()));
+        user.setConfirmPassword(HashString.MD5(user.getConfirmPassword()));
+        user.setResetPassword(HashString.MD5(user.getConfirmPassword()));
+
+        if (id != null && !user.getAssignedCompanies().isEmpty()) {
+            userRepository.updateUserAssignedCompanies(id);
         }
         return userRepository.save(user);
     }
@@ -108,6 +112,33 @@ public class UserService {
     @Transactional
     public SearchResult<User> searchUsers(UserSearchCriteria criteria) {
         return userRepository.searchByCriteria(criteria);
+    }
+
+    @Transactional
+    public int updateLanguage(int id, String language) {
+        if (id == 0) {
+            return 0;
+        }
+        if (id != 0 && !userRepository.exists(id)) {
+            throw new EntityNotFoundException();
+        }
+        return userRepository.updateLanguage(id, language);
+    }
+
+    @Transactional
+    public int updatePassword(int id, String password, String passwordConfirm) {
+        if (id == 0 || !password.equals(passwordConfirm)) {
+            return 0;
+        }
+        if (id != 0 && !userRepository.exists(id)) {
+            throw new EntityNotFoundException();
+        }
+        System.out.println("ID::::::::::::::::"+id);
+        User user = userRepository.findOne(id);
+        user.setPassword(password);
+        user.setConfirmPassword(passwordConfirm);
+        validateUser(user);
+        return userRepository.updatePassword(id, HashString.MD5(password), passwordConfirm);
     }
 
     public void validateUser(User user) throws ValidationException {

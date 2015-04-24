@@ -1,9 +1,8 @@
 'use strict';
 
-angular.module('contactmgrApp', ['LocalStorageModule', 'tmh.dynamicLocale',
-    'ngResource', 'ui.router', 'ngCookies', 'pascalprecht.translate', 'ngCacheBuster',
-    'ngTable','angularjs-dropdown-multiselect','ui.bootstrap'])
-
+angular.module('contactmgrApp', ['LocalStorageModule', 'tmh.dynamicLocale','ngResource', 'ui.router', 
+                                 'ngCookies', 'pascalprecht.translate', 'ngCacheBuster', 'ngTable',
+                                 'angularjs-dropdown-multiselect','ui.bootstrap'])
     .run(function($rootScope, $location, $window, $http, $state, $translate, Language, ENV, VERSION) {
         $rootScope.ENV = ENV;
         $rootScope.VERSION = VERSION;
@@ -17,7 +16,8 @@ angular.module('contactmgrApp', ['LocalStorageModule', 'tmh.dynamicLocale',
         };
     })
 
-    .config(function($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider, $translateProvider, tmhDynamicLocaleProvider, httpRequestInterceptorCacheBusterProvider) {
+    .config(function($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider, $translateProvider, 
+    	             tmhDynamicLocaleProvider, httpRequestInterceptorCacheBusterProvider) {
 
         //Cache everything except rest api requests
         httpRequestInterceptorCacheBusterProvider.setMatchlist([/.*api.*/, /.*protected.*/], true);
@@ -32,7 +32,8 @@ angular.module('contactmgrApp', ['LocalStorageModule', 'tmh.dynamicLocale',
                 }
             },
             resolve: {
-                translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
+                translatePartialLoader: ['$translate', '$translatePartialLoader', 
+                                         function ($translate, $translatePartialLoader) {
                     $translatePartialLoader.addPart('global');
                     $translatePartialLoader.addPart('language');
                     return $translate.refresh();

@@ -1,39 +1,35 @@
 package vn.kms.launch.contactmgr.service.validator;
 
-import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
-import static java.lang.annotation.ElementType.CONSTRUCTOR;
-import static java.lang.annotation.ElementType.FIELD;
-import static java.lang.annotation.ElementType.METHOD;
-import static java.lang.annotation.ElementType.PARAMETER;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
+import vn.kms.launch.contactmgr.domain.contact.Company;
 
+import javax.validation.Constraint;
+import javax.validation.Payload;
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
-import javax.validation.Constraint;
-import javax.validation.Payload;
+import static java.lang.annotation.ElementType.FIELD;
+import static java.lang.annotation.ElementType.METHOD;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
-/**
- * Check Entity have existed or not in database
- *
- * @author kynguyen
- */
 @Documented
-@Constraint(validatedBy = ExistEntityValidator.class)
-@Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER})
+@Constraint(validatedBy = ExistEntityValidate.class)
+@Target({METHOD, FIELD})
 @Retention(RUNTIME)
 public @interface ExistEntity {
-    String message() default "{validation.ExistEntity.message}";
+
+    String message() default "{validation.existEntity.message}";
 
     Class<?>[] groups() default {};
 
     Class<? extends Payload>[] payload() default {};
 
-    @Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER})
+    @Target({METHOD, FIELD})
     @Retention(RUNTIME)
     @Documented
     public @interface List {
         ExistEntity[] value();
     }
+
+    Class<Company> type();
 }

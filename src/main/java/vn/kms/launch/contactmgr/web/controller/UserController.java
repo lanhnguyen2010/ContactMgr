@@ -1,26 +1,23 @@
 package vn.kms.launch.contactmgr.web.controller;
 
-import static org.springframework.http.HttpStatus.*;
-import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.NO_CONTENT;
+import static org.springframework.http.HttpStatus.OK;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
+import org.springframework.web.bind.annotation.*;
 import vn.kms.launch.contactmgr.domain.user.User;
 import vn.kms.launch.contactmgr.domain.user.UserSearchCriteria;
+import vn.kms.launch.contactmgr.dto.user.ChangeLanguageInfo;
+import vn.kms.launch.contactmgr.dto.user.ChangePasswordInfo;
 import vn.kms.launch.contactmgr.service.MailService;
 import vn.kms.launch.contactmgr.service.UserService;
 import vn.kms.launch.contactmgr.util.EntityNotFoundException;
@@ -28,6 +25,9 @@ import vn.kms.launch.contactmgr.util.SearchResult;
 import vn.kms.launch.contactmgr.util.ValidationException;
 
 import javax.mail.MessagingException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/api/users")
@@ -49,9 +49,8 @@ public class UserController {
         return saveUser(user, id);
     }
 
-
     @RequestMapping(value = "/search", method = POST)
-    public SearchResult<User> searchUser( @RequestBody UserSearchCriteria criteria) {
+    public SearchResult<User> searchUser(@RequestBody UserSearchCriteria criteria) {
         return userService.searchUsers(criteria);
     }
 
@@ -72,35 +71,31 @@ public class UserController {
 
     @RequestMapping(value = "/active/", method = PUT)
     public ResponseEntity<Integer> activeUser(@RequestParam int... ids) {
-        int result = userService.activeUser(ids);
-        if (result == ids.length) {
-            return new ResponseEntity<Integer>(result,
-                HttpStatus.OK);
-        } else {
-            return new ResponseEntity<Integer>(result, HttpStatus.BAD_REQUEST);
+        if (ids.length == 0) {
+            return new ResponseEntity<>(BAD_REQUEST);
         }
-
+        Integer result = userService.deactiveUser(ids);
+        return new ResponseEntity<>((result == 0) ? NOT_FOUND : OK);
     }
 
     @RequestMapping(value = "/deactive/", method = PUT)
     public ResponseEntity<Integer> deactiveUser(@RequestParam int... ids) {
-        int result = userService.deactiveUser(ids);
-        if (result == ids.length) {
-            return new ResponseEntity<Integer>(result,
-                HttpStatus.OK);
-        } else {
-            return new ResponseEntity<Integer>(result, HttpStatus.BAD_REQUEST);
+        if (ids.length == 0) {
+            return new ResponseEntity<>(BAD_REQUEST);
         }
+        Integer result = userService.deactiveUser(ids);
+        return new ResponseEntity<>((result == 0) ? NOT_FOUND : OK);
     }
+
 
     @RequestMapping(value = "/roles", method = GET)
     public ResponseEntity<List<String>> getRoles() {
         List<String> result = userService.getRoles();
         if (result == null) {
             return new ResponseEntity<List<String>>(result,
-                HttpStatus.BAD_REQUEST);
+                BAD_REQUEST);
         }
-        return new ResponseEntity<List<String>>(result, HttpStatus.OK);
+        return new ResponseEntity<List<String>>(result, OK);
     }
 
     @RequestMapping(value = "/validate", method = POST)
@@ -112,17 +107,46 @@ public class UserController {
             return new ResponseEntity<Object>(e.getErrors(), BAD_REQUEST);
         }
     }
-    @RequestMapping(value = "/password", method = PUT)
+    @RequestMapping(value = "/reset_password", method = PUT)
     public ResponseEntity<Void> forgetPassword(@RequestParam String email) {
         String randomPassword = null;
         try {
-            randomPassword = mailService.sendRandomPassword(email);
+            randomPassword = mailService.sendRandomPasswordTo(email);
         } catch (MessagingException exception) {
             return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         } catch (EntityNotFoundException exception) {
             return new ResponseEntity<>(NOT_FOUND);
         }
         return new ResponseEntity<>(OK);
+    }
+
+    @RequestMapping(value = "/updateLanguage", method = PUT)
+    public ResponseEntity<?> updateLanguage(@RequestBody ChangeLanguageInfo changeLanguageInfo) {
+        try {
+            int id = changeLanguageInfo.getId();
+            String language = changeLanguageInfo.getLanguage();
+            Integer update = userService.updateLanguage(id, language);
+            return new ResponseEntity<>(update, OK);
+        } catch (EntityNotFoundException ex) {
+            return new ResponseEntity<>(NOT_FOUND);
+        }
+    }
+
+    @RequestMapping(value = "/updatePassword", method = PUT)
+    public ResponseEntity<?> updatePassword(@RequestBody ChangePasswordInfo changePasswordInfo) {
+        try{
+            int id = changePasswordInfo.getId();
+            String password= changePasswordInfo.getPassword();
+            String passwordConfirm = changePasswordInfo.getPasswordconfirm();
+            Integer update = userService.updatePassword(id, password, passwordConfirm);
+            return new ResponseEntity<>(update, OK);
+        } catch (EntityNotFoundException ex) {
+            return new ResponseEntity<>(NOT_FOUND);
+        } catch (ValidationException ex) {
+            Map<String, Object> exception = new HashMap<>();
+            exception.put("errors", ex.getErrors());
+            return new ResponseEntity<>(exception, BAD_REQUEST);
+        }
     }
 
     private ResponseEntity<?> saveUser(User user, Integer id) {

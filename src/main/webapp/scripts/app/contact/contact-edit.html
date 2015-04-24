@@ -117,7 +117,8 @@
                         translate="contact-edit.home.add-line1">Add. Line 1</label>
                     <div class="col-sm-9">
                         <input ng-model="contact.home.address.addrLine1" type="text"
-                             class="form-control">
+                             class="form-control" data-toggle="tooltip" title="{{validator.home.address.addrLine1}}"
+                             ng-class="{red: validator.home.address.addrLine1}">
                     </div>
                 </div>
                 <div class="form-group">
@@ -125,23 +126,27 @@
                         translate="contact-edit.home.add-line2">Add. Line 2</label>
                     <div class="col-sm-9">
                         <input ng-model="contact.home.address.addrLine2" type="text"
-                             class="form-control">
+                             class="form-control" data-toggle="tooltip" title="{{validator.home.address.addrLine2}}"
+                             ng-class="{red: validator.home.address.addrLine2}">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-3"
                         translate="contact-edit.home.city">City</label>
                     <div class="col-sm-9">
-                        <input type="text"  class="form-control"
-                            placeholder="{{'contact-edit.placeholder.city'|translate}}">
+                        <input ng-model="contact.home.address.city" type="text"  class="form-control"
+                            placeholder="{{'contact-edit.placeholder.city'|translate}}"
+                            data-toggle="tooltip" title="{{validator.home.address.city}}"
+                            ng-class="{red: validator.home.address.city}">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-3"
                         translate="contact-edit.home.state">State</label>
                     <div class="col-sm-9">
-                        <input ng-model="contact.home.address.city" type="text"
-                             class="form-control">
+                        <input ng-model="contact.home.address.state" type="text" class="form-control" 
+                            data-toggle="tooltip" title="{{validator.home.address.state}}"
+                            ng-class="{red: validator.home.address.state}">
                     </div>
                 </div>
                 <div class="form-group">
@@ -363,21 +368,27 @@
                             <div class="form-group row">
                                 <label for="selectCompany" class="control-label col-sm-3" translate="contact-edit.work.company-name">Company Name</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" id = "selectCompany" ng-model="selectedCompany.name"/>
+                                    <input class="form-control" id = "selectCompany" ng-model="selectedCompany.name"
+                                       data-toggle="tooltip" title="{{companyValidator.name}}"
+                                       ng-class="{red: companyValidator.name}"/>
                                 </div>
                            </div>
                             <div class="form-group row">
                                 <label for="inputMessage" class="control-label col-sm-3"
                                     translate="contact-edit.work.message">Message</label>
                                 <div class="col-sm-9">
-                                   <input ng-model="selectedCompany.message" class="form-control" id="inputMessage">
+                                   <input ng-model="selectedCompany.message" class="form-control" id="inputMessage"
+                                       data-toggle="tooltip" title="{{companyValidator.message}}"
+                                       ng-class="{red: companyValidator.message}">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="inputWebsite" class="control-label col-sm-3"
                                     translate="contact-edit.work.website">Website</label>
                                 <div class="col-sm-9">
-                                   <input ng-model="selectedCompany.website" class="form-control" id="inputWebsite">
+                                   <input ng-model="selectedCompany.website" class="form-control" id="inputWebsite"
+                                       data-toggle="tooltip" title="{{companyValidator.website}}"
+                                       ng-class="{red: companyValidator.website}">
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -404,28 +415,36 @@
                                 <label for="inputAddrLine1" class="control-label col-sm-3"
                                     translate="contact-edit.home.add-line1">Add. Line 1</label>
                                 <div class="col-sm-9">
-                                   <input ng-model="selectedCompany.address.addrLine1" class="form-control" id="inputAddrLine1">
+                                   <input ng-model="selectedCompany.address.addrLine1" class="form-control" id="inputAddrLine1"
+                                       data-toggle="tooltip" title="{{companyValidator.address.addrLine1}}"
+                                       ng-class="{red: companyValidator.address.addrLine1}">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="inputAddrLine2" class="control-label col-sm-3"
                                     translate="contact-edit.home.add-line2">Add. Line 2</label>
                                 <div class="col-sm-9">
-                                   <input ng-model="selectedCompany.address.addrLine2" class="form-control" id="inputAddrLine2">
+                                   <input ng-model="selectedCompany.address.addrLine2" class="form-control" id="inputAddrLine2"
+                                       data-toggle="tooltip" title="{{companyValidator.address.addrLine2}}"
+                                       ng-class="{red: companyValidator.address.addrLine2}">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="inputCity" class="control-label col-sm-3"
                                     translate="contact-edit.home.city">City</label>
                                 <div class="col-sm-9">
-                                   <input ng-model="selectedCompany.address.city" class="form-control" id="inputCity">
+                                   <input ng-model="selectedCompany.address.city" class="form-control" id="inputCity"
+                                       data-toggle="tooltip" title="{{companyValidator.address.city}}"
+                                       ng-class="{red: companyValidator.address.city}">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="inputState" class="control-label col-sm-3"
                                     translate="contact-edit.home.state">State</label>
                                 <div class="col-sm-9">
-                                   <input ng-model="selectedCompany.address.state" class="form-control" id="inputState">
+                                   <input ng-model="selectedCompany.address.state" class="form-control" id="inputState"
+                                       data-toggle="tooltip" title="{{companyValidator.address.state}}"
+                                       ng-class="{red: companyValidator.address.state}">
                                 </div>
                             </div>
                             <div class="form-group row">

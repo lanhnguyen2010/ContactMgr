@@ -51,7 +51,7 @@ angular.module('contactmgrApp')
         }
 
         $scope.pageChanged = function() {
-            ContactService.getPhotos($scope.currentPage, $scope.maxSize)
+            ContactService.getPhotos($scope.currentPage,$scope.maxSize)
                 .success(function(data, status) {
                     $scope.totalItems = data['totalItems'];
                     $scope.imageList = data['items'];
@@ -63,6 +63,7 @@ angular.module('contactmgrApp')
 
         $scope.contact;
         $scope.init = function() {
+        	if (contactId == null) return;
             ContactService.getViewContact(contactId).success(
                     function(data) {
                         $scope.contact = data;
@@ -71,7 +72,7 @@ angular.module('contactmgrApp')
                         }
                     })
           };
-        $scope.init();
+        
         $scope.companies;
 
         $scope.selectedCompany = null;
@@ -171,11 +172,13 @@ angular.module('contactmgrApp')
          };
 
          $scope.openDialogCreateCompany = function(){
+        	 $scope.companyValidator = null;
              $scope.selectedCompany = null;
              $('#companyInfoModal').modal('show');
          };
 
          $scope.openDialogUpdateCompany = function(){
+        	 $scope.companyValidator = null;
              $scope.selectedCompany = $scope.selectedCompany = $.extend(true, {}, $scope.contact.work.company);
              $('#companyInfoModal').modal('show');
          };
@@ -228,4 +231,6 @@ angular.module('contactmgrApp')
              }
              return $scope.selectedCompany.logo;
          };
+         
+         $scope.init();
     });

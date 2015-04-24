@@ -27,10 +27,10 @@ public class MailService {
     @Autowired
     private JavaMailSender javaMailSender;
 
-    public String sendRandomPassword(String email) throws MessagingException {
+    public String sendRandomPasswordTo(String email) throws MessagingException {
         String randomPassword = getRandomPassword();
         userService.updatePasswordByEmail(email, randomPassword);
-        sendMail(email, "[CONTACT MANAGER] - Your New Random Password", randomPassword);
+        sendMail(email, "[CONTACT MANAGER] - Your New Reset Password", randomPassword);
         return randomPassword;
     }
 
