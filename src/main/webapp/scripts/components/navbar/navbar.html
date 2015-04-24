@@ -109,7 +109,7 @@
                         <li class="dropdown-submenu">
                             <a href="#" translate="global.user.language">Language</a>
                             <ul class="dropdown-menu">
-                                 <li active-menu="{{language}}" ng-repeat="language in languages">
+                                 <li active-menu="{{languages}}" ng-repeat="language in languages">
                                     <a href="" ng-click="changeLanguage(language)">
                                     {{'language.' + language | translate}}
                                     </a>
@@ -120,6 +120,7 @@
                         <li><a href="#" translate="global.user.signout">Sign Out</a></li>
                     </ul>
                 </li>
+                
 <!--                 <li ng-controller="LanguageController"> -->
 <!--                     <a class="lang-dropdown dropdown-toggle" data-toggle="dropdown"> -->
 <!--                         <span> -->
