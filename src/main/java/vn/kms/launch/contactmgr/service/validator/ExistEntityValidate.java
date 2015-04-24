@@ -20,9 +20,9 @@ public class ExistEntityValidate implements ConstraintValidator<ExistEntity, Int
 
     @Override
     public boolean isValid(Integer id, ConstraintValidatorContext context) {
-        String entityTable = entity.getSimpleName();
+        String entityName = entity.getSimpleName();
         if(em != null){
-            Query q = em.createQuery("select id from " + entityTable + " where id=" + id);
+            Query q = em.createQuery("select id from " + entityName + " where id=" + id);
             return q.getResultList().size() > 0;
         }
         return false;
