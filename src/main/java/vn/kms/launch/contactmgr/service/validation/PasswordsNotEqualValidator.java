@@ -19,15 +19,14 @@ public class PasswordsNotEqualValidator implements ConstraintValidator<Passwords
     public boolean isValid(Object value, ConstraintValidatorContext context) {
         context.disableDefaultConstraintViolation();
         try {
-            String password = (String) ValidatorUtil.getFieldValue(value, passwordFieldName);           
+            String password = (String) ValidatorUtil.getFieldValue(value, passwordFieldName);
             String passwordVerification = (String) ValidatorUtil.getFieldValue(value, passwordVerificationFieldName);
-    
+
             if (passwordsAreNotEqual(password, passwordVerification)) {
                 ValidatorUtil.addValidationError(passwordVerificationFieldName, context);
                 return false;
             }
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             throw new RuntimeException("Exception occurred during validation", ex);
         }
 
@@ -35,6 +34,8 @@ public class PasswordsNotEqualValidator implements ConstraintValidator<Passwords
     }
 
     private boolean passwordsAreNotEqual(String password, String passwordVerification) {
+        System.out.println("Password::::" +password);
+        System.out.println("PasswordRepeat::::" +passwordVerification);
         return !(password == null ? passwordVerification == null : password.equals(passwordVerification));
     }
 }

@@ -13,19 +13,19 @@ import javax.validation.Payload;
 
 @Documented
 @Constraint(validatedBy = ExistEntityValidator.class)
-@Target({ METHOD, FIELD })
+@Target({METHOD, FIELD})
 @Retention(RUNTIME)
 public @interface ExistEntity {
 
     String message() default "{validation.existEntity.message}";
 
-    Class<?>[] groups() default { };
+    Class<?>[] groups() default {};
 
-    Class<? extends Payload>[] payload() default { };
+    Class<? extends Payload>[] payload() default {};
 
     Class<?> type();
     
-    @Target({ METHOD, FIELD})
+    @Target({METHOD, FIELD})
     @Retention(RUNTIME)
     @Documented
     public @interface List {
