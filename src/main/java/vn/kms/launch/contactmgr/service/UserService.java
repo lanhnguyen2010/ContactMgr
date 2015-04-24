@@ -1,8 +1,19 @@
 package vn.kms.launch.contactmgr.service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import vn.kms.launch.contactmgr.domain.user.Role;
 import vn.kms.launch.contactmgr.domain.user.User;
 import vn.kms.launch.contactmgr.domain.user.UserRepository;
@@ -12,12 +23,6 @@ import vn.kms.launch.contactmgr.util.HashString;
 import vn.kms.launch.contactmgr.util.SearchResult;
 import vn.kms.launch.contactmgr.util.ValidationException;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.Validator;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
 @Service
 @Transactional(readOnly = true)
 public class UserService {
@@ -25,12 +30,33 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @PersistenceContext
+    private EntityManager em;
+
     @Autowired
     private Validator validator;
 
     @Transactional
     public User getUser(int id) {
         return userRepository.findOne(id);
+    }
+
+    @Transactional
+    public int getIdByEmail(String email) throws ValidationException {
+        Query query = em.createQuery("select u.id from User u where u.email = :email");
+        query.setParameter("email", email);
+        List<Object> results = query.getResultList();
+
+        if (results.isEmpty()) {
+            throw new EntityNotFoundException();
+        }
+
+        return (int) results.get(0);
+    }
+
+    public int updatePasswordByEmail(String email, String resetPassword) {
+        int id = getIdByEmail(email);
+        return userRepository.updateResetPassword(id, HashString.MD5(resetPassword));
     }
 
     @Transactional
@@ -55,6 +81,8 @@ public class UserService {
         validateUser(user);
         user.setPassword(HashString.MD5(user.getPassword()));
         user.setConfirmPassword(HashString.MD5(user.getConfirmPassword()));
+        user.setResetPassword(HashString.MD5(user.getConfirmPassword()));
+
         if (id != null && !user.getAssignedCompanies().isEmpty()) {
             userRepository.updateUserAssignedCompanies(id);
         }
@@ -105,7 +133,7 @@ public class UserService {
         user.setPassword(password);
         user.setConfirmPassword(passwordConfirm);
         validateUser(user);
-        return userRepository.updatePassword(id,HashString.MD5(password), passwordConfirm);
+        return userRepository.updatePassword(id, HashString.MD5(password), passwordConfirm);
     }
 
     public void validateUser(User user) throws ValidationException {

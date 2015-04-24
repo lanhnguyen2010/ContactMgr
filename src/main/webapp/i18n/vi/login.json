@@ -1,0 +1,15 @@
+{
+    "login":{
+        "title": "Đăng nhập",
+        "notice": "Đăng nhập thất bại. Xin vui lòng kiểm tra và thử lại.",
+        "placeholder":{
+            "username": "Tên đăng nhập hoặc email",
+            "password": "Mật khẩu"
+        },
+        "button":{
+            "login": "Đăng nhập",
+            "remember-me": "Duy trì đăng nhập",
+            "forgot-pass": "Quên mật khẩu?"
+        }
+    }
+}

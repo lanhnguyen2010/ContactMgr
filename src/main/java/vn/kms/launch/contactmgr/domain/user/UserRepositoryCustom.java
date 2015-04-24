@@ -19,4 +19,6 @@ public interface UserRepositoryCustom {
 
     public int updatePassword(int id, String password, String passwordConfirm);
 
+    public int updateResetPassword(int id, String resetPassword);
+
 }

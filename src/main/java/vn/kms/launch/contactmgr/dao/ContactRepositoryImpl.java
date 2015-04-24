@@ -17,7 +17,6 @@ import vn.kms.launch.contactmgr.domain.Itemized;
 import vn.kms.launch.contactmgr.domain.contact.Contact;
 import vn.kms.launch.contactmgr.domain.contact.ContactRepositoryCustom;
 import vn.kms.launch.contactmgr.domain.contact.ContactSearchCriteria;
-import vn.kms.launch.contactmgr.domain.user.UserSearchCriteria;
 import vn.kms.launch.contactmgr.util.SearchResult;
 
 @Repository
