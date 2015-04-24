@@ -1,62 +1,52 @@
 package vn.kms.launch.contactmgr.domain.user;
 
+import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.format.annotation.DateTimeFormat;
+import vn.kms.launch.contactmgr.service.validator.PasswordsNotEqual;
+
+import javax.persistence.*;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CollectionTable;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.Table;
-import javax.persistence.Transient;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
-
-import org.hibernate.validator.constraints.NotBlank;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import vn.kms.launch.contactmgr.service.validator.PasswordsNotEqual;
-
 @PasswordsNotEqual(
-        passwordFieldName = "password",
-        passwordVerificationFieldName = "confirmPassword",
-        message = "{validation.ConfirmPassWord.message}"
+    passwordFieldName = "password",
+    passwordVerificationFieldName = "confirmPassword",
+    message = "{validation.ConfirmPassWord.message}"
 )
-
-
 @Entity
 @Table(name = "USERS")
 public class User extends vn.kms.launch.contactmgr.domain.Entity {
     private static final long serialVersionUID = 1L;
-    
+
     @NotBlank(message = "{validation.UserName.message}")
     @Size(max = 16, message = "{validation.UserName.message}")
     @Pattern(regexp = "^([A-Za-z0-9]+)$", message = "{validation.UserName.message}")
     @Column(name = "USERNAME")
     private String username;
-    
+
     @NotBlank(message = "{validation.PassWord.message}")
-    @Pattern(regexp = "^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*]).{6,20}$", 
-             message = "{validation.PassWord.message}")
-    @Column(name="PASSWORD")
+    @Pattern(regexp = "^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*]).{6,20}$",
+        message = "{validation.PassWord.message}")
+    @Column(name = "PASSWORD")
     private String password;
-    
+
     @Transient
     private String confirmPassword;
-    
+
     @Size(max = 20, message = "{validation.FirstName.message}")
-    @Column(name="FIRST_NAME")
+    @Column(name = "FIRST_NAME")
     private String firstname;
-    
+
     @Size(max = 20, message = "{validation.LastName.message}")
-    @Column(name="LAST_NAME")
+    @Column(name = "LAST_NAME")
     private String lastname;
 
     @Size(max = 255, message = "{validation.size-255.message}")
-    @Pattern(regexp ="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)"
-            + "*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", 
-            message = "{validation.email.message}")
+    @Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)"
+        + "*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?",
+        message = "{validation.email.message}")
     private String email;
 
     @Column(name = "ROLE")
@@ -73,7 +63,7 @@ public class User extends vn.kms.launch.contactmgr.domain.Entity {
     private String language;
 
     @ElementCollection
-    @CollectionTable(name = "USER_ASSIGNEDCOMPANIES", joinColumns = @JoinColumn(name= "user_id"))
+    @CollectionTable(name = "USER_ASSIGNEDCOMPANIES", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "company_id")
     private List<Integer> assignedCompanies;
     
@@ -98,7 +88,7 @@ public class User extends vn.kms.launch.contactmgr.domain.Entity {
     public void setPassword(String password) {
         this.password = password;
     }
-    
+
     public String getConfirmPassword() {
         return confirmPassword;
     }

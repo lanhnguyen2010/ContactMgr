@@ -5,13 +5,13 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 
-public class ExistEntityValidate implements ConstraintValidator<ExistEntity, Entity>{
+public class ExistEntityValidate implements ConstraintValidator<ExistEntity, Entity> {
 
-     public void initialize(ExistEntity annotation) {
-     }
-     
-     public boolean isValid(Entity entity, ConstraintValidatorContext context) {
-         // Implements a querry to check enity existed or not
+    public void initialize(ExistEntity annotation) {
+    }
+
+    public boolean isValid(Entity entity, ConstraintValidatorContext context) {
+        // Implements a querry to check enity existed or not
         return true;
-     }
+    }
 }
