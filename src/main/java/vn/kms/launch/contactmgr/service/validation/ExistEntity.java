@@ -1,4 +1,4 @@
-package vn.kms.launch.contactmgr.service.validator;
+package vn.kms.launch.contactmgr.service.validation;
 
 import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.ElementType.METHOD;
@@ -12,7 +12,7 @@ import javax.validation.Constraint;
 import javax.validation.Payload;
 
 @Documented
-@Constraint(validatedBy = ExistEntityValidate.class)
+@Constraint(validatedBy = ExistEntityValidator.class)
 @Target({ METHOD, FIELD })
 @Retention(RUNTIME)
 public @interface ExistEntity {

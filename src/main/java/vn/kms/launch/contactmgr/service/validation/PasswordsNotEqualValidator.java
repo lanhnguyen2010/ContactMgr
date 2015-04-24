@@ -1,4 +1,4 @@
-package vn.kms.launch.contactmgr.service.validator;
+package vn.kms.launch.contactmgr.service.validation;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

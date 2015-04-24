@@ -1,4 +1,4 @@
-package vn.kms.launch.contactmgr.service.validator;
+package vn.kms.launch.contactmgr.service.validation;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -7,7 +7,7 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 
-public class ExistEntityValidate implements ConstraintValidator<ExistEntity, Integer>{
+public class ExistEntityValidator implements ConstraintValidator<ExistEntity, Integer>{
     
     private Class<?> entity;
     

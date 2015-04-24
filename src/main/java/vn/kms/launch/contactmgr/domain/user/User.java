@@ -16,7 +16,7 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import vn.kms.launch.contactmgr.service.validator.PasswordsNotEqual;
+import vn.kms.launch.contactmgr.service.validation.PasswordsNotEqual;
 
 @PasswordsNotEqual(
         passwordFieldName = "password",

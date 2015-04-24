@@ -8,7 +8,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.Size;
 
 import vn.kms.launch.contactmgr.domain.ValueObject;
-import vn.kms.launch.contactmgr.service.validator.ExistEntity;
+import vn.kms.launch.contactmgr.service.validation.ExistEntity;
 
 @Embeddable
 public class Work extends ValueObject<Work> {

@@ -1,4 +1,4 @@
-package vn.kms.launch.contactmgr.service.validator;
+package vn.kms.launch.contactmgr.service.validation;
 
 import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
 import static java.lang.annotation.ElementType.TYPE;
