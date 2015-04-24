@@ -1,28 +1,19 @@
 package vn.kms.launch.contactmgr.service;
 
-import java.util.List;
-import java.util.Set;
-
-import javax.validation.ConstraintViolation;
-import javax.validation.Validator;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import vn.kms.launch.contactmgr.domain.Itemized;
-import vn.kms.launch.contactmgr.domain.contact.Company;
-import vn.kms.launch.contactmgr.domain.contact.CompanyRepository;
-import vn.kms.launch.contactmgr.domain.contact.Contact;
-import vn.kms.launch.contactmgr.domain.contact.ContactRepository;
-import vn.kms.launch.contactmgr.domain.contact.ContactSearchCriteria;
-import vn.kms.launch.contactmgr.domain.contact.Country;
-import vn.kms.launch.contactmgr.domain.contact.CountryRepository;
-import vn.kms.launch.contactmgr.domain.contact.Work;
+import vn.kms.launch.contactmgr.domain.contact.*;
 import vn.kms.launch.contactmgr.domain.image.PhotoRepository;
 import vn.kms.launch.contactmgr.util.EntityNotFoundException;
 import vn.kms.launch.contactmgr.util.SearchResult;
 import vn.kms.launch.contactmgr.util.ValidationException;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
+import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional(readOnly = true)
@@ -82,7 +73,7 @@ public class ContactService {
     }
 
     @Transactional
-   public int deleteContacts(int... ids) {
+    public int deleteContacts(int... ids) {
         return contactRepo.deleteByIds(ids);
     }
 
@@ -103,12 +94,12 @@ public class ContactService {
             throw new ValidationException(violations.toArray(new ConstraintViolation[0]));
         }
     }
-    
+
     public List<Country> getCountries() {
         return countryRepo.findAll();
     }
 
-    
+
     public List<Company> getAllCompanies() {
         return companyRepo.findAll();
     }

@@ -3,7 +3,7 @@
 angular.module('contactmgrApp')
     .config(function($stateProvider,$httpProvider) {
         $stateProvider
-            .state('login', {
+            .state('login', { 
                 parent: 'site',
                 url: '/login',
                 data: {

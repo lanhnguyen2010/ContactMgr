@@ -1,22 +1,16 @@
 package vn.kms.launch.contactmgr.dao;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
-
 import vn.kms.launch.contactmgr.domain.user.User;
 import vn.kms.launch.contactmgr.domain.user.UserRepositoryCustom;
 import vn.kms.launch.contactmgr.domain.user.UserSearchCriteria;
 import vn.kms.launch.contactmgr.util.SearchResult;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import java.util.*;
 
 @Repository
 public class UserRepositoryImpl implements UserRepositoryCustom {
@@ -41,9 +35,9 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
         }
         query.setFirstResult((criteria.getPageIndex() - 1) * criteria.getPageSize());
         query.setMaxResults(criteria.getPageSize());
-        
+
         List<User> users = new ArrayList<User>();
-        if (!isContainPercenSign(criteria)){
+        if (!isContainPercenSign(criteria)) {
             users = query.getResultList();
         }
 
@@ -52,7 +46,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
     }
 
     private String buildBaseQuery(UserSearchCriteria criteria, Map<String, Object> params) {
-        
+
         StringBuilder jpqlQuery = new StringBuilder("");
 
         if (!criteria.getAssignedCompanies().isEmpty()) {
@@ -107,8 +101,8 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
 
         return jpqlQuery.toString();
     }
-    
-    private boolean isContainPercenSign(UserSearchCriteria criteria){
+
+    private boolean isContainPercenSign(UserSearchCriteria criteria) {
         if (criteria.getEmail().contains("%") || criteria.getFirstlastName().contains("%") || criteria.getUsername().contains("%"))
             return true;
         return false;
@@ -161,6 +155,30 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
     public int updateUserAssignedCompanies(int userId) {
         Query query = em.createNativeQuery("delete from user_assignedcompanies where user_id = :id");
         query.setParameter("id", userId);
+        return query.executeUpdate();
+    }
+
+    @Override
+    public int updateLanguage(int id, String language) {
+        Query query = em.createQuery("update User set language =:language where id =:id");
+        query.setParameter("language", language);
+        query.setParameter("id", id);
+        return query.executeUpdate();
+    }
+
+    @Override
+    public int updatePassword(int id, String password, String passwordConfirm) {
+        Query query = em.createQuery("update User set password =:password where id =:id");
+        query.setParameter("password", password);
+        query.setParameter("id", id);
+        return query.executeUpdate();
+    }
+
+    @Override
+    public int updateResetPassword(int id, String resetPassword) {
+        Query query = em.createQuery("update User set resetPassword = :resetPassword where id = :id");
+        query.setParameter("resetPassword", resetPassword);
+        query.setParameter("id", id);
         return query.executeUpdate();
     }
 

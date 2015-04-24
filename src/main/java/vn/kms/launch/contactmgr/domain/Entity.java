@@ -1,7 +1,5 @@
 package vn.kms.launch.contactmgr.domain;
 
-import vn.kms.launch.contactmgr.Constants;
-
 import java.io.Serializable;
 import java.util.Date;
 
@@ -13,6 +11,8 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 
 import org.springframework.format.annotation.DateTimeFormat;
+
+import vn.kms.launch.contactmgr.Constants;
 
 @MappedSuperclass
 public class Entity implements Serializable {
