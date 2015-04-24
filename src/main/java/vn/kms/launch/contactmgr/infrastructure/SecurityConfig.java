@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
+import vn.kms.launch.contactmgr.RestAuthenticationEntryPoint;
 import vn.kms.launch.contactmgr.service.security.UserDetailsServiceImpl;
 
 @Configuration
@@ -27,7 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests().antMatchers("/api/authenticate").authenticated();
-        http.authorizeRequests().antMatchers("/**").authenticated();
+        //http.authorizeRequests().antMatchers("/**").authenticated();
         http.csrf().disable();
         http.addFilterBefore(new AuthenticationFilter(authenticationManager()),BasicAuthenticationFilter.class);
         http.userDetailsService(userDetailsService);
