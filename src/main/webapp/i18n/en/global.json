@@ -1,6 +1,11 @@
 {
     "global": {
         "title": "Contact Manager",
+        "user": {
+            "changePassword" : "Change Password",
+            "language" : "Language",
+            "signout" : "Sign Out"
+        },
         "menu": {
             "home": "Home",
             "contacts": {
