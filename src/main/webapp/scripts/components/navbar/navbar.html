@@ -57,7 +57,8 @@
                         </li>
                     </ul>
                 </li>
-                <li ui-sref-active="active" class="split-dropdown">
+                <li ui-sref-active="active" class="split-dropdown"
+                    ng-show="isAdmin() || isDesigner()" ng-controller = "HomeController">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="">
                         <span class="caret"></span>
                     </a>
@@ -68,13 +69,13 @@
                         </span>
                     </a>
                     <ul class="dropdown-menu" role="menu">
-                        <li ui-sref-active="active" ng-hide = "isEditor()" ng-controller = "HomeController">
+                        <li ui-sref-active="active">
                             <a ui-sref="add">
                                 <span class="fa fa-tag"></span>
                                 <span translate="global.menu.cards.new">Design new Card</span>
                             </a>
                         </li>
-                        <li ui-sref-active="active" ng-hide = "isEditor()" ng-controller = "HomeController">
+                        <li ui-sref-active="active" >
                             <a ui-sref="add">
                                 <span class="fa fa-print"></span>
                                 <span translate="global.menu.cards.generate">Generate Cards</span>

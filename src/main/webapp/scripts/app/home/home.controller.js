@@ -1,12 +1,20 @@
 'use strict';
 
 angular.module('contactmgrApp')
-    .controller('HomeController', function($scope) {
+    .controller('HomeController', function($scope,$http) {
     
-        $scope.role = "ADMINISTRATTOR";
+        function init(){
+           $scope.getRole();
+        }
+    
+        $scope.getRole = function(){
+            $http.get('api/security/current-user').success(function(user){
+                $scope.role = user.role;
+            })
+        }
         
         $scope.isAdmin = function(){
-            if ($scope.role === "ADMINISTRATTOR"){
+            if ($scope.role === "ADMINISTRATOR"){
                 return true;
             } else {
                 return false;
@@ -28,4 +36,5 @@ angular.module('contactmgrApp')
                 return false;
             }
         }
+        init();
     });

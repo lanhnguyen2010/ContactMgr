@@ -22,15 +22,15 @@ angular.module('contactmgrApp')
                     }]
                 }
             })
-            .state('accessdenied', {
+            .state('access_denied', {
                 parent: 'site',
-                url: '/accessdenied',
+                url: '/access_denied',
                 data: {
                     roles: []
                 },
                 views: {
                     'content@': {
-                        templateUrl: 'scripts/app/error/access-denied.html'
+                        templateUrl: 'scripts/app/error/access_denied.html'
                     }
                 },
                 resolve: {

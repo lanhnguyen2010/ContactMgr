@@ -53,12 +53,6 @@ angular.module('contactmgrApp', ['LocalStorageModule', 'tmh.dynamicLocale','ngRe
         tmhDynamicLocaleProvider.useCookieStorage('NG_TRANSLATE_LANG_KEY');
     }).factory('authHttpResponseInterceptor',['$q','$location',function($q,$location){
         return {
-//            response: function(response){
-//                if (response.status === 401) {
-//                    console.log("Response 401");
-//                }
-//                return response || $q.when(response);
-//            },
             responseError: function(rejection) {
                 if (rejection.status === 404) {
                     console.log("Response Error 404",rejection);
@@ -71,6 +65,10 @@ angular.module('contactmgrApp', ['LocalStorageModule', 'tmh.dynamicLocale','ngRe
                 if (rejection.status === 403) {
                     console.log("Response Error 403",rejection);
                     $location.path('/access_denied');
+                }
+                if (rejection.status === 401) {
+                    console.log("Response Error 401",rejection);
+                    $location.path('/login');
                 }
                 return $q.reject(rejection);
             }
