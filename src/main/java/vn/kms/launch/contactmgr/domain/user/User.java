@@ -76,6 +76,8 @@ public class User extends vn.kms.launch.contactmgr.domain.Entity {
     @CollectionTable(name = "USER_ASSIGNEDCOMPANIES", joinColumns = @JoinColumn(name= "user_id"))
     @Column(name = "company_id")
     private List<Integer> assignedCompanies;
+    
+    public User(){}
 
     public User(String username) {
        this.username = username;

@@ -16,6 +16,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +32,7 @@ import vn.kms.launch.contactmgr.util.ValidationException;
 
 @RestController
 @RequestMapping(value = "/api/users")
+@PreAuthorize("hasRole('ADMINISTRATOR')")
 public class UserController {
 
     @Autowired
