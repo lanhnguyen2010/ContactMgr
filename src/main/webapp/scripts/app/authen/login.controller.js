@@ -11,12 +11,26 @@ angular.module('contactmgrApp').controller(
                 } : {};
                 console.log($scope.credentials.username);
             };
-            $scope.notice = 'Your registered email';
+            var x =document.getElementById("notice");
             $scope.resetEmail = function(){
-                $scope.email=''
+                $scope.notice = 'Your registered email';
+                x.style.color = "Black";
+                $scope.isHidden = false;
+                $scope.email='';
+            };
+            $scope.sendEmail = function(){
+                LoginService.checkEmail($scope.email).success(function(status) {
+                    if(status === 200){
+                        $scope.notice = 'The new password was sent to your email';
+                        $scope.isHidden = false;
+                        x.style.color = "Red";
+                    }
+                    if(status === 404){
+                        $scope.notice = 'The email is not existed';
+                    }
+                });
             };
             $scope.checkLogin=function(){
                 console.log($scope.credentials.username)
             }
-            
         });

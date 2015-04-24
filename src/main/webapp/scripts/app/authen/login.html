@@ -31,8 +31,8 @@
                 <div class="col-md-6 control-label">
                     <div class="checkbox">
                         <label> <input type="checkbox"> Remember me |
-                        </label> <a href="" data-toggle="modal" data-target="#forgotPasswordModal">Forgot
-                            password?</a>
+                        </label> <a href="" data-toggle="modal" ng-click='resetEmail()' 
+                        data-target="#forgotPasswordModal">Forgot password?</a>
                     </div>
                 </div>
             </div>
@@ -40,7 +40,7 @@
     </form>
     <!-- Forgot password model -->
     <form novalidate name="forgotPassword_form" class="form-horizontal"
-        role="form" ng-submit="sendEmail()">
+        role="form" >
         <div class="modal fade " id="forgotPasswordModal" tabindex="-1"
             role="dialog" aria-labelledby="forgtPassLabel" aria-hidden="true">
             <div class="vertical-alignment-helper">
@@ -57,17 +57,20 @@
                         <div class="modal-body">
                             <div class="form-group">
                                 <div class="col-md-12">
-                                    <label for="firstname" class="control-label" ng-model="notice">{{notice}}</label>
+                                    <label id="notice" class="control-label" ng-model="notice">{{notice}}</label>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" ng-hide="isHidden">
                                 <div class="col-md-9">
                                     <input class="form-control" type="text" name="email" ng-model="email">
                                 </div>
                                 <div class="col-md-3">
                                     <button class="btn btn-primary" type="submit" value="send" 
-                                    ng-click="resetEmail()" data-dismiss="modal">Send</button>
+                                    ng-click="sendEmail()">Send</button>
                                 </div>
+                            </div>
+                            <div class="form-group" ng-show="isHidden" style="text-align: center">
+                                    <button class="btn btn-default" data-dismiss="modal">Close</button>
                             </div>
                         </div>
                     </div>
