@@ -1,6 +1,11 @@
 {
     "global": {
         "title": "Quản lý Thông tin Cá nhân",
+        "user": {
+            "changePassword" : "Đổi mật khẩu",
+            "language" : "Ngôn ngữ",
+            "signout" : "Đăng xuất"
+        },
         "menu": {
             "home": "Trang chủ",
             "contacts": {
