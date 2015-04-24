@@ -26,9 +26,15 @@ public class ContactRepositoryImpl implements ContactRepositoryCustom {
     private EntityManager em;
 
     @Override
-    public List<Itemized> getCompanyNames() {
+    public List<Itemized> getCompanyNames(Integer userId) {
+        if(userId == null){
+            return null;
+        }
+        
         List<Itemized> items = new ArrayList<>();
-        Query query = em.createQuery("select id, name from Company");
+        Query query = em.createQuery("select c.id, c.name from Company c where exists (from User u left join u.assignedCompanies as companyId where u.id = :userId"
+                + " and c.id = companyId )");
+        query.setParameter("userId", userId);
 
         List<Object[]> results = query.getResultList();
 

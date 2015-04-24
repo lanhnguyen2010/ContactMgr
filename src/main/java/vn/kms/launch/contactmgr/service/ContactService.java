@@ -77,7 +77,7 @@ public class ContactService {
 
     @Transactional
     public List<Itemized> getCompanyNames() {
-        return contactRepo.getCompanyNames();
+        return contactRepo.getCompanyNames(SecurityUtil.getCurrentUserId());
     }
 
     @Transactional

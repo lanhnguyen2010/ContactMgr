@@ -8,6 +8,6 @@ import vn.kms.launch.contactmgr.util.SearchResult;
 public interface ContactRepositoryCustom {
     SearchResult<Contact> searchByCriteria(ContactSearchCriteria criteria, Integer userId, String userRole);
     
-    List<Itemized> getCompanyNames();
+    List<Itemized> getCompanyNames(Integer userId);
 
 }

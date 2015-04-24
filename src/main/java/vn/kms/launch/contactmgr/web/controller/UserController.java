@@ -8,12 +8,20 @@ import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.NO_CONTENT;
-import static org.springframework.http.HttpStatus.OK;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import org.springframework.web.bind.annotation.*;
 import vn.kms.launch.contactmgr.domain.user.User;
 import vn.kms.launch.contactmgr.domain.user.UserSearchCriteria;
 import vn.kms.launch.contactmgr.dto.user.ChangeLanguageInfo;
@@ -26,12 +34,9 @@ import vn.kms.launch.contactmgr.util.SearchResult;
 import vn.kms.launch.contactmgr.util.ValidationException;
 
 import javax.mail.MessagingException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 @RestController
 @RequestMapping(value = "/api/users")
+@PreAuthorize("hasRole('ADMINISTRATOR')")
 public class UserController {
 
     @Autowired
