@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 
@@ -26,12 +29,39 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @PersistenceContext
+    private EntityManager em;
+
     @Autowired
     private Validator validator;
 
     @Transactional
     public User getUser(int id) {
         return userRepository.findOne(id);
+    }
+
+    @Transactional
+    public int getIdByEmail(String email) throws ValidationException {
+        Query query = em.createQuery("select id from User where email = :email");
+        query.setParameter("email", email);
+        List<Object> results = query.getResultList();
+
+        if (results.isEmpty()) {
+            throw new EntityNotFoundException();
+        }
+
+        return (int) results.get(0);
+    }
+
+    @Transactional
+    public User updatePasswordByEmail(String email, String password) {
+        int id = getIdByEmail(email);
+        User user = getUser(id);
+
+        user.setPassword(password);
+        user.setConfirmPassword(password);
+
+        return saveUser(user, id);
     }
 
     @Transactional

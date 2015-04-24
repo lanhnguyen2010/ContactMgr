@@ -1,9 +1,6 @@
 package vn.kms.launch.contactmgr.web.controller;
 
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.http.HttpStatus.NOT_FOUND;
-import static org.springframework.http.HttpStatus.NO_CONTENT;
-import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.HttpStatus.*;
 import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -24,10 +21,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import vn.kms.launch.contactmgr.domain.user.User;
 import vn.kms.launch.contactmgr.domain.user.UserSearchCriteria;
+import vn.kms.launch.contactmgr.service.MailService;
 import vn.kms.launch.contactmgr.service.UserService;
 import vn.kms.launch.contactmgr.util.EntityNotFoundException;
 import vn.kms.launch.contactmgr.util.SearchResult;
 import vn.kms.launch.contactmgr.util.ValidationException;
+
+import javax.mail.MessagingException;
 
 @RestController
 @RequestMapping(value = "/api/users")
@@ -35,6 +35,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private MailService mailService;
 
     @RequestMapping(method = POST)
     public ResponseEntity<?> createUser(@RequestBody User user) {
@@ -108,6 +111,18 @@ public class UserController {
         } catch (ValidationException e) {
             return new ResponseEntity<Object>(e.getErrors(), BAD_REQUEST);
         }
+    }
+    @RequestMapping(value = "/password", method = PUT)
+    public ResponseEntity<Void> forgetPassword(@RequestParam String email) {
+        String randomPassword = null;
+        try {
+            randomPassword = mailService.sendRandomPassword(email);
+        } catch (MessagingException exception) {
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
+        } catch (EntityNotFoundException exception) {
+            return new ResponseEntity<>(NOT_FOUND);
+        }
+        return new ResponseEntity<>(OK);
     }
 
     private ResponseEntity<?> saveUser(User user, Integer id) {
