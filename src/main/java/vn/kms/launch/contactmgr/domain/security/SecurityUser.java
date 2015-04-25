@@ -28,6 +28,7 @@ public class SecurityUser implements UserDetails {
         this.username = user.getUsername();
         this.password = user.getPassword();
         this.email = user.getEmail();
+        this.role = user.getRole();
         this.expiredDate = user.getExpiredDate();
         this.active = user.isActive();
     }

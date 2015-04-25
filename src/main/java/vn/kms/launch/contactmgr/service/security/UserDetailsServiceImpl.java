@@ -23,7 +23,12 @@ public class UserDetailsServiceImpl implements UserDetailsService{
             // Try find user by email
             user = userRepo.findByEmail(username);
         }
-        return new SecurityUser(user);
+        
+        if(user != null){
+            return new SecurityUser(user);
+        }
+        
+        return null;
     }
 
 }

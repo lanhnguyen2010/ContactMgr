@@ -3,6 +3,8 @@ package vn.kms.launch.contactmgr.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
+
 import vn.kms.launch.contactmgr.domain.Itemized;
 import vn.kms.launch.contactmgr.domain.contact.*;
 import vn.kms.launch.contactmgr.domain.image.PhotoRepository;
@@ -16,6 +18,7 @@ import vn.kms.launch.contactmgr.util.ValidationException;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
+
 import java.util.List;
 import java.util.Set;
 
@@ -114,12 +117,17 @@ public class ContactService {
     }
 
     public List<Company> getAllCompanies() {
-        if(SecurityUtil.getCurrentUserRole().equals(Role.ADMINISTRATOR.name())){
+        String role = SecurityUtil.getCurrentUserRole();
+        if(!StringUtils.isEmpty(role) && role.equals(Role.ADMINISTRATOR.name())){
             return companyRepo.findAll();
         }
 
-        User user = userRepo.findOne(SecurityUtil.getCurrentUserId());
-        return companyRepo.findAll(user.getAssignedCompanies());
+        Integer userId = SecurityUtil.getCurrentUserId();
+        if(userId != null){
+            User user = userRepo.findOne(userId);
+            return companyRepo.findAll(user.getAssignedCompanies());
+        }
+        return null;
     }
 
     @Transactional
