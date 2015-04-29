@@ -8,7 +8,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 
 import vn.kms.launch.contactmgr.domain.user.User;
-import vn.kms.launch.contactmgr.domain.user.UserRepository;
 import vn.kms.launch.contactmgr.service.UserService;
 
 import com.google.common.base.Optional;
@@ -62,5 +61,4 @@ public class DomainUsernamePasswordAuthenticationProvider implements Authenticat
         // TODO Auto-generated method stub
         return authentication.equals(UsernamePasswordAuthenticationToken.class);
     }
-
 }

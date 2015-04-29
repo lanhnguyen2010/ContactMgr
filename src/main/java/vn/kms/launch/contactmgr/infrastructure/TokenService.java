@@ -3,15 +3,10 @@ package vn.kms.launch.contactmgr.infrastructure;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 //import net.sf.ehcache.Cache;
 //import net.sf.ehcache.CacheManager;
 //import net.sf.ehcache.Element;
-
-
-import vn.kms.launch.contactmgr.domain.user.User;
-import vn.kms.launch.contactmgr.service.UserService;
 
 public  class TokenService {
 
