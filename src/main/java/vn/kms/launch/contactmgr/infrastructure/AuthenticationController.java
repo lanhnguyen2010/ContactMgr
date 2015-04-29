@@ -11,6 +11,4 @@ public class AuthenticationController {
     public String authenticate() {
         return "";
     }
-    
-
 }

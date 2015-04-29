@@ -51,25 +51,30 @@ public class AuthenticationFilter extends GenericFilterBean {
             }
             
             if (token.isPresent()) {
+                System.out.println("token is present...");
                 processTokenAuthentication(token);
+                System.out.println("ENd token is present...");
             }
             
             chain.doFilter(httpRequest, httpResponse);
         } catch (BadCredentialsException e){
+            System.out.println("Loi Bad Credentials...");
             SecurityContextHolder.clearContext();
             httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED);
         }
         catch (InternalAuthenticationServiceException internalAuthenticationServiceException) {
+            System.out.println("Loi Services...");
             SecurityContextHolder.clearContext();
             httpResponse.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         } catch (AuthenticationException authenticationException) {
+            System.out.println("Loi Authentication...");
             SecurityContextHolder.clearContext();
             httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, authenticationException.getMessage());
         }
         
-        if (SecurityContextHolder.getContext().getAuthentication().isAuthenticated()){
-            httpResponse.sendError(HttpServletResponse.SC_OK);
-        }
+       // if (SecurityContextHolder.getContext().getAuthentication().isAuthenticated()){
+         //   httpResponse.sendError(HttpServletResponse.SC_OK);
+        //}
     }
     
     private HttpServletRequest asHttp(ServletRequest request) {
@@ -100,21 +105,24 @@ public class AuthenticationFilter extends GenericFilterBean {
     }
 
     private void processTokenAuthentication(Optional<String> token) {
+        System.out.println("Loi processTokenAuthentication");
         Authentication resultOfAuthentication = tryToAuthenticateWithToken(token);
         SecurityContextHolder.getContext().setAuthentication(resultOfAuthentication);
     }
 
     private Authentication tryToAuthenticateWithToken(Optional<String> token) {
+        System.out.println("Loi tryToAuthenticateWithToken");
         PreAuthenticatedAuthenticationToken requestAuthentication = new PreAuthenticatedAuthenticationToken(token, null);
         return tryToAuthenticate(requestAuthentication);
     }
 
     private Authentication tryToAuthenticate(Authentication requestAuthentication) {
+        
         Authentication responseAuthentication = authenticationManager.authenticate(requestAuthentication);
         if (responseAuthentication == null || !responseAuthentication.isAuthenticated()) {
             throw new InternalAuthenticationServiceException("Unable to authenticate Domain User for provided credentials");
         }
-       
+        System.out.println("Loi tryToAuthenticate");
         return responseAuthentication;
     }
 }

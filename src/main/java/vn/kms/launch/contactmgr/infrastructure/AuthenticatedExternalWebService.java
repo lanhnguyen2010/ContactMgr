@@ -24,5 +24,4 @@ public class AuthenticatedExternalWebService extends AuthenticationWithToken{
      public ExternalWebServiceStub getExternalWebService(){
          return this.externalWebServiceStub;
      }
-
 }
