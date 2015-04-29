@@ -2,14 +2,22 @@
 
 angular.module('contactmgrApp').controller(
         'UsersController',
-        function($scope,$filter, UsersService, ngTableParams) {
+        function($scope,$filter, UsersService, ngTableParams,$http,$location) {
 
             function init() {
                 $scope.getCompanies();
                 $scope.getRoles();
                 $scope.initUser();
+                $scope.checkRole();
             };
-
+            
+            $scope.checkRole = function(){
+                $http.get("api/security/current-user").success(function(user){
+                    if(user.role != "ADMINISTRATOR"){
+                        $location.path("/access_denied");
+                    }
+                })
+            }
             $scope.criteria = {
                 username : '',
                 firstlastName : '',

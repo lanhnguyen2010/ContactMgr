@@ -6,8 +6,12 @@ import org.springframework.transaction.annotation.Transactional;
 import vn.kms.launch.contactmgr.domain.Itemized;
 import vn.kms.launch.contactmgr.domain.contact.*;
 import vn.kms.launch.contactmgr.domain.image.PhotoRepository;
+import vn.kms.launch.contactmgr.domain.user.Role;
+import vn.kms.launch.contactmgr.domain.user.User;
+import vn.kms.launch.contactmgr.domain.user.UserRepository;
 import vn.kms.launch.contactmgr.util.EntityNotFoundException;
 import vn.kms.launch.contactmgr.util.SearchResult;
+import vn.kms.launch.contactmgr.util.SecurityUtil;
 import vn.kms.launch.contactmgr.util.ValidationException;
 
 import javax.validation.ConstraintViolation;
@@ -29,6 +33,9 @@ public class ContactService {
 
     @Autowired
     private PhotoRepository photoRepo;
+    
+    @Autowired
+    private UserRepository userRepo;
 
     @Autowired
     private Validator validator;
@@ -38,7 +45,8 @@ public class ContactService {
     }
 
     @Transactional
-    public Contact saveContact(Contact contact, Integer contactId) throws ValidationException {
+    public Contact saveContact(Contact contact, Integer contactId)
+            throws ValidationException {
         if (contact == null) {
             return null;
         }
@@ -69,7 +77,7 @@ public class ContactService {
 
     @Transactional
     public List<Itemized> getCompanyNames() {
-        return contactRepo.getCompanyNames();
+        return contactRepo.getCompanyNames(SecurityUtil.getCurrentUserId());
     }
 
     @Transactional
@@ -77,21 +85,27 @@ public class ContactService {
         return contactRepo.deleteByIds(ids);
     }
 
-    public SearchResult searchContacts(ContactSearchCriteria criteria) {
-        return contactRepo.searchByCriteria(criteria);
+    public SearchResult<Contact> searchContacts(ContactSearchCriteria criteria) {
+        return contactRepo.searchByCriteria(criteria, 
+                SecurityUtil.getCurrentUserId(), 
+                SecurityUtil.getCurrentUserRole());
     }
 
     public void validateContact(Contact contact) throws ValidationException {
-        Set<ConstraintViolation<Contact>> violations = validator.validate(contact);
+        Set<ConstraintViolation<Contact>> violations = validator
+                .validate(contact);
         if (!violations.isEmpty()) {
-            throw new ValidationException(violations.toArray(new ConstraintViolation[0]));
+            throw new ValidationException(
+                    violations.toArray(new ConstraintViolation[0]));
         }
     }
 
     public void validateCompany(Company company) throws ValidationException {
-        Set<ConstraintViolation<Company>> violations = validator.validate(company);
+        Set<ConstraintViolation<Company>> violations = validator
+                .validate(company);
         if (!violations.isEmpty()) {
-            throw new ValidationException(violations.toArray(new ConstraintViolation[0]));
+            throw new ValidationException(
+                    violations.toArray(new ConstraintViolation[0]));
         }
     }
 
@@ -99,9 +113,13 @@ public class ContactService {
         return countryRepo.findAll();
     }
 
-
     public List<Company> getAllCompanies() {
-        return companyRepo.findAll();
+        if(SecurityUtil.getCurrentUserRole().equals(Role.ADMINISTRATOR.name())){
+            return companyRepo.findAll();
+        }
+
+        User user = userRepo.findOne(SecurityUtil.getCurrentUserId());
+        return companyRepo.findAll(user.getAssignedCompanies());
     }
 
     @Transactional
@@ -113,15 +131,10 @@ public class ContactService {
                 return companyRepo.save(company);
             } else {
                 // update a existing company
-
                 company.setId(id);
                 return companyRepo.save(company);
             }
         }
         return null;
-    }
-
-    public Company getCompany(int id) {
-        return companyRepo.findOne(id);
     }
 }
