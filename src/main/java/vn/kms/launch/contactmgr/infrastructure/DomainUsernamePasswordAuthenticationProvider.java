@@ -42,10 +42,9 @@ public class DomainUsernamePasswordAuthenticationProvider implements Authenticat
         }
         
         AuthenticationWithToken resultOfAuthentication = externalServiceAuthenticator.authenticate(userName.get(), password.get());
-        
-        String newToken = tokenService.generateToken();
+        User user = (User) resultOfAuthentication.getPrincipal();
+        String newToken = tokenService.generateToken(user.getUsername(),resultOfAuthentication.getCredentials().toString());
         resultOfAuthentication.setToken(newToken);
-        tokenService.storeToken(newToken, resultOfAuthentication);
         return resultOfAuthentication;
     }
     

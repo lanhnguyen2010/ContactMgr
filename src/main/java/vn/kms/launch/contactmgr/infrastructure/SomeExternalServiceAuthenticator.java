@@ -9,7 +9,7 @@ public class SomeExternalServiceAuthenticator implements ExternalServiceAuthenti
     @Override
     public AuthenticatedExternalWebService authenticate(String username, String password) {
         ExternalWebServiceStub externalWebService = new ExternalWebServiceStub();
-        AuthenticatedExternalWebService authenticatedExternalWebService = new AuthenticatedExternalWebService(new User(username), null,
+        AuthenticatedExternalWebService authenticatedExternalWebService = new AuthenticatedExternalWebService(new User(username), password,
                 AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_DOMAIN_USER"));
         authenticatedExternalWebService.setExternalWebService(externalWebService);
         return authenticatedExternalWebService;
