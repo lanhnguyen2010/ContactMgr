@@ -1,0 +1,23 @@
+'use strict';
+
+angular.module('contactmgrApp').controller(
+        'ChangePasswordController',
+        function($scope, ChangePasswordService) {
+            $scope.resetInfor = function() {
+                $scope.pass = {
+                    current : '',
+                    pass : '',
+                    confirm : ''
+                };
+            }
+            $scope.changePassword = function() {
+                ChangePasswordService.changePassword($scope.pass).success(
+                        function(data, status, headers, config) {
+                            window.alert("Change password successful!");
+                            $scope.resetInfor();
+                        }).error(function(data, status, header, config) {
+                    $scope.validator = data.errors;
+                    window.alert("Cannot change password!");
+                });
+            }
+        });
