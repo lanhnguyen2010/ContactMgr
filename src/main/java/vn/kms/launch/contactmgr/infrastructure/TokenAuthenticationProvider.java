@@ -16,7 +16,6 @@ import com.google.common.base.Optional;
 public class TokenAuthenticationProvider implements AuthenticationProvider {
 
     private TokenService tokenService;
-    private ExternalServiceAuthenticator externalServiceAuthenticator;
     @Autowired
     UserService userService;
     public TokenAuthenticationProvider(TokenService tokenService) {
@@ -39,8 +38,7 @@ public class TokenAuthenticationProvider implements AuthenticationProvider {
             String token2 = tokenService.generateToken(user.getUsername(), user.getPassword());
             System.out.println("token2: "+token2);
             if(token2.equals(token.get())){
-                AuthenticationWithToken resultOfAuthentication = new AuthenticationWithToken(user, token,AuthorityUtils.commaSeparatedStringToAuthorityList(user.getRole()));
-                System.out.println("resultOfAuthentication: "+ (resultOfAuthentication.isAuthenticated()));
+                AuthenticationWithToken resultOfAuthentication = new AuthenticationWithToken(user, token,AuthorityUtils.createAuthorityList(user.getRole()));
                 return resultOfAuthentication;
             }
             

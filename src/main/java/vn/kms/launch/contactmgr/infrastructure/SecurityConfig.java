@@ -29,7 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         //http.antMatcher("/api/contacts").httpBasic();
         http.authorizeRequests().antMatchers("/api/authenticate").authenticated();
-        http.authorizeRequests().antMatchers("/api/contacts/**").hasRole("USER");
+        http.authorizeRequests().antMatchers("/api/contacts/**").authenticated();
         //http.authorizeRequests().antMatchers("/**").authenticated();
         http.csrf().disable();
         http.formLogin().loginPage("/#/login").permitAll();
@@ -54,13 +54,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public ExternalServiceAuthenticator someExternalServiceAuthenticator() {
-        return new SomeExternalServiceAuthenticator();
-    }
-
-    @Bean
     public AuthenticationProvider domainUsernamePasswordAuthenticationProvider() {
-        return new DomainUsernamePasswordAuthenticationProvider(tokenService(),someExternalServiceAuthenticator());
+        return new DomainUsernamePasswordAuthenticationProvider(tokenService());
     }
 
 }
