@@ -12,14 +12,11 @@ import org.springframework.security.config.annotation.web.servlet.configuration.
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import vn.kms.launch.contactmgr.RestAuthenticationEntryPoint;
-import vn.kms.launch.contactmgr.service.security.UserDetailsServiceImpl;
 
 @Configuration
 @EnableWebMvcSecurity
 @EnableGlobalMethodSecurity(prePostEnabled=true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    @Autowired
-    UserDetailsServiceImpl userDetailsService;
     
     @Autowired
     RestAuthenticationEntryPoint restAuthenticationEntryPoint;
@@ -33,7 +30,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.formLogin().loginPage("/#/login").permitAll();
         http.addFilterBefore(new AuthenticationFilter(authenticationManager()),BasicAuthenticationFilter.class);
-        http.userDetailsService(userDetailsService);
         http.exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint);
     }
 

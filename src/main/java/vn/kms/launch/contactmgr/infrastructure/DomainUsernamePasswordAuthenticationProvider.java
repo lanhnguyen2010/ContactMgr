@@ -39,7 +39,7 @@ public class DomainUsernamePasswordAuthenticationProvider implements Authenticat
             throw new BadCredentialsException("Invalid username password");
         }
         String userRole = gerRoleUser(userName,password);
-        AuthenticationWithToken resultOfAuthentication = new AuthenticationWithToken(new User(userName.get()), password.get(),AuthorityUtils.createAuthorityList(userRole));
+        AuthenticationWithToken resultOfAuthentication = new AuthenticationWithToken(userService.findByUsername(userName.get()), password.get(),AuthorityUtils.createAuthorityList(userRole));
         User user = (User) resultOfAuthentication.getPrincipal();
         
         String newToken = tokenService.generateToken(user.getUsername(),resultOfAuthentication.getCredentials().toString());
