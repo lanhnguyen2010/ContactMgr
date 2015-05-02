@@ -22,5 +22,4 @@ public class AuthenticationWithToken extends PreAuthenticatedAuthenticationToken
     public String getToken() {
         return (String)getDetails();
     }
-
 }
