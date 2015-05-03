@@ -23,10 +23,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        //http.antMatcher("/api/contacts").httpBasic();
+        http.authorizeRequests().antMatchers("/api/contacts**").hasRole("DESIGNER");
         http.authorizeRequests().antMatchers("/api/authenticate").authenticated();
-        http.authorizeRequests().antMatchers("/api/contacts/**").authenticated();
-        //http.authorizeRequests().antMatchers("/**").authenticated();
         http.csrf().disable();
         http.formLogin().loginPage("/#/login").permitAll();
         http.addFilterBefore(new AuthenticationFilter(authenticationManager()),BasicAuthenticationFilter.class);
