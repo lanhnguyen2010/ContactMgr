@@ -33,7 +33,7 @@ public class DomainUsernamePasswordAuthenticationProvider implements Authenticat
         if (!userName.isPresent() || !password.isPresent()) {
             throw new BadCredentialsException("Invalid Domain User Credentials");
         }
-
+        System.out.println("lejrlkj"+userName.get());
         if (credentialsInvalid(userName, password)) {
             throw new BadCredentialsException("Invalid username password");
         }

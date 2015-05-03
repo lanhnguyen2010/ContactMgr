@@ -36,7 +36,7 @@ public  class TokenService {
         }
         return sb.toString();
     }
-    public byte[] encrypt(String str){
+    private byte[] encrypt(String str){
         digester.update(str.getBytes());
         byte[] hash = digester.digest();
         return hash;

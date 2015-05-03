@@ -198,4 +198,14 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
         return 0;
     }
 
+    @Override
+    public User findByUsernameOrEmail(String username) {
+        System.out.println("Query:::::" + username);
+        Query query = em.createQuery("from User u where u.username =:username or u.email=:email");
+        //System.out.println("Query:::::" + query);
+        query.setParameter("username", username);
+        query.setParameter("email", username);
+        return (User)query.getSingleResult();
+    }
+
 }
