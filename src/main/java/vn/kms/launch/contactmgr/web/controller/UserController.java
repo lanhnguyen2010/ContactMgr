@@ -35,7 +35,7 @@ import vn.kms.launch.contactmgr.util.ValidationException;
 import javax.mail.MessagingException;
 @RestController
 @RequestMapping(value = "/api/users")
-@PreAuthorize("hasRole('ADMINISTRATOR')")
+//@PreAuthorize("hasRole('ADMINISTRATOR')")
 public class UserController {
 
     @Autowired
@@ -79,7 +79,7 @@ public class UserController {
         if (ids.length == 0) {
             return new ResponseEntity<>(BAD_REQUEST);
         }
-        Integer result = userService.deactiveUser(ids);
+        Integer result = userService.activeUser(ids);
         return new ResponseEntity<>((result == 0) ? NOT_FOUND : OK);
     }
 

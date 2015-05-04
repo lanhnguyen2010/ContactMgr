@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.6.17, for Win32 (x86)
 --
--- Host: localhost    Database: contactmgr
+-- Host: 127.0.0.1    Database: contactmgr
 -- ------------------------------------------------------
 -- Server version	5.6.23-log
 
@@ -16,41 +16,29 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `users`
+-- Table structure for table `user_assignedcompanies`
 --
 
-DROP TABLE IF EXISTS `users`;
+DROP TABLE IF EXISTS `user_assignedcompanies`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `users` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
-  `USERNAME` varchar(100) NOT NULL,
-  `PASSWORD` varchar(100) DEFAULT NULL,
-  `FIRST_NAME` varchar(45) DEFAULT NULL,
-  `LAST_NAME` varchar(45) DEFAULT NULL,
-  `ROLE` varchar(45) DEFAULT NULL,
-  `EXPIRED_DATE` timestamp,
-  `ACTIVE` int(1) DEFAULT 0,
-  `CREATED_AT` timestamp,
-  `CREATED_BY` varchar(100) DEFAULT NULL,
-  `UPDATED_AT` timestamp,
-  `UPDATED_BY` varchar(100) DEFAULT NULL,
-  `EMAIL` varchar(100) DEFAULT NULL,
-  `LANGUAGE` varchar(15) DEFAULT NULL,
-  `RESET_PASSWORD` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+CREATE TABLE `user_assignedcompanies` (
+  `user_id` int(11) NOT NULL DEFAULT '0',
+  `company_id` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`user_id`,`company_id`),
+  KEY `fk_user_assignedcompanies_company` (`company_id`),
+  CONSTRAINT `fk_user_assignedcompanies_company` FOREIGN KEY (`company_id`) REFERENCES `companies` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_user_assignedcompanies_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `users`
+-- Dumping data for table `user_assignedcompanies`
 --
 
-LOCK TABLES `users` WRITE;
-/*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Odthientho',null,'Odthientho','Odthientho','',null,0,null,'','2015-04-16','system','odthientho@gmail.com','VI',null),
-    (2,'KyNguyen',null,'KyNguyen','KyNguyen','',null,0,null,'','2015-04-16','system','kychaunguyen@gmail.com','EN',null);
-/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+LOCK TABLES `user_assignedcompanies` WRITE;
+/*!40000 ALTER TABLE `user_assignedcompanies` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_assignedcompanies` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -62,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-04-16 17:32:42
+-- Dump completed on 2015-05-04 14:29:01

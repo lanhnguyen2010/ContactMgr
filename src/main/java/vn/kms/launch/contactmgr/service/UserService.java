@@ -80,9 +80,6 @@ public class UserService {
         user.setPassword(HashString.MD5(user.getPassword()));
         user.setResetPassword(HashString.MD5(user.getConfirmPassword()));
 
-        if (id != null && !user.getAssignedCompanies().isEmpty()) {
-            userRepository.updateUserAssignedCompanies(id);
-        }
         return userRepository.save(user);
     }
 
@@ -140,4 +137,8 @@ public class UserService {
         return userRepository.findByUsername(username);
     }
 
+    @Transactional
+    public User findByUsernameOrEmail(String userName) {
+        return userRepository.findByUsernameOrEmail(userName);
+    }
 }
