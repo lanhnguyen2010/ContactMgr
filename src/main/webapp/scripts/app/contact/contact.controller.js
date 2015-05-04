@@ -1,10 +1,14 @@
 'use strict';
 
 angular.module('contactmgrApp')
-    .controller('ContactController', function($scope, ContactService, ngTableParams) {
+    .controller('ContactController', function($scope, ContactService, ngTableParams,$http) {
         function init(){
             $scope.getCompanies();
+            $scope.getAuthUser();
         };
+        $scope.getAuthUser = function(){
+            $http.get('api/security/current-user');
+        }
 
         $scope.criteria = {
             name: '',

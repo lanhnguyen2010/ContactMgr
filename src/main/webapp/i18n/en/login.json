@@ -3,8 +3,8 @@
         "title": "Login",
         "notice": "The authentication was failed. Please double-check and try again.",
         "placeholder":{
-            "username": "username or email",
-            "password": "password"
+            "username": "Username or Email",
+            "password": "Password"
         },
         "button":{
             "login": "Login",

@@ -2,6 +2,7 @@ package vn.kms.launch.contactmgr.dao;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
+
 import vn.kms.launch.contactmgr.domain.user.User;
 import vn.kms.launch.contactmgr.domain.user.UserRepositoryCustom;
 import vn.kms.launch.contactmgr.domain.user.UserSearchCriteria;
@@ -10,6 +11,7 @@ import vn.kms.launch.contactmgr.util.SearchResult;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+
 import java.util.*;
 
 @Repository
@@ -159,18 +161,27 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
     }
 
     @Override
-    public int updateLanguage(int id, String language) {
-        Query query = em.createQuery("update User set language =:language where id =:id");
+    public User findByUsername(String username) {
+        Query query = em.createQuery("select u from User u where u.username=:username");
+        System.out.println("Query:::::" + query);
+        query.setParameter("username", username);
+        return (User)query.getSingleResult();
+
+    }
+
+    @Override
+    public int updateLanguage(String username, String language) {
+        Query query = em.createQuery("update User set language =:language where username =:username");
         query.setParameter("language", language);
-        query.setParameter("id", id);
+        query.setParameter("username", username);
         return query.executeUpdate();
     }
 
     @Override
-    public int updatePassword(int id, String password, String passwordConfirm) {
-        Query query = em.createQuery("update User set password =:password where id =:id");
+    public int updatePassword(String username, String password) {
+        Query query = em.createQuery("update User set password =:password where username =:username");
         query.setParameter("password", password);
-        query.setParameter("id", id);
+        query.setParameter("username", username);
         return query.executeUpdate();
     }
 
@@ -180,6 +191,11 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
         query.setParameter("resetPassword", resetPassword);
         query.setParameter("id", id);
         return query.executeUpdate();
+    }
+
+    @Override
+    public int updatePassword(int id, String password, String passwordConfirm) {
+        return 0;
     }
 
 }

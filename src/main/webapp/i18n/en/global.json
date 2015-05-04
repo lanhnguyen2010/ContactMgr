@@ -1,6 +1,11 @@
 {
     "global": {
         "title": "Contact Manager",
+        "user": {
+            "changePassword" : "Change Password",
+            "language" : "Language",
+            "signout" : "Sign Out"
+        },
         "menu": {
             "home": "Home",
             "contacts": {
@@ -22,5 +27,17 @@
         },
         "browserupgrade": "You are using an <strong>outdated</strong> browser. Please <a href='http://browsehappy.com/?locale=en'>upgrade your browser</a> to improve your experience.",
         "copyright": "Copyright &copy;2015 KMS Technology, Inc."
+    },
+    "change-pass-dialog":{
+        "field":{
+            "title": "Change Password",
+            "current-pass": "Current Password",
+            "new-pass": "New Password",
+            "conf-pass": "Confirm New Password"
+        },
+        "button":{
+            "change": "Change",
+            "cancel": "Cancel"
+        }
     }
 }

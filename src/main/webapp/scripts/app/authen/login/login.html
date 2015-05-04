@@ -1,42 +1,44 @@
 <div ng-loak>
     <form name="login_form" novalidate
         class="form-horizontal col-md-offset-3" role="form"
-        ng-submit="checkLogin()">
+        ng-submit="login()">
         <div class="container">
             <h3 class="modal-title" id="loginLabel" translate="login.title">Login</h3>
         </div>
         <div class="modal-body" id="size-dialog">
             <div class="form-group">
                 <div class="col-md-8">
-                    <label for="firstname" class="control-label" ng-show="authenticated" translate="login.notice">
-                    The authentication was failed. Please double-check and try again.</label>
+                    <label for="firstname" class="control-label"
+                        ng-show="authenticated" ng-style="{color:'red'}"
+                        translate="login.notice">The authentication was failed.
+                        Please double-check and try again.</label>
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-md-8">
                     <input type="text" class="form-control" name="username"
-                        ng-model="credentials.username" 
-                        translate="{{'login.placeholder.username'|translate}}" placeholder="username or email">
+                        ng-model="credentials.username"
+                        placeholder="{{'login.placeholder.username'|translate}}">
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-md-8">
                     <input type="password" class="form-control" name="password"
-                        translate="{{'login.placeholder.password'|translate}}"
-                        placeholder="password" ng-model="credentials.password">
+                        placeholder="{{'login.placeholder.password'|translate}}"
+                        ng-model="credentials.password">
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-md-2">
-                    <button type="submit" class="btn btn-default" 
-                    translate="login.button.login" value="login">Login</button>
+                    <button type="submit" class="btn btn-default" value="login"
+                        translate="login.button.login">Login</button>
                 </div>
                 <div class="col-md-6 control-label">
                     <div class="checkbox">
-                        <label> <input type="checkbox" translate="login.button.remember-me"> Remember me |
-                        </label> <a href="" data-toggle="modal" ng-click='resetEmail()'
-                        translate="login.button.forgot-pass"
-                        data-target="#forgotPasswordModal">Forgot password?</a>
+                        <label> <input type="checkbox"
+                            translate="login.button.remember-me"> Remember me |
+                        </label> <a href="" data-toggle="modal" data-target="#forgotPasswordModal"
+                            translate="login.button.forgot-pass">Forgot password?</a>
                     </div>
                 </div>
             </div>
@@ -45,14 +47,15 @@
     <!-- Forgot password model -->
     <form novalidate name="forgotPassword_form" class="form-horizontal"
         role="form" >
-        <div class="modal fade" id="forgotPasswordModal" tabindex="-1"
-            role="dialog" aria-labelledby="forgtPassLabel" aria-hidden="true">
+        <div class="modal fade " id="forgotPasswordModal" tabindex="-1"
+            role="dialog" aria-labelledby="forgotPassLabel" aria-hidden="true">
             <div class="vertical-alignment-helper">
                 <div class="modal-dialog vertical-align-center"
                     id="dialog-small-size">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" ng-click="resetEmail()">
+                            <button type="button" class="close" data-dismiss="modal"
+                                ng-click="resetEmail()">
                                 <span aria-hidden="true">&times; </span> <span class="sr-only">Close</span>
                             </button>
                             <h3 class="modal-title" id="forgotPassLabel" style="color: white" 
@@ -68,7 +71,8 @@
                                          value="100" type="info"></progressbar>
                             <div class="form-group" ng-show="btnSend">
                                 <div class="col-md-9">
-                                    <input class="form-control" type="text" name="email" ng-model="email">
+                                    <input class="form-control" type="text" name="email"
+                                        ng-model="email">
                                 </div>
                                 <div class="col-md-3">
                                     <button class="btn btn-primary" type="submit" value="send"

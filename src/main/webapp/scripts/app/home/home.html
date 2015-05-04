@@ -15,15 +15,15 @@
                 <li><a href="#contact/new" translate="home.links.contacts-new">Create
                     new Contacts</a></li>
             </ul>
-            <ul>
-                <li><a href="#cards" translate="home.links.cards">Manage
+            <ul ng-show="isAdmin() || isDesigner()">
+                <li><a href="#cards" translate="home.links.cards" >Manage
                     Cards</a></li>
-                <li><a href="#cards/new" translate="home.links.cards-new">Create
+                <li ><a href="#cards/new" translate="home.links.cards-new">Create
                     new Card Template</a></li>
-                <li><a href="#cards/generate"
+                <li ><a href="#cards/generate"
                        translate="home.links.cards-generate">Generate Cards</a></li>
             </ul>
-            <ul>
+            <ul ng-show = "isAdmin()">
                 <li><a href="#admin/user" translate="home.links.admin.users">Manage
                     Users</a></li>
             </ul>
