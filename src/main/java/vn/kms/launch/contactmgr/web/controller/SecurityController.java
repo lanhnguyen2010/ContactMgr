@@ -13,10 +13,13 @@ import vn.kms.launch.contactmgr.domain.security.UserInfo;
 import vn.kms.launch.contactmgr.util.SecurityUtil;
 
 @RestController
+
 @RequestMapping(value = "/api/security")
-@PreAuthorize("hasAnyRole('ADMINISTRATOR', 'DESIGNER', 'EDITOR')")
 public class SecurityController {
-    @RequestMapping(value = "/current-user" ,method = GET)
+
+
+    @RequestMapping(value = "/current-user", method = GET)
+    @PreAuthorize("hasAnyRole('ADMINISTRATOR', 'DESIGNER', 'EDITOR')")
     public ResponseEntity<UserInfo> getCurrentUser() {
         UserInfo userInfo = SecurityUtil.getUserInfo();
         return new ResponseEntity<>(userInfo, (userInfo == null) ? NOT_FOUND : OK);

@@ -1,5 +1,7 @@
 package vn.kms.launch.contactmgr.domain.user;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -10,12 +12,14 @@ import org.springframework.stereotype.Repository;
 public interface UserRepository extends JpaRepository<User, Integer>, UserRepositoryCustom {
 
 
+
     @Modifying
     @Query("update User u set u.active = 1 where u.id in (:ids)")
     public int activeUser(@Param("ids") int... ids);
    
 
     
+
     @Modifying
     @Query("update User u set u.active = 0 where u.id in (:ids)")
     public int deactiveUser(@Param("ids") int... ids);
@@ -44,4 +48,9 @@ public interface UserRepository extends JpaRepository<User, Integer>, UserReposi
     @Query("select u.password from User u where u.username =:username")
     String getPasswordByUsername(@Param("username") String username);
 
+
+    @Query("select c.id from Contact c left join c.work.company where "
+            + "exists (from User u left join u.assignedCompanies as companyId where u.id = :userId "
+                                + "and c.work.company.id = companyId )")
+    public List<Integer> getContactIds(@Param("userId")Integer userId);
 }

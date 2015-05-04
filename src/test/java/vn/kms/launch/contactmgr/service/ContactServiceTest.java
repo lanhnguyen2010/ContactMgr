@@ -13,6 +13,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import vn.kms.launch.contactmgr.ContactMgrApp;
 import vn.kms.launch.contactmgr.domain.contact.Contact;
+import vn.kms.launch.contactmgr.util.AuthorizationException;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = ContactMgrApp.class)
@@ -24,11 +25,18 @@ public class ContactServiceTest {
 
     /**
      * Test getContact function
+     * @throws AuthorizationException 
      */
     @Test
-    public void testGetContact() {
+    public void testGetContact() throws AuthorizationException {
         // Get an existing contact
-        Contact contact = contactService.getContact(1);
+        Contact contact = null;
+        try {
+            contact = contactService.getContact(1);
+        } catch (AuthorizationException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         assertNotNull(contact);
         assertEquals("first_name1", contact.getFirstName());
 
