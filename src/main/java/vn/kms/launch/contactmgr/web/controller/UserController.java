@@ -37,7 +37,6 @@ import vn.kms.launch.contactmgr.util.ValidationException;
 import javax.mail.MessagingException;
 @RestController
 @RequestMapping(value = "/api/users")
-@PreAuthorize("hasRole('ADMINISTRATOR')")
 public class UserController {
 
     @Autowired
@@ -47,27 +46,32 @@ public class UserController {
     private MailService mailService;
 
     @RequestMapping(method = POST)
+    @PreAuthorize("hasRole('ADMINISTRATOR')")
     public ResponseEntity<?> createUser(@RequestBody User user) {
         return saveUser(user, null);
     }
 
     @RequestMapping(value = "/{id}", method = PUT)
+    @PreAuthorize("hasRole('ADMINISTRATOR')")
     public ResponseEntity<?> updateUser(@PathVariable int id, @RequestBody User user) {
         return saveUser(user, id);
     }
 
     @RequestMapping(value = "/search", method = POST)
+    @PreAuthorize("hasRole('ADMINISTRATOR')")
     public SearchResult<User> searchUser(@RequestBody UserSearchCriteria criteria) {
         return userService.searchUsers(criteria);
     }
 
     @RequestMapping(value = "/{id}", method = DELETE)
+    @PreAuthorize("hasRole('ADMINISTRATOR')")
     public ResponseEntity<Void> deleteUser(@PathVariable int id) {
         int deleteId = userService.deleteUsers(id);
         return new ResponseEntity<>((deleteId == 0) ? NOT_FOUND : NO_CONTENT);
     }
 
     @RequestMapping(method = DELETE)
+    @PreAuthorize("hasRole('ADMINISTRATOR')")
     public ResponseEntity<Integer> deleteUsers(@RequestParam int... ids) {
         if (ids.length == 0) {
             return new ResponseEntity<>(BAD_REQUEST);
@@ -77,6 +81,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/active/", method = PUT)
+    @PreAuthorize("hasRole('ADMINISTRATOR')")
     public ResponseEntity<Integer> activeUser(@RequestParam int... ids) {
         if (ids.length == 0) {
             return new ResponseEntity<>(BAD_REQUEST);
@@ -86,6 +91,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/deactive/", method = PUT)
+    @PreAuthorize("hasRole('ADMINISTRATOR')")
     public ResponseEntity<Integer> deactiveUser(@RequestParam int... ids) {
         if (ids.length == 0) {
             return new ResponseEntity<>(BAD_REQUEST);
@@ -96,6 +102,7 @@ public class UserController {
 
 
     @RequestMapping(value = "/roles", method = GET)
+    @PreAuthorize("hasRole('ADMINISTRATOR')")
     public ResponseEntity<List<String>> getRoles() {
         List<String> result = userService.getRoles();
         if (result == null) {
@@ -106,6 +113,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/validate", method = POST)
+    @PreAuthorize("hasRole('ADMINISTRATOR')")
     public ResponseEntity<Object> validateUser(@RequestBody User user) {
         try {
             userService.validateUser(user);
@@ -128,12 +136,14 @@ public class UserController {
     }
 
     @RequestMapping(value = "/updateLanguage", method = PUT)
+    @PreAuthorize("hasAnyRole('ADMINISTRATOR', 'DESIGNER', 'EDITOR')")
     public ResponseEntity<?> updateLanguage(@RequestBody ChangeLanguageInfo changeLanguageInfo) {
         Integer update = userService.updateLanguage(changeLanguageInfo);
         return new ResponseEntity<>((update == 0) ? NOT_FOUND : OK);
     }
 
     @RequestMapping(value = "/updatePassword", method = PUT)
+    @PreAuthorize("hasAnyRole('ADMINISTRATOR', 'DESIGNER', 'EDITOR')")
     public ResponseEntity<?> updatePassword(@RequestBody ChangePasswordInfo changePasswordInfo) {
         try {
             Integer update = userService.updatePassword(changePasswordInfo);
