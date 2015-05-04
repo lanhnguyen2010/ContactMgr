@@ -1,22 +1,23 @@
 package vn.kms.launch.contactmgr.web.controller;
 
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
-import static org.springframework.web.bind.annotation.RequestMethod.PUT;
-import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
-import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.NO_CONTENT;
 import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.mail.MessagingException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,11 +34,9 @@ import vn.kms.launch.contactmgr.util.EntityNotFoundException;
 import vn.kms.launch.contactmgr.util.PasswordNotExistException;
 import vn.kms.launch.contactmgr.util.SearchResult;
 import vn.kms.launch.contactmgr.util.ValidationException;
-
-import javax.mail.MessagingException;
 @RestController
 @RequestMapping(value = "/api/users")
-@PreAuthorize("hasRole('ADMINISTRATOR')")
+//@PreAuthorize("hasRole('ADMINISTRATOR')")
 public class UserController {
 
     @Autowired
@@ -115,14 +114,14 @@ public class UserController {
         }
     }
     @RequestMapping(value = "/reset_password", method = PUT)
-    public ResponseEntity<Void> forgetPassword(@RequestParam String email) {
+    public ResponseEntity<String> forgetPassword(@RequestParam String email) {
         String randomPassword = null;
         try {
             randomPassword = mailService.sendRandomPasswordTo(email);
         } catch (MessagingException exception) {
             return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         } catch (EntityNotFoundException exception) {
-            return new ResponseEntity<>(NOT_FOUND);
+            return new ResponseEntity<>(BAD_REQUEST);
         }
         return new ResponseEntity<>(OK);
     }

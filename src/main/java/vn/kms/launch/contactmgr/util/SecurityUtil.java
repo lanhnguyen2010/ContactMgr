@@ -36,9 +36,9 @@ public class SecurityUtil {
     }
     
     public static UserInfo getUserInfo(){
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if(principal != null && principal instanceof User){
-            new UserInfo((User) principal);
+    	User user = getCurrentUser();
+        if(user != null){
+            return new UserInfo(user);
         }
         
         return null;

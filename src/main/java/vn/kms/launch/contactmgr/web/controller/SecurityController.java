@@ -13,9 +13,9 @@ import vn.kms.launch.contactmgr.domain.security.UserInfo;
 import vn.kms.launch.contactmgr.util.SecurityUtil;
 
 @RestController
-@RequestMapping(value = "/api/security/current-user")
+@RequestMapping(value = "/api/security")
 public class SecurityController {
-    @RequestMapping(method = GET)
+    @RequestMapping(value = "/current-user" ,method = GET)
     @PreAuthorize("hasAnyRole('ADMINISTRATOR', 'DESIGNER', 'EDITOR')")
     public ResponseEntity<UserInfo> getCurrentUser() {
         UserInfo userInfo = SecurityUtil.getUserInfo();
