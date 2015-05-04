@@ -14,6 +14,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +30,7 @@ import vn.kms.launch.contactmgr.util.ValidationException;
 
 @RestController
 @RequestMapping(value = "/api/contacts")
+@PreAuthorize("hasAnyRole('ADMINISTRATOR', 'DESIGNER', 'EDITOR')")
 public class ContactController {
 
     @Autowired
@@ -60,12 +62,14 @@ public class ContactController {
         return saveContact(contact, null);
     }
 
+    
     @RequestMapping(value = "/{id}", method = PUT)
     public ResponseEntity<?> updateContact(@PathVariable int id,
                                            @RequestBody Contact contact) {
         return saveContact(contact, id);
     }
 
+    
     @RequestMapping(value = "/{id}", method = DELETE)
     public ResponseEntity<Void> deleteContact(@PathVariable int id) {
         int deleteId = contactService.deleteContacts(id);

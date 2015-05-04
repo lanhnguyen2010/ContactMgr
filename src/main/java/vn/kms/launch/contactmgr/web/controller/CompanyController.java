@@ -14,6 +14,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,29 +34,26 @@ public class CompanyController {
     private ContactService contactService;
     
     @RequestMapping(value = "/names", method = GET)
+    @PreAuthorize("hasAnyRole('ADMINISTRATOR', 'DESIGNER', 'EDITOR')")
     public ResponseEntity<List<Itemized>> getCompanyNames() {
         return new ResponseEntity<>(contactService.getCompanyNames(), HttpStatus.OK);
     }
 
     @RequestMapping(method = GET)
+    @PreAuthorize("hasAnyRole('ADMINISTRATOR', 'DESIGNER', 'EDITOR')")
     public ResponseEntity<List<Company>> getAllCompanies() {
         List<Company> companies = contactService.getAllCompanies();
         return new ResponseEntity<>(companies, HttpStatus.OK);
     }
     
-    @RequestMapping(value = "/{id}", method = GET)
-    public ResponseEntity<Company> getCompany(@PathVariable int id){
-        Company company = contactService.getCompany(id);
-        
-        return new ResponseEntity<>(company, (company == null)? NOT_FOUND : OK);
-    }
-    
     @RequestMapping(value = "/{id}", method = PUT)
+    @PreAuthorize("hasAnyRole('ADMINISTRATOR', 'DESIGNER', 'EDITOR')")
     public ResponseEntity<?> saveCompany(@PathVariable int id, @RequestBody Company company) {
         return save(id, company);
     }
 
     @RequestMapping(method = POST)
+    @PreAuthorize("hasRole('ADMINISTRATOR')")
     public ResponseEntity<?> createCompany(@RequestBody Company company) {
         return save(0, company);
     }

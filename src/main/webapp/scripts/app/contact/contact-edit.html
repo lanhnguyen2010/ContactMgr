@@ -52,6 +52,8 @@
                         <input ng-model="contact.middleName" type="text"
                             class="form-control" style="margin-bottom: 10px"
                             placeholder="{{'contact-edit.placeholder.middle-name'|translate}} "
+                            data-toggle="tooltip" data-placement="left" title="{{validator.middleName}}"
+                            ng-class="{red: validator.middleName}"
                             >
                     </div>
                     <div class="col-sm-3" class="form-group">

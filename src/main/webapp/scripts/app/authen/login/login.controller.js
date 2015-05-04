@@ -2,15 +2,21 @@
 
 angular.module('contactmgrApp').controller(
         'LoginController',function($rootScope, $scope, $http, $location, LoginService) {
-
-            var authenticate = function(credentials, callback) {
-                var headers = credentials ? {
-                    authorization : "Basic "
-                            + btoa(credentials.username + ":"
-                                    + credentials.password)
-                } : {};
-                console.log($scope.credentials.username);
-            };
+            $scope.reset = function() {
+                $scope.credentials = {
+                    username : '',
+                    password : ''
+                };
+            }
+            $scope.login = function() {
+                console.log($scope.credentials);
+                LoginService.login($scope.credentials).success(
+                        function(data, status, headers, config) {
+                            $scope.authenticated = false;
+                        }).error(function(data, status, header, config) {
+                    $scope.authenticated = true;
+                });
+            }
             var x =document.getElementById("notice");
             $scope.resetEmail = function(){
                 $scope.isLoading = false;
@@ -27,7 +33,7 @@ angular.module('contactmgrApp').controller(
                 $scope.btnSend = false;
                 $scope.btnClose = false;
                 LoginService.checkEmail($scope.email).success(function(data, status) {
-                	if (status == '200') {
+                     if (status == '200') {
                         $scope.isLoading = false;
                         $scope.btnSend = false;
                         $scope.btnClose = true;
@@ -35,7 +41,7 @@ angular.module('contactmgrApp').controller(
                         x.style.color = "Black";
                     }
                 }).error(function(data, status){
-                	if (status == '404') {
+                     if (status == '404') {
                         $scope.isLoading = false;
                         $scope.btnSend = true;
                         $scope.btnClose = false;
