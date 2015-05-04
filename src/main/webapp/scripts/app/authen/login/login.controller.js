@@ -11,13 +11,14 @@ angular
                             password : ''
                         };
                     }
+                    $rootScope.reloadNavbar = false;
                     $scope.login = function() {
                         LoginService.login($scope.credentials).success(
                                 function(data) {
                                     $scope.unauthenticated = false;
                                     $rootScope.token = data.token;
                                     $location.path('/');
-                                    console.log($rootScope.token)
+                                    $rootScope.firstLogin = true;
                                 }).error(
                                 function(data) {
                                     $scope.unauthenticated = true;
