@@ -45,7 +45,7 @@
     <!-- Forgot password model -->
     <form novalidate name="forgotPassword_form" class="form-horizontal"
         role="form" >
-        <div class="modal fade " id="forgotPasswordModal" tabindex="-1"
+        <div class="modal fade" id="forgotPasswordModal" tabindex="-1"
             role="dialog" aria-labelledby="forgtPassLabel" aria-hidden="true">
             <div class="vertical-alignment-helper">
                 <div class="modal-dialog vertical-align-center"
@@ -55,8 +55,8 @@
                             <button type="button" class="close" data-dismiss="modal" ng-click="resetEmail()">
                                 <span aria-hidden="true">&times; </span> <span class="sr-only">Close</span>
                             </button>
-                            <h3 class="modal-title" id="forgotPassLabel" style="color: white">Forgot
-                                Password</h3>
+                            <h3 class="modal-title" id="forgotPassLabel" style="color: white" 
+                            translate="login.forgot-pass.title">Forgot Password</h3>
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
@@ -64,18 +64,20 @@
                                     <label id="notice" class="control-label" ng-model="notice">{{notice}}</label>
                                 </div>
                             </div>
-                            <progressbar ng-show="isLoading" class="progress-striped active" value="100" type="info"></progressbar>
+                            <progressbar ng-show="isLoading" class="progress-striped active" 
+                                         value="100" type="info"></progressbar>
                             <div class="form-group" ng-show="btnSend">
                                 <div class="col-md-9">
                                     <input class="form-control" type="text" name="email" ng-model="email">
                                 </div>
                                 <div class="col-md-3">
                                     <button class="btn btn-primary" type="submit" value="send"
-                                    ng-click="sendEmail()">Send</button>
+                                    ng-click="sendEmail()" translate="login.forgot-pass.button.send">Send</button>
                                 </div>
                             </div>
                             <div class="form-group" ng-show="btnClose" style="text-align: center">
-                                    <button class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <button class="btn btn-default" data-dismiss="modal"
+                                    translate="login.forgot-pass.button.close">Close</button>
                             </div>
                         </div>
                     </div>
