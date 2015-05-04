@@ -1,6 +1,7 @@
 package vn.kms.launch.contactmgr.web.controller;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.NO_CONTENT;
 import static org.springframework.http.HttpStatus.OK;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 import vn.kms.launch.contactmgr.domain.contact.Contact;
 import vn.kms.launch.contactmgr.domain.contact.ContactSearchCriteria;
 import vn.kms.launch.contactmgr.service.ContactService;
+import vn.kms.launch.contactmgr.util.AuthorizationException;
 import vn.kms.launch.contactmgr.util.EntityNotFoundException;
 import vn.kms.launch.contactmgr.util.SearchResult;
 import vn.kms.launch.contactmgr.util.ValidationException;
@@ -72,7 +74,12 @@ public class ContactController {
     
     @RequestMapping(value = "/{id}", method = DELETE)
     public ResponseEntity<Void> deleteContact(@PathVariable int id) {
-        int deleteId = contactService.deleteContacts(id);
+        int deleteId;
+        try {
+            deleteId = contactService.deleteContacts(id);
+        } catch (AuthorizationException e) {
+            return new ResponseEntity<>(FORBIDDEN);
+        }
 
         return new ResponseEntity<>((deleteId == 0) ? NOT_FOUND : NO_CONTENT);
     }
@@ -84,7 +91,12 @@ public class ContactController {
             return new ResponseEntity<>(BAD_REQUEST);
         }
 
-        int deleteId = contactService.deleteContacts(ids);
+        int deleteId;
+        try {
+            deleteId = contactService.deleteContacts(ids);
+        } catch (AuthorizationException e) {
+            return new ResponseEntity<>(FORBIDDEN);
+        }
         return new ResponseEntity<>((deleteId == 0) ? NOT_FOUND : OK);
     }
 
@@ -99,6 +111,8 @@ public class ContactController {
             returnObj.put("data", contact);
             returnObj.put("errors", e.getErrors());
             return new ResponseEntity<>(returnObj, BAD_REQUEST);
+        } catch (AuthorizationException e) {
+            return new ResponseEntity<>(FORBIDDEN);
         }
     }
 

@@ -5,12 +5,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import com.google.common.primitives.Ints;
+
 import vn.kms.launch.contactmgr.domain.Itemized;
 import vn.kms.launch.contactmgr.domain.contact.*;
 import vn.kms.launch.contactmgr.domain.image.PhotoRepository;
 import vn.kms.launch.contactmgr.domain.user.Role;
 import vn.kms.launch.contactmgr.domain.user.User;
 import vn.kms.launch.contactmgr.domain.user.UserRepository;
+import vn.kms.launch.contactmgr.util.AuthorizationException;
 import vn.kms.launch.contactmgr.util.EntityNotFoundException;
 import vn.kms.launch.contactmgr.util.SearchResult;
 import vn.kms.launch.contactmgr.util.SecurityUtil;
@@ -49,13 +52,18 @@ public class ContactService {
 
     @Transactional
     public Contact saveContact(Contact contact, Integer contactId)
-            throws ValidationException {
+            throws ValidationException, AuthorizationException {
+        
         if (contact == null) {
             return null;
         }
 
         if (contactId != null && !contactRepo.exists(contactId)) {
             throw new EntityNotFoundException();
+        }
+        
+        if(contactId != null && !hasPermissionEditAndDeleteContact(contactId)){
+            throw new AuthorizationException();
         }
 
         contact.setId(contactId);
@@ -84,8 +92,27 @@ public class ContactService {
     }
 
     @Transactional
-    public int deleteContacts(int... ids) {
+    public int deleteContacts(int... ids) throws AuthorizationException {
+        if(!hasPermissionEditAndDeleteContact(ids)){
+           throw new AuthorizationException();
+        } 
+        
         return contactRepo.deleteByIds(ids);
+    }
+    
+    private boolean hasPermissionEditAndDeleteContact(int... contactIds){
+        String role = SecurityUtil.getCurrentUserRole();
+        if(role == Role.ADMINISTRATOR.name()){
+            return true;
+        } else {
+            Integer userId = SecurityUtil.getCurrentUserId();
+            List<Integer> assignedContactIds = userRepo.getContactIds(userId);
+            if(assignedContactIds .containsAll(Ints.asList(contactIds))){
+               return true;
+            }
+            
+            return false;
+        }
     }
 
     public SearchResult<Contact> searchContacts(ContactSearchCriteria criteria) {
@@ -131,7 +158,7 @@ public class ContactService {
     }
 
     @Transactional
-    public Company saveCompany(Company company, int id) {
+    public Company saveCompany(Company company, int id) throws AuthorizationException {
         if (company != null) {
             validateCompany(company);
             if (id == 0) {
@@ -139,8 +166,16 @@ public class ContactService {
                 return companyRepo.save(company);
             } else {
                 // update a existing company
-                company.setId(id);
-                return companyRepo.save(company);
+                Integer userId = SecurityUtil.getCurrentUserId();
+                if(userId != null){
+                    User user = userRepo.findOne(userId);
+                    if(!user.getAssignedCompanies().contains(id)){
+                        throw new AuthorizationException();
+                    }
+                    
+                    company.setId(id);
+                    return companyRepo.save(company);
+                }
             }
         }
         return null;

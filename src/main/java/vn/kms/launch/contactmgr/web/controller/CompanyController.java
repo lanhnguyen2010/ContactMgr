@@ -1,6 +1,7 @@
 package vn.kms.launch.contactmgr.web.controller;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 import vn.kms.launch.contactmgr.domain.Itemized;
 import vn.kms.launch.contactmgr.domain.contact.Company;
 import vn.kms.launch.contactmgr.service.ContactService;
+import vn.kms.launch.contactmgr.util.AuthorizationException;
 import vn.kms.launch.contactmgr.util.EntityNotFoundException;
 import vn.kms.launch.contactmgr.util.ValidationException;
 
@@ -79,6 +81,8 @@ public class CompanyController {
             returnObj.put("data", company);
             returnObj.put("errors", e.getErrors());
             return new ResponseEntity<>(returnObj, BAD_REQUEST);
+        } catch (AuthorizationException e) {
+            return new ResponseEntity<>(FORBIDDEN);
         }
     }
 
