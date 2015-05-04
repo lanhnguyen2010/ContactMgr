@@ -90,6 +90,7 @@ public class AuthenticationFilter extends GenericFilterBean {
     }
 
     private void processUsernamePasswordAuthentication(HttpServletResponse httpResponse, Optional<String> username, Optional<String> password) throws IOException {
+        
         Authentication resultOfAuthentication = tryToAuthenticateWithUsernameAndPassword(username, password);
         SecurityContextHolder.getContext().setAuthentication(resultOfAuthentication);
         httpResponse.setStatus(HttpServletResponse.SC_OK);
@@ -117,8 +118,9 @@ public class AuthenticationFilter extends GenericFilterBean {
     }
 
     private Authentication tryToAuthenticate(Authentication requestAuthentication) {
-        
+        System.out.println("chay...");
         Authentication responseAuthentication = authenticationManager.authenticate(requestAuthentication);
+        System.out.println("chay...qwqe");
         if (responseAuthentication == null || !responseAuthentication.isAuthenticated()) {
             throw new InternalAuthenticationServiceException("Unable to authenticate Domain User for provided credentials");
         }

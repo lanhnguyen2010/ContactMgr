@@ -2,6 +2,8 @@ package vn.kms.launch.contactmgr.domain.security;
 
 import java.util.Date;
 
+import vn.kms.launch.contactmgr.domain.user.User;
+
 public class UserInfo {
     private String username;
     private String email;
@@ -9,7 +11,7 @@ public class UserInfo {
     private Date expiredDate;
     private boolean active;
     
-    public UserInfo(SecurityUser user){
+    public UserInfo(User user){
         this.username = user.getUsername();
         this.email = user.getEmail();
         this.role = user.getRole();
