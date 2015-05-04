@@ -11,5 +11,15 @@
             "remember-me": "Duy trì đăng nhập",
             "forgot-pass": "Quên mật khẩu?"
         }
+        "forgot-pass":{
+	        "title": "Quên mật khẩu",
+	        "registered-email": "Email của bạn đã được đăng ký",
+	        "existed-email": "Email không tồn tại",
+	        "new-pass": "Mật khẩu mới đã được gửi đến email của bạn",
+	        "button":{
+	            "send": "Gửi",
+	            "close": "Đóng"
+	        }
+	    }
     }
 }

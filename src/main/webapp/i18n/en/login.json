@@ -11,5 +11,15 @@
             "remember-me": "Remember me",
             "forgot-pass": "Forgot password?"
         }
+        "forgot-pass":{
+	        "title": "Forgot Password",
+	        "registered-email": "Your registered email",
+	        "existed-email": "The email is not existed",
+	        "new-pass": "The new password was sent to your email",
+	        "button":{
+	            "send": "Send",
+	            "close": "Close"
+	        }
+	    }
     }
 }
