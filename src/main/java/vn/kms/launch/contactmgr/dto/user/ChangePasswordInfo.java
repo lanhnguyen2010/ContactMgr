@@ -58,4 +58,10 @@ public class ChangePasswordInfo {
     public void setOldPassword(String oldPassword) {
         this.oldPassword = oldPassword;
     }
+
+    public ChangePasswordInfo(String oldPassword, String password, String passwordConfirm) {
+        this.oldPassword = oldPassword;
+        this.password = password;
+        this.passwordConfirm = passwordConfirm;
+    }
 }

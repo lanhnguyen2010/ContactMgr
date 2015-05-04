@@ -108,6 +108,9 @@ public class UserService {
 
     @Transactional
     public Integer updateLanguage(String language) {
+        if(!(language.equalsIgnoreCase("VI")||language.equalsIgnoreCase("EN"))){
+            return null;
+        }
         String username = SecurityUtil.getCurrentUsername();
         if (username.equals("") || username.isEmpty()) {
             return null;

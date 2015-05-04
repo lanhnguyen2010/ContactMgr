@@ -17,16 +17,17 @@ import vn.kms.launch.contactmgr.RestAuthenticationEntryPoint;
 @EnableWebMvcSecurity
 @EnableGlobalMethodSecurity(prePostEnabled=true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    
+
     @Autowired
     RestAuthenticationEntryPoint restAuthenticationEntryPoint;
-    
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         //http.antMatcher("/api/contacts").httpBasic();
-        http.authorizeRequests().antMatchers("/api/authenticate").authenticated();
-        http.authorizeRequests().antMatchers("/api/contacts/**").authenticated();
+//        http.authorizeRequests().antMatchers("/api/authenticate").authenticated();
+//        http.authorizeRequests().antMatchers("/api/contacts/**").authenticated();
         //http.authorizeRequests().antMatchers("/**").authenticated();
+        http.authorizeRequests().antMatchers("/**").permitAll();
         http.csrf().disable();
         http.formLogin().loginPage("/#/login").permitAll();
         http.addFilterBefore(new AuthenticationFilter(authenticationManager()),BasicAuthenticationFilter.class);
