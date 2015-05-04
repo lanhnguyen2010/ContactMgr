@@ -3,14 +3,13 @@ package vn.kms.launch.contactmgr.util;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
-import vn.kms.launch.contactmgr.domain.security.SecurityUser;
 import vn.kms.launch.contactmgr.domain.security.UserInfo;
 import vn.kms.launch.contactmgr.domain.user.User;
 
 @Component
 public class SecurityUtil {
     public static Integer getCurrentUserId(){
-        SecurityUser user = getCurrentUser();
+        User user = getCurrentUser();
         if(user != null){
             return user.getId();
         }
@@ -19,7 +18,7 @@ public class SecurityUtil {
     }
     
     public static String getCurrentUserRole(){
-        SecurityUser user = getCurrentUser();
+        User user = getCurrentUser();
         if(user != null){
             return user.getRole();
         }
@@ -28,7 +27,7 @@ public class SecurityUtil {
     }
     
     public static String getCurrentUsername(){
-        SecurityUser user = getCurrentUser();
+        User user = getCurrentUser();
         if(user != null){
             return user.getUsername();
         }
@@ -37,18 +36,18 @@ public class SecurityUtil {
     }
     
     public static UserInfo getUserInfo(){
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if(principal != null && principal instanceof SecurityUser){
-            new UserInfo((SecurityUser) principal);
+    	User user = getCurrentUser();
+        if(user != null){
+            return new UserInfo(user);
         }
         
         return null;
     }
     
-    private static SecurityUser getCurrentUser(){
+    private static User getCurrentUser(){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if(principal != null && principal instanceof User){
-            return (SecurityUser)principal;
+            return (User)principal;
         }
         
         return null;

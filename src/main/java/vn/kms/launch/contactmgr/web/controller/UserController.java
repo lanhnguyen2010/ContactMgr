@@ -37,7 +37,7 @@ import vn.kms.launch.contactmgr.util.ValidationException;
 import javax.mail.MessagingException;
 @RestController
 @RequestMapping(value = "/api/users")
-@PreAuthorize("hasRole('ADMINISTRATOR')")
+//@PreAuthorize("hasRole('ADMINISTRATOR')")
 public class UserController {
 
     @Autowired
@@ -115,14 +115,14 @@ public class UserController {
         }
     }
     @RequestMapping(value = "/reset_password", method = PUT)
-    public ResponseEntity<Void> forgetPassword(@RequestParam String email) {
+    public ResponseEntity<String> forgetPassword(@RequestParam String email) {
         String randomPassword = null;
         try {
             randomPassword = mailService.sendRandomPasswordTo(email);
         } catch (MessagingException exception) {
             return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         } catch (EntityNotFoundException exception) {
-            return new ResponseEntity<>(NOT_FOUND);
+            return new ResponseEntity<>(BAD_REQUEST);
         }
         return new ResponseEntity<>(OK);
     }

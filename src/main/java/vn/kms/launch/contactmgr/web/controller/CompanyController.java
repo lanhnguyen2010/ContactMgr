@@ -42,8 +42,7 @@ public class CompanyController {
     @RequestMapping(method = GET)
     @PreAuthorize("hasAnyRole('ADMINISTRATOR', 'DESIGNER', 'EDITOR')")
     public ResponseEntity<List<Company>> getAllCompanies() {
-        List<Company> companies;
-        companies = contactService.getAllCompanies();
+        List<Company> companies = contactService.getAllCompanies();
         return new ResponseEntity<>(companies, HttpStatus.OK);
     }
     
