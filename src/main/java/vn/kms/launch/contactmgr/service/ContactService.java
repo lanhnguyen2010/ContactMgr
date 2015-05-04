@@ -105,7 +105,7 @@ public class ContactService {
     
     private boolean hasPermissionEditAndDeleteContact(int... contactIds){
         String role = SecurityUtil.getCurrentUserRole();
-        if(role == Role.ADMINISTRATOR.name()){
+        if(role.equals(Role.ADMINISTRATOR.name())){
             return true;
         } else {
             Integer userId = SecurityUtil.getCurrentUserId();
