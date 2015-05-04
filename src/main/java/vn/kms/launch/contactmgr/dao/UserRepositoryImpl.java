@@ -2,6 +2,7 @@ package vn.kms.launch.contactmgr.dao;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
+
 import vn.kms.launch.contactmgr.domain.user.User;
 import vn.kms.launch.contactmgr.domain.user.UserRepositoryCustom;
 import vn.kms.launch.contactmgr.domain.user.UserSearchCriteria;
@@ -10,6 +11,7 @@ import vn.kms.launch.contactmgr.util.SearchResult;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+
 import java.util.*;
 
 @Repository
@@ -184,9 +186,16 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
     }
 
     @Override
-    public String getPasswordByUsername(String username) {
-        Query query= em.createQuery("select u.password from User u where u.username=:username");
-        query.setParameter("username",username);
-        return query.getSingleResult().toString();
+    public int updateResetPassword(int id, String resetPassword) {
+        Query query = em.createQuery("update User set resetPassword = :resetPassword where id = :id");
+        query.setParameter("resetPassword", resetPassword);
+        query.setParameter("id", id);
+        return query.executeUpdate();
     }
+
+    @Override
+    public int updatePassword(int id, String password, String passwordConfirm) {
+        return 0;
+    }
+
 }

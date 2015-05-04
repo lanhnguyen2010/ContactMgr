@@ -1,19 +1,18 @@
-package vn.kms.launch.contactmgr.service.validator;
-
-import vn.kms.launch.contactmgr.domain.contact.Company;
-
-import javax.validation.Constraint;
-import javax.validation.Payload;
-import java.lang.annotation.Documented;
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
+package vn.kms.launch.contactmgr.service.validation;
 
 import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
+
+import javax.validation.Constraint;
+import javax.validation.Payload;
+
 @Documented
-@Constraint(validatedBy = ExistEntityValidate.class)
+@Constraint(validatedBy = ExistEntityValidator.class)
 @Target({METHOD, FIELD})
 @Retention(RUNTIME)
 public @interface ExistEntity {
@@ -24,12 +23,12 @@ public @interface ExistEntity {
 
     Class<? extends Payload>[] payload() default {};
 
+    Class<?> type();
+    
     @Target({METHOD, FIELD})
     @Retention(RUNTIME)
     @Documented
     public @interface List {
         ExistEntity[] value();
     }
-
-    Class<Company> type();
 }

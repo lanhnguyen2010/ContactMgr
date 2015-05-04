@@ -1,4 +1,4 @@
-package vn.kms.launch.contactmgr.service.validator;
+package vn.kms.launch.contactmgr.service.validation;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -25,7 +25,4 @@ public @interface PasswordNotMatch {
     Class<? extends Payload>[] payload() default {};
 
     String passwordFieldNameOld() default "";
-
-    String username() default "";
-
 }

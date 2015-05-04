@@ -1,32 +1,48 @@
 package vn.kms.launch.contactmgr.web.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import vn.kms.launch.contactmgr.domain.user.User;
-import vn.kms.launch.contactmgr.domain.user.UserSearchCriteria;
-import vn.kms.launch.contactmgr.dto.user.ChangeLanguageInfo;
-import vn.kms.launch.contactmgr.dto.user.ChangePasswordInfo;
-import vn.kms.launch.contactmgr.service.UserService;
-import vn.kms.launch.contactmgr.util.EntityNotFoundException;
-import vn.kms.launch.contactmgr.util.PasswordNotExistException;
-import vn.kms.launch.contactmgr.util.SearchResult;
-import vn.kms.launch.contactmgr.util.ValidationException;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import static org.springframework.web.bind.annotation.RequestMethod.PUT;
+import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.NO_CONTENT;
+import static org.springframework.http.HttpStatus.OK;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.springframework.http.HttpStatus.*;
-import static org.springframework.web.bind.annotation.RequestMethod.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
+import vn.kms.launch.contactmgr.domain.user.User;
+import vn.kms.launch.contactmgr.domain.user.UserSearchCriteria;
+import vn.kms.launch.contactmgr.dto.user.ChangePasswordInfo;
+import vn.kms.launch.contactmgr.service.MailService;
+import vn.kms.launch.contactmgr.service.UserService;
+import vn.kms.launch.contactmgr.util.EntityNotFoundException;
+import vn.kms.launch.contactmgr.util.SearchResult;
+import vn.kms.launch.contactmgr.util.ValidationException;
+
+import javax.mail.MessagingException;
 @RestController
 @RequestMapping(value = "/api/users")
+@PreAuthorize("hasRole('ADMINISTRATOR')")
 public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private MailService mailService;
 
     @RequestMapping(method = POST)
     public ResponseEntity<?> createUser(@RequestBody User user) {
@@ -63,7 +79,7 @@ public class UserController {
         if (ids.length == 0) {
             return new ResponseEntity<>(BAD_REQUEST);
         }
-        Integer result = userService.activeUser(ids);
+        Integer result = userService.deactiveUser(ids);
         return new ResponseEntity<>((result == 0) ? NOT_FOUND : OK);
     }
 
@@ -76,14 +92,15 @@ public class UserController {
         return new ResponseEntity<>((result == 0) ? NOT_FOUND : OK);
     }
 
+
     @RequestMapping(value = "/roles", method = GET)
     public ResponseEntity<List<String>> getRoles() {
         List<String> result = userService.getRoles();
         if (result == null) {
             return new ResponseEntity<List<String>>(result,
-                HttpStatus.BAD_REQUEST);
+                BAD_REQUEST);
         }
-        return new ResponseEntity<List<String>>(result, HttpStatus.OK);
+        return new ResponseEntity<List<String>>(result, OK);
     }
 
     @RequestMapping(value = "/validate", method = POST)
@@ -94,6 +111,18 @@ public class UserController {
         } catch (ValidationException e) {
             return new ResponseEntity<Object>(e.getErrors(), BAD_REQUEST);
         }
+    }
+    @RequestMapping(value = "/reset_password", method = PUT)
+    public ResponseEntity<Void> forgetPassword(@RequestParam String email) {
+        String randomPassword = null;
+        try {
+            randomPassword = mailService.sendRandomPasswordTo(email);
+        } catch (MessagingException exception) {
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
+        } catch (EntityNotFoundException exception) {
+            return new ResponseEntity<>(NOT_FOUND);
+        }
+        return new ResponseEntity<>(OK);
     }
 
     @RequestMapping(value = "/updateLanguage/{language}", method = PUT)
@@ -107,8 +136,6 @@ public class UserController {
         try {
             Integer update = userService.updatePassword(changePasswordInfo);
             return new ResponseEntity<>((update == 0) ? NO_CONTENT : OK);
-        } catch (PasswordNotExistException ex) {
-            return new ResponseEntity<Object>(new String(ex.getMessage()), BAD_REQUEST);
         } catch (ValidationException ex) {
             Map<String, Object> exception = new HashMap<>();
             exception.put("data", changePasswordInfo);

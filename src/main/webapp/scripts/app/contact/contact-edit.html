@@ -52,6 +52,8 @@
                         <input ng-model="contact.middleName" type="text"
                             class="form-control" style="margin-bottom: 10px"
                             placeholder="{{'contact-edit.placeholder.middle-name'|translate}} "
+                            data-toggle="tooltip" data-placement="left" title="{{validator.middleName}}"
+                            ng-class="{red: validator.middleName}"
                             >
                     </div>
                     <div class="col-sm-3" class="form-group">
@@ -223,6 +225,7 @@
                         </div>
                         <div class="col-sm-3">
                             <button class="btn btn-default" style = "width: 100%"
+                                ng-controller = "HomeController" ng-show="isAdmin()"
                                 translate="contact-edit.button.new-company"
                                 ng-click="openDialogCreateCompany()">New</button>
                         </div>

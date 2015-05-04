@@ -1,14 +1,22 @@
 package vn.kms.launch.contactmgr.domain.user;
 
-import org.hibernate.validator.constraints.NotBlank;
-import org.springframework.format.annotation.DateTimeFormat;
-import vn.kms.launch.contactmgr.service.validator.PasswordsNotEqual;
-
-import javax.persistence.*;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.List;
+
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import vn.kms.launch.contactmgr.service.validation.PasswordsNotEqual;
 
 @PasswordsNotEqual(
     passwordFieldName = "password",
@@ -63,10 +71,22 @@ public class User extends vn.kms.launch.contactmgr.domain.Entity {
     @Column(name = "LANGUAGE")
     private String language;
 
+    @NotBlank(message = "{validation.PassWord.message}")
+    @Pattern(regexp = "^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*]).{6,20}$",
+        message = "{validation.PassWord.message}")
+    @Column(name = "RESET_PASSWORD")
+    private String resetPassword;
+
     @ElementCollection
     @CollectionTable(name = "USER_ASSIGNEDCOMPANIES", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "company_id")
     private List<Integer> assignedCompanies;
+    
+    public User(){}
+
+    public User(String username) {
+       this.username = username;
+    }
 
     public String getUsername() {
         return username;
@@ -82,6 +102,14 @@ public class User extends vn.kms.launch.contactmgr.domain.Entity {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getResetPassword() {
+        return resetPassword;
+    }
+
+    public void setResetPassword(String resetPassword) {
+        this.resetPassword = resetPassword;
     }
 
     public String getConfirmPassword() {

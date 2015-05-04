@@ -18,9 +18,9 @@ public interface UserRepositoryCustom {
     public int updateLanguage(String username, String language);
 
     public int updatePassword(String username, String password);
-
+    public int updatePassword(int id, String password, String passwordConfirm);
     public User findByUsername(String username);
 
-    public String getPasswordByUsername(String username);
+    public int updateResetPassword(int id, String resetPassword);
 
 }

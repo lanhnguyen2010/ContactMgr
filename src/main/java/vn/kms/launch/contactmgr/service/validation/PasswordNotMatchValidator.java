@@ -1,6 +1,9 @@
-package vn.kms.launch.contactmgr.service.validator;
+package vn.kms.launch.contactmgr.service.validation;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import vn.kms.launch.contactmgr.domain.user.UserRepository;
 import vn.kms.launch.contactmgr.util.HashString;
+import vn.kms.launch.contactmgr.util.SecurityUtil;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -11,12 +14,12 @@ import javax.validation.ConstraintValidatorContext;
  */
 public class PasswordNotMatchValidator implements ConstraintValidator<PasswordNotMatch, Object> {
     private String passwordFieldNameOld;
-    private String username;
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     public void initialize(PasswordNotMatch constraintAnnotation) {
         this.passwordFieldNameOld = constraintAnnotation.passwordFieldNameOld();
-        this.username = constraintAnnotation.username();
     }
 
     @Override
@@ -24,7 +27,6 @@ public class PasswordNotMatchValidator implements ConstraintValidator<PasswordNo
         context.disableDefaultConstraintViolation();
         try {
             String passwordOld = (String) ValidatorUtil.getFieldValue(value, passwordFieldNameOld);
-            this.username = (String) ValidatorUtil.getFieldValue(value, username);
             if (passwordsAreNotMatch(passwordOld)) {
                 ValidatorUtil.addValidationError(passwordFieldNameOld, context);
                 return false;
@@ -37,7 +39,9 @@ public class PasswordNotMatchValidator implements ConstraintValidator<PasswordNo
 
     private boolean passwordsAreNotMatch(String password) {
         password = HashString.MD5(password);
-        String PasswordByUsername = "";
+        String username= SecurityUtil.getCurrentUsername();
+        String PasswordByUsername = userRepository.getPasswordByUsername(username);
+        return (password.equals(PasswordByUsername));
 
     }
 

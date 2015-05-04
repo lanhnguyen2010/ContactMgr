@@ -1,11 +1,13 @@
 package vn.kms.launch.contactmgr.dto.user;
 
-import org.apache.catalina.security.SecurityUtil;
 import org.hibernate.validator.constraints.NotBlank;
-import vn.kms.launch.contactmgr.service.validator.PasswordNotMatch;
-import vn.kms.launch.contactmgr.service.validator.PasswordsNotEqual;
+import vn.kms.launch.contactmgr.service.validation.PasswordNotMatch;
+import vn.kms.launch.contactmgr.service.validation.PasswordsNotEqual;
 
 import javax.validation.constraints.Pattern;
+
+import vn.kms.launch.contactmgr.util.SecurityUtil;
+import  vn.kms.launch.contactmgr.util.SecurityUtil.*;
 
 /**
  * Created by thanhtuong on 4/23/2015.
@@ -17,7 +19,6 @@ import javax.validation.constraints.Pattern;
 )
 @PasswordNotMatch(
     passwordFieldNameOld = "oldPassword",
-    username = "",
     message = "{validation.PasswordMatch.message}"
 )
 
@@ -42,6 +43,8 @@ public class ChangePasswordInfo {
 
     public String getPasswordConfirm() {
         return passwordConfirm;
+
+
     }
 
     public void setPasswordConfirm(String passwordConfirm) {
