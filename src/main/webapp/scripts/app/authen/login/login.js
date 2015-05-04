@@ -21,6 +21,5 @@ angular.module('contactmgrApp')
                         return $translate.refresh();
                     }]
                 }
-            }),
-            $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
+            })
         });
