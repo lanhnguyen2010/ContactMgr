@@ -45,21 +45,13 @@ public class UserService {
     }
 
     @Transactional
-    public int getIdByEmail(String email) throws ValidationException {
-        Query query = em.createQuery("select u.id from User u where u.email = :email");
-        query.setParameter("email", email);
-        List<Object> results = query.getResultList();
+    public void updatePasswordByEmail(String email, String resetPassword) {
 
-        if (results.isEmpty()) {
+        int tmp = userRepository.resetPasswordByEmail(email, HashString.MD5(resetPassword));
+
+        if (tmp == 0) {
             throw new EntityNotFoundException();
         }
-
-        return (int) results.get(0);
-    }
-
-    public int updatePasswordByEmail(String email, String resetPassword) {
-        int id = getIdByEmail(email);
-        return userRepository.updateResetPassword(id, HashString.MD5(resetPassword));
     }
 
     @Transactional
@@ -83,11 +75,11 @@ public class UserService {
         user.setId(id);
         validateUser(user);
         user.setPassword(HashString.MD5(user.getPassword()));
-        user.setResetPassword(HashString.MD5(user.getConfirmPassword()));
 
         if (id != null && !user.getAssignedCompanies().isEmpty()) {
             userRepository.updateUserAssignedCompanies(id);
         }
+
         return userRepository.save(user);
     }
 

@@ -21,6 +21,4 @@ public interface UserRepositoryCustom {
     public int updatePassword(int id, String password, String passwordConfirm);
     public User findByUsername(String username);
 
-    public int updateResetPassword(int id, String resetPassword);
-
 }

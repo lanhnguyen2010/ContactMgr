@@ -113,6 +113,7 @@ public class UserController {
             return new ResponseEntity<Object>(e.getErrors(), BAD_REQUEST);
         }
     }
+
     @RequestMapping(value = "/reset_password", method = PUT)
     public ResponseEntity<String> forgetPassword(@RequestParam String email) {
         String randomPassword = null;
