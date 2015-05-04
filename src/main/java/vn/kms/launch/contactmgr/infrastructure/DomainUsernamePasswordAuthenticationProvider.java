@@ -1,5 +1,10 @@
 package vn.kms.launch.contactmgr.infrastructure;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -10,6 +15,7 @@ import org.springframework.security.core.authority.AuthorityUtils;
 
 import vn.kms.launch.contactmgr.domain.user.User;
 import vn.kms.launch.contactmgr.service.UserService;
+import vn.kms.launch.contactmgr.util.HashString;
 
 import com.google.common.base.Optional;
 
@@ -29,43 +35,48 @@ public class DomainUsernamePasswordAuthenticationProvider implements Authenticat
 
         Optional<String> userName = (Optional) authentication.getPrincipal();
         Optional<String> password = (Optional) authentication.getCredentials();
-
+        if(userName.get().length()==0||password.get().length()==0){
+            throw new BadCredentialsException("Invalid Domain User Credentials");
+        }
+        
         if (!userName.isPresent() || !password.isPresent()) {
             throw new BadCredentialsException("Invalid Domain User Credentials");
         }
-        System.out.println("lejrlkj"+userName.get());
-        if (credentialsInvalid(userName, password)) {
+        
+        if (credentialsValid(userName, password)==null) {
             throw new BadCredentialsException("Invalid username password");
         }
-        String userRole = getRoleUser(userName, password);
+        
+        User userRole = credentialsValid(userName, password);
+        if(!UserInfoValid(userRole)){
+            throw new BadCredentialsException("User Infomation Invalid");
+        }
+        
+        String userGetRole = userRole.getRole();
         AuthenticationWithToken resultOfAuthentication = new AuthenticationWithToken(
                 userService.findByUsernameOrEmail(userName.get()), password.get(),
-                AuthorityUtils.createAuthorityList(userRole));
+                AuthorityUtils.createAuthorityList(userGetRole));
         User user = (User) resultOfAuthentication.getPrincipal();
 
         String newToken = tokenService.generateToken(user.getUsername(),
-                resultOfAuthentication.getCredentials().toString());
+                user.getPassword());
         resultOfAuthentication.setToken(newToken);
         return resultOfAuthentication;
     }
-
-    private String getRoleUser(Optional<String> username,
-            Optional<String> password) {
-        User user = userService.findByUsernameOrEmail(username.get());
-        if (user == null || !user.getPassword().equals(password.get())) {
-            return null;
-        }
-        return user.getRole();
+    private boolean UserInfoValid(User userRole) {
+        Date date = new Date();
+        long expired = userRole.getExpiredDate().getTime();
+        if(date.getTime()>expired||!userRole.isActive()||userRole.getRole().length()==0)
+            return false;
+        return true;
     }
 
-    private boolean credentialsInvalid(Optional<String> username,
+    private User credentialsValid(Optional<String> username,
             Optional<String> password) {
         User user = userService.findByUsernameOrEmail(username.get());
-        if (user == null || !user.getPassword().equals(password.get())) {
-            return true;
-        }
-        
-        return false;
+        if(user == null ||user.getPassword().equals(HashString.MD5(password.get())))
+                return user;
+        return null;
     }
 
     @Override

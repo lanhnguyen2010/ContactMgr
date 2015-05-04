@@ -5,8 +5,10 @@ import java.security.NoSuchAlgorithmException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import vn.kms.launch.contactmgr.domain.user.User;
 import vn.kms.launch.contactmgr.service.UserService;
+import vn.kms.launch.contactmgr.util.HashString;
 
 public  class TokenService {
 
@@ -61,22 +63,7 @@ public  class TokenService {
         sb.append(":");
         sb.append(System.currentTimeMillis());
         sb.append(":");
-        sb.append(hashingUsernamePassword(username, password));
-        return sb.toString();
-    }
-    
-    public String hashingUsernamePassword(String username, String password) {
-        String usernameAndPassword = username + password;
-        StringBuilder sb = new StringBuilder();
-        byte[] hash = digester.digest(usernameAndPassword.getBytes());
-        for (int i = 0; i < hash.length; i++) {
-            if ((0xff & hash[i]) < 0x10) {
-                sb.append("0" + Integer.toHexString((0xFF & hash[i])));
-            }
-            else {
-                sb.append(Integer.toHexString(0xFF & hash[i]));
-            }
-        }
+        sb.append(HashString.MD5(username+password));
         return sb.toString();
     }
 }

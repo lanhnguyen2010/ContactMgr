@@ -8,6 +8,7 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 
 import vn.kms.launch.contactmgr.domain.user.User;
+import vn.kms.launch.contactmgr.util.HashString;
 
 import com.google.common.base.Optional;
 
@@ -25,6 +26,7 @@ public class TokenAuthenticationProvider implements AuthenticationProvider {
         if (!token.isPresent() || token.get().isEmpty()) {
             throw new BadCredentialsException("Invalid token");
         }
+        
         if (!tokenService.isExpries(token.get())) {
             throw new BadCredentialsException("Invalid token or token expired");
         }
@@ -32,7 +34,8 @@ public class TokenAuthenticationProvider implements AuthenticationProvider {
         String userName = tokenService.extractUsername(token.get());
         User user = tokenService.getUser(userName);
         if (user != null){
-        	String hash = tokenService.hashingUsernamePassword(user.getUsername(), user.getPassword());
+        	String hash = HashString.MD5(user.getUsername()+user.getPassword());
+        	System.out.println(hash+"..."+ tokenService.getHashUserNameAndPassWord(token.get()));
             if(hash.equals(tokenService.getHashUserNameAndPassWord(token.get()))){
                 AuthenticationWithToken resultOfAuthentication = new AuthenticationWithToken(user, token,AuthorityUtils.createAuthorityList(user.getRole()));
                 return resultOfAuthentication;

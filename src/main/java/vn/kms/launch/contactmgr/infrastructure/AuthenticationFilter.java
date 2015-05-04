@@ -9,6 +9,8 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
@@ -29,9 +31,7 @@ public class AuthenticationFilter extends GenericFilterBean {
     public static final String TOKEN_SESSION_KEY = "token";
     public static final String USER_SESSION_KEY = "user";
     private AuthenticationManager authenticationManager;
-    public static final String logoutLink = "/api/logout";
-    private static final String REQUEST_ATTR_DO_NOT_CONTINUE = "MyAuthenticationFilter-doNotContinue";
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticationFilter.class);
     public AuthenticationFilter(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
     }
@@ -47,16 +47,16 @@ public class AuthenticationFilter extends GenericFilterBean {
         String resourcePath = new UrlPathHelper().getPathWithinApplication(httpRequest);
         try {
             if (postToAuthenticate(httpRequest, resourcePath)) {
-                processUsernamePasswordAuthentication(httpResponse, username, password);
+                if(username.isPresent() && password.isPresent()){
+                    processUsernamePasswordAuthentication(httpResponse, username, password);
+                    return;
+                }
+                httpResponse.sendError(HttpServletResponse.SC_BAD_REQUEST);
                 return;
             }
             
             if (token.isPresent()) {
                 processTokenAuthentication(token);
-                boolean authenticated = SecurityContextHolder.getContext().getAuthentication().isAuthenticated();
-                if(authenticated){
-                    checkLogout(httpRequest,SecurityContextHolder.getContext().getAuthentication());
-                }
             }
             
             chain.doFilter(httpRequest, httpResponse);
@@ -71,23 +71,6 @@ public class AuthenticationFilter extends GenericFilterBean {
             SecurityContextHolder.clearContext();
             httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, authenticationException.getMessage());
         }
-    }
-    
-    private void checkLogout(HttpServletRequest httpRequest, Authentication authentication) {
-        if (currentLink(httpRequest).equals(logoutLink)) {
-         
-        }
-    }
-    
-    private void doNotContinueWithRequestProcessing(HttpServletRequest httpRequest) {
-        httpRequest.setAttribute(REQUEST_ATTR_DO_NOT_CONTINUE, "");
-    }
-
-    private String currentLink(HttpServletRequest httpRequest) {
-        if (httpRequest.getPathInfo() == null) {
-            return httpRequest.getServletPath();
-        }
-        return httpRequest.getServletPath() + httpRequest.getPathInfo();
     }
     
     private HttpServletRequest asHttp(ServletRequest request) {
@@ -130,6 +113,7 @@ public class AuthenticationFilter extends GenericFilterBean {
     private Authentication tryToAuthenticate(Authentication requestAuthentication) {
         Authentication responseAuthentication = authenticationManager.authenticate(requestAuthentication);
         if (responseAuthentication == null || !responseAuthentication.isAuthenticated()) {
+            LOGGER.error("Unable to authenticate Domain User for provided credentials");
             throw new InternalAuthenticationServiceException("Unable to authenticate Domain User for provided credentials");
         }
         return responseAuthentication;
