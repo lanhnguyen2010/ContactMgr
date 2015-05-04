@@ -9,10 +9,9 @@
             <div class="form-group">
                 <div class="col-md-8">
                     <label for="firstname" class="control-label"
-                        ng-show="unauthenticated" ng-style="{color:'red'}"
+                        ng-show="loginFailed" ng-style="{color:'red'}"
                         translate="login.notice">The authentication was failed.
                         Please double-check and try again.</label>
-                        {{token}}
                 </div>
             </div>
             <div class="form-group">

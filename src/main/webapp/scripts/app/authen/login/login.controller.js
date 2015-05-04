@@ -11,18 +11,22 @@ angular
                             password : ''
                         };
                     }
+                    $rootScope.reloadNavbar = false;
                     $scope.login = function() {
-                        LoginService.login($scope.credentials).success(
-                                function(data) {
-                                    $scope.unauthenticated = false;
-                                    $rootScope.token = data.token;
-                                    $location.path('/user/admin');
-                                    if(document.getElementById('remember').checked){
-                                        $scope.maintainLogin();
-                                    }
-                                }).error(
-                                function(data) {
-                                    $scope.unauthenticated = true;
+                        LoginService
+                                .login($scope.credentials)
+                                .success(
+                                        function(data) {
+                                            $scope.loginFailed = false;
+                                            $rootScope.token = data.token;
+                                            $location.path('/');
+                                            if (document
+                                                    .getElementById('remember').checked) {
+                                                $scope.maintainLogin();
+                                            }
+                                            $rootScope.firstLogin = true;
+                                        }).error(function(data) {
+                                    $scope.loginFailed = true;
                                 });
                     }
                     var x = document.getElementById("notice");
@@ -63,7 +67,4 @@ angular
                                             }
                                         });
                     };
-                    $scope.checkLogin = function() {
-                        console.log($scope.credentials.username)
-                    }
                 });

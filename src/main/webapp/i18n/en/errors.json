@@ -2,6 +2,7 @@
     "errors": {
         "title": "Error page!",
         "403": "You are not authorized to access this page.",
-        "404": "Not found"
+        "404": "Not found",
+        "500": "Server is die"
     }
 }

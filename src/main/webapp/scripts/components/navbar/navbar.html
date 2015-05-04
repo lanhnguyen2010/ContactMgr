@@ -16,7 +16,7 @@
             </a>
         </div>
         <div class="collapse navbar-collapse" id="navbar-collapse">
-            <ul class="nav nav-tabs navbar-right">
+            <ul ng-show ="isLogin" class="nav nav-tabs navbar-right">
                 <li ui-sref-active="active">
                     <a ui-sref="home">
                         <span class="fa fa-home fa-2x"></span>
@@ -119,24 +119,9 @@
                             </ul>
 
                         </li>
-                        <li><a href="#" translate="global.user.signout">Sign Out</a></li>
+                        <li><a href="#" translate="global.user.signout" ng-click="logout()">Sign Out</a></li>
                     </ul>
                 </li>
-<!--                 <li ng-controller="LanguageController"> -->
-<!--                     <a class="lang-dropdown dropdown-toggle" data-toggle="dropdown"> -->
-<!--                         <span> -->
-<!--                             <span class="fa fa-language"></span> -->
-<!--                             <span>{{'language.' + currentLanguage() | translate}}</span> -->
-<!--                         </span> -->
-<!--                     </a> -->
-<!--                     <ul class="dropdown-menu"> -->
-<!--                         <li active-menu="{{language}}" ng-repeat="language in languages"> -->
-<!--                             <a href="" ng-click="changeLanguage(language)"> -->
-<!--                                 {{'language.' + language | translate}} -->
-<!--                             </a> -->
-<!--                         </li> -->
-<!--                     </ul> -->
-<!--                 </li> -->
             </ul>
         </div>
     </div>

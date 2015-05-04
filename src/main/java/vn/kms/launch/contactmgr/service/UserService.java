@@ -149,4 +149,8 @@ public class UserService {
         return userRepository.findByUsername(username);
     }
 
+    @Transactional
+    public User findByUsernameOrEmail(String userName) {
+        return userRepository.findByUsernameOrEmail(userName);
+    }
 }
