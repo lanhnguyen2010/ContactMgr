@@ -4,30 +4,23 @@ angular
         .module('contactmgrApp')
         .controller(
                 'LoginController',
-                function($rootScope, $scope, $http, $location, LoginService) {
-                	$scope.credentials = {
-                        username : '',
-                        password : ''
-                        }
-                	$scope.reset = function() {
+                function($scope, $rootScope, $location, LoginService) {
+                    $scope.reset = function() {
                         $scope.credentials = {
                             username : '',
                             password : ''
                         };
                     }
-                    var para = {
-                        headers : {
-                            'X-Auth-Username' : $scope.credentials.username,
-                            'X-Auth-Password' : $scope.credentials.password
-                        }
-                    }
                     $scope.login = function() {
-                        LoginService.login(para).success(
-                                function(data, status, headers, config) {
-                                    $scope.authenticated = false;
+                        LoginService.login($scope.credentials).success(
+                                function(data) {
+                                    $scope.unauthenticated = false;
+                                    $rootScope.token = data.token;
+                                    $location.path('/');
+                                    console.log($rootScope.token)
                                 }).error(
-                                function(data, status, header, config) {
-                                    $scope.authenticated = true;
+                                function(data) {
+                                    $scope.unauthenticated = true;
                                 });
                     }
                     var x = document.getElementById("notice");
