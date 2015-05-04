@@ -29,6 +29,8 @@ public class AuthenticationFilter extends GenericFilterBean {
     public static final String TOKEN_SESSION_KEY = "token";
     public static final String USER_SESSION_KEY = "user";
     private AuthenticationManager authenticationManager;
+    public static final String logoutLink = "/api/logout";
+    private static final String REQUEST_ATTR_DO_NOT_CONTINUE = "MyAuthenticationFilter-doNotContinue";
 
     public AuthenticationFilter(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
@@ -43,7 +45,6 @@ public class AuthenticationFilter extends GenericFilterBean {
         Optional<String> password = Optional.fromNullable(httpRequest.getHeader("X-Auth-Password"));
         Optional<String> token = Optional.fromNullable(httpRequest.getHeader("X-Auth-Token"));
         String resourcePath = new UrlPathHelper().getPathWithinApplication(httpRequest);
-        
         try {
             if (postToAuthenticate(httpRequest, resourcePath)) {
                 processUsernamePasswordAuthentication(httpResponse, username, password);
@@ -51,30 +52,42 @@ public class AuthenticationFilter extends GenericFilterBean {
             }
             
             if (token.isPresent()) {
-                System.out.println("token is present...");
                 processTokenAuthentication(token);
-                System.out.println("ENd token is present...");
+                boolean authenticated = SecurityContextHolder.getContext().getAuthentication().isAuthenticated();
+                if(authenticated){
+                    checkLogout(httpRequest,SecurityContextHolder.getContext().getAuthentication());
+                }
             }
             
             chain.doFilter(httpRequest, httpResponse);
         } catch (BadCredentialsException e){
-            System.out.println("Loi Bad Credentials...");
             SecurityContextHolder.clearContext();
             httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED);
         }
         catch (InternalAuthenticationServiceException internalAuthenticationServiceException) {
-            System.out.println("Loi Services...");
             SecurityContextHolder.clearContext();
             httpResponse.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         } catch (AuthenticationException authenticationException) {
-            System.out.println("Loi Authentication...");
             SecurityContextHolder.clearContext();
             httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, authenticationException.getMessage());
         }
-        
-       // if (SecurityContextHolder.getContext().getAuthentication().isAuthenticated()){
-         //   httpResponse.sendError(HttpServletResponse.SC_OK);
-        //}
+    }
+    
+    private void checkLogout(HttpServletRequest httpRequest, Authentication authentication) {
+        if (currentLink(httpRequest).equals(logoutLink)) {
+         
+        }
+    }
+    
+    private void doNotContinueWithRequestProcessing(HttpServletRequest httpRequest) {
+        httpRequest.setAttribute(REQUEST_ATTR_DO_NOT_CONTINUE, "");
+    }
+
+    private String currentLink(HttpServletRequest httpRequest) {
+        if (httpRequest.getPathInfo() == null) {
+            return httpRequest.getServletPath();
+        }
+        return httpRequest.getServletPath() + httpRequest.getPathInfo();
     }
     
     private HttpServletRequest asHttp(ServletRequest request) {
@@ -90,7 +103,6 @@ public class AuthenticationFilter extends GenericFilterBean {
     }
 
     private void processUsernamePasswordAuthentication(HttpServletResponse httpResponse, Optional<String> username, Optional<String> password) throws IOException {
-        
         Authentication resultOfAuthentication = tryToAuthenticateWithUsernameAndPassword(username, password);
         SecurityContextHolder.getContext().setAuthentication(resultOfAuthentication);
         httpResponse.setStatus(HttpServletResponse.SC_OK);
@@ -106,25 +118,20 @@ public class AuthenticationFilter extends GenericFilterBean {
     }
 
     private void processTokenAuthentication(Optional<String> token) {
-        System.out.println("Loi processTokenAuthentication");
         Authentication resultOfAuthentication = tryToAuthenticateWithToken(token);
         SecurityContextHolder.getContext().setAuthentication(resultOfAuthentication);
     }
 
     private Authentication tryToAuthenticateWithToken(Optional<String> token) {
-        System.out.println("Loi tryToAuthenticateWithToken");
         PreAuthenticatedAuthenticationToken requestAuthentication = new PreAuthenticatedAuthenticationToken(token, null);
         return tryToAuthenticate(requestAuthentication);
     }
 
     private Authentication tryToAuthenticate(Authentication requestAuthentication) {
-        System.out.println("chay...");
         Authentication responseAuthentication = authenticationManager.authenticate(requestAuthentication);
-        System.out.println("chay...qwqe");
         if (responseAuthentication == null || !responseAuthentication.isAuthenticated()) {
             throw new InternalAuthenticationServiceException("Unable to authenticate Domain User for provided credentials");
         }
-        System.out.println("Loi tryToAuthenticate");
         return responseAuthentication;
     }
 }

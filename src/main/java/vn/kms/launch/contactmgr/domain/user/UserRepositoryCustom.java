@@ -20,7 +20,7 @@ public interface UserRepositoryCustom {
     public int updatePassword(String username, String password);
     public int updatePassword(int id, String password, String passwordConfirm);
     public User findByUsername(String username);
-
     public int updateResetPassword(int id, String resetPassword);
+    public User findByUsernameOrEmail(String username);
 
 }
