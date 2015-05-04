@@ -40,7 +40,12 @@ public class ContactController {
 
     @RequestMapping(value = "/{id}", method = GET)
     public ResponseEntity<Contact> getContact(@PathVariable int id) {
-        Contact contact = contactService.getContact(id);
+        Contact contact = null;
+        try {
+            contact = contactService.getContact(id);
+        } catch (AuthorizationException e) {
+            return new ResponseEntity<>(FORBIDDEN);
+        }
         return new ResponseEntity<>(contact, (contact == null) ? NOT_FOUND : OK);
     }
 

@@ -46,7 +46,10 @@ public class ContactService {
     @Autowired
     private Validator validator;
 
-    public Contact getContact(int id) {
+    public Contact getContact(int id) throws AuthorizationException {
+        if(!hasPermissionEditAndDeleteContact(id)){
+            throw new AuthorizationException();
+        }
         return contactRepo.findOne(id);
     }
 
