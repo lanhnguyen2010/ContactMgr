@@ -17,7 +17,6 @@ angular
                                     $scope.unauthenticated = false;
                                     $rootScope.token = data.token;
                                     $location.path('/');
-                                    console.log($rootScope.token)
                                 }).error(
                                 function(data) {
                                     $scope.unauthenticated = true;
