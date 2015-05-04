@@ -47,7 +47,7 @@ public class ContactService {
     private Validator validator;
 
     public Contact getContact(int id) throws AuthorizationException {
-        if(!hasPermissionEditAndDeleteContact(id)){
+        if(contactRepo.exists(id) && !hasPermissionEditAndDeleteContact(id)){
             throw new AuthorizationException();
         }
         return contactRepo.findOne(id);
@@ -65,7 +65,7 @@ public class ContactService {
             throw new EntityNotFoundException();
         }
         
-        if(contactId != null && !hasPermissionEditAndDeleteContact(contactId)){
+        if(contactId != null && contactRepo.exists(contactId) && !hasPermissionEditAndDeleteContact(contactId)){
             throw new AuthorizationException();
         }
 
