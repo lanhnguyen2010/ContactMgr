@@ -162,7 +162,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
 
     @Override
     public User findByUsername(String username) {
-        Query query = em.createQuery("select u from User u where u.username=:username");
+        Query query = em.createQuery("select u from User u where u.username= :username");
         System.out.println("Query:::::" + query);
         query.setParameter("username", username);
         return (User)query.getSingleResult();
@@ -171,7 +171,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
 
     @Override
     public int updateLanguage(String username, String language) {
-        Query query = em.createQuery("update User set language =:language where username =:username");
+        Query query = em.createQuery("update User set language = :language where username = :username");
         query.setParameter("language", language);
         query.setParameter("username", username);
         return query.executeUpdate();
@@ -179,7 +179,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
 
     @Override
     public int updatePassword(String username, String password) {
-        Query query = em.createQuery("update User set password =:password where username =:username");
+        Query query = em.createQuery("update User set password = :password where username = :username");
         query.setParameter("password", password);
         query.setParameter("username", username);
         return query.executeUpdate();
@@ -200,9 +200,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
 
     @Override
     public User findByUsernameOrEmail(String username) {
-        System.out.println("Query:::::" + username);
-        Query query = em.createQuery("from User u where u.username =:username or u.email=:email");
-        //System.out.println("Query:::::" + query);
+        Query query = em.createQuery("select u from User u where u.username = :username or u.email= :email");
         query.setParameter("username", username);
         query.setParameter("email", username);
         return (User)query.getSingleResult();

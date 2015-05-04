@@ -48,11 +48,9 @@ public class AuthenticationFilter extends GenericFilterBean {
                 processUsernamePasswordAuthentication(httpResponse, username, password);
                 return;
             }
+            
             if (token.isPresent()) {
-                System.out.println("token is present...");
                 processTokenAuthentication(token);
-                System.out.println("ENd token is present...");
-                System.out.println(SecurityContextHolder.getContext().getAuthentication().getAuthorities());
             }
             
             chain.doFilter(httpRequest, httpResponse);
@@ -82,7 +80,6 @@ public class AuthenticationFilter extends GenericFilterBean {
     }
 
     private void processUsernamePasswordAuthentication(HttpServletResponse httpResponse, Optional<String> username, Optional<String> password) throws IOException {
-        
         Authentication resultOfAuthentication = tryToAuthenticateWithUsernameAndPassword(username, password);
         SecurityContextHolder.getContext().setAuthentication(resultOfAuthentication);
         httpResponse.setStatus(HttpServletResponse.SC_OK);

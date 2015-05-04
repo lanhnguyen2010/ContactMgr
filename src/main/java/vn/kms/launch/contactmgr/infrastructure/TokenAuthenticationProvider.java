@@ -14,9 +14,11 @@ import com.google.common.base.Optional;
 public class TokenAuthenticationProvider implements AuthenticationProvider {
 
     private TokenService tokenService;
+    
     public TokenAuthenticationProvider(TokenService tokenService) {
         this.tokenService = tokenService;
     }
+    
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         Optional<String> token = (Optional) authentication.getPrincipal();
@@ -27,22 +29,19 @@ public class TokenAuthenticationProvider implements AuthenticationProvider {
             throw new BadCredentialsException("Invalid token or token expired");
         }
         
-        String userName = tokenService.getUserName(token.get());
-        if(tokenService.isValidUserName(userName)){
-            User user = tokenService.getUserValid(userName);
-            String token2 = tokenService.generateTokenWithUserNameAndPassword(user.getUsername(), user.getPassword());
-            System.out.println("token2: "+token2);
-            if(token2.equals(tokenService.getHashUserNameAndPassWord(token.get()))){
-                System.out.println("token dcsfhgf ");
+        String userName = tokenService.extractUsername(token.get());
+        User user = tokenService.getUser(userName);
+        if (user != null){
+        	String hash = tokenService.hashingUsernamePassword(user.getUsername(), user.getPassword());
+            if(hash.equals(tokenService.getHashUserNameAndPassWord(token.get()))){
                 AuthenticationWithToken resultOfAuthentication = new AuthenticationWithToken(user, token,AuthorityUtils.createAuthorityList(user.getRole()));
                 return resultOfAuthentication;
             }
-            
         }
         return null;
     }
-    @Override
     
+    @Override
     public boolean supports(Class<?> authentication) {
         return authentication.equals(PreAuthenticatedAuthenticationToken.class);
     }

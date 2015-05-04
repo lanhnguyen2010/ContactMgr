@@ -7,7 +7,12 @@ import org.springframework.security.web.authentication.preauth.PreAuthenticatedA
 
 public class AuthenticationWithToken extends PreAuthenticatedAuthenticationToken {
 
-    public AuthenticationWithToken(Object aPrincipal, Object aCredentials) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 3068287610779860133L;
+
+	public AuthenticationWithToken(Object aPrincipal, Object aCredentials) {
         super(aPrincipal, aCredentials);
     }
     

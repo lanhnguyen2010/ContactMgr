@@ -43,7 +43,7 @@ public class DomainUsernamePasswordAuthenticationProvider implements Authenticat
                 AuthorityUtils.createAuthorityList(userRole));
         User user = (User) resultOfAuthentication.getPrincipal();
 
-        String newToken = tokenService.generateTokenFirst(user.getUsername(),
+        String newToken = tokenService.generateToken(user.getUsername(),
                 resultOfAuthentication.getCredentials().toString());
         resultOfAuthentication.setToken(newToken);
         return resultOfAuthentication;
