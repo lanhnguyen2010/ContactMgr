@@ -21,4 +21,6 @@ public interface UserRepositoryCustom {
 
     public User findByUsername(String username);
 
+    public String getPasswordByUsername(String username);
+
 }

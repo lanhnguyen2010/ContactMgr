@@ -183,4 +183,10 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
         return query.executeUpdate();
     }
 
+    @Override
+    public String getPasswordByUsername(String username) {
+        Query query= em.createQuery("select u.password from User u where u.username=:username");
+        query.setParameter("username",username);
+        return query.getSingleResult().toString();
+    }
 }

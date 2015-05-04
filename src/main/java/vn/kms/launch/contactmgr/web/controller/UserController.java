@@ -89,7 +89,6 @@ public class UserController {
     @RequestMapping(value = "/validate", method = POST)
     public ResponseEntity<Object> validateUser(@RequestBody User user) {
         try {
-
             userService.validateUser(user);
             return new ResponseEntity<>(OK);
         } catch (ValidationException e) {
@@ -97,9 +96,9 @@ public class UserController {
         }
     }
 
-    @RequestMapping(value = "/updateLanguage", method = PUT)
-    public ResponseEntity<?> updateLanguage(@RequestBody ChangeLanguageInfo changeLanguageInfo) {
-        Integer update = userService.updateLanguage(changeLanguageInfo);
+    @RequestMapping(value = "/updateLanguage/{language}", method = PUT)
+    public ResponseEntity<?> updateLanguage(@PathVariable String language) {
+        Integer update = userService.updateLanguage(language);
         return new ResponseEntity<>((update == 0) ? NOT_FOUND : OK);
     }
 

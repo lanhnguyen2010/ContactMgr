@@ -80,12 +80,12 @@ public class UserService {
     }
 
     @Transactional
-    public Integer updateLanguage(ChangeLanguageInfo changeLanguageInfo) {
+    public Integer updateLanguage(String language) {
         String username = "thanhtuong";// get from SecurityUtil
         if (username.equals("") || username.isEmpty()) {
             return null;
         }
-        return userRepository.updateLanguage(username, changeLanguageInfo.getLanguage());
+        return userRepository.updateLanguage(username, language);
     }
 
     @Transactional
