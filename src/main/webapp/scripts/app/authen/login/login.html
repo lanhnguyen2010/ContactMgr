@@ -12,6 +12,7 @@
                         ng-show="unauthenticated" ng-style="{color:'red'}"
                         translate="login.notice">The authentication was failed.
                         Please double-check and try again.</label>
+                        {{token}}
                 </div>
             </div>
             <div class="form-group">
@@ -36,6 +37,7 @@
                 <div class="col-md-6 control-label">
                     <div class="checkbox">
                         <label> <input type="checkbox" name="_spring_security_remember_me"
+                            id="remember"
                             translate="login.button.remember-me"> Remember me |
                         </label> <a href="" data-toggle="modal" data-target="#forgotPasswordModal"
                             translate="login.button.forgot-pass">Forgot password?</a>

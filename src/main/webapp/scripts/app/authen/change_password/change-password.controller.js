@@ -5,10 +5,11 @@ angular.module('contactmgrApp').controller(
         function($scope, ChangePasswordService) {
             $scope.resetInfor = function() {
                 $scope.pass = {
-                    current : '',
-                    pass : '',
-                    confirm : ''
+                    oldPassword : '',
+                    password : '',
+                    passwordConfirm : ''
                 };
+                $scope.validator = null;
             }
             $scope.changePassword = function() {
                 ChangePasswordService.changePassword($scope.pass).success(

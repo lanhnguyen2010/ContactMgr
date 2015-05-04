@@ -16,7 +16,10 @@ angular
                                 function(data) {
                                     $scope.unauthenticated = false;
                                     $rootScope.token = data.token;
-                                    $location.path('/');
+                                    $location.path('/user/admin');
+                                    if(document.getElementById('remember').checked){
+                                        $scope.maintainLogin();
+                                    }
                                 }).error(
                                 function(data) {
                                     $scope.unauthenticated = true;
