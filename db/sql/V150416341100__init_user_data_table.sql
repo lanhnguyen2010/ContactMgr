@@ -30,7 +30,7 @@ CREATE TABLE `users` (
   `LAST_NAME` varchar(45) DEFAULT NULL,
   `ROLE` varchar(45) DEFAULT NULL,
   `EXPIRED_DATE` timestamp,
-  `ACTIVE` int(1) DEFAULT NULL,
+  `ACTIVE` int(1) DEFAULT 0,
   `CREATED_AT` timestamp,
   `CREATED_BY` varchar(100) DEFAULT NULL,
   `UPDATED_AT` timestamp,
