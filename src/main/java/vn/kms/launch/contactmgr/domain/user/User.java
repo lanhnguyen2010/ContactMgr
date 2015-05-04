@@ -71,17 +71,14 @@ public class User extends vn.kms.launch.contactmgr.domain.Entity {
     @Column(name = "LANGUAGE")
     private String language;
 
-    @NotBlank(message = "{validation.PassWord.message}")
-    @Pattern(regexp = "^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*]).{6,20}$",
-        message = "{validation.PassWord.message}")
-    @Column(name = "RESET_PASSWORD")
-    private String resetPassword;
+    @Column(name = "RESET_PASSWORD_FLAG", columnDefinition = "INT(1)")
+    private boolean resetPasswordFlag;
 
     @ElementCollection
     @CollectionTable(name = "USER_ASSIGNEDCOMPANIES", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "company_id")
     private List<Integer> assignedCompanies;
-    
+
     public User(){}
 
     public User(String username) {
@@ -104,12 +101,12 @@ public class User extends vn.kms.launch.contactmgr.domain.Entity {
         this.password = password;
     }
 
-    public String getResetPassword() {
-        return resetPassword;
+    public boolean getResetPasswordFlag() {
+        return resetPasswordFlag;
     }
 
-    public void setResetPassword(String resetPassword) {
-        this.resetPassword = resetPassword;
+    public void setResetPasswordFlag(boolean resetPassword) {
+        this.resetPasswordFlag = resetPassword;
     }
 
     public String getConfirmPassword() {

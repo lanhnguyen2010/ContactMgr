@@ -186,14 +186,6 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
     }
 
     @Override
-    public int updateResetPassword(int id, String resetPassword) {
-        Query query = em.createQuery("update User set resetPassword = :resetPassword where id = :id");
-        query.setParameter("resetPassword", resetPassword);
-        query.setParameter("id", id);
-        return query.executeUpdate();
-    }
-
-    @Override
     public int updatePassword(int id, String password, String passwordConfirm) {
         return 0;
     }
