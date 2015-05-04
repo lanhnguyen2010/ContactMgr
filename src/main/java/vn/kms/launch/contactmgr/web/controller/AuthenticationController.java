@@ -11,4 +11,8 @@ public class AuthenticationController {
     public String authenticate() {
         return "";
     }
+    @RequestMapping(value = "/logout", method = RequestMethod.POST)
+    public String Logout() {
+        return "";
+    }
 }

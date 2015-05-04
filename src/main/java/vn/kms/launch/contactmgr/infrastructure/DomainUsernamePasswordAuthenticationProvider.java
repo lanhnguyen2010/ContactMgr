@@ -60,7 +60,7 @@ public class DomainUsernamePasswordAuthenticationProvider implements Authenticat
 
     private boolean credentialsInvalid(Optional<String> username,
             Optional<String> password) {
-        User user = userService.findByUsername(username.get());
+        User user = userService.findByUsernameOrEmail(username.get());
         if (user == null || !user.getPassword().equals(password.get())) {
             return true;
         }
