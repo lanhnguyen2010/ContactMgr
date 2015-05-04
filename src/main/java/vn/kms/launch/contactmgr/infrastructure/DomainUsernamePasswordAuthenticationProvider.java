@@ -47,26 +47,26 @@ public class DomainUsernamePasswordAuthenticationProvider implements Authenticat
             throw new BadCredentialsException("Invalid username password");
         }
         
-        User userRole = credentialsValid(userName, password);
-        if(!UserInfoValid(userRole)){
+        User user = credentialsValid(userName, password);
+        if(!isUserValid(user)){
             throw new BadCredentialsException("User Infomation Invalid");
         }
         
-        String userGetRole = userRole.getRole();
-        AuthenticationWithToken resultOfAuthentication = new AuthenticationWithToken(
-                userService.findByUsernameOrEmail(userName.get()), password.get(),
-                AuthorityUtils.createAuthorityList(userGetRole));
-        User user = (User) resultOfAuthentication.getPrincipal();
+        String role = user.getRole();
+        AuthenticationWithToken resultOfAuthentication = new AuthenticationWithToken( userService.findByUsernameOrEmail(userName.get()), 
+                password.get(), 
+                AuthorityUtils.createAuthorityList(role));
+        User principal = (User) resultOfAuthentication.getPrincipal();
 
-        String newToken = tokenService.generateToken(user.getUsername(),
-                user.getPassword());
+        String newToken = tokenService.generateToken(principal.getUsername(),
+                principal.getPassword());
         resultOfAuthentication.setToken(newToken);
         return resultOfAuthentication;
     }
-    private boolean UserInfoValid(User userRole) {
+    private boolean isUserValid(User user) {
         Date date = new Date();
-        long expired = userRole.getExpiredDate().getTime();
-        if(date.getTime()>expired||!userRole.isActive()||userRole.getRole().length()==0)
+        long expired = user.getExpiredDate().getTime();
+        if(date.getTime() > expired || !user.isActive())
             return false;
         return true;
     }
@@ -74,11 +74,11 @@ public class DomainUsernamePasswordAuthenticationProvider implements Authenticat
     private User credentialsValid(Optional<String> username,
             Optional<String> password) {
         User user = userService.findByUsernameOrEmail(username.get());
-        if(user == null ||user.getPassword().equals(HashString.MD5(password.get())))
+        if(user != null && user.getPassword().equals(HashString.MD5(password.get()))) {
                 return user;
+        }
         return null;
     }
-
     @Override
     public boolean supports(Class<?> authentication) {
         return authentication.equals(UsernamePasswordAuthenticationToken.class);
