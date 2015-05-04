@@ -27,13 +27,19 @@ angular
                         $scope.isLoading = false;
                         $scope.btnSend = true;
                         $scope.btnClose = false;
-                        $scope.notice = 'Your registered email';
+                        $scope.registeredEmail = true;
+                        $scope.existedEmail = false;
+                        $scope.sendingEmail = false;
+                        $scope.newPass = false;
                         x.style.color = "Black";
                         $scope.email = '';
                     };
                     $scope.sendEmail = function() {
                         x.style.color = "Black";
-                        $scope.notice = 'Sending email ...';
+                        $scope.registeredEmail = false;
+                        $scope.existedEmail = false;
+                        $scope.sendingEmail = true;
+                        $scope.newPass = false;
                         $scope.isLoading = true;
                         $scope.btnSend = false;
                         $scope.btnClose = false;
@@ -45,7 +51,10 @@ angular
                                                 $scope.isLoading = false;
                                                 $scope.btnSend = false;
                                                 $scope.btnClose = true;
-                                                $scope.notice = 'The new password was sent to your email';
+                                                $scope.registeredEmail = false;
+                                                $scope.existedEmail = false;
+                                                $scope.sendingEmail = false;
+                                                $scope.newPass = true;
                                                 x.style.color = "Black";
                                             }
                                         })
@@ -55,12 +64,15 @@ angular
                                                 $scope.isLoading = false;
                                                 $scope.btnSend = true;
                                                 $scope.btnClose = false;
-                                                $scope.notice = 'The email is not existed';
+                                                $scope.registeredEmail = false;
+                                                $scope.existedEmail = true;
+                                                $scope.sendingEmail = false;
+                                                $scope.newPass = false;
                                                 x.style.color = "Red";
                                             }
                                         });
                     };
                     $scope.checkLogin = function() {
-                        console.log($scope.credentials.username)
+                        console.log($scope.credentials.username);
                     }
                 });

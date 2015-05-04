@@ -10,11 +10,12 @@
             "login": "Đăng nhập",
             "remember-me": "Duy trì đăng nhập",
             "forgot-pass": "Quên mật khẩu?"
-        }
+        },
         "forgot-pass":{
 	        "title": "Quên mật khẩu",
-	        "registered-email": "Email của bạn đã được đăng ký",
+	        "registered-email": "Email đã được đăng ký của bạn ",
 	        "existed-email": "Email không tồn tại",
+	        "sending-email": "Đang gửi email ...",
 	        "new-pass": "Mật khẩu mới đã được gửi đến email của bạn",
 	        "button":{
 	            "send": "Gửi",
