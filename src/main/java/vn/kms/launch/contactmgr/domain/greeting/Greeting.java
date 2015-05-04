@@ -22,7 +22,7 @@ public class Greeting extends vn.kms.launch.contactmgr.domain.Entity {
     @Transient
     private String language;
 
-    @Size(max = 64, message = "{validation.size-64.message}")
+    @Size(max = 64, message = "{validation.size.message}")
     @NotEmpty(message = "{validation.not-empty.message}")
     @Column(name = "MESSAGE")
     private String message;

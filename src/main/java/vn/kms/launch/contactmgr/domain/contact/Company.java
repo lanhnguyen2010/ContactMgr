@@ -15,20 +15,20 @@ import org.hibernate.validator.constraints.NotBlank;
 public class Company extends vn.kms.launch.contactmgr.domain.Entity {
     private static final long serialVersionUID = 1L;
 
-    @Size(max = 100, message = "{validation.maxSize-100.message}")
+    @Size(max = 100, message = "{validation.size.message}")
     @NotBlank(message = "{validation.not-empty.message}")
     @Column(name = "NAME")
     private String name;
 
-    @Size(max = 255, message = "{validation.maxSize-255.message}")
+    @Size(max = 255, message = "{validation.size.message}")
     @Column(name = "WEBSITE")
     private String website;
 
-    @Size(max = 255, message = "{validation.maxSize-255.message}")
+    @Size(max = 255, message = "{validation.size.message}")
     @Column(name = "LOGO")
     private String logo;
 
-    @Size(max = 255, message = "{validation.maxSize-255.message}")
+    @Size(max = 255, message = "{validation.size.message}")
     @Column(name = "MESSAGE")
     private String message;
 
