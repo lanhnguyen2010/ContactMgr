@@ -1,15 +1,21 @@
 'use strict';
 
 angular.module('contactmgrApp')
-    .controller('HomeController', function($scope,$http) {
+    .controller('HomeController', function($scope, $state, $rootScope, $http) {
     
         function init(){
            $scope.getRole();
         }
-    
+        $scope.firstLogin = $rootScope.firstLogin;
+        if($scope.firstLogin == true){
+            $state.reload();
+            $rootScope.firstLogin = false;
+        }
+        $scope.firstLogin = 1;
         $scope.getRole = function(){
-            $http.get('api/security/current-user').success(function(user){
+            $http.get("api/security/current-user").success(function(user){
                 $scope.role = user.role;
+                $scope.isLogin = true;
             })
         }
         

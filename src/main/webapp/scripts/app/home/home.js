@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('contactmgrApp')
-    .config(function($stateProvider) {
+    .config(function($stateProvider, $httpProvider) {
         $stateProvider
             .state('home', {
                 parent: 'site',
