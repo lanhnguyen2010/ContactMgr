@@ -37,9 +37,9 @@ public class DomainUsernamePasswordAuthenticationProvider implements Authenticat
         if (credentialsInvalid(userName, password)) {
             throw new BadCredentialsException("Invalid username password");
         }
-        String userRole = gerRoleUser(userName, password);
+        String userRole = getRoleUser(userName, password);
         AuthenticationWithToken resultOfAuthentication = new AuthenticationWithToken(
-                userService.findByUsername(userName.get()), password.get(),
+                userService.findByUsernameOrEmail(userName.get()), password.get(),
                 AuthorityUtils.createAuthorityList(userRole));
         User user = (User) resultOfAuthentication.getPrincipal();
 
@@ -49,11 +49,11 @@ public class DomainUsernamePasswordAuthenticationProvider implements Authenticat
         return resultOfAuthentication;
     }
 
-    private String gerRoleUser(Optional<String> username,
+    private String getRoleUser(Optional<String> username,
             Optional<String> password) {
-        User user = userService.findByUsername(username.get());
+        User user = userService.findByUsernameOrEmail(username.get());
         if (user == null || !user.getPassword().equals(password.get())) {
-            return "NO_USER";
+            return null;
         }
         return user.getRole();
     }

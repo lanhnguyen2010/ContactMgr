@@ -10,7 +10,7 @@ import vn.kms.launch.contactmgr.service.UserService;
 
 public  class TokenService {
 
-    private final long EXPIRED_TIME = 60*60*1000;
+    private static final long EXPIRED_TIME = 60*60*1000;
     
     private static final Logger LOGGER = LoggerFactory.getLogger(TokenService.class);
     
