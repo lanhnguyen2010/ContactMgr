@@ -37,7 +37,7 @@ CREATE TABLE `users` (
   `UPDATED_BY` varchar(100) DEFAULT NULL,
   `EMAIL` varchar(100) DEFAULT NULL,
   `LANGUAGE` varchar(15) DEFAULT NULL,
-  `RESET_PASSWORD` varchar(100) DEFAULT NULL,
+  `RESET_PASSWORD_FLAG` int(1) DEFAULT 0,
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -48,8 +48,8 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Odthientho',null,'Odthientho','Odthientho','',null,0,null,'','2015-04-16','system','odthientho@gmail.com','VI',null),
-    (2,'KyNguyen',null,'KyNguyen','KyNguyen','',null,0,null,'','2015-04-16','system','kychaunguyen@gmail.com','EN',null);
+INSERT INTO `users` VALUES (1,'Odthientho',null,'Odthientho','Odthientho','',null,0,null,'','2015-04-16','system','odthientho@gmail.com','VI',false),
+    (2,'KyNguyen',null,'KyNguyen','KyNguyen','',null,0,null,'','2015-04-16','system','kychaunguyen@gmail.com','EN',false);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

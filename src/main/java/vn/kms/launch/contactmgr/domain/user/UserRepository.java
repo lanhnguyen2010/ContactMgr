@@ -9,9 +9,12 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer>, UserRepositoryCustom {
 
+
     @Modifying
     @Query("update User u set u.active = 1 where u.id in (:ids)")
     public int activeUser(@Param("ids") int... ids);
+   
+
     
     @Modifying
     @Query("update User u set u.active = 0 where u.id in (:ids)")
@@ -31,11 +34,10 @@ public interface UserRepository extends JpaRepository<User, Integer>, UserReposi
     
     @Query("select u from User u where u.username = (:username)")
     public User findByUsername(@Param("username") String username);
-    
-    @Query("update User u set u.resetPassword = (:resetPassword) where id = (:id)")
-    public int updateResetPassword(@Param("id") int id, @Param("resetPassword") String resetPassword);
-    
-    @Query("select u from User u where u.username = (:username) or u.email = (:username)")
+     
+    @Modifying
+    @Query("update User set password = (:password), resetPasswordFlag = true where email = (:email)")
+    public int resetPasswordByEmail(@Param("email") String email, @Param("password") String password);    @Query("select u from User u where u.username = (:username) or u.email = (:username)")
     public User findByUsernameOrEmail(@Param("username") String username);
     
 

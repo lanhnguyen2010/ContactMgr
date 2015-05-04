@@ -113,4 +113,5 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
     private String replaceWildcards(String text) {
         return text.replace('*', '%');
     }
+
 }
