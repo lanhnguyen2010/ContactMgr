@@ -9,12 +9,6 @@ angular
                         username : '',
                         password : ''
                     };
-                    $scope.reset = function() {
-                        $scope.credentials = {
-                            username : '',
-                            password : ''
-                        };
-                    }
                     $rootScope.reloadNavbar = false;
                     $scope.login = function() {
                         if ($scope.credentials.username == ''
