@@ -222,12 +222,10 @@ angular
                             $scope.user.active = false;
                         }
                         $scope.setAssignedCompanies();
-                        UsersService
-                                .saveUser($scope.user)
+                        UsersService.saveUser($scope.user)
                                 .success(
                                         function(data, status, headers, config) {
-                                            window
-                                                    .alert("Save user successful!");
+                                            window.alert("Save user successful!");
                                             $scope.currentPage = $scope.currentPage - 1;
                                             $scope.usersTableParams.reload();
                                             $scope.initUser();
@@ -242,8 +240,8 @@ angular
                     // to update
                     $scope.addUser = function(user) {
                         angular.copy(user, $scope.user);
+                        $scope.user.password = "";
                         $scope.getCompaniesToDisplayUI();
-                        console.log("Date: " + $scope.user.expiredDate);
                         if ($scope.user.active == true) {
                             $scope.checkboxSelection = '1';
                         } else {
