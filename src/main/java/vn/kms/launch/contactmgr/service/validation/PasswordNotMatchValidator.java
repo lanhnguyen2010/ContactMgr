@@ -39,9 +39,9 @@ public class PasswordNotMatchValidator implements ConstraintValidator<PasswordNo
 
     private boolean passwordsAreNotMatch(String password) {
         password = HashString.MD5(password);
-        String username= SecurityUtil.getCurrentUsername();
+        String username = SecurityUtil.getCurrentUsername();
         String PasswordByUsername = userRepository.getPasswordByUsername(username);
-        return (password.equals(PasswordByUsername));
+        return !(password.equals(PasswordByUsername));
 
     }
 
