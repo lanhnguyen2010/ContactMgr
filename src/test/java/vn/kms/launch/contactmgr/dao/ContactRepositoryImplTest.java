@@ -1,5 +1,6 @@
 package vn.kms.launch.contactmgr.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import junit.framework.TestCase;
@@ -24,20 +25,16 @@ public class ContactRepositoryImplTest extends TestCase {
 
     @Test
     public void testGetCompanyNames() {
-        // test admin can get all name of companies
-        List<Itemized> companyNames = contactRepo.getCompanyNames(1);
+        // test capability can get name of all companies when companyIds == null
+        List<Itemized> companyNames = contactRepo.getCompanyNames(null);
         assertNotNull(companyNames);
         assertEquals(3, companyNames.size());
         
-        // test designer can get companies is assigned
-        companyNames = contactRepo.getCompanyNames(2);
-        assertNotNull(companyNames);
-        assertEquals(2, companyNames.size());
-        assertEquals("name1", companyNames.get(0).getName());
-        assertEquals("name2", companyNames.get(1).getName());
-        
-        // test editor can get companies is assigned
-        companyNames = contactRepo.getCompanyNames(3);
+        // test capability  designer can get name of companies by companyIds
+        List<Integer> companyIds = new ArrayList<>();
+        companyIds.add(1);
+        companyIds.add(2);
+        companyNames = contactRepo.getCompanyNames(companyIds);
         assertNotNull(companyNames);
         assertEquals(2, companyNames.size());
         assertEquals("name1", companyNames.get(0).getName());
@@ -59,13 +56,16 @@ public class ContactRepositoryImplTest extends TestCase {
         criteria.setSortField("");
         SearchResult<Contact> searchResult = null;
         
-        // test admin can see all results when he search contact
-        searchResult = contactRepo.searchByCriteria(criteria, 1, "ADMINISTRATOR");
+        // test capability can see search results of all contact when companyIds equals null
+        searchResult = contactRepo.searchByCriteria(criteria, null);
         assertNotNull(searchResult);
         assertEquals(9, searchResult.getItems().size());
         
-        // test designer only can see  assigned contact when he search contact
-        searchResult = contactRepo.searchByCriteria(criteria, 2, "DESIGNER");
+        // test câpbility only can see  search results of contacts has company id on companyIds
+        List<Integer> companyIds = new ArrayList<>();
+        companyIds.add(1);
+        companyIds.add(2);
+        searchResult = contactRepo.searchByCriteria(criteria, companyIds);
         assertNotNull(searchResult);
         assertEquals(6, searchResult.getItems().size());
         for(Contact c : searchResult.getItems()){
@@ -73,19 +73,7 @@ public class ContactRepositoryImplTest extends TestCase {
             assertTrue(c.getId() != 3);
             assertTrue(c.getId() != 6);
             assertTrue(c.getId() != 9);
-        }
-        
-        // test editer only can see  assigned contact when he search contact
-        searchResult = contactRepo.searchByCriteria(criteria, 3, "EDITOR");
-        assertNotNull(searchResult);
-        assertEquals(6, searchResult.getItems().size());
-        for(Contact c : searchResult.getItems()){
-            assertNotSame((int)c.getId(), 3);
-            assertTrue(c.getId() != 3);
-            assertTrue(c.getId() != 6);
-            assertTrue(c.getId() != 9);
-        }
-        
+        }     
     }
 
 }

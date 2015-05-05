@@ -89,9 +89,14 @@ public class ContactService {
         return contactRepo.save(contact);
     }
 
-    @Transactional
     public List<Itemized> getCompanyNames() {
-        return contactRepo.getCompanyNames(SecurityUtil.getCurrentUserId());
+        User user = SecurityUtil.getCurrentUser();
+        List<Integer> assignedCompanies = null;
+        if(!user.getRole().equals(Role.ADMINISTRATOR.name())){
+            assignedCompanies = user.getAssignedCompanies();
+            System.out.println("number assigned companies: " + assignedCompanies.size());
+        }
+        return contactRepo.getCompanyNames(assignedCompanies);
     }
 
     @Transactional
@@ -119,9 +124,12 @@ public class ContactService {
     }
 
     public SearchResult<Contact> searchContacts(ContactSearchCriteria criteria) {
-        return contactRepo.searchByCriteria(criteria, 
-                SecurityUtil.getCurrentUserId(), 
-                SecurityUtil.getCurrentUserRole());
+        User user = SecurityUtil.getCurrentUser();
+        List<Integer> assignedCompanies = null;
+        if(!user.getRole().equals(Role.ADMINISTRATOR)){
+            assignedCompanies = user.getAssignedCompanies();
+        }
+        return contactRepo.searchByCriteria(criteria,  assignedCompanies);
     }
 
     public void validateContact(Contact contact) throws ValidationException {
