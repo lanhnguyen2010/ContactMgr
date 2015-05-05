@@ -9,7 +9,7 @@
             <div class="form-group">
                 <div class="col-md-8">
                     <label for="firstname" class="control-label"
-                        ng-show="authenticated" ng-style="{color:'red'}"
+                        ng-show="loginFailed" ng-style="{color:'red'}"
                         translate="login.notice">The authentication was failed.
                         Please double-check and try again.</label>
                 </div>
@@ -35,7 +35,8 @@
                 </div>
                 <div class="col-md-6 control-label">
                     <div class="checkbox">
-                        <label> <input type="checkbox"
+                        <label> <input type="checkbox" name="_spring_security_remember_me"
+                            id="remember"
                             translate="login.button.remember-me"> Remember me |
                         </label> <a href="" data-toggle="modal" data-target="#forgotPasswordModal"
                             translate="login.button.forgot-pass">Forgot password?</a>

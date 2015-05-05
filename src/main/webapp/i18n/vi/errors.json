@@ -2,6 +2,7 @@
     "errors": {
         "title": "Trang bị lỗi!",
         "403": "Bạn không được phép truy xuất trang này!",
-        "404": "Không tìm thấy yêu cầu"
+        "404": "Không tìm thấy yêu cầu",
+        "500": "Lỗi máy chủ"
     }
 }

@@ -18,7 +18,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @EnableAutoConfiguration
 @SpringBootApplication
 public class ContactMgrApp  extends SpringBootServletInitializer {
-    
+
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
         return application.sources(ContactMgrApp.class);
@@ -31,7 +31,7 @@ public class ContactMgrApp  extends SpringBootServletInitializer {
         SimpleCommandLinePropertySource source = new SimpleCommandLinePropertySource(args);
         addDefaultProfile(app, source);
         app.run(args).getEnvironment();
-        
+
     }
 
     private static void addDefaultProfile(SpringApplication app,
