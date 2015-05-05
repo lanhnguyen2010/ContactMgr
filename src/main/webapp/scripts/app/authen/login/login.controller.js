@@ -41,7 +41,7 @@ angular.module('contactmgrApp').controller(
                         x.style.color = "Black";
                     }
                 }).error(function(data, status){
-                     if (status == '404') {
+                     if (status == '400') {
                         $scope.isLoading = false;
                         $scope.btnSend = true;
                         $scope.btnClose = false;

@@ -3,8 +3,8 @@ package vn.kms.launch.contactmgr.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.stereotype.Component;
-import vn.kms.launch.contactmgr.domain.user.User;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -13,7 +13,8 @@ import java.util.Random;
 /**
 * Created by thoong on 4/22/2015.
 */
-@Component
+@Service("mailService")
+@Transactional
 public class MailService {
 
     private static final String UPPERCASE_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -39,13 +40,14 @@ public class MailService {
         int length = randomGenerator.nextInt(5);
 
         String randomPassword = "";
-        randomPassword += UPPERCASE_CHARS.charAt(randomGenerator.nextInt(26));
-        randomPassword += LOWERCASE_CHARS.charAt(randomGenerator.nextInt(26));
-        randomPassword += SPECIAL_CHARS.charAt(randomGenerator.nextInt(8));
-        randomPassword += NUMBERS.charAt(randomGenerator.nextInt(10));
+        randomPassword += UPPERCASE_CHARS.charAt(randomGenerator.nextInt(UPPERCASE_CHARS.length()));
+        randomPassword += LOWERCASE_CHARS.charAt(randomGenerator.nextInt(LOWERCASE_CHARS.length()));
+        randomPassword += SPECIAL_CHARS.charAt(randomGenerator.nextInt(SPECIAL_CHARS.length()));
+        randomPassword += NUMBERS.charAt(randomGenerator.nextInt(NUMBERS.length()));
 
         for (int i = 0; i <= length + 1; i++) {
-            int pos = randomGenerator.nextInt(70);
+            int pos = randomGenerator.nextInt(UPPERCASE_CHARS.length() + LOWERCASE_CHARS.length()
+                    + SPECIAL_CHARS.length() + NUMBERS.length());
             char ch;
             if (pos < 26) ch = UPPERCASE_CHARS.charAt(pos);
             else if (pos < 52) ch = LOWERCASE_CHARS.charAt(pos - 26);
