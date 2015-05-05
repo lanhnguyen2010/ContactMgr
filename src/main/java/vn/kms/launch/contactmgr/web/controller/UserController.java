@@ -1,28 +1,9 @@
 package vn.kms.launch.contactmgr.web.controller;
 
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
-import static org.springframework.web.bind.annotation.RequestMethod.PUT;
-import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
-import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.http.HttpStatus.NOT_FOUND;
-import static org.springframework.http.HttpStatus.NO_CONTENT;
-import static org.springframework.http.HttpStatus.OK;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
 import vn.kms.launch.contactmgr.domain.user.User;
 import vn.kms.launch.contactmgr.domain.user.UserSearchCriteria;
 import vn.kms.launch.contactmgr.dto.user.ChangePasswordInfo;
@@ -33,6 +14,13 @@ import vn.kms.launch.contactmgr.util.SearchResult;
 import vn.kms.launch.contactmgr.util.ValidationException;
 
 import javax.mail.MessagingException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static org.springframework.http.HttpStatus.*;
+import static org.springframework.web.bind.annotation.RequestMethod.*;
+
 @RestController
 @RequestMapping(value = "/api/users")
 public class UserController {
@@ -140,8 +128,6 @@ public class UserController {
     }
 
 
-
-
     @RequestMapping(value = "/updateLanguage/{language}", method = PUT)
     @PreAuthorize("hasAnyRole('ADMINISTRATOR', 'DESIGNER', 'EDITOR')")
     public ResponseEntity<?> updateLanguage(@PathVariable String language) {
@@ -149,7 +135,7 @@ public class UserController {
         return new ResponseEntity<>((update == 0) ? NOT_FOUND : OK);
     }
 
-    @RequestMapping(value = "/updatePassword", method = PUT)
+    @RequestMapping(value = "/updatePassword", method = POST)
     @PreAuthorize("hasAnyRole('ADMINISTRATOR', 'DESIGNER', 'EDITOR')")
     public ResponseEntity<?> updatePassword(@RequestBody ChangePasswordInfo changePasswordInfo) {
         try {
