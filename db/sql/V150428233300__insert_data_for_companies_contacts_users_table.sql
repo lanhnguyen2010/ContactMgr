@@ -1,11 +1,4 @@
-INSERT INTO `contactmgr`.`users` (`USERNAME`, `PASSWORD`, `FIRST_NAME`, `LAST_NAME`, `ROLE`, `EXPIRED_DATE`) VALUES ('thoong', 'Password4@', 'tho', 'ong', 'EDITOR', '2015-04-11 23:11:33');
-INSERT INTO `contactmgr`.`users` (`USERNAME`, `PASSWORD`, `FIRST_NAME`, `LAST_NAME`, `ROLE`, `EXPIRED_DATE`) VALUES ('kynguyen', 'Password5@', 'ky', 'nguyen', 'ADMINISTRATOR', '2015-04-22 23:11:33');
-INSERT INTO `contactmgr`.`users` (`USERNAME`, `PASSWORD`, `FIRST_NAME`, `LAST_NAME`, `ROLE`, `EXPIRED_DATE`) VALUES ('vinhtran', 'Password6@', 'vinh', 'tran', 'DESIGNER', '2015-11-08 23:11:33');
-INSERT INTO `contactmgr`.`users` (`USERNAME`, `PASSWORD`, `FIRST_NAME`, `LAST_NAME`, `ROLE`, `EXPIRED_DATE`) VALUES ('trieudoan', 'Password7@', 'trieu', 'doan', 'EDITOR', '2015-04-19 23:11:33');
-INSERT INTO `contactmgr`.`users` (`USERNAME`, `PASSWORD`, `FIRST_NAME`, `LAST_NAME`, `ROLE`, `EXPIRED_DATE`) VALUES ('dieule', 'Password8@', 'dieu', 'le', 'DESIGNER', '2015-07-06 23:11:33');
-INSERT INTO `contactmgr`.`users` (`USERNAME`, `PASSWORD`, `FIRST_NAME`, `LAST_NAME`, `ROLE`, `EXPIRED_DATE`) VALUES ('lanhnguyen', 'Password9@', 'lanh', 'nguyen', 'ADMINISTRATOR', '2015-09-26 23:11:33');
-INSERT INTO `contactmgr`.`users` (`USERNAME`, `PASSWORD`, `FIRST_NAME`, `LAST_NAME`, `ROLE`, `EXPIRED_DATE`) VALUES ('thanhtuong', 'Password10@', 'thanh', 'tuong', 'DESIGNER', '2015-05-22 23:11:33');
-INSERT INTO `contactmgr`.`users` (`USERNAME`, `PASSWORD`, `FIRST_NAME`, `LAST_NAME`, `ROLE`, `EXPIRED_DATE`) VALUES ('thoaitran', 'Password3@', 'thoai', 'tran', 'DESIGNER', '2015-12-01 23:11:33');
+INSERT INTO `contactmgr`.`users` (`USERNAME`, `PASSWORD`, `FIRST_NAME`, `LAST_NAME`, `ROLE`, `EXPIRED_DATE`,`EMAIL`,`ACTIVE`) VALUES ('ThoOng', '25681edfefd392a832f580fa4ef3283d', 'Tho', 'Ong', 'ADMINISTRATOR', '2015-12-01 23:11:33','thoong@kms-technology.com',1);
 
 
 
