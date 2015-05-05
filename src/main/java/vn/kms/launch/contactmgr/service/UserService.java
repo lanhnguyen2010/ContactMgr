@@ -6,20 +6,30 @@ import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import vn.kms.launch.contactmgr.domain.user.Role;
 import vn.kms.launch.contactmgr.domain.user.User;
 import vn.kms.launch.contactmgr.domain.user.UserRepository;
 import vn.kms.launch.contactmgr.domain.user.UserSearchCriteria;
 import vn.kms.launch.contactmgr.dto.user.ChangePasswordInfo;
-import vn.kms.launch.contactmgr.util.*;
+import vn.kms.launch.contactmgr.util.EntityNotFoundException;
+import vn.kms.launch.contactmgr.util.HashString;
+import vn.kms.launch.contactmgr.util.SearchResult;
+import vn.kms.launch.contactmgr.util.SecurityUtil;
+import vn.kms.launch.contactmgr.util.ValidationException;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional(readOnly = true)
@@ -40,7 +50,7 @@ public class UserService {
     }
 
 
-  @Transactional
+    @Transactional
     public void updatePasswordByEmail(String email, String resetPassword) {
 
         int tmp = userRepository.resetPasswordByEmail(email, HashString.MD5(resetPassword));
@@ -73,7 +83,6 @@ public class UserService {
         user.setPassword(HashString.MD5(user.getPassword()));
 
 
-
         return userRepository.save(user);
     }
 
@@ -98,10 +107,8 @@ public class UserService {
     }
 
     @Transactional
-
-
     public Integer updateLanguage(String language) {
-        if(!(language.equalsIgnoreCase("VI")||language.equalsIgnoreCase("EN"))){
+        if (!(language.equalsIgnoreCase("VI") || language.equalsIgnoreCase("EN"))) {
             return null;
         }
         String username = SecurityUtil.getCurrentUsername();
@@ -115,6 +122,7 @@ public class UserService {
     @Transactional
     public Integer updatePassword(ChangePasswordInfo changePasswordInfo) {
         String username = SecurityUtil.getCurrentUsername();
+        System.out.println("Username change password: "+ username);
         if (username.equals("") || username.isEmpty()) {
             return null;
         }
@@ -129,6 +137,7 @@ public class UserService {
             throw new ValidationException(violations.toArray(new ConstraintViolation[0]));
         }
     }
+
     @Transactional
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);

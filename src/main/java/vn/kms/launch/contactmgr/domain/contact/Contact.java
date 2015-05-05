@@ -19,31 +19,31 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Contact extends vn.kms.launch.contactmgr.domain.Entity {
     private static final long serialVersionUID = 1L;
 
-    @Size(max = 152, message = "{validation.maxSize-152.message}")
+    @Size(max = 152, message = "{validation.size.message}")
     @NotBlank(message = "{validation.not-empty.message}")
     @Column(name = "DISPLAY_NAME")
     private String displayName;
 
-    @Size(max = 50, message = "{validation.maxSize-50.message}")
+    @Size(max = 50, message = "{validation.size.message}")
     @NotBlank(message = "{validation.not-empty.message}")
     @Column(name = "FIRST_NAME")
     private String firstName;
 
-    @Size(max = 50, message = "{validation.maxSize-50.message}")
+    @Size(max = 50, message = "{validation.size.message}")
     @Column(name = "MIDDLE_NAME")
     private String middleName;
 
-    @Size(max = 50, message = "{validation.maxSize-50.message}")
+    @Size(max = 50, message = "{validation.size.message}")
     @NotBlank(message = "{validation.not-empty.message}")
     @Column(name = "LAST_NAME")
     private String lastName;
 
-    @Size(max = 255, message = "{validation.maxSize-255.message}")
+    @Size(max = 255, message = "{validation.size.message}")
     @Email(message = "{validation.email.message}")
     @Column(name = "EMAIL")
     private String email;
 
-    @Size(max = 255, message = "{validation.maxSize-255.message}")
+    @Size(max = 255, message = "{validation.size.message}")
     @Column(name = "PHOTO")
     private String photo;
 

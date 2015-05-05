@@ -43,13 +43,13 @@ angular
                         $scope.isLoading = false;
                         $scope.btnSend = true;
                         $scope.btnClose = false;
-                        $scope.notice = 'Your registered email';
+                        $scope.notice= "Your registered email";
                         x.style.color = "Black";
                         $scope.email = '';
                     };
                     $scope.sendEmail = function() {
                         x.style.color = "Black";
-                        $scope.notice = 'Sending email ...';
+                        $scope.notice= "Sending email ...";
                         $scope.isLoading = true;
                         $scope.btnSend = false;
                         $scope.btnClose = false;
@@ -61,19 +61,19 @@ angular
                                                 $scope.isLoading = false;
                                                 $scope.btnSend = false;
                                                 $scope.btnClose = true;
-                                                $scope.notice = 'The new password was sent to your email';
+                                                $scope.notice= data.message;
                                                 x.style.color = "Black";
                                             }
                                         })
                                 .error(
-                                        function(data, status) {
-                                            if (status == '404') {
+                                        function(data, status, msg) {
+                                            if (status == '400') {
                                                 $scope.isLoading = false;
                                                 $scope.btnSend = true;
                                                 $scope.btnClose = false;
-                                                $scope.notice = 'The email is not existed';
+                                                $scope.notice= data.message;
                                                 x.style.color = "Red";
                                             }
-                                        });
+                                });
                     };
                 });

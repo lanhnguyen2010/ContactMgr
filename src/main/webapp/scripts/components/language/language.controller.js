@@ -13,7 +13,7 @@ angular.module('contactmgrApp')
             })
         }
         $scope.changeLanguage = function(languageKey) {
-            $http.put("/api/users/updateLanguage", languageKey);
+            $http.put("/api/users/updateLanguage/" + languageKey);
             $translate.use(languageKey);
         };
 

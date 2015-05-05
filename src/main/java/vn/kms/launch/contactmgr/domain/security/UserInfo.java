@@ -10,6 +10,7 @@ public class UserInfo {
     private String role;
     private Date expiredDate;
     private boolean active;
+    private String language;
     
     public UserInfo(User user){
         this.username = user.getUsername();
@@ -17,6 +18,7 @@ public class UserInfo {
         this.role = user.getRole();
         this.expiredDate = user.getExpiredDate();
         this.active = user.isActive();
+        this.language = user.getLanguage();
     }
 
     public String getUsername() {
@@ -58,5 +60,15 @@ public class UserInfo {
     public void setActive(boolean active) {
         this.active = active;
     }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+    
+    
 
 }
