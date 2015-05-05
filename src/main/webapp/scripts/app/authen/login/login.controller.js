@@ -34,19 +34,13 @@ angular
                         $scope.isLoading = false;
                         $scope.btnSend = true;
                         $scope.btnClose = false;
-                        $scope.registeredEmail = true;
-                        $scope.existedEmail = false;
-                        $scope.sendingEmail = false;
-                        $scope.newPass = false;
+                        $scope.notice= "Your registered email";
                         x.style.color = "Black";
                         $scope.email = '';
                     };
                     $scope.sendEmail = function() {
                         x.style.color = "Black";
-                        $scope.registeredEmail = false;
-                        $scope.existedEmail = false;
-                        $scope.sendingEmail = true;
-                        $scope.newPass = false;
+                        $scope.notice= "Sending email ...";
                         $scope.isLoading = true;
                         $scope.btnSend = false;
                         $scope.btnClose = false;
@@ -58,25 +52,19 @@ angular
                                                 $scope.isLoading = false;
                                                 $scope.btnSend = false;
                                                 $scope.btnClose = true;
-                                                $scope.registeredEmail = false;
-                                                $scope.existedEmail = false;
-                                                $scope.sendingEmail = false;
-                                                $scope.newPass = true;
+                                                $scope.notice= data.message;
                                                 x.style.color = "Black";
                                             }
                                         })
                                 .error(
-                                        function(data, status) {
+                                        function(data, status, msg) {
                                             if (status == '400') {
                                                 $scope.isLoading = false;
                                                 $scope.btnSend = true;
                                                 $scope.btnClose = false;
-                                                $scope.registeredEmail = false;
-                                                $scope.existedEmail = true;
-                                                $scope.sendingEmail = false;
-                                                $scope.newPass = false;
+                                                $scope.notice= data.message;
                                                 x.style.color = "Red";
                                             }
-                                        });
+                                });
                     };
                 });

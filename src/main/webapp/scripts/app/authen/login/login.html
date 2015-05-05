@@ -60,10 +60,7 @@
                         <div class="modal-body">
                             <div class="form-group">
                                 <div class="col-md-12">
-                                    <label class="control-label" ng-show="registeredEmail">Your registered email</label>
-                                    <label id="notice" class="control-label" ng-show="existedEmail">The email is not existed</label>
-                                    <label class="control-label" ng-show="sendingEmail">Sending email ...</label>
-                                    <label class="control-label" ng-show="newPass" style="text-align: center">The new password was sent to your email</label>
+                                     <label id="notice" class="control-label" ng-model="notice">{{notice}}</label>
                                 </div>
                             </div>
                             <progressbar ng-show="isLoading" class="progress-striped active" 

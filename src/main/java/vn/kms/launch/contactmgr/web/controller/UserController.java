@@ -124,16 +124,20 @@ public class UserController {
 
     @RequestMapping(value = "/reset_password", method = PUT)
 
-    public ResponseEntity<String> forgetPassword(@RequestParam String email) {
+    public ResponseEntity<?> forgetPassword(@RequestParam String email) {
         String randomPassword = null;
+        Map<String, Object> exception = new HashMap<>();
         try {
             randomPassword = mailService.sendRandomPasswordTo(email);
-        } catch (MessagingException exception) {
-            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
-        } catch (EntityNotFoundException exception) {
-            return new ResponseEntity<>(BAD_REQUEST);
+        } catch (MessagingException ex) {
+            exception.put("message", "The email is not sent because server lost");
+            return new ResponseEntity<>(exception, INTERNAL_SERVER_ERROR);
+        } catch (EntityNotFoundException ex) {
+            exception.put("message", "The email is not existed");
+            return new ResponseEntity<>(exception, BAD_REQUEST);
         }
-        return new ResponseEntity<>(OK);
+        exception.put("message", "The new password was sent to your email");
+        return new ResponseEntity<>(exception, OK);
     }
 
     @RequestMapping(value = "/updateLanguage/{language}", method = PUT)
