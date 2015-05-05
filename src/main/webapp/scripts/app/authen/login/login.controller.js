@@ -66,7 +66,7 @@ angular
                                             }
                                         })
                                 .error(
-                                        function(data, status, msg) {
+                                        function(data, status) {
                                             if (status == '400') {
                                                 $scope.isLoading = false;
                                                 $scope.btnSend = true;
