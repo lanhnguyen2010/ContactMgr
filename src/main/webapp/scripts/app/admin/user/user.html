@@ -1,7 +1,6 @@
 <div ng-loak>
     <a href="" class="btn btn-default " data-toggle="modal"
-        data-target="#userModal" translate="user.button.add-user"
-        ng-click="initUser()">Add user</a>
+        data-target="#userModal" translate="user.button.add-user">Add user</a>
     <hr>
 
     <form name="user_form" novalidate class="form-horizontal" role="form"
@@ -157,7 +156,7 @@
                     <div class="modal-dialog vertical-align-center">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">
+                                <button type="button" class="close" data-dismiss="modal" ng-click="initUser()">
                                     <span aria-hidden="true">&times; </span> <span class="sr-only">Close</span>
                                 </button>
                                 <h3 class="modal-title" id="myModalLabel" style="color: white"
@@ -215,8 +214,8 @@
 
                                             <div class="col-sm-7">
                                                 <select class="form-control" ng-model="user.language">
-                                                    <option value="EN">ENGLISH</option>
-                                                    <option value="VI">VIETNAMESE</option>
+                                                    <option value="en">ENGLISH</option>
+                                                    <option value="vi">VIETNAMESE</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -224,7 +223,7 @@
                                             <label for="role" class="col-sm-5 control-label"
                                                    translate="user.field.role">Role</label>
                                             <div class="col-sm-7">
-                                                <select class="form-control" ng-model="user.role">
+                                                <select class="form-control" ng-model="user.role" ng-required="true">
                                                     <option ng-repeat="role in roles" value="{{role}}">{{role}}</option>
                                                 </select>
                                             </div>
