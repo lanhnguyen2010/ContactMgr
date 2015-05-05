@@ -8,11 +8,21 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import com.google.common.base.Optional;
+
 import vn.kms.launch.contactmgr.ContactMgrApp;
 import vn.kms.launch.contactmgr.domain.contact.Contact;
+import vn.kms.launch.contactmgr.domain.user.User;
+import vn.kms.launch.contactmgr.domain.user.UserRepository;
+import vn.kms.launch.contactmgr.infrastructure.AuthenticationWithToken;
+import vn.kms.launch.contactmgr.infrastructure.DomainUsernamePasswordAuthenticationProvider;
+import vn.kms.launch.contactmgr.infrastructure.TokenService;
 import vn.kms.launch.contactmgr.util.AuthorizationException;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -22,6 +32,9 @@ public class ContactServiceTest {
 
     @Autowired
     private ContactService contactService;
+    
+    @Autowired
+    private UserRepository userRepo;
 
     /**
      * Test getContact function
@@ -29,12 +42,16 @@ public class ContactServiceTest {
      */
     @Test
     public void testGetContact() throws AuthorizationException {
-        // Get an existing contact
+        // test admin can get any existing contact
+        User admin = userRepo.findOne(1);
+        Authentication authen = new AuthenticationWithToken(admin, "Password1@");
+        authen.setAuthenticated(true);
+        
+        SecurityContextHolder.getContext().setAuthentication(authen);
         Contact contact = null;
         try {
             contact = contactService.getContact(1);
         } catch (AuthorizationException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         assertNotNull(contact);
