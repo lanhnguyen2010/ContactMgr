@@ -6,7 +6,6 @@ import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 
@@ -18,12 +17,11 @@ import vn.kms.launch.contactmgr.domain.user.Role;
 import vn.kms.launch.contactmgr.domain.user.User;
 import vn.kms.launch.contactmgr.domain.user.UserRepository;
 import vn.kms.launch.contactmgr.domain.user.UserSearchCriteria;
-import vn.kms.launch.contactmgr.dto.user.ChangeLanguageInfo;
 import vn.kms.launch.contactmgr.dto.user.ChangePasswordInfo;
 import vn.kms.launch.contactmgr.util.EntityNotFoundException;
 import vn.kms.launch.contactmgr.util.HashString;
-import vn.kms.launch.contactmgr.util.PasswordNotExistException;
 import vn.kms.launch.contactmgr.util.SearchResult;
+import vn.kms.launch.contactmgr.util.SecurityUtil;
 import vn.kms.launch.contactmgr.util.ValidationException;
 
 @Service
@@ -44,7 +42,8 @@ public class UserService {
         return userRepository.findOne(id);
     }
 
-    @Transactional
+
+  @Transactional
     public void updatePasswordByEmail(String email, String resetPassword) {
 
         int tmp = userRepository.resetPasswordByEmail(email, HashString.MD5(resetPassword));
@@ -76,9 +75,7 @@ public class UserService {
         validateUser(user);
         user.setPassword(HashString.MD5(user.getPassword()));
 
-        if (id != null && !user.getAssignedCompanies().isEmpty()) {
-            userRepository.updateUserAssignedCompanies(id);
-        }
+
 
         return userRepository.save(user);
     }
@@ -104,23 +101,25 @@ public class UserService {
     }
 
     @Transactional
-    public Integer updateLanguage(ChangeLanguageInfo changeLanguageInfo) {
-        String username = "thanhtuong";// get from SecurityUtil
+
+
+    public Integer updateLanguage(String language) {
+        if(!(language.equalsIgnoreCase("VI")||language.equalsIgnoreCase("EN"))){
+            return null;
+        }
+        String username = SecurityUtil.getCurrentUsername();
         if (username.equals("") || username.isEmpty()) {
             return null;
         }
-        return userRepository.updateLanguage(username, changeLanguageInfo.getLanguage());
+
+        return userRepository.updateLanguage(username, language);
     }
 
     @Transactional
     public Integer updatePassword(ChangePasswordInfo changePasswordInfo) {
-        String username = "thanhtuong"; // get from SecurityUtil
+        String username = SecurityUtil.getCurrentUsername();
         if (username.equals("") || username.isEmpty()) {
             return null;
-        }
-        User user = userRepository.findByUsername(username);
-        if (!user.getPassword().equals(HashString.MD5(changePasswordInfo.getOldPassword()))) {
-            throw new PasswordNotExistException("Password not exist");
         }
         validateUser(changePasswordInfo);
         return userRepository.updatePassword(username, HashString.MD5(changePasswordInfo.getPassword()));
@@ -138,4 +137,8 @@ public class UserService {
         return userRepository.findByUsername(username);
     }
 
+    @Transactional
+    public User findByUsernameOrEmail(String userName) {
+        return userRepository.findByUsernameOrEmail(userName);
+    }
 }

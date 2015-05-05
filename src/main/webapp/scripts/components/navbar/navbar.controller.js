@@ -1,8 +1,10 @@
 'use strict';
 
 angular.module('contactmgrApp')
-    .controller('NavbarController', function($scope, $location, $state,$http) {
+    .controller('NavbarController', function($scope, $cookieStore, $rootScope, $location, $state,$http) {
         $scope.$state = $state;
+
+        $scope.isLogin = false;
         function init(){
             $scope.getUsername();
         }
@@ -10,8 +12,13 @@ angular.module('contactmgrApp')
         $scope.getUsername = function(){
             $http.get("api/security/current-user").success(function(user){
                $scope.username = user.username;
-               console.log($scope.username);
+               $scope.isLogin = true;
             });
+        }
+        $scope.logout = function(){
+            $cookieStore.remove("JSESSIONID");
+            console.log("logout");
+            $location.path("/login");
         }
         init();
     });

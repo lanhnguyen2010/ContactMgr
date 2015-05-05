@@ -1,7 +1,13 @@
 package vn.kms.launch.contactmgr.dto.user;
+
 import org.hibernate.validator.constraints.NotBlank;
+import vn.kms.launch.contactmgr.service.validation.PasswordNotMatch;
 import vn.kms.launch.contactmgr.service.validation.PasswordsNotEqual;
+
 import javax.validation.constraints.Pattern;
+
+import vn.kms.launch.contactmgr.util.SecurityUtil;
+import  vn.kms.launch.contactmgr.util.SecurityUtil.*;
 
 /**
  * Created by thanhtuong on 4/23/2015.
@@ -11,6 +17,11 @@ import javax.validation.constraints.Pattern;
     passwordVerificationFieldName = "passwordConfirm",
     message = "{validation.ConfirmPassWord.message}"
 )
+@PasswordNotMatch(
+    passwordFieldNameOld = "oldPassword",
+    message = "{validation.PasswordMatch.message}"
+)
+
 public class ChangePasswordInfo {
 
     private String oldPassword;
@@ -32,6 +43,8 @@ public class ChangePasswordInfo {
 
     public String getPasswordConfirm() {
         return passwordConfirm;
+
+
     }
 
     public void setPasswordConfirm(String passwordConfirm) {
@@ -44,5 +57,11 @@ public class ChangePasswordInfo {
 
     public void setOldPassword(String oldPassword) {
         this.oldPassword = oldPassword;
+    }
+
+    public ChangePasswordInfo(String oldPassword, String password, String passwordConfirm) {
+        this.oldPassword = oldPassword;
+        this.password = password;
+        this.passwordConfirm = passwordConfirm;
     }
 }

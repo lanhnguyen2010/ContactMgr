@@ -36,7 +36,7 @@ public class SecurityUtil {
     }
     
     public static UserInfo getUserInfo(){
-    	User user = getCurrentUser();
+        User user = getCurrentUser();
         if(user != null){
             return new UserInfo(user);
         }

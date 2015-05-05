@@ -1,5 +1,7 @@
 package vn.kms.launch.contactmgr.util;
 
+import java.security.NoSuchAlgorithmException;
+
 /**
  * Created by thanhtuong on 4/23/2015.
  */
