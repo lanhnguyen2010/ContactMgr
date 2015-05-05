@@ -1,5 +1,21 @@
 package vn.kms.launch.contactmgr.web.controller;
 
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.NO_CONTENT;
+import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import static org.springframework.web.bind.annotation.RequestMethod.PUT;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.mail.MessagingException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -12,8 +28,6 @@ import vn.kms.launch.contactmgr.service.UserService;
 import vn.kms.launch.contactmgr.util.EntityNotFoundException;
 import vn.kms.launch.contactmgr.util.SearchResult;
 import vn.kms.launch.contactmgr.util.ValidationException;
-
-import javax.mail.MessagingException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -112,21 +126,21 @@ public class UserController {
 
     @RequestMapping(value = "/reset_password", method = PUT)
 
-    public ResponseEntity<String> forgetPassword(@RequestParam String email) {
+    public ResponseEntity<?> forgetPassword(@RequestParam String email) {
         String randomPassword = null;
+        Map<String, Object> exception = new HashMap<>();
         try {
             randomPassword = mailService.sendRandomPasswordTo(email);
-        } catch (MessagingException exception) {
-
-            return new ResponseEntity<>("Email is not sent because server lost", INTERNAL_SERVER_ERROR);
-        } catch (EntityNotFoundException exception) {
-
-            return new ResponseEntity<>("Email is not existed", BAD_REQUEST);
+        } catch (MessagingException ex) {
+            exception.put("message", "The email is not sent because server lost");
+            return new ResponseEntity<>(exception, INTERNAL_SERVER_ERROR);
+        } catch (EntityNotFoundException ex) {
+            exception.put("message", "The email is not existed");
+            return new ResponseEntity<>(exception, BAD_REQUEST);
         }
-
-        return new ResponseEntity<>("Email was already sent", OK);
+        exception.put("message", "The new password was sent to your email");
+        return new ResponseEntity<>(exception, OK);
     }
-
 
     @RequestMapping(value = "/updateLanguage/{language}", method = PUT)
     @PreAuthorize("hasAnyRole('ADMINISTRATOR', 'DESIGNER', 'EDITOR')")

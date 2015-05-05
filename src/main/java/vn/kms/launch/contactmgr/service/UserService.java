@@ -1,5 +1,14 @@
 package vn.kms.launch.contactmgr.service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -8,7 +17,11 @@ import vn.kms.launch.contactmgr.domain.user.User;
 import vn.kms.launch.contactmgr.domain.user.UserRepository;
 import vn.kms.launch.contactmgr.domain.user.UserSearchCriteria;
 import vn.kms.launch.contactmgr.dto.user.ChangePasswordInfo;
-import vn.kms.launch.contactmgr.util.*;
+import vn.kms.launch.contactmgr.util.EntityNotFoundException;
+import vn.kms.launch.contactmgr.util.HashString;
+import vn.kms.launch.contactmgr.util.SearchResult;
+import vn.kms.launch.contactmgr.util.SecurityUtil;
+import vn.kms.launch.contactmgr.util.ValidationException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

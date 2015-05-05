@@ -13,19 +13,19 @@ import vn.kms.launch.contactmgr.domain.ValueObject;
 public class Address extends ValueObject<Address> {
     private static final long serialVersionUID = 1L;
 
-    @Size(max = 255, message = "{validation.maxSize-255.message}")
+    @Size(max = 255, message = "{validation.size.message}")
     @Column(name = "ADDR_LINE1")
     private String addrLine1;
 
-    @Size(max = 255, message = "{validation.maxSize-255.message}")
+    @Size(max = 255, message = "{validation.size.message}")
     @Column(name = "ADDR_LINE2")
     private String addrLine2;
 
-    @Size(max = 150, message = "{validation.maxSize-150.message}")
+    @Size(max = 150, message = "{validation.size.message}")
     @Column(name = "CITY")
     private String city;
 
-    @Size(max = 150, message = "{validation.maxSize-150.message}")
+    @Size(max = 150, message = "{validation.size.message}")
     @Column(name = "STATE")
     private String state;
 

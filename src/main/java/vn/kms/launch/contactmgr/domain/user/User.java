@@ -43,15 +43,15 @@ public class User extends vn.kms.launch.contactmgr.domain.Entity {
     @Transient
     private String confirmPassword;
 
-    @Size(max = 20, message = "{validation.FirstName.message}")
+    @Size(max = 20, message = "{validation.size.message}")
     @Column(name = "FIRST_NAME")
     private String firstname;
 
-    @Size(max = 20, message = "{validation.LastName.message}")
+    @Size(max = 20, message = "{validation.size.message}")
     @Column(name = "LAST_NAME")
     private String lastname;
 
-    @Size(max = 255, message = "{validation.size-255.message}")
+    @Size(max = 255, message = "{validation.size.message}")
     @Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)"
         + "*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?",
         message = "{validation.email.message}")
