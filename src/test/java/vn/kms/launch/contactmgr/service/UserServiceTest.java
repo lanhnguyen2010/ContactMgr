@@ -55,4 +55,8 @@ public class UserServiceTest extends TestCase {
         result = userService.updatePassword(changePasswordInfo);
         assertThat(result, is(equalTo(0)));
     }
+
+    @Test
+    public void testUpdatePasswordByEmail() throws Exception {
+    }
 }

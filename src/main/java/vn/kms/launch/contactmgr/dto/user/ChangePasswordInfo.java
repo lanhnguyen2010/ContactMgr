@@ -40,8 +40,6 @@ public class ChangePasswordInfo {
 
     public String getPasswordConfirm() {
         return passwordConfirm;
-
-
     }
 
     public void setPasswordConfirm(String passwordConfirm) {
