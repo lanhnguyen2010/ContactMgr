@@ -172,7 +172,7 @@ public class ContactService {
                 Integer userId = SecurityUtil.getCurrentUserId();
                 if(userId != null){
                     User user = userRepo.findOne(userId);
-                    if(!user.getAssignedCompanies().contains(id)){
+                    if(!user.getRole().equals(Role.ADMINISTRATOR.name()) && !user.getAssignedCompanies().contains(id)){
                         throw new AuthorizationException();
                     }
                     
