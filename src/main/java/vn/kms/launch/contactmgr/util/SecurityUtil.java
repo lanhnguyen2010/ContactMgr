@@ -35,6 +35,16 @@ public class SecurityUtil {
         return null;
     }
     
+
+    public static String getCurrentEmail(){
+        User user = getCurrentUser();
+        if(user != null){
+            return user.getEmail();
+        }
+
+        return null;
+    }
+
     private static User getCurrentUser(){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if(principal != null && principal instanceof User){

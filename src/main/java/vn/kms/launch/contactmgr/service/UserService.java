@@ -53,7 +53,7 @@ public class UserService {
     @Transactional
     public void updatePasswordByEmail(String email, String resetPassword) {
 
-        int tmp = userRepository.resetPasswordByEmail(email, HashString.MD5(resetPassword));
+        int tmp = userRepository.updatePasswordByEmail(email, HashString.MD5(resetPassword), true);
 
         if (tmp == 0) {
             throw new EntityNotFoundException();
@@ -81,8 +81,6 @@ public class UserService {
         user.setId(id);
         validateUser(user);
         user.setPassword(HashString.MD5(user.getPassword()));
-
-
         return userRepository.save(user);
     }
 
@@ -121,13 +119,12 @@ public class UserService {
 
     @Transactional
     public Integer updatePassword(ChangePasswordInfo changePasswordInfo) {
-        String username = SecurityUtil.getCurrentUsername();
-        System.out.println("Username change password: "+ username);
-        if (username.equals("") || username.isEmpty()) {
+        String email = SecurityUtil.getCurrentEmail();
+        if (email.equals("") || email.isEmpty()) {
             return null;
         }
         validateUser(changePasswordInfo);
-        return userRepository.updatePassword(username, HashString.MD5(changePasswordInfo.getPassword()));
+        return userRepository.updatePasswordByEmail(email, HashString.MD5(changePasswordInfo.getPassword()),false);
     }
 
 

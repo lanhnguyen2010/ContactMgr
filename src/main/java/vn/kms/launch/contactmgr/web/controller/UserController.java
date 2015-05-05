@@ -125,7 +125,6 @@ public class UserController {
     }
 
     @RequestMapping(value = "/reset_password", method = PUT)
-
     public ResponseEntity<?> forgetPassword(@RequestParam String email) {
         String randomPassword = null;
         Map<String, Object> exception = new HashMap<>();
@@ -138,6 +137,7 @@ public class UserController {
             exception.put("message", "The email is not existed");
             return new ResponseEntity<>(exception, BAD_REQUEST);
         }
+
         exception.put("message", "The new password was sent to your email");
         return new ResponseEntity<>(exception, OK);
     }
