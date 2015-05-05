@@ -6,9 +6,6 @@ import vn.kms.launch.contactmgr.service.validation.PasswordsNotEqual;
 
 import javax.validation.constraints.Pattern;
 
-import vn.kms.launch.contactmgr.util.SecurityUtil;
-import  vn.kms.launch.contactmgr.util.SecurityUtil.*;
-
 /**
  * Created by thanhtuong on 4/23/2015.
  */
@@ -61,5 +58,8 @@ public class ChangePasswordInfo {
         this.oldPassword = oldPassword;
         this.password = password;
         this.passwordConfirm = passwordConfirm;
+    }
+
+    public ChangePasswordInfo() {
     }
 }

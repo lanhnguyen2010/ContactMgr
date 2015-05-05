@@ -14,11 +14,11 @@ import vn.kms.launch.contactmgr.service.validation.ExistEntity;
 public class Work extends ValueObject<Work> {
     private static final long serialVersionUID = 1L;
 
-    @Size(max = 50, message = "{validation.maxSize-50.message}")
+    @Size(max = 50, message = "{validation.size.message}")
     @Column(name = "JOB_TITLE")
     private String title;
 
-    @Size(max = 100, message = "{validation.maxSize-100.message}")
+    @Size(max = 100, message = "{validation.size.message}")
     @Column(name = "DEPARTMENT")
     private String department;
 

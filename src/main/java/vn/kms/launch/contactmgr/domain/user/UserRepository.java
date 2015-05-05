@@ -40,10 +40,6 @@ public interface UserRepository extends JpaRepository<User, Integer>, UserReposi
                                      @Param("password") String password,
                                      @Param("isResetPassword") boolean isResetPassword);
 
-    @Modifying
-    @Query("update User set resetPasswordFlag = false where username = (:username)")
-    public int updatePasswordFlag(@Param("username") String username);
-
     @Query("select u from User u where u.username = (:username) or u.email = (:username)")
     public User findByUsernameOrEmail(@Param("username") String username);
 

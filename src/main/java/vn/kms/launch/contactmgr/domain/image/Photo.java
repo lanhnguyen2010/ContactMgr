@@ -13,15 +13,15 @@ import javax.validation.constraints.Size;
 public class Photo extends vn.kms.launch.contactmgr.domain.Entity{
 	private static final long serialVersionUID = 1L;
 
-    @Size(max = 255, message = "{validation.size-255.message}")
+    @Size(max = 255, message = "{validation.size.message}")
     @Column(name = "PATH_FULL")
     private String pathFull;
     
-    @Size(max = 100, message = "{validation.size-100.message}")
+    @Size(max = 100, message = "{validation.size.message}")
     @Column(name = "FILE_NAME")
     private String fileName;
     
-    @Size(max = 10, message = "{validation.size-10.message}")
+    @Size(max = 10, message = "{validation.size.message}")
     @Column(name = "CONTENT_TYPE")
     private String contentType;
 

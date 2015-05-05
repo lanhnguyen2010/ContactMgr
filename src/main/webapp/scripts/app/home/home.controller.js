@@ -11,7 +11,6 @@ angular.module('contactmgrApp')
             $state.reload();
             $rootScope.firstLogin = false;
         }
-        $scope.firstLogin = 1;
         $scope.getRole = function(){
             $http.get("api/security/current-user").success(function(user){
                 $scope.role = user.role;

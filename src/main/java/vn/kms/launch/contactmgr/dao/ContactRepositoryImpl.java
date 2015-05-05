@@ -32,9 +32,10 @@ public class ContactRepositoryImpl implements ContactRepositoryCustom {
         }
         
         List<Itemized> items = new ArrayList<>();
-        Query query = em.createQuery("select c.id, c.name from Company c where exists (from User u left join u.assignedCompanies as companyId where u.id = :userId"
-                + " and c.id = companyId )");
+        Query query = em.createQuery("select c.id, c.name from Company c where exists (from User u left join u.assignedCompanies as companyId"
+                + " where u.id = :userId and (u.role = :adminRole or c.id = companyId) )");
         query.setParameter("userId", userId);
+        query.setParameter("adminRole", "ADMINISTRATOR");
 
         List<Object[]> results = query.getResultList();
 

@@ -9,6 +9,8 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,14 +24,15 @@ import org.springframework.security.web.authentication.preauth.PreAuthenticatedA
 import org.springframework.web.filter.GenericFilterBean;
 import org.springframework.web.util.UrlPathHelper;
 
+import vn.kms.launch.contactmgr.domain.user.User;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Optional;
 
 public class AuthenticationFilter extends GenericFilterBean {
 
     public static final String AUTHENTICATE_URL = "/api/authenticate";
-    public static final String TOKEN_SESSION_KEY = "token";
-    public static final String USER_SESSION_KEY = "user";
+    
     private AuthenticationManager authenticationManager;
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticationFilter.class);
     public AuthenticationFilter(AuthenticationManager authenticationManager) {
@@ -89,10 +92,16 @@ public class AuthenticationFilter extends GenericFilterBean {
         Authentication resultOfAuthentication = tryToAuthenticateWithUsernameAndPassword(username, password);
         SecurityContextHolder.getContext().setAuthentication(resultOfAuthentication);
         httpResponse.setStatus(HttpServletResponse.SC_OK);
-        TokenResponse tokenResponse = new TokenResponse(resultOfAuthentication.getDetails().toString());
-        String tokenJsonResponse = new ObjectMapper().writeValueAsString(tokenResponse);
+        String token = resultOfAuthentication.getDetails().toString();
         httpResponse.addHeader("Content-Type", "application/json");
-        httpResponse.getWriter().print(tokenJsonResponse);
+        try {
+            JSONObject responseData = new JSONObject();
+            responseData.put("resetPasswordFlag", String.valueOf(((User)resultOfAuthentication.getPrincipal()).getResetPasswordFlag()));
+            responseData.put("token", token);
+            responseData.write(httpResponse.getWriter());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     private Authentication tryToAuthenticateWithUsernameAndPassword(Optional<String> username, Optional<String> password) {

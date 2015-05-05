@@ -19,7 +19,11 @@ angular
                                         function(data) {
                                             $scope.loginFailed = false;
                                             $rootScope.token = data.token;
-                                            $location.path('/');
+                                            if (data.resetPasswordFlag === 'true') {
+                                                $('#changePasswordModal').modal('toggle');
+                                            } else {
+                                                $location.path('/');
+                                            }
                                             if (document
                                                     .getElementById('remember').checked) {
                                                 $scope.maintainLogin();
@@ -34,13 +38,13 @@ angular
                         $scope.isLoading = false;
                         $scope.btnSend = true;
                         $scope.btnClose = false;
-                        $scope.notice = 'Your registered email';
+                        $scope.notice= "Your registered email";
                         x.style.color = "Black";
                         $scope.email = '';
                     };
                     $scope.sendEmail = function() {
                         x.style.color = "Black";
-                        $scope.notice = 'Sending email ...';
+                        $scope.notice= "Sending email ...";
                         $scope.isLoading = true;
                         $scope.btnSend = false;
                         $scope.btnClose = false;
@@ -52,7 +56,7 @@ angular
                                                 $scope.isLoading = false;
                                                 $scope.btnSend = false;
                                                 $scope.btnClose = true;
-                                                $scope.notice = 'The new password was sent to your email';
+                                                $scope.notice= data.message;
                                                 x.style.color = "Black";
                                             }
                                         })
@@ -62,9 +66,9 @@ angular
                                                 $scope.isLoading = false;
                                                 $scope.btnSend = true;
                                                 $scope.btnClose = false;
-                                                $scope.notice = 'The email is not existed';
+                                                $scope.notice= data.message;
                                                 x.style.color = "Red";
                                             }
-                                        });
+                                });
                     };
                 });
