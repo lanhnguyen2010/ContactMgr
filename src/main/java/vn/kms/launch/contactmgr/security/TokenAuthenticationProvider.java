@@ -1,4 +1,4 @@
-package vn.kms.launch.contactmgr.infrastructure;
+package vn.kms.launch.contactmgr.security;
 
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -8,6 +8,7 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 
 import vn.kms.launch.contactmgr.domain.user.User;
+import vn.kms.launch.contactmgr.service.security.TokenService;
 import vn.kms.launch.contactmgr.util.HashString;
 
 import com.google.common.base.Optional;
@@ -35,7 +36,6 @@ public class TokenAuthenticationProvider implements AuthenticationProvider {
         User user = tokenService.getUser(userName);
         if (user != null){
         	String hash = HashString.MD5(user.getUsername()+user.getPassword());
-        	System.out.println(hash+"..."+ tokenService.getHashUserNameAndPassWord(token.get()));
             if(hash.equals(tokenService.getHashUserNameAndPassWord(token.get()))){
                 AuthenticationWithToken resultOfAuthentication = new AuthenticationWithToken(user, token,AuthorityUtils.createAuthorityList(user.getRole()));
                 return resultOfAuthentication;

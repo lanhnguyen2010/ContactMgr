@@ -1,16 +1,18 @@
-package vn.kms.launch.contactmgr.infrastructure;
+package vn.kms.launch.contactmgr.service.security;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import vn.kms.launch.contactmgr.domain.user.User;
 import vn.kms.launch.contactmgr.service.UserService;
 import vn.kms.launch.contactmgr.util.HashString;
 
-public  class TokenService {
+@Service
+public class TokenService {
 
     private static final long EXPIRED_TIME = 60*60*1000;
     

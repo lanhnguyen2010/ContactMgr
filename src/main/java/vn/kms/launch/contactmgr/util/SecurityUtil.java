@@ -45,12 +45,21 @@ public class SecurityUtil {
         return null;
     }
 
-    private static User getCurrentUser(){
+    public static User getCurrentUser(){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if(principal != null && principal instanceof User){
             return (User)principal;
         }
         
+        return null;
+    }
+    
+    public static UserInfo getUserInfo(){
+        User user = getCurrentUser();
+        if(user != null){
+            return new UserInfo(user);
+        }
+
         return null;
     }
 }

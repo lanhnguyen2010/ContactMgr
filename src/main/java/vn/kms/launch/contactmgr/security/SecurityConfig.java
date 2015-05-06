@@ -1,4 +1,4 @@
-package vn.kms.launch.contactmgr.infrastructure;
+package vn.kms.launch.contactmgr.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -9,9 +9,12 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
-import vn.kms.launch.contactmgr.RestAuthenticationEntryPoint;
+import vn.kms.launch.contactmgr.web.security.RestAuthenticationEntryPoint;
+import vn.kms.launch.contactmgr.service.security.TokenService;
+import vn.kms.launch.contactmgr.web.security.AuthenticationFilter;
 
 @Configuration
 @EnableWebMvcSecurity
@@ -24,7 +27,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http.authorizeRequests().antMatchers("/api/authenticate").authenticated();
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http.authorizeRequests().antMatchers("/api/authenticate").permitAll();
         http.csrf().disable();
         http.formLogin().loginPage("/#/login").permitAll();
         http.addFilterBefore(new AuthenticationFilter(authenticationManager()),BasicAuthenticationFilter.class);
@@ -33,7 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(domainUsernamePasswordAuthenticationProvider()).authenticationProvider(tokenAuthenticationProvider());
+        auth.authenticationProvider(tokenAuthenticationProvider());
     }
 
     @Bean
@@ -44,10 +48,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public TokenService tokenService() {
         return new TokenService();
-    }
-
-    @Bean
-    public AuthenticationProvider domainUsernamePasswordAuthenticationProvider() {
-        return new DomainUsernamePasswordAuthenticationProvider(tokenService());
     }
 }
