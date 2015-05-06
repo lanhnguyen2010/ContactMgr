@@ -18,7 +18,6 @@ angular.module('contactmgrApp')
         }
         $scope.logout = function(){
             delete $cookies.token;
-            console.log("logout");
             $state.reload();
         }
         init();

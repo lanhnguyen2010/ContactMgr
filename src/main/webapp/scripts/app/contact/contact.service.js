@@ -77,7 +77,6 @@ angular.module('contactmgrApp')
         this.updateCompany = function(company){
            this.replaceEmptyDataWithNullOfCompany(company);
             var url = '/api/companies/' + company.id;
-            console.log('Update company: ' + url)
             return $http.put(url, company);
         };
         

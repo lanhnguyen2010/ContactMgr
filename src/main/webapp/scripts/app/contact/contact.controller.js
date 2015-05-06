@@ -61,9 +61,6 @@ angular.module('contactmgrApp')
                         $defer.resolve(data.items);
                         $scope.isLoading = false;
                     })
-                    .error(function(data, status) {
-                        console.log(status);
-                    });
             }
         });
 
@@ -79,12 +76,8 @@ angular.module('contactmgrApp')
             if (confirm('Do you want to delete?')) {
                 ContactService.deleteContacts($scope.selectedIds)
                     .success(function (data, status) {
-                        console.log('Deleted ' + data + ' contact(s)');
                         $scope.tableParams.reload();
                     })
-                    .error(function (data, status) {
-                        console.log('Error', status);
-                    });
             }
         };
 
@@ -113,9 +106,6 @@ angular.module('contactmgrApp')
                 .success(function(data,status) {
                     $scope.companies=data;
                 })
-                .error(function (data, status) {
-                    console.log('Error get companies', status);
-                });
         }
         init();
     });

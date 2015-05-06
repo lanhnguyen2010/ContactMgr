@@ -116,7 +116,6 @@ angular
                                         $defer.resolve($scope.users);
                                         $scope.isLoading = false;
                                     }).error(function(data, status) {
-                                        console.log("Error", status);
                                     });
 
                             $scope.checkboxes = {
@@ -143,9 +142,7 @@ angular
                             UsersService.deleteUsers($scope.selectedIds)
                                     .success(function(data, status) {
                                         $scope.usersTableParams.reload();
-                                    }).error(function(data, status) {
-                                        console.log("Error", status);
-                                    });
+                                    })
                         }
                     };
                     // activate Users Controller
@@ -154,9 +151,7 @@ angular
                             UsersService.activateUsers($scope.selectedIds)
                                     .success(function(data, status) {
                                         $scope.searchUsers($scope.currentPage);
-                                    }).error(function(data, status) {
-                                        console.log("Error", status);
-                                    });
+                                    })
                         }
                     };
 
@@ -166,9 +161,7 @@ angular
                             UsersService.deactivateUsers($scope.selectedIds)
                                     .success(function(data, status) {
                                         $scope.searchUsers($scope.currentPage);
-                                    }).error(function(data, status) {
-                                        console.log("Error", status);
-                                    });
+                                    })
                         }
                     };
 
@@ -203,9 +196,7 @@ angular
                     $scope.getRoles = function() {
                         UsersService.getRoles().success(function(data, status) {
                             $scope.roles = data;
-                        }).error(function(data, status) {
-                            console.log("Error get roles", status);
-                        });
+                        })
                     };
                     $scope.getCompanies = function() {
                         UsersService.getCompanies().success(
@@ -234,12 +225,9 @@ angular
                                             window.alert("Save user successful!");
                                             $scope.currentPage = $scope.currentPage - 1;
                                             $scope.usersTableParams.reload();
-                                            console.log($scope.flagUpdate);
                                             if($scope.flagUpdate == true){
-                                                console.log("chay vo day :v");
                                                 $('#userModal').modal('toggle');
                                                 $scope.flagUpdate == false;
-                                                console.log($scope.flagUpdate == false);
                                             }
                                             $scope.initUser();
                                         }).error(
@@ -296,7 +284,6 @@ angular
                     $scope.getCompaniesToDisplayUI = function() {
                         $scope.exitedCompanies = [];
                         if ($scope.user.assignedCompanies != null) {
-                            console.log($scope.user.assignedCompanies.length);
                             $scope.user.assignedCompanies.forEach(function(
                                     entry) {
                                 var singleObj = {}

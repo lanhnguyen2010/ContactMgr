@@ -16,7 +16,6 @@ angular.module('contactmgrApp')
            $scope.getRole();
         }
   
-        console.log($scope.token);
         $scope.firstLogin = $rootScope.firstLogin;
         if($scope.firstLogin == true){
             $state.reload();

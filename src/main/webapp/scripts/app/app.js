@@ -55,19 +55,15 @@ angular.module('contactmgrApp', ['LocalStorageModule', 'tmh.dynamicLocale','ngRe
         return {
             responseError: function(rejection) {
                 if (rejection.status === 404) {
-                    console.log("Response Error 404",rejection);
                     $location.path('/not_found');
                 }
                 if (rejection.status === 500) {
-                    console.log("Response Error 500",rejection);
                     $location.path('/error');
                 }
                 if (rejection.status === 403) {
-                    console.log("Response Error 403",rejection);
                     $location.path('/access_denied');
                 }
                 if (rejection.status === 401) {
-                    console.log("Response Error 401",rejection);
                     $location.path('/login');
                 }
                 return $q.reject(rejection);

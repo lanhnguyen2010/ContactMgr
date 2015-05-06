@@ -56,9 +56,6 @@ angular.module('contactmgrApp')
                     $scope.totalItems = data['totalItems'];
                     $scope.imageList = data['items'];
                 })
-                .error(function(data, status) {
-                    console.log(status);
-                });
         };
 
         $scope.contact;
