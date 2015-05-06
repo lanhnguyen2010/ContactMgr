@@ -1,19 +1,15 @@
 package vn.kms.launch.contactmgr.web.controller;
 
-import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.parboiled.parserunners.ProfilingParseRunner.Report;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -52,7 +48,7 @@ public class AuthenticationController {
             return new ResponseEntity<>(UNAUTHORIZED);
         }
 
-        String token = tokenService.generateToken(user.getUsername(),password);
+        String token = tokenService.generateToken(user.getUsername(),HashString.MD5(password));
         Map<String, String> responseData = new HashMap<String, String>();
         responseData.put("resetPasswordFlag", String.valueOf(user.getResetPasswordFlag()));
         responseData.put("token", token);

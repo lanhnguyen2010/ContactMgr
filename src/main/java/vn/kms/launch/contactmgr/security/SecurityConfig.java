@@ -12,7 +12,7 @@ import org.springframework.security.config.annotation.web.servlet.configuration.
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
-import vn.kms.launch.contactmgr.RestAuthenticationEntryPoint;
+import vn.kms.launch.contactmgr.web.security.RestAuthenticationEntryPoint;
 import vn.kms.launch.contactmgr.service.security.TokenService;
 import vn.kms.launch.contactmgr.web.security.AuthenticationFilter;
 
@@ -28,7 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.authorizeRequests().antMatchers("/api/contacts**").authenticated();
+        http.authorizeRequests().antMatchers("/api/authenticate").permitAll();
         http.csrf().disable();
         http.formLogin().loginPage("/#/login").permitAll();
         http.addFilterBefore(new AuthenticationFilter(authenticationManager()),BasicAuthenticationFilter.class);

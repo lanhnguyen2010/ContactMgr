@@ -89,9 +89,14 @@ public class ContactService {
         return contactRepo.save(contact);
     }
 
-    @Transactional
     public List<Itemized> getCompanyNames() {
-        return contactRepo.getCompanyNames(SecurityUtil.getCurrentUserId());
+        User user = SecurityUtil.getCurrentUser();
+        List<Integer> assignedCompanies = null;
+        if(!user.getRole().equals(Role.ADMINISTRATOR.name())){
+            assignedCompanies = user.getAssignedCompanies();
+            System.out.println("number assigned companies: " + assignedCompanies.size());
+        }
+        return contactRepo.getCompanyNames(assignedCompanies);
     }
 
     @Transactional
@@ -108,8 +113,8 @@ public class ContactService {
         if(role.equals(Role.ADMINISTRATOR.name())){
             return true;
         } else {
-            Integer userId = SecurityUtil.getCurrentUserId();
-            List<Integer> assignedContactIds = userRepo.getContactIds(userId);
+            List<Integer> assignedCompanyIds = SecurityUtil.getCurrentUser().getAssignedCompanies();
+            List<Integer> assignedContactIds = contactRepo.getContactIds(assignedCompanyIds);
             if(assignedContactIds .containsAll(Ints.asList(contactIds))){
                return true;
             }
@@ -119,9 +124,12 @@ public class ContactService {
     }
 
     public SearchResult<Contact> searchContacts(ContactSearchCriteria criteria) {
-        return contactRepo.searchByCriteria(criteria, 
-                SecurityUtil.getCurrentUserId(), 
-                SecurityUtil.getCurrentUserRole());
+        User user = SecurityUtil.getCurrentUser();
+        List<Integer> assignedCompanies = null;
+        if(!user.getRole().equals(Role.ADMINISTRATOR)){
+            assignedCompanies = user.getAssignedCompanies();
+        }
+        return contactRepo.searchByCriteria(criteria,  assignedCompanies);
     }
 
     public void validateContact(Contact contact) throws ValidationException {
@@ -172,7 +180,7 @@ public class ContactService {
                 Integer userId = SecurityUtil.getCurrentUserId();
                 if(userId != null){
                     User user = userRepo.findOne(userId);
-                    if(!user.getAssignedCompanies().contains(id)){
+                    if(!user.getRole().equals(Role.ADMINISTRATOR.name()) && !user.getAssignedCompanies().contains(id)){
                         throw new AuthorizationException();
                     }
                     
