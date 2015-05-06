@@ -19,8 +19,6 @@ angular
                                     if (user.role != "ADMINISTRATOR") {
                                         $location.path("/access_denied");
                                     }
-                                }).error(function(data, status, header, config) {
-                                    alert('user');
                                 })
                     }
                     $scope.criteria = {
@@ -239,7 +237,6 @@ angular
                                             console.log($scope.flagUpdate);
                                             if($scope.flagUpdate == true){
                                                 $('#userModal').modal('toggle');
-                                                console.log($scope.flagUpdate == false);
                                             }
                                             $scope.initUser();
                                         }).error(
