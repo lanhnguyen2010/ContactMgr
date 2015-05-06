@@ -53,4 +53,13 @@ public class SecurityUtil {
         
         return null;
     }
+    
+    public static UserInfo getUserInfo(){
+        User user = getCurrentUser();
+        if(user != null){
+            return new UserInfo(user);
+        }
+
+        return null;
+    }
 }

@@ -113,8 +113,8 @@ public class ContactService {
         if(role.equals(Role.ADMINISTRATOR.name())){
             return true;
         } else {
-            Integer userId = SecurityUtil.getCurrentUserId();
-            List<Integer> assignedContactIds = userRepo.getContactIds(userId);
+            List<Integer> assignedCompanyIds = SecurityUtil.getCurrentUser().getAssignedCompanies();
+            List<Integer> assignedContactIds = contactRepo.getContactIds(assignedCompanyIds);
             if(assignedContactIds .containsAll(Ints.asList(contactIds))){
                return true;
             }

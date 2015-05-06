@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import vn.kms.launch.contactmgr.domain.security.UserInfo;
-import vn.kms.launch.contactmgr.domain.user.User;
 import vn.kms.launch.contactmgr.domain.user.UserRepository;
 import vn.kms.launch.contactmgr.util.SecurityUtil;
 
@@ -24,11 +23,7 @@ public class SecurityController {
     @RequestMapping(value = "/current-user", method = GET)
     @PreAuthorize("hasAnyRole('ADMINISTRATOR', 'DESIGNER', 'EDITOR')")
     public ResponseEntity<UserInfo> getCurrentUser() {
-        UserInfo userInfo = null;
-        User user = userRepos.findOne(SecurityUtil.getCurrentUserId());
-        if(user != null){
-            userInfo = new UserInfo(user);
-        }
+        UserInfo userInfo = SecurityUtil.getUserInfo();
         return new ResponseEntity<>(userInfo, (userInfo == null) ? NOT_FOUND : OK);
     }
 }

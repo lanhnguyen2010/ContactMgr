@@ -45,9 +45,4 @@ public interface UserRepository extends JpaRepository<User, Integer>, UserReposi
 
     @Query("select u.password from User u where u.username =:username")
     String getPasswordByUsername(@Param("username") String username);
-
-    @Query("select c.id from Contact c left join c.work.company where "
-            + "exists (from User u left join u.assignedCompanies as companyId where u.id = :userId "
-                                + "and c.work.company.id = companyId )")
-    public List<Integer> getContactIds(@Param("userId")Integer userId);
 }
