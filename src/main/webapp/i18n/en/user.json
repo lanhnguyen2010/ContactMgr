@@ -11,7 +11,11 @@
             "first-name": "First Name",
             "last-name": "Last Name",
             "ex-date": "Expired Date",
-            "language": "Language",
+            "language": {
+                "title":"Ngôn ngữ",
+                "en": "ENGLISH",
+                "vi": "VIETNAMESE"
+            },
             "active": "Active",
             "yes-active": "Yes",
             "no-active": "No"

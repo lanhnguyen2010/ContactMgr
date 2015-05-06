@@ -11,7 +11,11 @@
             "last-name": "Họ",
             "email": "Email",
             "ex-date": "Ngày hết hạn",
-            "language": "Ngôn ngữ",
+            "language": {
+                "title":"Ngôn ngữ",
+                "en": "TIẾNG ANH",
+                "vi": "TIẾNG VIỆT"
+            },
             "active": "Trạng thái",
             "yes-active": "Có",
             "no-active": "Không"

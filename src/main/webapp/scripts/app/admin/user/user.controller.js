@@ -55,7 +55,7 @@ angular
                         $scope.checkboxSelection = '1';
                         $scope.exitedCompanies = [];
                         $scope.validator = null;
-                        $scope.flagUpdate == false;
+                        $scope.flagUpdate = false;
                     }
                     var PAGE_SIZE = 10;
                     $scope.users = [];
