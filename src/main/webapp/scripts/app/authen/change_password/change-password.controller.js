@@ -15,6 +15,7 @@ angular.module('contactmgrApp').controller(
                 ChangePasswordService.changePassword($scope.pass).success(
                         function(data, status, headers, config) {
                             window.alert("Change password successful!");
+                            $('#changePasswordModal').modal('toggle');
                             $scope.resetInfor();
                         }).error(function(data, status, header, config) {
                     $scope.validator = data.errors;

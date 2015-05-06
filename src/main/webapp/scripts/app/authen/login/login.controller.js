@@ -5,17 +5,18 @@ angular
         .controller(
                 'LoginController',
                 function($scope, $rootScope, $location, LoginService) {
+                    $scope.isLogin = $rootScope.isLogin;
                     $scope.credentials = {
                         username : '',
                         password : ''
                     };
-                    $scope.reset = function() {
-                        $scope.credentials = {
-                            username : '',
-                            password : ''
-                        };
+                    console.log($scope.isLogin);
+                    if($scope.isLogin === true){
+                        $location.path('/');
                     }
+                    $rootScope.token = null;
                     $rootScope.reloadNavbar = false;
+                    $scope.isLogin = false;
                     $scope.login = function() {
                         LoginService
                                 .login($scope.credentials)
@@ -30,9 +31,10 @@ angular
                                             }
                                             if (document
                                                     .getElementById('remember').checked) {
-                                                $scope.maintainLogin();
+                                                document.cookie = $rootScope.token;
                                             }
                                             $rootScope.firstLogin = true;
+                                            $rootScope.isLogin = true;
                                         }).error(function(data) {
                                     $scope.loginFailed = true;
                                 });
