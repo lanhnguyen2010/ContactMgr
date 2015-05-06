@@ -102,7 +102,7 @@
                 </li>
                 <!-- user login -->
                 <li class="dropdown" ng-controller="LanguageController">
-                    <a href = "#" ng-controller = "NavbarController" class="dropdown-toggle" data-toggle="dropdown">
+                    <a  ng-controller = "NavbarController" class="dropdown-toggle" data-toggle="dropdown">
                         {{username}}<span class="caret"></span></a>
                     <ul class ="dropdown-menu">
                         <li><a data-toggle="modal" data-target="#changePasswordModal" 
@@ -111,14 +111,14 @@
                             <a translate="global.user.language">Language</a>
                             <ul class="dropdown-menu">
                                  <li active-menu="{{language}}" ng-repeat="language in languages">
-                                    <a href="" ng-click="changeLanguage(language)">
+                                    <a ng-click="changeLanguage(language)">
                                     {{'language.' + language | translate}}
                                     </a>
                                 </li>
                             </ul>
 
                         </li>
-                        <li><a href="#" translate="global.user.signout" ng-click="logout()">Sign Out</a></li>
+                        <li><a translate="global.user.signout" ng-click="logout()">Sign Out</a></li>
                     </ul>
                 </li>
             </ul>

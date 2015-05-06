@@ -19,8 +19,6 @@ angular
                                     if (user.role != "ADMINISTRATOR") {
                                         $location.path("/access_denied");
                                     }
-                                }).error(function(data, status, header, config) {
-                                    alert('user');
                                 })
                     }
                     $scope.criteria = {

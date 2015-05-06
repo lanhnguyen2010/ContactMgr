@@ -17,10 +17,9 @@ angular.module('contactmgrApp')
             })
         }
         $scope.logout = function(){
-            //delete $cookies.token;
+            delete $cookies.token;
             console.log("logout");
-            
-            $location.path("/login");
+            $state.reload();
         }
         init();
     });
