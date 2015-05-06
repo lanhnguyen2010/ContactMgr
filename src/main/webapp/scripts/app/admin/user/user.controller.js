@@ -57,7 +57,7 @@ angular
                         $scope.checkboxSelection = '1';
                         $scope.exitedCompanies = [];
                         $scope.validator = null;
-                        $scope.flagUpdate == false;
+                        $scope.flagUpdate = false;
                     }
                     var PAGE_SIZE = 10;
                     $scope.users = [];
@@ -238,9 +238,7 @@ angular
                                             $scope.usersTableParams.reload();
                                             console.log($scope.flagUpdate);
                                             if($scope.flagUpdate == true){
-                                                console.log("chay vo day :v");
                                                 $('#userModal').modal('toggle');
-                                                $scope.flagUpdate == false;
                                                 console.log($scope.flagUpdate == false);
                                             }
                                             $scope.initUser();
@@ -298,7 +296,6 @@ angular
                     $scope.getCompaniesToDisplayUI = function() {
                         $scope.exitedCompanies = [];
                         if ($scope.user.assignedCompanies != null) {
-                            console.log($scope.user.assignedCompanies.length);
                             $scope.user.assignedCompanies.forEach(function(
                                     entry) {
                                 var singleObj = {}
