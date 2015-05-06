@@ -5,8 +5,7 @@ angular
         .controller(
                 'UsersController',
                 function($scope, $filter, UsersService, ngTableParams, $http,
-                        $location) {
-
+                        $location,$rootScope) {
                     function init() {
                         $scope.getCompanies();
                         $scope.getRoles();
@@ -20,6 +19,8 @@ angular
                                     if (user.role != "ADMINISTRATOR") {
                                         $location.path("/access_denied");
                                     }
+                                }).error(function(data, status, header, config) {
+                                    alert('user');
                                 })
                     }
                     $scope.criteria = {
@@ -56,6 +57,7 @@ angular
                         $scope.checkboxSelection = '1';
                         $scope.exitedCompanies = [];
                         $scope.validator = null;
+                        $scope.flagUpdate == false;
                     }
                     var PAGE_SIZE = 10;
                     $scope.users = [];
@@ -214,6 +216,12 @@ angular
                                 }).error(function(data, status) {
                         });
                     }
+                    
+                    $scope.checkUpdating = function(){
+                        if($scope.flagUpdate == true){
+                            $scope.initUser();
+                        }
+                    }
                     // save user
                     $scope.saveUser = function() {
                         if ($scope.checkboxSelection == "1") {
@@ -228,6 +236,13 @@ angular
                                             window.alert("Save user successful!");
                                             $scope.currentPage = $scope.currentPage - 1;
                                             $scope.usersTableParams.reload();
+                                            console.log($scope.flagUpdate);
+                                            if($scope.flagUpdate == true){
+                                                console.log("chay vo day :v");
+                                                $('#userModal').modal('toggle');
+                                                $scope.flagUpdate == false;
+                                                console.log($scope.flagUpdate == false);
+                                            }
                                             $scope.initUser();
                                         }).error(
                                         function(data, status, header, config) {
@@ -247,6 +262,7 @@ angular
                         } else {
                             $scope.checkboxSelection = '0';
                         }
+                        $scope.flagUpdate = true;
                     };
                     $scope.minDate = new Date();
                     $scope.openCalendar = function($event, isTo) {

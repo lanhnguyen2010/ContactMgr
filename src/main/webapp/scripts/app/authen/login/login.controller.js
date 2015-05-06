@@ -4,13 +4,13 @@ angular
         .module('contactmgrApp')
         .controller(
                 'LoginController',
-                function($scope, $rootScope, $location, LoginService) {
+                function($scope, $rootScope, $location, LoginService,$cookies,$http,$state) {
+
                     $scope.isLogin = $rootScope.isLogin;
                     $scope.credentials = {
                         username : '',
                         password : ''
                     };
-                    console.log($scope.isLogin);
                     if($scope.isLogin === true){
                         $location.path('/');
                     }
@@ -18,12 +18,12 @@ angular
                     $rootScope.reloadNavbar = false;
                     $scope.isLogin = false;
                     $scope.login = function() {
-                        LoginService
-                                .login($scope.credentials)
+                        LoginService.login($scope.credentials)
                                 .success(
                                         function(data) {
                                             $scope.loginFailed = false;
                                             $rootScope.token = data.token;
+                                            $cookies.token = data.token;
                                             if (data.resetPasswordFlag === 'true') {
                                                 $('#changePasswordModal').modal('toggle');
                                             } else {
@@ -35,6 +35,9 @@ angular
                                             }
                                             $rootScope.firstLogin = true;
                                             $rootScope.isLogin = true;
+
+
+                                        
                                         }).error(function(data) {
                                     $scope.loginFailed = true;
                                 });
@@ -54,8 +57,7 @@ angular
                         $scope.isLoading = true;
                         $scope.btnSend = false;
                         $scope.btnClose = false;
-                        LoginService
-                                .checkEmail($scope.email)
+                        LoginService.checkEmail($scope.email)
                                 .success(
                                         function(data, status) {
                                             if (status == '200') {
