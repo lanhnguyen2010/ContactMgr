@@ -1,4 +1,4 @@
-package vn.kms.launch.contactmgr.infrastructure;
+package vn.kms.launch.contactmgr.security;
 
 import java.util.Collection;
 
