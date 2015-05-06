@@ -11,7 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
-import vn.kms.launch.contactmgr.RestAuthenticationEntryPoint;
+import vn.kms.launch.contactmgr.web.security.RestAuthenticationEntryPoint;
 
 @Configuration
 @EnableWebMvcSecurity
